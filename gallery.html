@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery | Queer Latin Dance SD</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Fix mobile gallery scrollbar issues */
+    @media (max-width: 768px) {
+      .gallery-grid {
+        overflow-y: visible !important;
+        max-height: none !important;
+      }
+      .gallery-photo {
+        width: 80vw !important;
+      }
+      .filter-btn {
+        width: 80vw !important;
+      }
+    }
+  </style>
+</head>
+<body class="gallery-page">
+   <div id="sparkle-bg"></div>
+<!-- Place this in the <body> of each page -->
+<header>
+  <a href="index.html">
+    <img src="images/logos/logo1.png" alt="Queer Latin Dance SD Logo" class="logo1" />
+   </a>
+  <nav>
+    <a href="about.html">About</a>
+    <a href="Events.html">Events</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="directory.html">Directory</a>
+    <a href="lessons.html">Lessons</a>
+  </nav>
+    <!-- Mobile Navigation Toggle -->
+  <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- Mobile Navigation Menu -->
+<div class="mobile-nav-menu">
+  <nav>
+    <a href="about.html">About</a>
+    <a href="Events.html">Events</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="directory.html">Directory</a>
+    <a href="lessons.html">Lessons</a>
+  </nav>
+</div>
+</header>
+  <main>
+ <section>
+  <h1 class="gallery-title">QUEER LATIN DANCE GALLERY</h1>
+  <div class="event-filters">
+    <!-- filter buttons -->
+  </div> 
+<div class="gallery-grid">
+  <div class="gallery-item">
+    <button class="filter-btn active" data-event="sunsets">Queer Salsa Sunsets</button>
+    <img class="gallery-photo open-workshop-modal" src="images/SalsaSunsets/IMG_7840.JPG" alt="Queer Salsa Sunsets" data-gallery="sunsets">
+  </div>
+  <div class="gallery-item">
+    <button class="filter-btn active" data-event="all">All Events</button>
+    <a href="all-events.html">
+      <img class="gallery-photo" src="images/SalsaSunsets/qssjun5.png" alt="All Events">
+    </a>
+  </div>
+    <div class="gallery-item">
+        <button class="filter-btn active" data-event="Studio Lessons">Dance Lessons</button>
+        <img class="gallery-photo open-workshop-modal" src="images/4weekseries1/IMG_8662.jpg" alt="4 Week Series 1" data-gallery="4weekseries1">
+      </div>
+  <div class="gallery-item">
+    <button class="filter-btn active" data-event="all">Sun Dance Day Fest</button>
+    <img class="gallery-photo open-workshop-modal" src="images/SunDanceDayFest/IMG_7675.jpg" alt="Sun Dance Day Fest" data-gallery="sundance">
+  </div>
+  <div class="gallery-item">
+    <button class="filter-btn active" data-event="all">Queer Latin Dance LA</button>
+    <img class="gallery-photo open-workshop-modal" src="images/QueerLatinDanceLA/IMG_7943.jpg" alt="Queer Latin Dance LA" data-gallery="qldla">
+  </div>
+  <div class="gallery-item">
+    <button class="filter-btn active" data-event="video">Video Gallery</button>
+    <a href="https://www.youtube.com/@QueerLatinDance" target="_blank" style="position:relative;display:block;">
+      <img class="gallery-photo" src="images/SunDanceDayFest/sddf33.jpg" alt="Video Gallery" style="position:relative;">
+      <img src="images/icons/youtubeicon.png" alt="YouTube" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width: 80px;pointer-events:none;">
+    </a>
+  </div>
+    <div class="gallery-item">
+    <button class="filter-btn active" data-event="workshops">Special Workshops</button>
+    <img class="gallery-photo open-workshop-modal" src="images/SoberPrideRecap/SoberP1.png" alt="Special Workshops" data-gallery="workshops">
+  </div>
+</div>
+</div>
+</section>
+  <div id="workshopGalleryModal" class="workshop-modal-overlay" style="display:none;">
+    <div class="workshop-modal-content">
+      <button class="modal-close" id="closeWorkshopModal">&times;</button>
+      <div class="main-photo-glow">
+        <div class="main-photo">
+          <h2 id="modalTitle"></h2>
+          <img id="mainWorkshopPhoto" src="" alt="Special Workshop Main">
+        </div>
+      </div>
+      <div style="display: flex; align-items: center;">
+        <button id="thumbs-scroll-left" style="font-size:2rem; background:none; border:none; cursor:pointer;">&#8592;</button>
+        <div class="thumbs-wrapper"></div>
+        <button id="thumbs-scroll-right" style="font-size:2rem; background:none; border:none; cursor:pointer;">&#8594;</button>
+      </div>
+    </div>
+</main>
+  <footer class="footer">
+      <div class="footer-bottom">
+        <div class="footer-newsletter">
+          <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
+          <form>
+            <input type="email" placeholder="Enter your email ..." required>
+            <button type="submit">Subscribe</button>
+          </form>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="Events.html">Events</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="directory.html">Directory</a>
+            <a href="lessons.html">Lessons</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
+        </div>
+        <div class="footer-social">
+          <h3>Follow Us</h3>
+          <div class="footer-social-icons">
+            <a href="https://www.instagram.com/queerlatindancesd/"><img src="images/icons/instagramlogo.png" alt="Instagram"></a>
+            <a href="https://www.youtube.com/@QueerLatinDance"><img src="images/icons/youtubeicon.png" alt="YouTube"></a>
+            <a href="https://www.tiktok.com/@queerlatindance"><img src="images/icons/tiktokicon2.png" alt="TikTok"></a>
+            <a href="https://linktr.ee/queerlatindancesd"><img src="images/icons/linktreelogo.png" alt="Linktree"></a>
+            <a href="https://chat.whatsapp.com/Hn9iICBTIPm9mCIEGcDRSr?mode=r_c"><img src="images/icons/whatsappicon.jpg" alt="WhatsApp"></a>
+          </div>
+          <div class="footer-copyright">
+            © 2025 Queer Latin Dance. All Rights Reserved.
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  <!-- Lightbox Modal -->
+<div id="lightbox-modal" style="display:none;">
+  <span id="lightbox-close">&times;</span>
+  <div id="lightbox-content"></div>
+  <button id="lightbox-prev">&#8592;</button>
+  <button id="lightbox-next">&#8594;</button>
+</div>
+<script src="script.js">
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Fade in the page on load
+  setTimeout(function() {
+    document.body.classList.add('fade-in');
+  }, 10);
+
+  // Fade-out on navigation (for all internal links)
+  function isInternalLink(a) {
+    try {
+      return (
+        a.tagName === 'A' &&
+        a.hasAttribute('href') &&
+        !a.getAttribute('href').startsWith('#') &&
+        !a.getAttribute('href').toLowerCase().startsWith('javascript:') &&
+        (!a.hasAttribute('target') || a.getAttribute('target') === '' || a.getAttribute('target') === '_self') &&
+        (a.hostname === window.location.hostname)
+      );
+    } catch (err) {
+      return false;
+    }
+  }
+  document.addEventListener('click', function(e) {
+    let a = e.target;
+    while (a && a.tagName !== 'A' && a !== document.body) a = a.parentElement;
+    if (a && isInternalLink(a)) {
+      e.preventDefault();
+      document.body.classList.remove('fade-in');
+      requestAnimationFrame(function() {
+        document.body.style.transition = 'opacity 0.5s cubic-bezier(.4,0,.2,1)';
+        document.body.style.opacity = 0;
+        setTimeout(function() {
+          window.location = a.href;
+        }, 500);
+      });
+    }
+  }, true);
+});
+</script>
+</body>
+</html>

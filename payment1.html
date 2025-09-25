@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment | Queer Salsa Series</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: linear-gradient(120deg, #e1d9ff 0%, #b1e3ff 50%, #c1b1ff 100%);
+      min-height: 100vh;
+      font-family: 'Nunito', Arial, sans-serif;
+      color: #222;
+      font-size: 0.92em;
+      opacity: 0;
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
+      padding: 20px;
+    }
+    body.fade-in {
+      opacity: 1;
+    }
+    .modal-fade {
+      opacity: 0;
+      transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
+    }
+    .modal-fade.show {
+      opacity: 1;
+    }
+    .payment-container {
+      max-width: 480px;
+      margin: 20px auto 0 auto;
+      background: #fff9;
+      border-radius: 24px;
+      box-shadow: 0 4px 32px #a259ff22;
+      padding: 2.5rem 2rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      font-size: 0.96em;
+    }
+    .payment-title {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: #716cff;
+      margin-bottom: 1.5rem;
+      letter-spacing: -1px;
+    }
+    .payment-desc {
+      font-size: 1.01rem;
+      color: #444;
+      margin-bottom: 2.0rem;
+    }
+    .payment-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      width: calc(100% - 1.2rem);
+      margin: 0 auto 1.2rem auto;
+      align-items: center;
+      font-size: 0.97em;
+    }
+    .choose-btn {
+      width: 380px;
+      min-width: 280px;
+      max-width: 380px;
+      max-height: 60px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.3rem;
+      font-size: 1.13rem;
+      font-weight: 600;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      padding: 0.32em 0.5em;
+      outline: none;
+      margin-bottom: 0.12em;
+      text-decoration: none;
+      text-align: center;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .choose-btn img {
+      height: 1.0em !important;
+      width: auto !important;
+      max-width: 1.2em !important;
+      max-height: 1.0em !important;
+      vertical-align: middle;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
+    .choose-btn.zelle {
+      background: linear-gradient(90deg,#6c1cd1 10%,#b57edc 90%);
+      color: #fff;
+    }
+    .choose-btn.venmo {
+      background: linear-gradient(90deg,#3d95ce 10%,#b57edc 90%);
+      color: #fff;
+    }
+    .choose-btn.stripe {
+      background: linear-gradient(90deg,#635bff 10%,#b57edc 90%);
+      color: #fff;
+    }
+    .choose-btn.paypal {
+      background: linear-gradient(90deg,#ffe066 10%,#b57edc 90%);
+      color: #222;
+    }
+    .no-fees-badge {
+      background: #6fcf97;
+      color: #fff;
+      font-size: 0.75em;
+      font-weight: 700;
+      padding: 0.12em 0.5em;
+      border-radius: 6px;
+      margin-left: 1em;
+    }
+    /* Slide-down form styles */
+    .payment-form {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      background: #fff;
+      border-radius: 12px;
+      margin-top: 0.01rem;
+      box-shadow: 0 2px 8px #a259ff11;
+    }
+    .payment-form.active {
+      max-height: 800px;
+      padding: 1.5rem;
+    }
+    .payment-form h3 {
+      color: #716cff;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .form-row {
+      display: flex;
+      gap: 0.7em;
+      margin-bottom: 0.7em;
+    }
+    .form-col {
+      flex: 1;
+    }
+    .form-input {
+      width: 100%;
+      padding: 0.5em;
+      border-radius: 7px;
+      border: 1px solid #e0e0e0;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+    .form-input-full {
+      margin-bottom: 0.7em;
+    }
+    .agreement-row {
+      margin-bottom: 1.2em;
+      font-size: 0.97em;
+      color: #888;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+      flex-wrap: wrap;
+    }
+    .modal-link {
+      text-decoration: underline;
+      cursor: pointer;
+      color: #716cff;
+    }
+    .modal-instructions {
+      background: #eaf6fa;
+      padding: 0.7em;
+      border-radius: 8px;
+      margin-bottom: 1em;
+      font-size: 1em;
+      color: #444;
+    }
+    .modal-submit {
+      width: 100%;
+      font-size: 1.1em;
+      padding: 0.6em;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+    .paypal-submit {
+      background: linear-gradient(90deg,#ffe066 10%,#b57edc 90%);
+      color: #222;
+    }
+    .zelle-submit {
+      background: linear-gradient(90deg,#6c1cd1 10%,#b57edc 90%);
+      color: #fff;
+    }
+    .venmo-submit {
+      background: linear-gradient(90deg,#3d95ce 10%,#b57edc 90%);
+      color: #fff;
+    }
+    .whatsapp-invite {
+      margin-top: 1.2em;
+      font-size: 1em;
+      color: #444;
+      text-align: left;
+      background: #f7f7ff;
+      padding: 0.8em 0.7em 0.8em 0.7em;
+      border-radius: 8px;
+    }
+    .whatsapp-link {
+      color: #25d366;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    
+    /* Modal close button styling */
+    .modal-close-x {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #999;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+    
+    .modal-close-x:hover {
+      background: #f0f0f0;
+      color: #666;
+    }
+
+    /* Payment Details Overlay */
+    .payment-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2500;
+      opacity: 0;
+      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .payment-overlay.show {
+      opacity: 1;
+    }
+
+    .payment-overlay-content {
+      background: #fff;
+      border-radius: 18px;
+      max-width: 540px;
+      width: 96vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem 1.5rem;
+      box-shadow: 0 8px 40px rgba(162, 89, 255, 0.3);
+      position: relative;
+      text-align: center;
+    }
+
+    .payment-overlay-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #716cff;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+    }
+
+    .payment-overlay-message {
+      font-size: 1.1rem;
+      color: #444;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .payment-details-box {
+      background: #f8f9ff;
+      border: 2px solid #e1d9ff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      text-align: left;
+      font-size: 1.05rem;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    .payment-details-box b {
+      color: #716cff;
+    }
+
+    .payment-overlay-close {
+      background: #716cff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.8rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.2s;
+    }
+
+    .payment-overlay-close:hover {
+      background: #5a4fff;
+    }
+
+    .payment-overlay-x {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #999;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+
+    .payment-overlay-x:hover {
+      background: #f0f0f0;
+      color: #666;
+    }
+
+    @media (max-width: 768px) {
+      .payment-overlay-content {
+        width: 95vw;
+        padding: 1.5rem 1rem;
+        margin: 1rem;
+      }
+
+      .payment-overlay-title {
+        font-size: 1.5rem;
+      }
+
+      .payment-overlay-message {
+        font-size: 1rem;
+      }
+
+      .payment-details-box {
+        padding: 1rem;
+        font-size: 1rem;
+      }
+
+      .payment-overlay-close {
+        width: 100%;
+        padding: 1rem 2rem;
+      }
+
+      .payment-container {
+        padding: 1.5rem 1rem;
+        margin-top: 10px;
+        margin-left: 1rem;
+        margin-right: 1rem;
+      }
+
+      .choose-btn {
+        width: 100%;
+        min-width: auto;
+        max-width: 100%;
+        font-size: 1rem;
+        padding: 0.5em 0.8em;
+      }
+
+      .choose-btn img {
+        height: 0.9em !important;
+        max-width: 1em !important;
+        max-height: 0.9em !important;
+      }
+
+      .no-fees-badge {
+        font-size: 0.7em;
+        margin-left: 0.5em;
+        padding: 0.1em 0.4em;
+      }
+
+      .mobile-spacing {
+        height: 60px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-container">
+    <!-- Verified Sticker removed as requested -->
+
+    <!-- The CSS for .verified-sticker should be in a <style> block, not in the HTML body. -->
+
+    <div class="payment-title">Complete Your Payment</div>
+    <div class="payment-desc">
+      Select a payment method below to finish registration for the Queer Salsa Series.<br>
+      <span id="selectedSeries" style="display:block;margin-top:0.7em;font-size:1.08rem;color:#716cff;font-weight:700;"></span>
+      <span id="selectedPrice" style="display:block;margin-top:0.2em;font-size:1.08rem;color:#222;font-weight:700;"></span>
+      <div id="lessonDateTime" style="display:block;margin-top:0.5em;padding:0.5em;background:#f0f4ff;border-radius:6px;border-left:3px solid #716cff;">
+        <div style="font-size:0.95rem;color:#444;font-weight:600;">Lesson Date & Time:</div>
+        <div id="selectedDateTime" style="font-size:1rem;color:#222;font-weight:700;margin-top:0.2em;"></div>
+      </div>
+    </div>
+    
+    <!-- Add some spacing to push content down and make back button visible (mobile only) -->
+    <div class="mobile-spacing" style="height: 0;"></div>
+    
+    <div class="payment-methods">
+    <!-- Order Summary -->
+    <div style="width:100%;background:#f9f9f9;border-radius:12px;padding:1.2em 1em 1em 1em;margin-bottom:1.2em;box-shadow:0 2px 8px #a259ff11;text-align:left;">
+      <div style="font-size:1.18rem;font-weight:700;color:#444;margin-bottom:0.7em;">Order Summary</div>
+      <div id="orderSummaryDetails" style="margin-bottom:0.5em;font-size:1.08rem;color:#222;font-weight:700;"></div>
+      <div style="background:#fff;border-radius:8px;padding:0.7em 1em;margin-bottom:0.5em;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span>Total</span>
+          <span id="orderSummaryTotal" style="font-weight:900;font-size:1.3rem;color:#222;"></span>
+        </div>
+        <div id="orderSummaryCalc" style="font-size:0.98rem;color:#888;"></div>
+      </div>
+    </div>
+    <!-- Contact Information -->
+    <!-- Contact Information section fully removed as requested -->
+    <!-- Payment Information -->
+    <div style="width:100%;background:#f9f9f9;border-radius:12px;padding:1.2em 1em 1em 1em;margin-bottom:1.2em;box-shadow:0 2px 8px #a259ff11;text-align:left;">
+      <div style="font-size:1.18rem;font-weight:700;color:#444;margin-bottom:0.7em;">Payment Information</div>
+      <!-- Highlight Zelle and Venmo as No Fee -->
+      <div style="display:flex;flex-direction:column;gap:0.3em;margin-top:1.2em;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.3em;">
+          <a id="zelleBtn" href="#" class="choose-btn zelle">
+            <span style="display:flex;align-items:center;gap:0.5em;"><img src="images/icons/zelleicon.png" alt="Zelle" style="height:1.0em;width:auto;max-width:1.2em;max-height:1.0em;vertical-align:middle;object-fit:contain;"/>Zelle</span><span class="no-fees-badge">No Fees</span>
+          </a>
+          
+          <!-- Zelle Form (slide-down) -->
+          <div id="zelleForm" class="payment-form">
+            <h3>Zelle Payment Instructions</h3>
+            <form id="zelleFormInner">
+              <div class="form-row">
+                <div class="form-col">
+                  <label>First Name</label><br>
+                  <input type="text" name="firstName" required class="form-input" />
+                </div>
+                <div class="form-col">
+                  <label>Last Name</label><br>
+                  <input type="text" name="lastName" required class="form-input" />
+                </div>
+              </div>
+              <label>Email</label><br><input type="email" name="email" required class="form-input form-input-full" /><br>
+              <label>Phone</label><br><input type="tel" name="phone" class="form-input form-input-full" /><br>
+              <label>Pronouns</label><br><input type="text" name="pronouns" class="form-input form-input-full" /><br>
+              <div class="agreement-row">
+                <span>By registering, you agree to our</span>
+                <a href="#" id="termsLink2" class="modal-link terms-link">Terms & Conditions</a>
+                <span>and</span>
+                <a href="#" id="conductLink2" class="modal-link conduct-link">Code of Conduct</a>.
+              </div>
+              <div class="modal-instructions zelle-instructions">
+                <b>Step 1:</b> Open your banking app and select Zelle.<br>
+                <b>Step 2:</b> Send payment to <b>Queer Latin Dance SD</b> details will be provided after form submission.<br>
+                <b>Step 3:</b> Enter the correct amount and include your name & series in the memo.<br>
+                <b>Step 4:</b> Click below to confirm and see payment details.
+              </div>
+              <button type="submit" class="modal-submit zelle-submit">Show Zelle Details</button>
+              <div class="whatsapp-invite">
+                <b>Join our WhatsApp group chat for updates and get connected with other members.</b><br>
+                We will post videos and details for future meet ups and social dance outings.<br><br>
+                <a href="https://chat.whatsapp.com/queerlatindancesd" target="_blank" class="whatsapp-link">LINK TO OUR WHATSAPP GROUP CHAT!</a>
+              </div>
+            </form>
+            <div id="zelleConfirm" class="zelle-confirm" style="display:none;"></div>
+          </div>
+
+          <button id="venmoBtn" type="button" class="choose-btn venmo">
+            <span style="display:flex;align-items:center;gap:0.5em;"><img src="images/icons/venmoicon.png" alt="Venmo" style="height:1.0em;width:auto;max-width:1.2em;max-height:1.0em;vertical-align:middle;object-fit:contain;"/>Venmo</span><span class="no-fees-badge">No Fees</span>
+          </button>
+          
+          <!-- Venmo Form (slide-down) -->
+          <div id="venmoForm" class="payment-form">
+            <h3>Venmo Payment Instructions</h3>
+            <form id="venmoFormInner">
+              <div class="form-row">
+                <div class="form-col">
+                  <label>First Name</label><br>
+                  <input type="text" name="firstName" required class="form-input" />
+                </div>
+                <div class="form-col">
+                  <label>Last Name</label><br>
+                  <input type="text" name="lastName" required class="form-input" />
+                </div>
+              </div>
+              <label>Email</label><br><input type="email" name="email" required class="form-input form-input-full" /><br>
+              <label>Phone</label><br><input type="tel" name="phone" class="form-input form-input-full" /><br>
+              <label>Pronouns</label><br><input type="text" name="pronouns" class="form-input form-input-full" /><br>
+              <div class="agreement-row">
+                <span>By registering, you agree to our</span>
+                <a href="#" id="termsLink3" class="modal-link terms-link">Terms & Conditions</a>
+                <span>and</span>
+                <a href="#" id="conductLink3" class="modal-link conduct-link">Code of Conduct</a>.
+              </div>
+              <div class="modal-instructions venmo-instructions">
+                <b>Step 1:</b> Open Venmo app.<br>
+                <b>Step 2:</b> Send payment to <b>@michf18</b>.<br>
+                <b>Step 3:</b> Enter the correct amount and include your name & series in the note.<br>
+                <b>Step 4:</b> Click below to continue to Venmo.
+              </div>
+              <button type="submit" class="modal-submit venmo-submit">Continue to Venmo</button>
+              <div class="whatsapp-invite">
+                <b>Join our WhatsApp group chat for updates and get connected with other members.</b><br>
+                We will post videos and details for future meet ups and social dance outings.<br><br>
+                <a href="https://chat.whatsapp.com/your-group-link" target="_blank" class="whatsapp-link">LINK TO OUR WHATSAPP GROUP CHAT!</a>
+              </div>
+            </form>
+          </div>
+
+          <!-- Stripe Embedded Checkout Button -->
+          <button id="stripeCheckoutBtn" class="choose-btn stripe" type="button">
+            <span style="display:flex;align-items:center;gap:0.5em;"><img src="images/icons/stripeicon.png" alt="Stripe" style="height:1.0em;width:auto;max-width:1.2em;max-height:1.0em;vertical-align:middle;object-fit:contain;"/>Stripe (Pay with Credit Card)</span>
+          </button>
+          
+          <button id="paypalBtn" type="button" class="choose-btn paypal">
+            <span style="display:flex;align-items:center;gap:0.5em;"><img src="images/icons/paypalicon.png" alt="PayPal" style="height:1.0em;width:auto;max-width:1.2em;max-height:1.0em;vertical-align:middle;object-fit:contain;"/>PayPal</span>
+          </button>
+          
+          <!-- PayPal Form (slide-down) -->
+          <div id="paypalForm" class="payment-form">
+            <h3>PayPal Payment Instructions</h3>
+            <form id="paypalFormInner">
+              <div class="form-row">
+                <div class="form-col">
+                  <label>First Name</label><br>
+                  <input type="text" name="firstName" required class="form-input" />
+                </div>
+                <div class="form-col">
+                  <label>Last Name</label><br>
+                  <input type="text" name="lastName" required class="form-input" />
+                </div>
+              </div>
+              <label>Email</label><br><input type="email" name="email" required class="form-input form-input-full" /><br>
+              <label>Phone</label><br><input type="tel" name="phone" class="form-input form-input-full" /><br>
+              <label>Pronouns</label><br><input type="text" name="pronouns" class="form-input form-input-full" /><br>
+              <div class="agreement-row">
+                <span>By registering, you agree to our</span>
+                <a href="#" id="termsLink1" class="modal-link terms-link">Terms & Conditions</a>
+                <span>and</span>
+                <a href="#" id="conductLink1" class="modal-link conduct-link">Code of Conduct</a>.
+              </div>
+              <div class="modal-instructions paypal-instructions">
+                <b>Step 1:</b> Click below to continue to PayPal.<br>
+                <b>Step 2:</b> Log in to PayPal (if prompted).<br>
+                <b>Step 3:</b> Confirm the amount and complete payment.<br>
+                <b>Step 4:</b> We will confirm your registration by email.
+              </div>
+              <button type="submit" class="modal-submit paypal-submit">Continue to PayPal</button>
+              <div class="whatsapp-invite">
+                <b>Join our WhatsApp group chat for updates and get connected with other members.</b><br>
+                We will post videos and details for future meet ups and social dance outings.<br><br>
+                <a href="https://chat.whatsapp.com/your-group-link" target="_blank" class="whatsapp-link">LINK TO OUR WHATSAPP GROUP CHAT!</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="payment-note">After payment, you will receive a confirmation email within 24 hours.</div>
+      <div class="payment-fee-note">
+        <span class="payment-fee-highlight">Note: PayPal and Stripe charge processing fees. Zelle and Venmo are recommended for no-fee payments.</span>
+      </div>
+    </div>
+    <!-- Safe Checkout -->
+    <div style="width:100%;background:#fff;border-radius:12px;padding:1em 1em 1em 1em;margin-bottom:1.2em;box-shadow:0 2px 8px #a259ff11;text-align:center;">
+      <div style="font-size:1.08rem;font-weight:700;color:#444;margin-bottom:0.7em;">GUARANTEED SAFE CHECKOUT</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:1em;flex-wrap:wrap;">
+        <span style="display:flex;align-items:center;gap:0.3em;background:#eaf6fa;padding:0.3em 0.7em;border-radius:8px;font-size:0.98rem;color:#2d9cdb;font-weight:700;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#6fcf97"/><path d="M17 8l-5.5 7L7 12" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          Authentic Guarantee
+        </span>
+        <img src="images/icons/visaicon.png" alt="Visa" style="height:24px;max-width:40px;object-fit:contain;" />
+        <img src="images/icons/mastercardlogo.png" alt="MasterCard" style="height:24px;max-width:40px;object-fit:contain;" />
+        <img src="images/icons/amexicon.png" alt="Amex" style="height:24px;max-width:40px;object-fit:contain;" />
+        <img src="images/icons/discovericon.png" alt="Discover" style="height:24px;max-width:40px;object-fit:contain;" />
+      </div>
+    </div>
+    
+    <!-- Payment Details Overlay -->
+    <div id="paymentOverlay" class="payment-overlay">
+      <div class="payment-overlay-content">
+        <button type="button" class="payment-overlay-x" onclick="closePaymentOverlay()">&times;</button>
+        <div class="payment-overlay-title">🎉 Payment Details</div>
+        <div class="payment-overlay-message">
+          Your registration form has been submitted! Here are your payment details:
+        </div>
+        <div id="paymentDetailsBox" class="payment-details-box">
+          <!-- Payment details will be inserted here -->
+        </div>
+        <div class="payment-overlay-message" style="margin-top: 1.5rem; font-size: 0.95rem; color: #666;">
+          <strong>Important:</strong> You do not need to fill out the form again. Complete your payment using the details above, and you'll receive a confirmation email within 24 hours.
+        </div>
+        <button type="button" class="payment-overlay-close" onclick="closePaymentOverlay()">
+          Got It!
+        </button>
+      </div>
+    </div>
+    
+    <!-- Code of Conduct Modal (moved out of Venmo modal) -->
+    <div id="conductModal" class="modal-fade" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#0008;z-index:2100;align-items:center;justify-content:center;">
+      <div style="background:#fff;border-radius:18px;max-width:540px;width:96vw;padding:1.5em 1.2em;box-shadow:0 4px 32px #a259ff33;position:relative;overflow-y:auto;max-height:92vh;font-size:0.97em;">
+        <button type="button" class="modal-close-x" aria-label="Close" onclick="document.getElementById('conductModal').classList.remove('show'); setTimeout(()=>{document.getElementById('conductModal').style.display='none';},500);">&times;</button>
+        <h2 style="color:#a259ff;font-size:1.4em;margin-bottom:0.7em;">Queer Latin Dance San Diego - Code of Conduct</h2>
+        <div style="color:#444;line-height:1.7;font-size:1.04em;max-height:70vh;overflow-y:auto;">
+          This group is built on joy, connection, and mutual respect. By participating, you agree to uphold the following values:<br><br>
+          <b>🤝 Respect Boundaries & Zero Tolerance for Harassment</b><br>
+          &bull; Do not correct or touch someone’s body without their consent<br>
+          &bull; Accept “no” gracefully without expecting explanations<br>
+          &bull; Respect others’ physical and emotional space before, during, and after the class/social<br>
+          &bull; If someone expresses discomfort or asks for space, honor it immediately<br>
+          &bull; Repeated boundary violations or disrespectful behavior may result in removal from the group<br>
+          &bull; Sexual harassment, lewd comments, invasive questions, or unwanted flirting will not be tolerated<br><br>
+          <b>️‍⚧️ Queer & Trans Inclusion</b><br>
+          &bull; All gender identities and expressions are welcome and affirmed here<br>
+          &bull; Use the name and pronouns people share with you. If you’re unsure please ask respectfully or listen and observe<br>
+          &bull; Be mindful of gendered language, anyone can lead or follow, regardless of gender or presentation<br><br>
+          <b>✊ Reject Racism & Honor the Roots</b><br>
+          &bull; Salsa and bachata come from Afro-Caribbean, Black, and Latinx communities. Respect and uplift their history.<br>
+          &bull; This is not just dance, it’s culture. Stay curious and learn about the traditions that shape this art form.<br><br>
+          <b>❤️ Cultivate a Safer Space</b><br>
+          &bull; No body shaming, ageism, ableism, classism, or other forms of discrimination.<br>
+          &bull; Respect people’s pace of learning; offer encouragement, not unsolicited advice.<br>
+          &bull; If someone is being harmed or targeted, offer support or bring it to a facilitator.<br><br>
+          <b>️ Take Feedback with Care</b><br>
+          &bull; If someone shares that your behavior caused harm or discomfort, listen with openness and humility.<br>
+          &bull; Defensiveness shuts down growth. This is a learning space for all of us.<br><br>
+          Thank you for taking the time to read and uphold these community guidelines.
+        </div>
+      </div>
+    </div>
+    <!-- Terms & Conditions Modal (moved out of Venmo modal) -->
+    <div id="termsModal" class="modal-fade" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#0008;z-index:2000;align-items:center;justify-content:center;">
+      <div style="background:#fff;border-radius:18px;max-width:540px;width:96vw;padding:1.5em 1.2em;box-shadow:0 4px 32px #a259ff33;position:relative;overflow-y:auto;max-height:92vh;font-size:0.97em;">
+        <button type="button" class="modal-close-x" aria-label="Close" onclick="document.getElementById('termsModal').classList.remove('show'); setTimeout(()=>{document.getElementById('termsModal').style.display='none';},500);">&times;</button>
+        <h2 style="color:#716cff;font-size:1.4em;margin-bottom:0.7em;">Queer Latin Dance San Diego - Terms & Conditions</h2>
+        <div style="color:#444;line-height:1.7;font-size:1.04em;max-height:70vh;overflow-y:auto;">
+          <b>Registration & Payment</b><br>
+          &bull; Full payment is required to secure your spot in the series.<br><br>
+          <b>Attendance & Missed Classes</b><br>
+          &bull; Missed classes will not be refunded or credited.<br>
+          &bull; We do not offer makeup classes at this time.<br>
+          &bull; We recommend attending all sessions to get the most out of the series.<br><br>
+          <b>Refund Policy</b><br>
+          &bull; All payments are non-refundable.<br>
+          &bull; Studio space is reserved and paid in advance, and we are unable to offer refunds for cancellations or no-shows.<br><br>
+          <b>Class Minimum Requirement</b><br>
+          &bull; A minimum of 8 registered students per class is required.<br>
+          &bull; If the minimum is not met, we reserve the right to postpone or cancel the series.<br>
+          &bull; In the event of cancellation on our part, full refunds will be issued.<br><br>
+          <b>Communication & Updates</b><br>
+          &bull; We will communicate schedule changes, postponements, or cancellations via email and our WhatsApp group chat.<br>
+          &bull; Please ensure your contact information is accurate and check your email & WhatsApp regularly.<br><br>
+          <b>Safety & Respect</b><br>
+          &bull; All participants are expected to act in accordance with our Code of Conduct.<br>
+          &bull; Discriminatory, inappropriate, or disruptive behavior will not be tolerated and may result in removal without refund.<br><br>
+          <b>Liability</b><br>
+          &bull; By participating in our classes, you acknowledge that dancing is a physical activity and accept all risks involved.<br>
+          &bull; Queer Latin Dance SD and its instructors are not liable for any injuries sustained during classes or events.<br><br>
+          <b>Media Release</b><br>
+          &bull; We may occasionally take photos or short videos for promotional purposes.<br>
+          &bull; If you prefer not to be photographed, please let the instructor know at the start of class.<br><br>
+          Thank you for your support. Please email <a href="mailto:queerlatindancesd@gmail.com" style="color:#a259ff;text-decoration:underline;">queerlatindancesd@gmail.com</a> with any questions or comments.
+        </div>
+      </div>
+    </div>
+    <!-- ...existing code... -->
+    <!-- Stripe.js must be loaded before your custom script -->
+    <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    // Payment Overlay Functions
+    function showPaymentOverlay(paymentDetails) {
+      const overlay = document.getElementById('paymentOverlay');
+      const detailsBox = document.getElementById('paymentDetailsBox');
+      
+      detailsBox.innerHTML = paymentDetails;
+      overlay.style.display = 'flex';
+      
+      setTimeout(() => {
+        overlay.classList.add('show');
+      }, 10);
+      
+      // Close all forms when overlay is shown
+      closeAllForms();
+    }
+
+    function closePaymentOverlay() {
+      const overlay = document.getElementById('paymentOverlay');
+      overlay.classList.remove('show');
+      
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 500);
+    }
+
+    // Close overlay when clicking outside the content
+    document.addEventListener('click', function(e) {
+      const overlay = document.getElementById('paymentOverlay');
+      if (e.target === overlay) {
+        closePaymentOverlay();
+      }
+    });
+
+    // Terms & Conditions and Code of Conduct modal logic
+    function openTermsModal() {
+      const modal = document.getElementById('termsModal');
+      modal.style.display = 'flex';
+      setTimeout(() => modal.classList.add('show'), 10);
+    }
+    function openConductModal() {
+      const modal = document.getElementById('conductModal');
+      modal.style.display = 'flex';
+      setTimeout(() => modal.classList.add('show'), 10);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      // All terms links
+      ['termsLink1','termsLink2','termsLink3','termsLink1b','termsLink2b','termsLink3b'].forEach(function(id) {
+        const link = document.getElementById(id);
+        if (link) {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            openTermsModal();
+          });
+        }
+      });
+      // All conduct links
+      ['conductLink1','conductLink2','conductLink3','conductLink1b','conductLink2b','conductLink3b'].forEach(function(id) {
+        const link = document.getElementById(id);
+        if (link) {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            openConductModal();
+          });
+        }
+      });
+      
+      // ...existing code for agreement logic (now removed, as only the "By registering..." message remains)...
+      // Fade in the page on load
+      setTimeout(function() {
+        document.body.classList.add('fade-in');
+      }, 10);
+      // Load pricing configuration from JSON file
+      let pricingConfig = null;
+      
+      async function loadPricingConfig() {
+        try {
+          const response = await fetch('pricing-config.json');
+          pricingConfig = await response.json();
+          console.log('✅ Pricing configuration loaded:', pricingConfig);
+        } catch (error) {
+          console.error('❌ Failed to load pricing configuration:', error);
+          // Fallback to hardcoded pricing if JSON fails to load
+          pricingConfig = {
+            "series": {
+              "both": { "price": 144, "calculation": "Salsa & Bachata: 8 hours of lessons x $18 per hour = $144", "label": "Salsa & Bachata Series", "perHour": "$18 per hour" },
+              "salsa": { "price": 80, "calculation": "Salsa Only: 4 hours of lessons x $20 per hour = $80", "label": "Salsa Only Series", "perHour": "$20 per hour" },
+              "bachata": { "price": 80, "calculation": "Bachata Only: 4 hours of lessons x $20 per hour = $80", "label": "Bachata Only Series", "perHour": "$20 per hour" }
+            },
+            "dropin": {
+              "both": { "price": 52, "calculation": "Salsa & Bachata: 2 classes x $26 per class = $52", "label": "Salsa & Bachata Drop-in", "perHour": "$26 per class" },
+              "salsa": { "price": 26, "calculation": "Salsa Only: 1 class x $26 per class = $26", "label": "Salsa Only Drop-in", "perHour": "$26 per class" },
+              "bachata": { "price": 26, "calculation": "Bachata Only: 1 class x $26 per class = $26", "label": "Bachata Only Drop-in", "perHour": "$26 per class" }
+            },
+            "private": {
+              "both": { "price": 170, "calculation": "Salsa & Bachata: 2 hours x $85 per hour = $170", "label": "Salsa & Bachata Private Lesson", "perHour": "$85 per hour" },
+              "salsa": { "price": 85, "calculation": "Salsa Only: 1 hour x $85 per hour = $85", "label": "Salsa Only Private Lesson", "perHour": "$85 per hour" },
+              "bachata": { "price": 85, "calculation": "Bachata Only: 1 hour x $85 per hour = $85", "label": "Bachata Only Private Lesson", "perHour": "$85 per hour" }
+            }
+          };
+        }
+      }
+
+      // Get pricing and series from URL params
+      function getParam(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+      }
+      
+      async function initializePricing() {
+        await loadPricingConfig();
+        
+        const pricing = getParam('option');
+        const price = getParam('price');
+        const pricingType = getParam('pricing_type') || 'series'; // default to series
+        
+        console.log('🔧 Initializing pricing with:', { pricing, price, pricingType, pricingConfig });
+        
+        let priceData = null;
+        
+        // Get pricing data from configuration
+        // Support both old and new option values
+        let normalizedPricing = pricing;
+        if (pricing) {
+          if (pricing.toLowerCase().includes('salsa') && pricing.toLowerCase().includes('bachata')) {
+            normalizedPricing = 'both';
+          } else if (pricing.toLowerCase().includes('salsa')) {
+            normalizedPricing = 'salsa';
+          } else if (pricing.toLowerCase().includes('bachata')) {
+            normalizedPricing = 'bachata';
+          }
+        }
+        if (pricingConfig && pricingConfig[pricingType] && pricingConfig[pricingType][normalizedPricing]) {
+          priceData = pricingConfig[pricingType][normalizedPricing];
+          console.log('✅ Found price data:', priceData);
+        } else {
+          console.log('❌ No price data found for:', { pricingType, pricing });
+        }
+        
+        if (priceData) {
+          document.getElementById('selectedSeries').textContent = priceData.label;
+          document.getElementById('selectedPrice').textContent = `Total: $${priceData.price} USD (one-time payment)`;
+          document.getElementById('orderSummaryDetails').textContent = priceData.perHour;
+          document.getElementById('orderSummaryTotal').textContent = `$${priceData.price} USD`;
+          document.getElementById('orderSummaryCalc').textContent = priceData.calculation;
+        } else {
+          // Fallback if no matching pricing found
+          console.log('🔄 Using fallback pricing');
+          document.getElementById('selectedSeries').textContent = 'Unknown Series';
+          document.getElementById('selectedPrice').textContent = 'Price not available';
+          document.getElementById('orderSummaryDetails').textContent = '';
+          document.getElementById('orderSummaryTotal').textContent = '$0 USD';
+          document.getElementById('orderSummaryCalc').textContent = '';
+        }
+      }
+      
+      // Initialize pricing on page load
+      initializePricing().catch(error => {
+        console.error('❌ Error initializing pricing:', error);
+        // Continue with basic functionality even if pricing fails
+      });
+      
+      // Set up payment button event listeners (ensure this runs even if pricing fails)
+      setTimeout(function() {
+        console.log('🔧 Setting up payment button listeners...');
+        
+        // Payment button event listeners
+        const paypalBtn = document.getElementById('paypalBtn');
+        const venmoBtn = document.getElementById('venmoBtn');
+        const zelleBtn = document.getElementById('zelleBtn');
+        
+        console.log('📍 Found buttons:', { paypalBtn: !!paypalBtn, venmoBtn: !!venmoBtn, zelleBtn: !!zelleBtn });
+        
+        if (paypalBtn) {
+          paypalBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('💰 PayPal button clicked');
+            toggleForm('paypalForm');
+          });
+          console.log('✅ PayPal listener attached');
+        }
+        
+        if (venmoBtn) {
+          venmoBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('📱 Venmo button clicked');
+            toggleForm('venmoForm');
+          });
+          console.log('✅ Venmo listener attached');
+        }
+        
+        if (zelleBtn) {
+          zelleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('🏦 Zelle button clicked');
+            toggleForm('zelleForm');
+          });
+          console.log('✅ Zelle listener attached');
+        }
+      }, 100); // Small delay to ensure DOM is ready
+      
+      // Show lesson date/time ONLY for private lessons  
+      setTimeout(function() {
+        const pricingType = getParam('pricing_type');
+        const lessonDateTimeDiv = document.getElementById('lessonDateTime');
+        const selectedDateTimeDiv = document.getElementById('selectedDateTime');
+        if (pricingType === 'private') {
+          const date = getParam('date');
+          const time = getParam('time');
+          let dateStr = '';
+          let timeStr = '';
+          // Format date
+          if (date) {
+            const d = new Date(date);
+            dateStr = d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+          }
+          // Format time
+          if (time === '13:00') timeStr = '1:00pm - 2:00pm';
+          else if (time === '14:00') timeStr = '2:00pm - 3:00pm';
+          else if (time === '15:00') timeStr = '3:00pm - 4:00pm';
+          else if (time) timeStr = time;
+          if (dateStr && timeStr) {
+            selectedDateTimeDiv.textContent = `${dateStr}, ${timeStr}`;
+            lessonDateTimeDiv.style.display = 'block';
+          } else {
+            selectedDateTimeDiv.textContent = '';
+            lessonDateTimeDiv.style.display = 'none';
+          }
+        } else {
+          lessonDateTimeDiv.style.display = 'none';
+        }
+      }, 200);
+
+      // Shared form data cache
+      let sharedFormData = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        pronouns: ''
+      };
+
+      // Helper to sync all forms with shared data
+      function syncForms() {
+        ['paypalFormInner','venmoFormInner','zelleFormInner'].forEach(function(formId) {
+          const form = document.getElementById(formId);
+          if (form) {
+            if (form.firstName) form.firstName.value = sharedFormData.firstName;
+            if (form.lastName) form.lastName.value = sharedFormData.lastName;
+            if (form.email) form.email.value = sharedFormData.email;
+            if (form.phone) form.phone.value = sharedFormData.phone;
+            if (form.pronouns) form.pronouns.value = sharedFormData.pronouns;
+          }
+        });
+      }
+
+      // Listen for input changes on all forms and update shared data
+      ['paypalFormInner','venmoFormInner','zelleFormInner'].forEach(function(formId) {
+        const form = document.getElementById(formId);
+        if (form) {
+          ['firstName','lastName','email','phone','pronouns'].forEach(function(field) {
+            if (form[field]) {
+              form[field].addEventListener('input', function() {
+                sharedFormData[field] = this.value;
+                syncForms();
+              });
+            }
+          });
+        }
+      });
+
+      // Function to close all forms
+      function closeAllForms() {
+        ['paypalForm','venmoForm','zelleForm'].forEach(function(formId) {
+          const form = document.getElementById(formId);
+          if (form) {
+            form.classList.remove('active');
+          }
+        });
+      }
+      
+      // Make closeAllForms available globally for overlay
+      window.closeAllForms = closeAllForms;
+
+      // Function to toggle a specific form
+      function toggleForm(formId) {
+        console.log('🔄 Toggling form:', formId);
+        const form = document.getElementById(formId);
+        if (form && form.classList.contains('active')) {
+          // If the form is already open, close it
+          console.log('➖ Closing form:', formId);
+          form.classList.remove('active');
+        } else {
+          // Close all other forms and open this one
+          console.log('➕ Opening form:', formId);
+          closeAllForms();
+          syncForms();
+          if (form) {
+            form.classList.add('active');
+            // Scroll the form into view
+            setTimeout(() => {
+              form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 200);
+          } else {
+            console.error('❌ Form not found:', formId);
+          }
+        }
+      }
+      // Form submission handlers
+      
+      // Helper function to calculate amount based on pricing type and option
+      function calculateAmount(option, pricingType) {
+        if (pricingConfig && pricingConfig[pricingType] && pricingConfig[pricingType][option]) {
+          return pricingConfig[pricingType][option].price.toString();
+        }
+        // Fallback to original hardcoded values if config is not available
+        if (pricingType === 'dropin') {
+          return option === 'both' ? '52' : '26';
+        } else if (pricingType === 'private') {
+          return option === 'both' ? '170' : '85';
+        } else {
+          return option === 'both' ? '144' : '80';
+        }
+      }
+      
+      // Helper function to get series label
+      function getSeriesLabel(option, pricingType) {
+        if (pricingConfig && pricingConfig[pricingType] && pricingConfig[pricingType][option]) {
+          return pricingConfig[pricingType][option].label;
+        }
+        // Fallback to original hardcoded labels if config is not available
+        if (pricingType === 'dropin') {
+          if (option === 'both') return 'Salsa & Bachata Drop-in';
+          if (option === 'salsa') return 'Salsa Only Drop-in';
+          if (option === 'bachata') return 'Bachata Only Drop-in';
+        } else if (pricingType === 'private') {
+          if (option === 'both') return 'Salsa & Bachata Private Lesson';
+          if (option === 'salsa') return 'Salsa Only Private Lesson';
+          if (option === 'bachata') return 'Bachata Only Private Lesson';
+        } else {
+          if (option === 'both') return 'Salsa & Bachata Series';
+          if (option === 'salsa') return 'Salsa Only Series';
+          if (option === 'bachata') return 'Bachata Only Series';
+        }
+        return '';
+      }
+      
+      // PayPal form handler
+      document.getElementById('paypalFormInner').onsubmit = function(ev) {
+        ev.preventDefault();
+        const firstName = this.firstName.value;
+        const lastName = this.lastName.value;
+        const email = this.email.value;
+        const phone = this.phone.value;
+        const pronouns = this.pronouns.value;
+        function getParam(name) {
+          const url = new URL(window.location.href);
+          return url.searchParams.get(name);
+        }
+        const series = getParam('option') || '';
+        const pricingType = getParam('pricing_type');
+        let amount = calculateAmount(series, pricingType);
+        // Add date and time for private lessons
+        let formData = {
+          firstName,
+          lastName,
+          email,
+          phone,
+          pronouns,
+          paymentMethod: 'PayPal',
+          series,
+          amount: `$${amount}`
+        };
+        if (pricingType === 'private') {
+          formData.date = getParam('date') || '';
+          formData.time = getParam('time') || '';
+        }
+        console.log('Submitting to Google Sheet (PayPal):', formData);
+        sendToGoogleSheet(formData);
+        
+        let seriesLabel = getSeriesLabel(series, pricingType);
+        let details = `<b>💳 PayPal Payment</b><br><br>` +
+          `<b>Amount:</b> $${amount}<br>` +
+          (seriesLabel ? `<b>Series:</b> ${seriesLabel}<br>` : '') +
+          `<b>Recipient:</b> @queerlatindance<br>` +
+          `<b>Name:</b> ${firstName} ${lastName}<br>` +
+          (pronouns ? `<b>Pronouns:</b> ${pronouns}<br>` : '') +
+          (email ? `<b>Email:</b> ${email}<br>` : '') +
+          (phone ? `<b>Phone:</b> ${phone}<br>` : '') +
+          `<b>Note:</b> ${firstName} ${lastName} - ${seriesLabel}<br><br>` +
+          `<div style="background: #ffe066; padding: 1rem; border-radius: 8px; margin: 1rem 0; border: 2px solid #ffd700; color: black;">` +
+          `<b>Next Step:</b> Click the PayPal link that will open automatically to complete your payment. Please include your name and series in the note.` +
+          `</div>`;
+        
+        // Show overlay with payment details
+        showPaymentOverlay(details);
+        
+        // Redirect to PayPal with correct amount
+        let paypalUrl = `https://www.paypal.com/paypalme/queerlatindance/${amount}`;
+        setTimeout(() => {
+          let win = window.open(paypalUrl, '_blank', 'noopener,noreferrer');
+          if (!win || win.closed || typeof win.closed == 'undefined') {
+            // Fallback for pop-up blockers: create a temporary link and click it
+            let link = document.createElement('a');
+            link.href = paypalUrl;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          }
+        }, 1000); // Give time for overlay to show
+      };
+
+      // Zelle form handler
+      document.getElementById('zelleFormInner').onsubmit = function(ev) {
+        ev.preventDefault();
+        const firstName = this.firstName.value;
+        const lastName = this.lastName.value;
+        const email = this.email.value;
+        const phone = this.phone.value;
+        const pronouns = this.pronouns.value;
+        function getParam(name) {
+          const url = new URL(window.location.href);
+          return url.searchParams.get(name);
+        }
+        const series = getParam('option') || '';
+        const pricingType = getParam('pricing_type');
+        let amount = `$${calculateAmount(series, pricingType)}`;
+        // Add date and time for private lessons
+        let formData = {
+          firstName,
+          lastName,
+          email,
+          phone,
+          pronouns,
+          paymentMethod: 'Zelle',
+          series,
+          amount
+        };
+        if (pricingType === 'private') {
+          formData.date = getParam('date') || '';
+          formData.time = getParam('time') || '';
+        }
+        console.log('Submitting to Google Sheet (Zelle):', formData);
+        sendToGoogleSheet(formData);
+        let seriesLabel = getSeriesLabel(series, pricingType);
+        let details = `<b>💰 Zelle Payment</b><br><br>` +
+          `<b>Amount:</b> ${amount}<br>` +
+          (seriesLabel ? `<b>Series:</b> ${seriesLabel}<br>` : '') +
+          `<b>Recipient:</b> michf18@gmail.com or 760-529-1320<br>` +
+          `<b>Name:</b> ${firstName} ${lastName}<br>` +
+          (pronouns ? `<b>Pronouns:</b> ${pronouns}<br>` : '') +
+          (email ? `<b>Email:</b> ${email}<br>` : '') +
+          (phone ? `<b>Phone:</b> ${phone}<br>` : '') +
+          `<b>Memo:</b> ${firstName} ${lastName} - ${seriesLabel}<br><br>` +
+          `<div style="background: #6c1cd1; color: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">` +
+          `<b style="color: black;">Next Step:</b> Open your banking app, select Zelle, and send your payment using the recipient info above. Please include your name and series in the memo.` +
+          `</div>`;
+        
+        // Show overlay with payment details
+        showPaymentOverlay(details);
+      };
+
+      // Venmo form handler
+      document.getElementById('venmoFormInner').onsubmit = function(ev) {
+        ev.preventDefault();
+        const firstName = this.firstName.value;
+        const lastName = this.lastName.value;
+        const email = this.email.value;
+        const phone = this.phone.value;
+        const pronouns = this.pronouns.value;
+        function getParam(name) {
+          const url = new URL(window.location.href);
+          return url.searchParams.get(name);
+        }
+        const series = getParam('option') || '';
+        const pricingType = getParam('pricing_type');
+        let amount = calculateAmount(series, pricingType);
+        // Add date and time for private lessons
+        let formData = {
+          firstName,
+          lastName,
+          email,
+          phone,
+          pronouns,
+          paymentMethod: 'Venmo',
+          series,
+          amount: `$${amount}`
+        };
+        if (pricingType === 'private') {
+          formData.date = getParam('date') || '';
+          formData.time = getParam('time') || '';
+        }
+        console.log('Submitting to Google Sheet (Venmo):', formData);
+        sendToGoogleSheet(formData);
+        let seriesLabel = getSeriesLabel(series, pricingType);
+        let details = `<b>📱 Venmo Payment</b><br><br>` +
+          `<b>Amount:</b> $${amount}<br>` +
+          (seriesLabel ? `<b>Series:</b> ${seriesLabel}<br>` : '') +
+          `<b>Recipient:</b> @michf18<br>` +
+          `<b>Name:</b> ${firstName} ${lastName}<br>` +
+          (pronouns ? `<b>Pronouns:</b> ${pronouns}<br>` : '') +
+          (email ? `<b>Email:</b> ${email}<br>` : '') +
+          (phone ? `<b>Phone:</b> ${phone}<br>` : '') +
+          `<b>Note:</b> ${firstName} ${lastName} - ${seriesLabel}<br><br>` +
+          `<div style="background: #3d95ce; color: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">` +
+          `<b style="color: black;">Next Step:</b> The Venmo app will open automatically. Send your payment to @michf18 and include your name and series in the note.` +
+          `</div>`;
+        
+        // Show overlay with payment details
+        showPaymentOverlay(details);
+        
+        // Open Venmo after showing overlay
+        setTimeout(() => {
+          window.location.href = venmoUrl;
+        }, 1500); // Give time for overlay to show and user to read
+      };
+      /*
+      <div style="background:#e6ffe6;padding:1em;border-radius:8px;margin:1em 0 1em 0;color:#228B22;font-size:0.98em;">
+        <strong>Old Stripe backend code (hidden):</strong><br>
+        // Stripe Embedded Checkout<br>
+        // You must set up a backend endpoint to create Stripe Checkout Sessions<br>
+        // Replace YOUR_STRIPE_PUBLISHABLE_KEY and /create-checkout-session with your actual values<br>
+        // ...existing backend code...
+      </div>
+      */
+      // Stripe Payment Link (no backend needed)
+      const stripeBtn = document.getElementById('stripeCheckoutBtn');
+      if (stripeBtn) {
+        stripeBtn.onclick = function(e) {
+          e.preventDefault();
+          const pricing = getParam('option');
+          const pricingType = getParam('pricing_type') || 'series';
+          
+          if (!pricing || !['both', 'salsa', 'bachata'].includes(pricing)) {
+            alert('Please select a valid series before paying.');
+            return;
+          }
+          
+          let stripeLink = '';
+          
+          // Get Stripe link from configuration
+          if (pricingConfig && pricingConfig.stripeLinks && 
+              pricingConfig.stripeLinks[pricingType] && 
+              pricingConfig.stripeLinks[pricingType][pricing]) {
+            stripeLink = pricingConfig.stripeLinks[pricingType][pricing];
+          } else {
+            // Fallback to original hardcoded Stripe links
+            if (pricingType === 'dropin') {
+              if (pricing === 'both') {
+                stripeLink = 'https://buy.stripe.com/bJe28s2Cm9osfOHgfy0Ny0e'; // $52
+              } else if (pricing === 'salsa' || pricing === 'bachata') {
+                stripeLink = 'https://buy.stripe.com/4gM14o3Gq1W0gSL1kE0Ny0d'; // $26
+              }
+            } else if (pricingType === 'private') {
+              // Private lesson pricing
+              if (pricing === 'both') {
+                stripeLink = 'https://buy.stripe.com/4gM4gA4Kuasw31V8N60Ny0b'; // $170
+              } else if (pricing === 'salsa' || pricing === 'bachata') {
+                stripeLink = 'https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c'; // $85
+              }
+            } else {
+              // Series pricing (existing logic)
+              if (pricing === 'both') {
+                stripeLink = 'https://buy.stripe.com/4gM4gA4Kuasw31V8N60Ny0b'; // $144
+              } else if (pricing === 'salsa' || pricing === 'bachata') {
+                stripeLink = 'https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c'; // $80
+              }
+            }
+          }
+          
+          if (stripeLink) {
+            window.location.href = stripeLink;
+          } else {
+            alert('Stripe payment link not configured for this option.');
+          }
+        };
+      }
+    });
+    
+    // Google Sheets - Enhanced with debugging
+    function sendToGoogleSheet(formData) {
+      const url = 'https://script.google.com/macros/s/AKfycbzwit7Dtxt6SK-KrgfqHRiz7W41UwnLLu59rJvJdzHUW7yvqmYVa8eXxP6efibH_sre7Q/exec';
+      
+      console.log('🔄 Attempting to send data to Google Sheets...', formData);
+      
+      const data = new FormData();
+      for (const key in formData) {
+        data.append(key, formData[key]);
+        console.log(`📝 Added field: ${key} = ${formData[key]}`);
+      }
+      
+      console.log('🌐 Sending to URL:', url);
+      
+      fetch(url, {
+        method: 'POST',
+        body: data,
+        mode: 'no-cors' // Prevents browser blocking on localhost/non-https
+      })
+      .then((response) => {
+        console.log('✅ Fetch completed (no-cors mode - cannot read response)');
+        console.log('Response status:', response.type); // Will be 'opaque' in no-cors mode
+        alert('✅ Registration submitted!');
+      })
+      .catch(error => {
+        console.error('❌ Google Sheet error:', error);
+        console.error('Error details:', {
+          message: error.message,
+          stack: error.stack,
+          name: error.name
+        });
+        alert('❌ Error submitting registration: ' + error.message + '\n\nCheck the browser console for more details.');
+      });
+    }
+  </script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Directory - Queer Latin Dance SD</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Mobile responsive styles for directory table */
+    @media (max-width: 768px) {
+      /* Directory title mobile styles */
+      .directory-section h1 {
+        font-size: 2.2rem !important;
+        line-height: 1.1 !important;
+        margin: 1rem 0 1.5rem 0 !important;
+      }
+      
+      .directory-table {
+        width: 100% !important;
+        font-size: 0.8rem !important;
+        display: block !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+      }
+      
+      .directory-table thead,
+      .directory-table tbody,
+      .directory-table th,
+      .directory-table td,
+      .directory-table tr {
+        display: block !important;
+      }
+      
+      .directory-table thead tr {
+        position: absolute !important;
+        top: -9999px !important;
+        left: -9999px !important;
+      }
+      
+      .directory-table tr {
+        border: 1px solid #ccc !important;
+        margin-bottom: 1rem !important;
+        padding: 0.5rem !important;
+        border-radius: 8px !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+      }
+      
+      .directory-table td {
+        border: none !important;
+        position: relative !important;
+        padding: 0.5rem 0.5rem 0.5rem 35% !important;
+        white-space: normal !important;
+        word-wrap: break-word !important;
+      }
+      
+      .directory-table td:before {
+        content: attr(data-label) ": " !important;
+        position: absolute !important;
+        left: 6px !important;
+        width: 30% !important;
+        padding-right: 10px !important;
+        white-space: nowrap !important;
+        font-weight: bold !important;
+        color: #fff !important;
+      }
+      
+      /* Footer mobile styles */
+      .footer-newsletter h2 {
+        font-size: 1.5rem;
+      }
+      .footer-social h3 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="sparkle-bg"></div>
+<header>
+  <a href="index.html">
+    <img src="images/logos/logo1.png" alt="Queer Latin Dance SD Logo" class="logo1" />
+  </a>
+  
+  <!-- Desktop Navigation -->
+  <nav>
+    <a href="about.html">About</a>
+    <a href="Events.html">Events</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="directory.html">Directory</a>
+    <a href="lessons.html">Lessons</a>
+  </nav>
+  
+  <!-- Mobile Navigation Toggle -->
+  <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- Mobile Navigation Menu -->
+<div class="mobile-nav-menu">
+  <nav>
+    <a href="about.html">About</a>
+    <a href="Events.html">Events</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="directory.html">Directory</a>
+    <a href="lessons.html">Lessons</a>
+  </nav>
+</div>
+<main>
+  <section class="directory-section">
+    <h1>Queer & Queer-Friendly Dance Instructors & Studios</h1>
+    <table class="directory-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Instructors</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Name"><a href="https://www.instagram.com/animo.dancecompany/?hl=en" target="_blank">Animo Dance Company</a></td>
+          <td data-label="Instructors">Anthony</td>
+          <td data-label="Address">Drip Studios, 5111 Santa Fe St suite DEF, San Diego, CA 92109</td>
+        </tr>
+        <tr>
+          <td data-label="Name"><a href="https://www.instagram.com/rebeccalifeofdance/?hl=en" target="_blank">Bachata like Becky</a></td>
+          <td data-label="Instructors">Becky</td>
+          <td data-label="Address">Studio K, 9340 Clairemont Mesa Blvd, San Diego, CA 92123</td>
+        </tr>
+        <tr>
+          <td data-label="Name"><a href="https://www.instagram.com/movementdanceproject/?hl=en" target="_blank">Movement Dance Project</a></td>
+          <td data-label="Instructors">Milton Martinez</td>
+          <td data-label="Address">Untouchable Dance Studio, 1210-A W Beverly Blvd, Montebello, CA 90640</td>
+        </tr>
+        <tr>
+          <td data-label="Name"><a href="https://www.instagram.com/salsachica_/" target="_blank">Michelle Ramos</a></td>
+          <td data-label="Instructors">Michelle Ramos</td>
+          <td data-label="Address">Location may vary, Los Angeles</td>
+        </tr>
+        <tr>
+          <td data-label="Name"><a href="https://www.movewisewellness.com/" target="_blank">Movewise Wellness</a></td>
+          <td data-label="Instructors">Natasha Tia</td>
+          <td data-label="Address">Encinitas Wellness Center, 613 Westlake St Suite 221, Encinitas, CA 92024</td>
+        </tr>
+        <tr>
+          <td data-label="Name"><a href="https://on2ourage.punchpass.com/classes" target="_blank">On2ourage</a></td>
+          <td data-label="Instructors">Eder Avila</td>
+          <td data-label="Address">Jazz it Up Studios, 1309 Sartori Ave, Torrance, CA 90501</td>
+        </tr>
+        <tr>
+          <td data-label="Name"><a href="https://www.queerchata.com/" target="_blank">Queerchata</a></td>
+          <td data-label="Instructors">Zen</td>
+          <td data-label="Address">1450 University Ave, Unit 2A, San Diego, CA 92103</td>
+        </tr>
+        <tr>
+          <td data-label="Name"><a href="https://www.instagram.com/queerlatindancela/" target="_blank">Queer Latin Dance LA</a></td>
+          <td data-label="Instructors">Arlene Santos</td>
+          <td data-label="Address">Location may vary, Los Angeles</td>
+        </tr>
+        <tr>
+          <td data-label="Name"><a href="https://www.queerlatindance.com/" target="_blank">Queer Latin Dance San Diego</a></td>
+          <td data-label="Instructors">Michelle Fernandez</td>
+          <td data-label="Address">Location may vary, San Diego</td>
+        </tr>
+        <tr>
+          <td data-label="Name"><a href="https://www.thesalsabeat.com/" target="_blank">The Salsa Beat</a></td>
+          <td data-label="Instructors">Ericka & Juan-2-3</td>
+          <td data-label="Address">Studio K, 9340 Clairemont Mesa Blvd, San Diego, CA 92123</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="directory-section" style="margin-top: 3rem;">
+    <h1>Performers, Musicians & DJs</h1>
+    <table class="directory-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Name">DJ Basico</td>
+          <td data-label="Type">DJ</td>
+          <td data-label="Address">Location may vary depending on events</td>
+        </tr>
+        <tr>
+          <td data-label="Name">Manny Cepeda</td>
+          <td data-label="Type">Latin Band</td>
+          <td data-label="Address">Location may vary depending on events</td>
+        </tr>
+        <tr>
+          <td data-label="Name">Sabrosas Latin Orchestra</td>
+          <td data-label="Type">Latin Band</td>
+          <td data-label="Address">Location may vary depending on events</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+<footer class="footer">
+  <div class="footer-bottom">
+    <div class="footer-newsletter">
+      <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
+      <form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec">
+        <input type="email" name="email" required placeholder="Enter your email ..." />
+        <button type="submit">Subscribe</button>
+      </form>
+      <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="Events.html">Events</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="directory.html">Directory</a>
+            <a href="lessons.html">Lessons</a>
+            <a href="contact.html">Contact Us</a>
+      </div>
+    </div>
+    <div class="footer-social">
+      <h3>Follow Us</h3>
+      <div class="footer-social-icons">
+        <a href="https://www.instagram.com/queerlatindancesd/"><img src="images/icons/instagramlogo.png" alt="Instagram"></a>
+        <a href="https://www.youtube.com/@QueerLatinDance"><img src="images/icons/youtubeicon.png" alt="YouTube"></a>
+        <a href="https://www.tiktok.com/@queerlatindance"><img src="images/icons/tiktokicon2.png" alt="TikTok"></a>
+        <a href="https://linktr.ee/queerlatindancesd"><img src="images/icons/linktreelogo.png" alt="Linktree"></a>
+        <a href="https://chat.whatsapp.com/Hn9iICBTIPm9mCIEGcDRSr?mode=r_c"><img src="images/icons/whatsappicon.jpg" alt="WhatsApp"></a>
+      </div>
+      <div class="footer-copyright">
+        © 2025 Queer Latin Dance. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="script.js"></script>
+<script>
+document.querySelector('.footer-newsletter form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = this;
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    mode: 'no-cors'
+  })
+  .then(() => {
+    alert('Success! You have subscribed to the newsletter.');
+    form.reset();
+  })
+  .catch(() => {
+    alert('There was an error. Please try again.');
+  });
+});
+</script>
+</body>
+</html>

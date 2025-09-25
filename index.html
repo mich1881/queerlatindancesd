@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Queer Latin Dance SD</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+/* ========================================
+   INDEX.HTML STYLES - EXTRACTED FROM STYLE.CSS
+   ======================================== */
+/* === NEWSLETTER PREVIEW SECTION STYLES === */
+.newsletter-preview-section {
+  margin: 2rem 0;
+  padding: 0 1rem;
+}
+
+.newsletter-container {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.newsletter-preview {
+  flex: 1;
+  text-align: center;
+}
+
+.newsletter-subscribe {
+  flex: 1;
+  text-align: center;
+  max-width: 400px;
+}
+
+.newsletter-subscribe h2 {
+  margin-bottom: 1rem;
+  color: #4B0082;
+}
+
+.newsletter-subscribe form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.newsletter-subscribe input {
+  padding: 0.75rem;
+  border: 2px solid #4B0082;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.newsletter-subscribe button {
+  padding: 0.75rem;
+  background-color: #4B0082;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.newsletter-subscribe button:hover {
+  background-color: #6B0F9C;
+}
+
+.newsletter-swipe-gallery {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  overflow: hidden;
+  display: flex;
+}
+
+.newsletter-swipe-gallery .swipe-img {
+  display: none;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  object-fit: contain;
+}
+
+.newsletter-swipe-gallery .swipe-img.active {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* === FAQ SECTION STYLES === */
+.faq-section {
+  background: linear-gradient(135deg, #6850c2 0%, #8c52ff 50%, #d0c4ff 100%);
+  padding: 2.5rem 1rem;
+  color: #ffffff;
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  align-items: start;
+  padding-left: -50rem;
+}
+
+.faq-questions h3 {
+  font-family: 'Nunito', Arial, sans-serif;
+  font-size: 1.2rem;
+  color: #e6ccff;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.faq-item {
+  border: 1px solid #4a0e7a;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  border-color: #7c3aed;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.faq-question {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  min-height: 35px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  font-family: 'Nunito', Arial, sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.faq-icon {
+  font-size: 1.3rem;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+  margin-right: 1rem;
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.faq-item.active .faq-answer {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.faq-answer p {
+  padding: 1rem;
+  margin: 0;
+  color: #e6ccff;
+  line-height: 1.5;
+  font-family: 'Nunito', Arial, sans-serif;
+}
+
+/* Custom scrollbar styling for FAQ answers */
+.faq-answer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.faq-answer::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.faq-answer::-webkit-scrollbar-thumb {
+  background: rgba(167, 36, 255, 0.6);
+  border-radius: 4px;
+}
+
+.faq-answer::-webkit-scrollbar-thumb:hover {
+  background: rgba(167, 36, 255, 0.8);
+}
+
+.faq-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.faq-title h2 {
+  font-family: 'PassionOne', 'Lilita One', Arial, sans-serif;
+  font-size: 10rem;
+  color: #ffffff;
+  text-align: center;
+  margin-left: -400px;
+  margin-right: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  line-height: 0.8;
+}
+
+.faq-title h2 span {
+  display: block;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .faq-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .faq-title {
+    order: -1;
+  }
+  
+  .faq-title h2 {
+    font-size: 4rem;
+    flex-direction: row;
+    gap: 0.2rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .faq-questions h3 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  
+  .faq-question {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+  
+  .faq-answer p {
+    padding: 1rem;
+  }
+}
+
+/* === MISSION & ABOUT STYLES === */
+.mission, .about-hero-text .mission, .hero-content p.mission, .hero-content .mission {
+  color: #a826ff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  background-clip: unset !important;
+  font-weight: 700;
+}
+
+/* --- MISSION CARD --- */
+/* --- Mission Card Section --- */
+.mission-text {
+  font-family: 'Nunito', Arial, sans-serif;
+  font-size: 1.0rem;
+  color: #ffffff;
+  text-align: center;
+  font-weight: 100;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+  line-height: 1.6;
+}
+.mission-card {
+  max-width: 1800px;
+  height: auto;
+  min-height: 600px;
+  margin: 2.5rem auto;
+  padding: 4rem 2rem;
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+}
+.mission-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('images/SalsaSunsets/qssjun14.png') center center/cover no-repeat;
+  opacity: 0.83;
+  mask: 
+    linear-gradient(to right, transparent 0%, black 8%, #6825e3 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 8%, #6825e3 92%, transparent 100%);
+  -webkit-mask: 
+    linear-gradient(to right, transparent 0%, black 8%, rgb(104, 37, 227) 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 8%, #6825e3 92%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+  pointer-events: none;
+  z-index: -2;
+}
+.mission-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(45, 25, 85, 0.4);
+  pointer-events: none;
+  z-index: -1;
+}
+.mission-card h1, .mission-card h2 {
+  font-family: 'PassionOne','Lilita One','Signika',Arial,sans-serif;
+  font-size: 4.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 3px 3px 8px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.8);
+  position: relative;
+  z-index: 1;
+  text-transform: uppercase;
+}
+.mission-logo {
+  max-width: 300px;
+  height: auto;
+  display: block;
+  margin: 0 auto 1.5rem auto;
+  position: relative;
+  z-index: 10;
+}
+.mission-card p {
+  font-size: 1.2rem;
+  color: #C4F9CA;
+  text-align: left;
+  margin: 0 auto 1.2rem auto;
+  font-family: 'Nunito', Arial, sans-serif;
+  text-shadow: 2px 2px 4px rgb(0, 0, 0), 1px 1px 2px rgba(0,0,0,0.7);
+  position: relative;
+}
+/* === SALSA HISTORY SECTION === */
+.salsa-history-section {
+  margin: 2.5rem auto 2rem auto;
+  max-width: 1200px;
+  text-align: left;
+  background: none;
+  box-shadow: none;
+  padding: 2rem;
+  color: #5c2ca9;
+  font-weight: 500;
+  font-family: 'Huninn', Arial, sans-serif;
+}
+
+/* History header with logo */
+.history-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  margin-bottom: -1rem;
+}
+
+.history-logo {
+  width: 350px;
+  height: auto;
+  object-fit: contain;
+  align-self: flex-start;
+}
+
+/* Newspaper-style three-column layout */
+.newspaper-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  column-rule: 1px solid #b57edc;
+  margin-top: -7rem;
+  align-items: start;
+}
+
+.newspaper-columns .column {
+  padding: 0 1rem;
+}
+
+.newspaper-columns .column:first-child {
+  margin-top: 7rem;
+}
+
+.newspaper-columns .column:nth-child(2),
+.newspaper-columns .column:nth-child(3) {
+  margin-top: 0;
+}
+
+.newspaper-columns .column h2 {
+  font-family: 'Huninn', 'PassionOne', 'Signika', Arial, sans-serif;
+  font-size: 1.5rem;
+  color: #9d09ff;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #b57edc;
+  padding-bottom: 0.5rem;
+}
+
+.newspaper-columns .column p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.newspaper-columns .image-container {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.newspaper-columns .image-container img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  object-position:left center;
+  border-radius: 50%;
+  border: 2px solid #9d09ff;
+}
+
+/* === RESPONSIVE STYLES === */
+@media (max-width: 900px) {
+  .hero-content .hero-logo {
+    width: 350px;
+    max-width: 85vw;
+    margin: 2rem 0;
+    top: 1.2rem;
+  }
+  .about-hero-text h1 {
+    font-size: 2.2rem;
+  }
+  .gallery-title {
+    font-size: 2.2rem;
+  }
+  .salsa-history-title {
+    font-size: 2.2rem;
+  }
+  .footer-newsletter h2 {
+    font-size: 1.5rem;
+  }
+  .footer-social h3 {
+    font-size: 1.3rem;
+  }
+  .gallery-photo {
+    width: 98vw;
+    max-width: 98vw;
+  }
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+  .hero-flex {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .newsletter-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    padding: 40px 5px 30px 5px;
+    border-radius: 20px;
+  }
+  .hero-content .hero-logo {
+    width: 280px;
+    max-width: 90vw;
+    margin: 1.5rem 0;
+    top: 0.2rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    margin-top: 0.7rem;
+  }
+  .cta-btn {
+    font-size: 1rem;
+    padding: 0.5rem 1.2rem;
+    margin-bottom: 1rem;
+    margin-top: 0.7rem;
+  }
+  .about-hero-img {
+    width: 100px;
+    height: 100px;
+  }
+  .about-hero-text h1 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .gallery-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .salsa-history-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  .gallery-photo {
+    width: 98vw;
+    max-width: 98vw;
+    border-radius: 8px;
+  }
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+  .logo, .logo1, .logo2 {
+    width: 120px;
+    max-width: 60vw;
+  }
+}
+/* ====================
+   MOBILE INDEX SECTION
+   ==================== */
+/* Mobile responsive for newspaper columns */
+@media (max-width: 900px) {
+  .history-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .history-logo {
+    width: 150px;
+  }
+  
+  .salsa-history-title {
+    text-align: center;
+    font-size: 2rem;
+  }
+  
+  .newspaper-columns {
+    grid-template-columns: 1fr;
+    column-rule: none;
+    gap: 2rem;
+  }
+  
+  .newspaper-columns .column {
+    padding: 0;
+    border-bottom: 1px solid #b57edc;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .newspaper-columns .column:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  
+  .salsa-history-section {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .history-logo {
+    width: 120px;
+  }
+  
+  .salsa-history-title {
+    font-size: 1.6rem;
+  }
+  
+  .newspaper-columns .column p {
+    text-align: justify;
+  }
+  .mission-card p {
+  font-size: 1.2rem;
+  color: #C4F9CA;
+  text-align: justify;
+  margin: 0 auto 1.2rem auto;
+  font-family: 'Nunito', Arial, sans-serif;
+  position: relative;
+}
+}
+
+  </style>
+</head>
+<body>
+  <div id="sparkle-bg"></div>
+<header>
+  <a href="index.html">
+    <img src="images/logos/logo1.png" alt="Queer Latin Dance SD Logo" class="logo1" />
+  </a>
+  <!-- Desktop Navigation -->
+  <nav>
+    <a href="about.html">About</a>
+    <a href="Events.html">Events</a>
+    <a href="directory.html">Directory</a>
+    <a href="gallery.html">Gallery</a> 
+    <a href="lessons.html">Lessons</a>
+  </nav>
+  
+  <!-- Mobile Navigation Toggle -->
+  <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- Mobile Navigation Menu -->
+<div class="mobile-nav-menu">
+  <nav>
+    <a href="about.html">About</a>
+    <a href="Events.html">Events</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="directory.html">Directory</a>
+    <a href="lessons.html">Lessons</a>
+  </nav>
+</div>
+<main>
+  <section class="hero-flex">
+    <div class="hero-content">
+      <img src="images/home/qldsdlogo.png" alt="Queer Latin Dance SD - Celebrates Your Identity in Every Step" class="hero-logo" />
+      <p class="mission">Queer Latin Dance is building community through dance. Lead, Follow, Switch, and Celebrate!</p>
+      <a href="Events.html" class="cta-btn">See Upcoming Events</a>
+    </div>
+    <section id="photoGallery">
+      <div class="swipe-gallery">
+        <img src="images/home/photo1.png" alt="Sun Dance Day Fest 1" class="swipe-img faded-img active" />
+        <img src="images/home/photo2.png" alt="Sun Dance Day Fest 2" class="swipe-img faded-img" />
+        <img src="images/Michelle1.jpeg" alt="Group Hug" class="swipe-img faded-img" />
+        <img src="images/home/photo3.png" alt="Sun Dance Day Fest 3" class="swipe-img faded-img" />
+        <img src="images/home/photo4.png" alt="Sun Dance Day Fest 4" class="swipe-img faded-img" />
+        <img src="images/SalsaSunsets/IMG_7851.JPG" alt="Pat and Miguel" class="swipe-img faded-img"/>
+        <img src="images/home/photo6.png" alt="Sun Dance Day Fest 6" class="swipe-img faded-img" />
+        <img src="images/home/photo7.png" alt="Sun Dance Day Fest 7" class="swipe-img faded-img" />
+        <!-- ...existing swipe gallery code... -->
+      </div>
+    </section>
+  </section>
+</main>
+<section class="newsletter-preview-section">
+  <div class="newsletter-container">
+    <div class="newsletter-preview">
+      <h2>Newsletter Preview</h2>
+      <div class="newsletter-swipe-gallery">
+        <img src="images/home/News1.png" alt="Newsletter Preview 1" class="swipe-img faded-img active" />
+        <img src="images/home/News2.png" alt="Newsletter Preview 2" class="swipe-img faded-img" />
+        <img src="images/home/News3.png" alt="Newsletter Preview 3" class="swipe-img faded-img" />
+        <img src="images/home/News4.png" alt="Newsletter Preview 4" class="swipe-img faded-img" />
+        <img src="images/home/News5.png" alt="Newsletter Preview 5" class="swipe-img faded-img" />
+        <!-- Add more newsletter images as needed -->
+      </div>
+    </div>
+    <div class="newsletter-subscribe">
+      <h2>Subscribe to Our Newsletter</h2>
+      <form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec">
+        <input type="email" name="email" required placeholder="Enter your email ..." />
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+  <div class="faq-container">
+    <div class="faq-title">
+      <h2><span>F</span><span>A</span><span>Q</span><span>s</span></h2>
+    </div>
+    
+    <div class="faq-questions">
+      <h3>Have a question that isn't covered below? Please send us an email!</h3>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            What is Salsa?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Salsa is both a music genre and a partner dance that developed in the mid-20th century. Its roots trace back to Cuba, where the son cubano blended Spanish guitar with African rhythms in the late 1800s. By the 1940s and 1950s, Cuban musicians brought these rhythms to New York City, where they mixed with jazz, mambo, and Puerto Rican musical traditions. The term “salsa” became popular in the 1970s, thanks to Fania Records, which marketed this vibrant mix as a new style. Today, salsa is danced and celebrated worldwide, known for its energetic footwork, partner connection, and rhythmic diversity.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            What is the difference between Salsa On1 and On2?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>The distinction comes from which beat of the 8-count musical phrase the dancer begins their basic step. Salsa On1 (popularized in Los Angeles in the 1990s) breaks forward on the first beat, making the style feel fast, sharp, and showy. Often matching the horn section of salsa music. Salsa On2 (developed in New York and associated with Eddie Torres in the 1980s) breaks forward on the second beat, aligning more closely with the clave rhythm, which has African and Afro-Cuban origins dating back centuries. On2 is often described as smoother, more rhythmically grounded, and deeply connected to traditional salsa music’s roots. Both styles share the same fundamentals. The timing simply shifts the feel of the dance.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            What is Bachata?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Bachata originated in the Dominican Republic in the early 1960s, emerging as a fusion of bolero, son, and Afro-Caribbean rhythms. Initially marginalized as “lower-class” music, bachata was closely tied to themes of heartbreak, longing, and romance. In 1962, José Manuel Calderón recorded one of the first recognized bachata songs, “Borracho de Amor,” which helped establish the genre. Through the 1980s and 1990s, artists like Juan Luis Guerra and Aventura brought bachata to international audiences. The dance itself features a simple side-to-side basic step with a tap on the 4th beat, but over time it has expanded into multiple styles: traditional Dominican bachata, modern bachata (with more body movement and fusion elements), and sensual bachata (developed in Spain in the 2000s). Today, bachata is one of the most popular social dances worldwide.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            How long does it take to learn Salsa or Bachata?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Learning times vary, but history shows both dances were created in social settings meant to be enjoyed by everyday people, not just professionals. Most students pick up the basics within 4–6 weeks of consistent classes. Salsa, which evolved through decades of cultural exchange has more complex rhythms and may take longer to master musically. Bachata, which began in the Dominican Republic in the 1960s, has a simpler basic step and is often easier for beginners to feel comfortable dancing within a few weeks. With steady practice, dancers can usually join social dance floors confidently in 3–6 months.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            What is Queer Salsa at the Park?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Queer Salsa at the Park is an inclusive community event that honors the long history of salsa and bachata while creating a modern, welcoming space for everyone. In traditional salsa and bachata, roles were historically gendered. Men led and women followed which reflected the social norms of the mid-20th century. However, dance has always been a form of resistance and liberation. By the 1990s and 2000s, queer dancers worldwide began reclaiming salsa and bachata, showing that anyone can lead, follow, or switch roles regardless of gender identity. Queer Salsa at the Park is about celebrating joy, community, and freedom while connecting to the rich Afro-Caribbean and Latin roots of these dances in an open-air, affirming environment. It is a potluck style gathering with a free Salsa or Bachata lesson and group activities to allow folks to connect.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            What is your return policy?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>At this time, we are unable to offer refunds. Social dance events and classes require advance planning and costs, which means all purchases are final. If you are unable to attend, you may transfer your spot to a friend or community member. Please contact us if you’d like help arranging a transfer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="scrolling-message">
+  <span>
+    &nbsp;  &nbsp;Where words leave off, music begins...&nbsp;  &nbsp; ¡Vamos a Bailar! &nbsp;  &nbsp;Let's Dance!&nbsp;
+  </span>
+</div>
+<section class="our-mission-section">
+  <div class="mission-card">
+    <img src="images/home/missionlogo.png" alt="Our Mission" class="mission-logo" />
+    <p class="mission-text">
+      Queer Latin Dance SD is a community-centered space for queer folks to connect, learn, and
+celebrate Latin dance and its rich cultural roots. We are committed to degendering dance by
+empowering everyone to lead, follow, or switch, regardless of gender. Our monthly donation
+based socials welcome all levels, no partner or experience needed. Inspired by other queer
+Latin dance communities, Michelle founded QLDSD with a vision for a growing community
+where members can build connections within themselves and with each other through
+dance.
+    </p>
+  </div>
+</section>
+    <section class="salsa-history-section">
+      <div class="history-header">
+        <img src="images/home/historylogo.png" alt="The Vibrant History of Salsa" class="history-logo" />
+      </div>
+      <div class="newspaper-columns">
+        <div class="column">
+          <h2>Origins & Roots</h2>
+          <p>
+            Salsa is more than a dance: it's a living, breathing celebration of Afro-Latino culture, resilience, and joy. Its roots stretch across the Caribbean, blending rhythms and movements from Cuba, Puerto Rico, and the vibrant immigrant communities of New York City.
+          </p>
+          <p>
+            Salsa's foundation lies in Cuban son, rumba, mambo, and cha-cha-cha, mixed with Puerto Rican bomba and plena. In the 1960s and 70s, New York became a melting pot where these styles fused with jazz, soul, and other influences, giving birth to the salsa we know today.
+          </p>
+          <p>
+            The heartbeat of salsa is Afro-Latino. African rhythms, percussion, and call-and-response vocals are at its core, reflecting the deep influence of the African diaspora in the Caribbean.
+          </p>
+        </div>
+        <div class="column">
+          <h2>Celia Cruz: The Queen <a href="https://youtu.be/cu1tsaLp65M" target="_blank"><img src="images/icons/youtubeicon.png" alt="Video" class="video-icon"></a></h2>
+          <div class="image-container">
+            <img src="images/celia-cruz.jpg" alt="Celia Cruz singing" />
+          </div>
+          <p>
+            No salsa history is complete without <strong>Celia Cruz</strong>, the legendary Cuban singer known as the "Queen of Salsa." Her powerful voice, infectious energy, and iconic shout—<em>¡Azúcar!</em>—made her a global ambassador for salsa and Afro-Cuban music.
+          </p>
+          <p>
+            Cruz's music transcended borders, bringing the rhythms of Cuba to audiences worldwide. Her collaborations with artists like Tito Puente and Willie Colón helped popularize salsa in the 20th century.
+          </p>
+          <p>
+            Cruz's legacy continues to inspire new generations of musicians and dancers, reminding us of the power of music to unite and uplift.
+          </p>
+        </div>
+        
+        <div class="column">
+          <h2>Sound & Movement</h2>
+          <p>
+            Salsa music is a rich tapestry of rhythms and instruments. The clave, a two-note pattern, is the backbone of salsa's rhythm, guiding dancers and musicians alike. Brass sections, piano montunos, and bass lines create a vibrant soundscape that invites movement.
+          </p>
+          <p>
+            The conga drum is essential to salsa's rhythm, driving the music with its deep, resonant tones. Alongside timbales, bongos, and cowbell, the conga brings the pulse of Africa to every salsa song.
+          </p>
+          <p>
+            Salsa is a dance of improvisation, where dancers express themselves through movement, rhythm, and connection. It's a dance that transcends language, culture, and identity, inviting everyone to join in the celebration.
+          </p>
+          <p>
+            Today, salsa is a global phenomenon, connecting people of all backgrounds and identities. Its spirit of community, improvisation, and joy lives on in dance floors around the world!
+          </p>
+        </div>
+      </div>
+    </section>
+
+   <footer class="footer">
+      <div class="footer-bottom">
+        <div class="footer-newsletter">
+          <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
+          <form>
+            <input type="email" placeholder="Enter your email ..." required>
+            <button type="submit">Subscribe</button>
+          </form>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="Events.html">Events</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="directory.html">Directory</a>
+            <a href="lessons.html">Lessons</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
+        </div>
+        <div class="footer-social">
+          <h3>Follow Us</h3>
+          <div class="footer-social-icons">
+            <a href="https://www.instagram.com/queerlatindancesd/"><img src="images/icons/instagramlogo.png" alt="Instagram"></a>
+            <a href="https://www.youtube.com/@QueerLatinDance"><img src="images/icons/youtubeicon.png" alt="YouTube"></a>
+            <a href="https://www.tiktok.com/@queerlatindance"><img src="images/icons/tiktokicon2.png" alt="TikTok"></a>
+            <a href="https://linktr.ee/queerlatindancesd"><img src="images/icons/linktreelogo.png" alt="Linktree"></a>
+            <a href="https://chat.whatsapp.com/Hn9iICBTIPm9mCIEGcDRSr?mode=r_c"><img src="images/icons/whatsappicon.jpg" alt="WhatsApp"></a>
+          </div>
+          <div class="footer-copyright">
+            © 2025 Queer Latin Dance. All Rights Reserved.
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  <script src="script.js"></script>
+<script>
+document.querySelector('.footer-newsletter form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = this;
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    mode: 'no-cors'
+  })
+  .then(() => {
+    alert('Success! You have subscribed to the newsletter.');
+    form.reset();
+  })
+  .catch(() => {
+    alert('There was an error. Please try again.');
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const newsletterGallery = document.querySelector('.newsletter-swipe-gallery');
+  if (newsletterGallery) {
+    const images = newsletterGallery.querySelectorAll('.swipe-img');
+    let current = 0;
+    let autoSwipeTimeout;
+
+    function showImage(index) {
+      images.forEach((img, i) => {
+        img.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextImage() {
+      current = (current + 1) % images.length;
+      showImage(current);
+    }
+
+    function prevImage() {
+      current = (current - 1 + images.length) % images.length;
+      showImage(current);
+    }
+
+    showImage(current);
+
+    // Swipe support for touch devices
+    let startX = 0;
+    newsletterGallery.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    });
+
+    newsletterGallery.addEventListener('touchend', (e) => {
+      let endX = e.changedTouches[0].clientX;
+      if (endX < startX - 30) {
+        nextImage();
+        resetAutoSwipe();
+      } else if (endX > startX + 30) {
+        prevImage();
+        resetAutoSwipe();
+      }
+    });
+
+    // Auto-swipe every 3 seconds with proper timing reset
+    function startAutoSwipe() {
+      autoSwipeTimeout = setTimeout(() => {
+        nextImage();
+        startAutoSwipe(); // Restart the cycle
+      }, 3000);
+    }
+
+    function resetAutoSwipe() {
+      clearTimeout(autoSwipeTimeout);
+      startAutoSwipe();
+    }
+
+    startAutoSwipe();
+  }
+});
+</script>
+<script>
+document.querySelector('.newsletter-subscribe form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = this;
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    mode: 'no-cors'
+  })
+  .then(() => {
+    alert('Success! You have subscribed to the newsletter.');
+    form.reset();
+  })
+  .catch(() => {
+    alert('There was an error. Please try again.');
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const span = document.querySelector('.scrolling-message span');
+  if (span) {
+    const text = span.textContent;
+    span.textContent = text + ' ' + text; // Duplicate the text for seamless scrolling
+    let position = 0;
+    const speed = 1; // Adjust speed as needed (pixels per frame)
+
+    function scroll() {
+      position -= speed;
+      if (position <= -span.offsetWidth / 2) {
+        position = 0;
+      }
+      span.style.transform = `translateX(${position}px)`;
+      requestAnimationFrame(scroll);
+    }
+    scroll();
+  }
+});
+</script>
+
+<script>
+// FAQ Toggle functionality
+function toggleFAQ(button) {
+  const faqItem = button.parentElement;
+  const isActive = faqItem.classList.contains('active');
+  
+  // Close all FAQ items
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.classList.remove('active');
+  });
+  
+  // If this item wasn't active, open it
+  if (!isActive) {
+    faqItem.classList.add('active');
+  }
+}
+
+// Close FAQ when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.faq-item')) {
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.classList.remove('active');
+    });
+  }
+});
+</script>
+
+</body>
+</html>

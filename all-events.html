@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Events Gallery | Queer Latin Dance SD</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: #181818;
+      color: #fff;
+      font-family: 'Passion One', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .all-events-header {
+      text-align: center;
+      margin: 2rem 0 1rem 0;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      font-family: 'Passion One', Arial, sans-serif;
+    }
+    .all-events-gallery {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.2rem;
+      max-width: 1200px;
+      margin: 0 auto 2rem auto;
+      padding: 0 1rem;
+    }
+    .all-events-thumb {
+      width: 100%;
+      aspect-ratio: 2/3;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      background: #222;
+    }
+    .all-events-thumb:hover {
+      transform: scale(1.04);
+      box-shadow: 0 4px 32px #e91e63aa;
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .pagination button {
+      background: #e91e63;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.6rem 1.5rem;
+      font-size: 1.1rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .pagination button:disabled {
+      background: #555;
+      cursor: not-allowed;
+    }
+    .pagination .page-info {
+      font-size: 1.1rem;
+      color: #fff;
+    }
+    /* Lightbox overlay styles */
+    #allEventsLightboxOverlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.98);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      flex-direction: column;
+    }
+    #allEventsLightboxOverlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 0 40px #000;
+      background: #111;
+    }
+    #allEventsLightboxOverlay .close-btn {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 3rem;
+      background: none;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      z-index: 10001;
+    }
+    #allEventsLightboxOverlay .nav-btn {
+      position: absolute;
+      top: 50%;
+      font-size: 3rem;
+      background: none;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      z-index: 10001;
+      transform: translateY(-50%);
+      user-select: none;
+    }
+    #allEventsLightboxOverlay .nav-btn.left { left: 30px; }
+    #allEventsLightboxOverlay .nav-btn.right { right: 30px; }
+  </style>
+</head>
+<body>
+  <button id="backToMainBtn" style="position:fixed;top:24px;left:24px;z-index:10000;background:#e91e63;color:#fff;border:none;border-radius:6px;padding:0.7rem 1.5rem;font-size:1.1rem;font-family:'Passion One',Arial,sans-serif;cursor:pointer;box-shadow:0 2px 12px #0006;">← Back to Main Gallery</button>
+  <h1 class="all-events-header">All Events Gallery</h1>
+  <div class="all-events-gallery" id="allEventsGallery"></div>
+  <div class="pagination">
+    <button id="prevPageBtn">Prev Page</button>
+    <span class="page-info" id="pageInfo"></span>
+    <button id="nextPageBtn">Next Page</button>
+  </div>
+  <script>
+    // Back to Main button logic
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('backToMainBtn').onclick = function() {
+        window.location.href = 'gallery.html';
+      };
+    });
+    // List of all event images (add more as needed)
+    const allEventImages = [
+      // Sober Pride Recap
+      'images/SoberPrideRecap/SoberP1.png',
+      'images/SoberPrideRecap/SoberP2.png',
+      'images/SoberPrideRecap/SoberP3.png',
+      'images/SoberPrideRecap/SoberP4.png',
+      'images/SoberPrideRecap/SoberP5.png',
+      'images/SoberPrideRecap/SoberP6.png',
+      'images/SoberPrideRecap/SoberP7.png',
+      'images/SoberPrideRecap/SoberP8.png',
+      'images/SoberPrideRecap/SoberP9.png',
+      'images/SoberPrideRecap/SoberP10.png',
+      'images/SoberPrideRecap/SoberP11.png',
+      // Salsa Sunsets (May,June,July)
+      "images/SalsaSunsets/IMG_7939.jpg",
+        "images/SalsaSunsets/IMG_7840.JPG",
+        "images/SalsaSunsets/IMG_7841.JPG",
+        "images/SalsaSunsets/IMG_7842.JPG",
+        "images/SalsaSunsets/IMG_7843.JPG",
+        "images/SalsaSunsets/IMG_7844.JPG",
+        "images/SalsaSunsets/IMG_7845.JPG",
+        "images/SalsaSunsets/IMG_7846.JPG",
+        "images/SalsaSunsets/IMG_7847.JPG",
+        "images/SalsaSunsets/IMG_7848.JPG",
+        "images/SalsaSunsets/IMG_7849.JPG",
+        "images/SalsaSunsets/IMG_7850.JPG",
+        "images/SalsaSunsets/IMG_7851.JPG",
+        "images/SalsaSunsets/IMG_7852.JPG",
+        "images/SalsaSunsets/IMG_7854.JPG",
+        "images/SalsaSunsets/IMG_7855.JPG",
+        "images/SalsaSunsets/IMG_7856.JPG",
+        "images/SalsaSunsets/IMG_7857.JPG",
+        "images/SalsaSunsets/IMG_7858.JPG",
+      'images/SalsaSunsets/qssjun1.png',
+      'images/SalsaSunsets/qssjun4.png',
+      'images/SalsaSunsets/qssjun5.png',
+      'images/SalsaSunsets/qssjun6.png',
+      'images/SalsaSunsets/qssjun7.png',
+      'images/SalsaSunsets/qssjun8.png',
+      'images/SalsaSunsets/qssjun12.png',
+      'images/SalsaSunsets/qssjun13.png',
+      'images/SalsaSunsets/qssjun14.png',
+      'images/SalsaSunsets/qssjun16.png',
+      'images/SalsaSunsets/qssjun18.png',
+      'images/SalsaSunsets/qssjun22.png',
+      'images/SalsaSunsets/qssjun23.png',
+      'images/SalsaSunsets/qssjun24.png',
+      'images/SalsaSunsets/qssjun25.png',
+      'images/SalsaSunsets/qssjun26.png',
+      'images/SalsaSunsets/qssjun29.png',
+       "images/SalsaSunsets/qssmay1.png",
+  "images/SalsaSunsets/qssmay2.png",
+  "images/SalsaSunsets/qssmay3.png",
+  "images/SalsaSunsets/qssmay4.png",
+  "images/SalsaSunsets/qssmay5.png",
+  "images/SalsaSunsets/qssmay6.png",
+  "images/SalsaSunsets/qssmay7.png",
+  "images/SalsaSunsets/qssmay8.png",
+  "images/SalsaSunsets/qssmay9.png",
+  "images/SalsaSunsets/qssmay10.png",
+  "images/SalsaSunsets/qssmay11.png",
+  "images/SalsaSunsets/qssmay12.png",
+  "images/SalsaSunsets/qssmay13.png",
+  "images/SalsaSunsets/qssmay15.png",
+  "images/SalsaSunsets/qssmay16.png",
+  "images/SalsaSunsets/qssmay18.png",
+  "images/SalsaSunsets/qssmay20.png",
+  "images/SalsaSunsets/qssmay22.png",
+  "images/SalsaSunsets/qssmay23.png",
+  "images/SalsaSunsets/qssmay24.png",
+  "images/SalsaSunsets/qssmay26.png",
+  "images/SalsaSunsets/qssmay27.png",
+  "images/SalsaSunsets/qssmay28.png",
+  "images/SalsaSunsets/qssmay29.png",
+  "images/SalsaSunsets/qssmay31.png",
+        // Sun Dance Day Fest
+    "images/QueerLatinDanceLA/MichelleFR.jpg",
+    "images/QueerLatinDanceLA/IMG_7787.JPG",
+    "images/QueerLatinDanceLA/IMG_7788.JPG",
+    "images/QueerLatinDanceLA/IMG_7790.JPG",
+    "images/QueerLatinDanceLA/IMG_7791.JPG",
+    "images/QueerLatinDanceLA/IMG_7792.JPG",
+    "images/QueerLatinDanceLA/IMG_7793.JPG",
+    "images/QueerLatinDanceLA/IMG_7802.JPG",
+    "images/QueerLatinDanceLA/IMG_7803.JPG",
+    "images/QueerLatinDanceLA/IMG_7804.JPG",
+    "images/QueerLatinDanceLA/IMG_7805.JPG",
+    "images/QueerLatinDanceLA/IMG_7807.JPG",
+    "images/QueerLatinDanceLA/IMG_7809.JPG",
+    "images/QueerLatinDanceLA/IMG_7810.JPG",
+    "images/QueerLatinDanceLA/IMG_7811.JPG",
+    "images/QueerLatinDanceLA/IMG_7812.JPG",
+    "images/QueerLatinDanceLA/IMG_7813.JPG",
+    "images/QueerLatinDanceLA/IMG_7814.JPG",
+    "images/QueerLatinDanceLA/IMG_7823.JPG",
+    "images/QueerLatinDanceLA/IMG_7830.JPG",
+    "images/QueerLatinDanceLA/IMG_7831.JPG",
+    "images/QueerLatinDanceLA/IMG_7833.JPG",
+    "images/QueerLatinDanceLA/IMG_7931.jpg",
+    "images/QueerLatinDanceLA/IMG_7927.png",
+    "images/QueerLatinDanceLA/IMG_7928.jpg",
+    "images/QueerLatinDanceLA/IMG_7929 2.jpg",
+    "images/QueerLatinDanceLA/IMG_7932.jpg",
+    "images/QueerLatinDanceLA/IMG_7936.jpg",
+    "images/QueerLatinDanceLA/IMG_7937.jpg",
+    "images/QueerLatinDanceLA/IMG_7938.jpg",
+    "images/QueerLatinDanceLA/IMG_7939.jpg",
+    "images/QueerLatinDanceLA/IMG_7941.jpg",
+    "images/QueerLatinDanceLA/IMG_7942.jpg",
+    "images/QueerLatinDanceLA/IMG_7945.jpg",
+    // Sun Dance Day Fest
+    "images/SunDanceDayFest/TashaTia.jpg",
+    "images/SunDanceDayFest/sddf1.png",
+    "images/SunDanceDayFest/sddf2.png",
+    "images/SunDanceDayFest/sddf3.png",
+    "images/SunDanceDayFest/sddf4.png",
+    "images/SunDanceDayFest/sddf5.png",
+    "images/SunDanceDayFest/sddf6.png",
+    "images/SunDanceDayFest/sddf7.png",
+    "images/SunDanceDayFest/sddf8.png",
+    "images/SunDanceDayFest/sddf9.png",
+    "images/SunDanceDayFest/sddf10.png",
+    "images/SunDanceDayFest/sddf11.png",
+    "images/SunDanceDayFest/sddf12.png",
+    "images/SunDanceDayFest/sddf13.png",
+    "images/SunDanceDayFest/sddf14.png",
+    "images/SunDanceDayFest/sddf15.png",
+    "images/SunDanceDayFest/sddf16.png",
+    "images/SunDanceDayFest/sddf17.png",
+    "images/SunDanceDayFest/sddf18.png",
+    "images/SunDanceDayFest/sddf19.jpg",
+    "images/SunDanceDayFest/sddf20.jpg",
+    "images/SunDanceDayFest/sddf21.jpg",
+    "images/SunDanceDayFest/sddf22.jpg",
+    "images/SunDanceDayFest/sddf23.jpg",
+    "images/SunDanceDayFest/sddf24.jpg",
+    "images/SunDanceDayFest/sddf25.jpg",
+    "images/SunDanceDayFest/sddf26.jpg",
+    "images/SunDanceDayFest/sddf27.jpg",
+    "images/SunDanceDayFest/sddf28.jpg",
+    "images/SunDanceDayFest/sddf29.jpg",
+    "images/SunDanceDayFest/sddf30.jpg",
+    "images/SunDanceDayFest/sddf31.jpg",
+    "images/SunDanceDayFest/sddf32.jpg",
+    "images/SunDanceDayFest/sddf33.jpg",
+    "images/SunDanceDayFest/sddf34.jpg",
+    "images/SunDanceDayFest/sddf35.jpg",
+    "images/SunDanceDayFest/sddf36.jpg",
+    "images/SunDanceDayFest/sddf37.jpg",
+    "images/SunDanceDayFest/sddf38.PNG",
+    "images/SunDanceDayFest/sddf39.jpg",
+    "images/SunDanceDayFest/sddf40.PNG",
+    "images/SunDanceDayFest/sddf41.jpg",
+    "images/SunDanceDayFest/sddf42.jpg",
+    "images/SunDanceDayFest/sddf43.jpg",
+    "images/SunDanceDayFest/sddf44.jpg",
+    "images/SunDanceDayFest/sddf45.jpeg",
+    "images/SunDanceDayFest/sddf46.jpg",
+    "images/SunDanceDayFest/sddf47.jpeg",
+    "images/SunDanceDayFest/sddf48.jpg",
+    "images/SunDanceDayFest/sddf49.jpeg",
+    "images/SunDanceDayFest/sddf50.jpg",
+  ];
+    const imagesPerPage = 25;
+    let currentPage = 1;
+    const totalPages = Math.ceil(allEventImages.length / imagesPerPage);
+
+    function renderGalleryPage(page) {
+      const gallery = document.getElementById('allEventsGallery');
+      gallery.innerHTML = '';
+      const startIdx = (page - 1) * imagesPerPage;
+      const endIdx = Math.min(startIdx + imagesPerPage, allEventImages.length);
+      for (let i = startIdx; i < endIdx; i++) {
+        const img = document.createElement('img');
+        img.src = allEventImages[i];
+        img.className = 'all-events-thumb';
+        img.alt = `Event Image ${i+1}`;
+        img.setAttribute('data-index', i);
+        img.addEventListener('click', function() {
+          openLightbox(i);
+        });
+        gallery.appendChild(img);
+      }
+      document.getElementById('pageInfo').textContent = `Page ${page} of ${totalPages}`;
+      document.getElementById('prevPageBtn').disabled = page === 1;
+      document.getElementById('nextPageBtn').disabled = page === totalPages;
+    }
+
+    document.getElementById('prevPageBtn').addEventListener('click', function() {
+      if (currentPage > 1) {
+        currentPage--;
+        renderGalleryPage(currentPage);
+      }
+    });
+    document.getElementById('nextPageBtn').addEventListener('click', function() {
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderGalleryPage(currentPage);
+      }
+    });
+
+    // Lightbox overlay for fullscreen image view
+    function openLightbox(startIndex) {
+      // Remove any existing overlay
+      document.getElementById('allEventsLightboxOverlay')?.remove();
+      // Create overlay
+      const overlay = document.createElement('div');
+      overlay.id = 'allEventsLightboxOverlay';
+      // Close button
+      const closeBtn = document.createElement('button');
+      closeBtn.textContent = '×';
+      closeBtn.className = 'close-btn';
+      closeBtn.onclick = () => overlay.remove();
+      overlay.appendChild(closeBtn);
+      // Image element
+      const img = document.createElement('img');
+      let currentIdx = startIndex;
+      function updateImg() {
+        img.src = allEventImages[currentIdx];
+      }
+      updateImg();
+      overlay.appendChild(img);
+      // Navigation
+      const leftBtn = document.createElement('button');
+      leftBtn.textContent = '‹';
+      leftBtn.className = 'nav-btn left';
+      leftBtn.onclick = function() {
+        if (currentIdx > 0) {
+          currentIdx--;
+          updateImg();
+        }
+      };
+      overlay.appendChild(leftBtn);
+      const rightBtn = document.createElement('button');
+      rightBtn.textContent = '›';
+      rightBtn.className = 'nav-btn right';
+      rightBtn.onclick = function() {
+        if (currentIdx < allEventImages.length - 1) {
+          currentIdx++;
+          updateImg();
+        }
+      };
+      overlay.appendChild(rightBtn);
+      // Keyboard navigation
+      function keyHandler(e) {
+        if (e.key === 'Escape') overlay.remove();
+        if (e.key === 'ArrowLeft' && currentIdx > 0) { currentIdx--; updateImg(); }
+        if (e.key === 'ArrowRight' && currentIdx < allEventImages.length - 1) { currentIdx++; updateImg(); }
+      }
+      setTimeout(() => document.addEventListener('keydown', keyHandler), 0);
+      overlay.addEventListener('DOMNodeRemoved', function(e) {
+        if (e.target === overlay) document.removeEventListener('keydown', keyHandler);
+      });
+      document.body.appendChild(overlay);
+    }
+
+    // Initial render
+    renderGalleryPage(currentPage);
+  </script>
+</body>
+</html>

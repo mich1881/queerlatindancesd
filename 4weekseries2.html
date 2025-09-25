@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #cfe4e0;
+      min-height: 100vh;
+      position: relative;
+      margin: 0;
+      padding: 0;
+    }
+    /* === CALENDAR CONTAINER STYLES === */
+.calendar-container {
+  background: rgba(20, 12, 40, 0.85);
+  border: 2px solid #ffe066;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(137,134,254,0.07);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  width: 90%;
+  text-align: center;
+}
+.calendar-container iframe {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background: #140c28;
+  width: 100%;
+  height: 600px;
+  max-width: 100%;
+}
+    .main-flex {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 64px;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding-top: 10px;
+      position: relative;
+      z-index: 1;
+      font-family: 'Huninn', Arial, sans-serif;
+    }
+    @media (max-width: 900px) {
+      .main-flex {
+        flex-direction: column;
+        gap: 32px;
+        padding-top: 12px;
+        max-width: 98vw;
+      }
+      
+      /* Mobile responsive layout for lessonone-series */
+      .event-title {
+        font-size: 3.5rem !important;
+      }
+      
+      .event-table-2col {
+        display: block !important;
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+      }
+      
+      /* Make both columns stack vertically as single column */
+      .event-table-left, .event-table-right {
+        display: block !important;
+        width: 100% !important;
+        padding: 1rem !important;
+        margin-bottom: 1.5rem !important;
+      }
+      
+      /* Remove table row structure on mobile */
+      .event-table-2col tr {
+        display: block !important;
+      }
+      
+      /* Remove table cell structure on mobile */
+      .event-table-2col td {
+        display: block !important;
+        width: 100% !important;
+        padding: 0 !important;
+      }
+      
+      /* Gallery styling for mobile */
+      #swipe-gallery {
+        max-width: 100%;
+        margin: 0 auto;
+      }
+      
+      #gallery-img {
+        max-width: 95%;
+        margin: 0 auto 1rem auto;
+      }
+      
+      /* Gallery navigation buttons for mobile */
+      #gallery-prev, #gallery-next {
+        position: absolute;
+        top: 50%;
+        width: 32px;
+        height: 32px;
+        font-size: 1.2em;
+      }
+      
+      #gallery-prev {
+        left: 5px;
+      }
+      
+      #gallery-next {
+        right: 5px;
+      }
+      
+      .mobile-spacing {
+        height: 60px !important;
+      }
+    }
+    .event-title {
+      font-family: 'Huninn', 'Nunito', Arial, sans-serif;
+      font-size: 7rem;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 48px;
+      letter-spacing: -1.5px;
+      text-align: left;
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+            -webkit-text-stroke: 2.5px #00a0ae;
+    }
+    .left-col {
+      flex: 1 1 340px;
+      min-width: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .event-table-2col {
+      width: 100%;
+      max-width: 1300px;
+      margin: 0 auto;
+      border-spacing: 0 0;
+      background: rgba(255, 255, 255, 0.027);
+      border-radius: 24px;
+      box-shadow: 0 2px 12px #e1d9ff33;
+      overflow: hidden;
+      font-family: 'Nunito', Arial, sans-serif;
+      font-size: 1.08rem;
+    }
+    .event-table-left {
+      width: 500px;
+      vertical-align: top;
+      padding: 36px 24px 36px 36px;
+      color:#22222200
+    }
+    .event-table-right {
+      width: 900px;
+      vertical-align: top;
+      padding: 32px 32px 32px 24px;
+    }
+    .info-card {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      background: rgba(255, 255, 255, 0);
+      border-radius: 10px;
+      padding: 6px 10px;
+      min-width: 120px;
+      width: auto;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+    }
+    .info-label {
+      font-family: 'Nunito', Arial, sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #322234;
+      margin-bottom: 2px;
+    }
+    .info-desc {
+      font-size: 0.8rem;
+      color: #444;
+    }
+    .event-section {
+      margin-bottom: 18px;
+    }
+    .event-label {
+      font-family: 'Nunito', Arial, sans-serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #322234;
+      margin-bottom: 4px;
+      text-align: left;
+    }
+    .event-value {
+      font-size: 1.05rem;
+      color: #444;
+      text-align: left;
+    }
+  
+    .event-map {
+      width: 100%;
+      max-width: 900px;
+      margin-top: 12px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px #e1d9ff33;
+    }
+
+    /* ORGANIZER SECTION CSS */
+    .organizer-section {
+      background: linear-gradient(135deg,#e1d9ff00 0%,#b1e2ff00 100%);
+      border-radius: 18px;
+      padding: 32px 32px 24px 32px;
+      margin-top: 24px;
+      box-shadow: 0 2px 12px #e1d9ff33;
+    }
+    .organizer-label {
+      font-family: 'Nunito', Arial, sans-serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #322234;
+      margin-bottom: 8px;
+    }
+    .organizer-name {
+      font-family: 'Nunito', Arial, sans-serif;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #222;
+      margin-bottom: 24px;
+    }
+    .organizer-cards {
+      display: flex;
+      flex-direction: row;
+      gap: 48px;
+    }
+    .organizer-card {
+      flex: 1;
+      background: rgba(4, 2, 2, 0);
+      border-radius: 14px;
+      padding: 18px 24px;
+      box-shadow: 0 2px 8px #00000000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 180px;
+    }
+    .organizer-icon {
+      margin-bottom: 12px;
+    }
+    .organizer-card-title {
+      font-family: 'Nunito', Arial, sans-serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #32223400;
+      margin-bottom: 4px;
+    }
+    .organizer-card-link {
+      font-size: 1rem;
+      color: #222;
+      text-decoration: underline;
+    }
+    /* END ORGANIZER SECTION CSS */
+
+    .pricing-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-left: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .pricing-option {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #716cff;
+      background: #f6f3ff;
+      border-radius: 9px;
+      padding: 0.36rem 0.8rem;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.2s, color 0.2s;
+      box-shadow: 0 2px 8px #716cff22;
+      outline: none;
+      border: 2px solid transparent;
+      user-select: none;
+      margin-right: auto;
+      width: fit-content;
+      min-width: 120px;
+      min-height: 32px;
+      line-height: 1.2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .pricing-option:hover, .pricing-option:focus {
+      transform: scale(1.06);
+      box-shadow: 0 4px 16px #716cff44;
+      background: #e6e0ff;
+    }
+    .pricing-option.selected {
+      background: #716cff;
+      color: #fff;
+      border: 2px solid #4b2fcf;
+      box-shadow: 0 4px 16px #716cff77;
+      transform: scale(1.06);
+    }
+    
+@media (max-width: 768px) {
+  /* Pricing section mobile adjustments */
+  .pricing-options {
+    margin-left: 0 !important;
+    gap: 0.25rem !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+  
+  .pricing-option {
+    font-size: 0.7rem !important;
+    padding: 0.3rem 0.5rem !important;
+    min-width: 80px !important;
+    width: min(140px, 90vw) !important;
+    max-width: 140px !important;
+    text-align: center !important;
+    margin: 0 auto 0.25rem auto !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .main-flex {
+    flex-direction: column !important;
+    padding: 0.5rem !important;
+    gap: 0.25rem !important;
+    max-width: 100vw !important;
+  }
+  
+  .event-title {
+    font-size: 1.8rem !important;
+    margin-bottom: 0.5rem !important;
+    text-align: center !important;
+    -webkit-text-stroke: 1px #00a0ae !important;
+    line-height: 1.2 !important;
+  }
+  
+  .event-table-2col {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    font-size: 0.75rem !important;
+  }
+  
+  /* Make both columns stack vertically as single column */
+  .event-table-left, .event-table-right {
+    display: block !important;
+    width: 100% !important;
+    padding: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Remove table row structure on mobile */
+  .event-table-2col tr {
+    display: block !important;
+  }
+  
+  /* Remove table cell structure on mobile */
+  .event-table-2col td {
+    display: block !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+  
+  /* Mobile typography adjustments */
+  .event-label {
+    font-size: 0.8rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+  
+  .event-value {
+    font-size: 0.75rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .event-value ul {
+    margin-left: 0.5rem !important;
+    padding-left: 0.25rem !important;
+  }
+  
+  .event-value ul li {
+    font-size: 0.7rem !important;
+    margin-bottom: 0.2rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  /* Pricing section mobile adjustments */
+  .pricing-options {
+    margin-left: 0 !important;
+    gap: 0.25rem !important;
+    flex-wrap: wrap !important;
+  }
+  
+  .pricing-option {
+    font-size: 0.7rem !important;
+    padding: 0.3rem 0.5rem !important;
+    min-width: 80px !important;
+  }
+  
+  #price-tag {
+    font-size: 0.75rem !important;
+    padding: 0.2rem 0.6rem !important;
+  }
+  
+  #price-total {
+    font-size: 0.7rem !important;
+  }
+  
+  #get-tickets-btn {
+    font-size: 0.85rem !important;
+    padding: 0.5rem 1.5rem !important;
+  }
+  
+  /* Gallery styling for mobile */
+  #swipe-gallery {
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+  
+  #gallery-img {
+    max-width: 90% !important;
+    margin: 0 auto 0.5rem auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+  
+  /* Gallery navigation buttons for mobile */
+  #gallery-prev, #gallery-next {
+    position: absolute !important;
+    top: 50% !important;
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 0.8rem !important;
+  }
+  
+  #gallery-prev {
+    left: 2px !important;
+  }
+  
+  #gallery-next {
+    right: 2px !important;
+  }
+  
+  /* Organizer section mobile adjustments */
+  .organizer-section {
+    padding: 0.5rem !important;
+  }
+  
+  .organizer-label {
+    font-size: 0.8rem !important;
+  }
+  
+  .organizer-name {
+    font-size: 0.9rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .organizer-cards {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  
+  .organizer-card {
+    min-width: auto !important;
+    padding: 0.5rem !important;
+  }
+  
+  .organizer-card-title {
+    font-size: 0.75rem !important;
+  }
+  
+  .organizer-card-link {
+    font-size: 0.7rem !important;
+  }
+  
+  /* Back button mobile adjustment */
+  .main-flex + a {
+    top: 10px !important;
+    left: 10px !important;
+    font-size: 0.8rem !important;
+    padding: 4px 10px 4px 6px !important;
+  }
+}
+</style>
+</head>
+<body>
+  <!-- Terms & Conditions Modal -->
+  <div id="termsModal" class="modal-fade" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#0008;z-index:2000;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:18px;max-width:540px;width:96vw;padding:1.5em 1.2em;box-shadow:0 4px 32px #a259ff33;position:relative;overflow-y:auto;max-height:92vh;font-size:0.97em;">
+      <button type="button" class="modal-close-x" aria-label="Close" onclick="document.getElementById('termsModal').classList.remove('show'); setTimeout(()=>{document.getElementById('termsModal').style.display='none';},500);">&times;</button>
+      <h2 style="color:#716cff;font-size:1.4em;margin-bottom:0.7em;">Queer Latin Dance San Diego - Terms & Conditions</h2>
+      <div style="color:#444;line-height:1.7;font-size:1.04em;max-height:70vh;overflow-y:auto;">
+        <b>Registration & Payment</b><br>
+        &bull; Full payment is required to secure your spot in the series.<br><br>
+        <b>Attendance & Missed Classes</b><br>
+        &bull; Missed classes will not be refunded or credited.<br>
+        &bull; We do not offer makeup classes at this time.<br>
+        &bull; We recommend attending all sessions to get the most out of the series.<br><br>
+        <b>Refund Policy</b><br>
+        &bull; All payments are non-refundable.<br>
+        &bull; Studio space is reserved and paid in advance, and we are unable to offer refunds for cancellations or no-shows.<br><br>
+        <b>Class Minimum Requirement</b><br>
+        &bull; A minimum of 8 registered students per class is required.<br>
+        &bull; If the minimum is not met, we reserve the right to postpone or cancel the series.<br>
+        &bull; In the event of cancellation on our part, full refunds will be issued.<br><br>
+        <b>Communication & Updates</b><br>
+        &bull; We will communicate schedule changes, postponements, or cancellations via email and our WhatsApp group chat.<br>
+        &bull; Please ensure your contact information is accurate and check your email & WhatsApp regularly.<br><br>
+        <b>Safety & Respect</b><br>
+        &bull; All participants are expected to act in accordance with our Code of Conduct.<br>
+        &bull; Discriminatory, inappropriate, or disruptive behavior will not be tolerated and may result in removal without refund.<br><br>
+        <b>Liability</b><br>
+        &bull; By participating in our classes, you acknowledge that dancing is a physical activity and accept all risks involved.<br>
+        &bull; Queer Latin Dance SD and its instructors are not liable for any injuries sustained during classes or events.<br><br>
+        <b>Media Release</b><br>
+        &bull; We may occasionally take photos or short videos for promotional purposes.<br>
+        &bull; If you prefer not to be photographed, please let the instructor know at the start of class.<br><br>
+        Thank you for your support. Please email <a href="mailto:queerlatindancesd@gmail.com" style="color:#a259ff;text-decoration:underline;">queerlatindancesd@gmail.com</a> with any questions or comments.
+      </div>
+    </div>
+  </div>
+  <a href="lessons.html" style="position:fixed;top:28px;left:38px;z-index:10;text-decoration:none;font-family:'Nunito',Arial,sans-serif;font-size:1.13rem;font-weight:800;color:#716cff;background:#fff6;padding:7px 18px 7px 12px;border-radius:8px;box-shadow:0 2px 8px #716cff22;display:inline-flex;align-items:center;gap:7px;transition:background 0.18s,box-shadow 0.18s;">
+    <span style="font-size:1.25em;line-height:1;">&#8592;</span>Back
+  </a>
+  
+  <!-- Add mobile spacing to push content down and make back button visible on mobile -->
+  <div class="mobile-spacing" style="height: 0;"></div>
+  
+  <div class="main-flex">
+    <div class="left-col">
+      <h1 class="event-title">4 Week Series 2</h1>
+      <table class="event-table-2col" style="margin-left: 32px;">
+        <tr>
+          <td class="event-table-left">
+            <!-- Salsa series description above pricing -->
+            <div style="margin-bottom:1.2rem;font-size:1.2rem;color:#000000;line-height:1.5;">
+              Thank you for your interest in our 4-Week Intro to Salsa & Bachata Series!
+
+Perfect for total beginners and those who want to build confidence and sharpen their basics. Whether you’re brand new or have taken a few classes, this series is designed to help you feel great on the dance floor.
+            </div>
+            <div class="event-section" style="margin-top: 0; margin-bottom: 1.2rem;">
+              <div>
+                <span class="event-label">Pricing</span>
+                <div style="display:flex;flex-direction:column;align-items:flex-start;margin-top:2px;">
+                  <span id="price-tag" style="display:inline-flex;align-items:center;background:#f6f3ff;color:#7c3aed;font-size:1.01rem;font-weight:800;border-radius:7px;padding:2px 12px 2px 10px;box-shadow:0 1px 4px #716cff18;min-width:90px;text-align:left;margin-top:2px;">$20 per hr</span>
+                  <span id="price-total" style="font-size:0.98rem;color:#444;font-weight:600;margin-top:2px;text-align:left;min-width:170px;">Total: 4 weeks x $20/hr = $80</span>
+                </div>
+              </div>
+              <div style="font-style:italic;font-size:1.13rem;margin-bottom:1.1rem;">Please select from the following:</div>
+              <div class="pricing-options" style="align-items:center;margin-left:0;">
+                <div class="pricing-option" tabindex="0" data-desc="">Salsa Only</div>
+                <div class="pricing-option" tabindex="0" data-desc="">Bachata Only</div>
+                <div class="pricing-option" tabindex="0" data-desc="">Salsa &amp; Bachata</div>
+                <div style="margin-top:1.2rem; display:flex; justify-content:center; width:100%;">
+                  <a id="get-tickets-btn" href="#" style="background:#716cff;color:#fff;font-family:'Nunito',Arial,sans-serif;font-weight:900;font-size:1.1rem;padding:0.7rem 2.2rem;border-radius:1.2rem;text-decoration:none;box-shadow:0 2px 12px #716cff44;transition:background 0.18s,color 0.18s;">Register</a>
+                </div>
+              </div>
+              <div id="pricing-desc" style="margin-top:1.1rem;font-size:1.08rem;color:#444;min-height:48px;"></div>
+            </div>
+          </td>
+          <td class="event-table-right" style="padding-left: 56px;">
+            <div class="event-section" style="padding:0; margin:0 0 18px 0; display:flex; justify-content:center; align-items:center;">
+              <div style="position:relative; width:100%; max-width:520px; display:flex; align-items:center; justify-content:center;">
+                <img id="gallery-img" src="images/lessons/4weekseries2.png" alt="4 Week Series Promo" style="width:100%;max-width:520px;height:auto;display:block;margin:0 0 18px 0;border-radius:18px;box-shadow:0 2px 12px #716cff22;object-fit:contain;transition:opacity 0.2s;" />
+              </div>
+            </div>
+
+            <div class="event-section">
+              <div class="event-label">ABOUT</div>
+              <div class="event-value">
+                  <b>Series Dates:</b> 
+                  <a id="gcal-link-sunday" href="#" target="_blank" title="Add Sunday Series to Google Calendar" style="display:inline-block;margin-left:8px;vertical-align:middle;">
+                    <img src="images/eventpage/Schedulicon 1.png" alt="Google Calendar" style="height:20px;width:20px;vertical-align:middle;filter:drop-shadow(0 1px 2px #fff8);" />
+                  </a>
+                  <span style="color:#943dff;font-weight:700;">Sundays – 10/12, 10/19, 11/02, 11/09</span><br>
+                  <b>RSVP Deadline:</b> <span style="color:#ff2d2d;font-weight:700;">Wednesday, 10/08</span> (limited spots available)
+                  <br><br>
+                  <b>Class Times:</b><br>
+                  <span style="color:#7c3aed;">Salsa:</span> 5:00pm – 5:50pm<br>
+                  <span style="color:#a259ff;">Bachata:</span> 6:00pm – 6:50pm
+                  <br><br>
+                  <b>What You Get:</b>
+                  <ul style="margin:0 0 0 1.2em;padding:0 0 0 1.2em;list-style:square;color:#0b0808;">
+                    <li>Queer-led, safe & inclusive dance environment</li>
+                    <li>Find your rhythm and feel good in your body</li>
+                    <li>Boost your mind-body connection</li>
+                  </ul>
+                  <br>
+                  You can sign up for <b>Salsa</b>, <b>Bachata</b>, or <b>both</b>! Drop-ins are available if you can’t make all the dates, but we highly recommend joining the full series to progress with us into the next 4-week Part 2 beginner lessons.
+                  <br><br>
+                  <b>Pricing:</b>
+                  <ul style="margin:0 0 0 1.2em;padding:0 0 0 1.2em;list-style:square;color:#030202;">
+                    <li><b>Salsa Only</b> – $80 total for 4 hours of instruction <span style="color:#090606;">($20/hr)</span></li>
+                    <li><b>Bachata Only</b> – $80 total for 4 hours of instruction <span style="color:#070101;">($20/hr)</span></li>
+                    <li><b>Salsa & Bachata BOTH</b> – $144 total for 8 hours of instruction <span style="color:#040101;">($18/hr)</span></li>
+                    <li><b>Drop-In</b> – $52 for both classes, $26.00 for single class</li>
+                  </ul>
+                  <br>
+                  <b>Important Notes:</b>
+                  <ul style="margin:0 0 0 1.2em;padding:0 0 0 1.2em;list-style:square;color:#090808;">
+                    <li>Payment is non-refundable. We book studio space in advance and are unable to offer refunds at this time.</li>
+                    <li>A minimum of 8 participants per class is required to run the series. If we do not meet the minimum, we will postpone until there is sufficient interest.</li>
+                  <li>We have a limited number of reduced-price spots available. Please contact us if you'd like to be considered.</li>
+                  </ul>
+                  <br>
+                  <span style="color:#716cff;font-weight:700;">Thank you for understanding. We can’t wait to dance with you!</span><br>
+                  <span style="color:#070505;">Email us at <a href="mailto:queerlatindancesd@gmail.com" style="color:#a259ff;text-decoration:underline;">queerlatindancesd@gmail.com</a> with any questions or comments.</span>
+                </div>
+              </div>
+            </div>
+            <div class="event-section">
+              <div class="event-label">LOCATION</div>
+              <div class="event-value">
+                Studio K<br>
+                9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123 &amp; D, San Diego CA 92126
+                <div class="event-map">
+                  <a href="https://maps.app.goo.gl/P8sKwApM5b67xiLa8?g_st=ipc" target="_blank" rel="noopener" style="display:block;">
+                    <iframe src="https://www.google.com/maps?q=9340+Clairemont+Mesa+Blvd,+Ste+F,+San+Diego,+CA+92123&output=embed" width="100%" height="220" style="border:0;border-radius:12px;margin-top:12px;box-shadow:0 2px 12px #e1d9ff33;pointer-events:none;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" tabindex="-1"></iframe>
+                  </a>
+                </div>
+                <div class="organizer-section" style="margin-top:24px; padding-left:0;">
+                  <div class="organizer-label">ORGANIZERS</div>
+                  <div class="organizer-name">Queer Latin Dance SD</div>
+                  <div class="organizer-cards">
+                    <div class="organizer-card">
+                      <div class="organizer-icon">
+                        <svg width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="10" width="24" height="16" rx="6" fill="#b1b1ff"/><rect x="6" y="10" width="24" height="16" rx="6" stroke="#a1a1c1" stroke-width="2"/><path d="M6 10l12 10 12-10" stroke="#a259ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
+                      <div class="organizer-card-title">Questions?</div>
+                      <a href="contact.html" class="organizer-card-link">Contact organizer</a>
+                    </div>
+                    <div class="organizer-card">
+                      <div class="organizer-icon">
+                        <svg width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="20" height="20" rx="5" fill="#b1b1ff"/><rect x="8" y="8" width="20" height="20" rx="5" stroke="#a1a1c1" stroke-width="2"/><rect x="13" y="13" width="10" height="2" rx="1" fill="#a259ff"/><rect x="13" y="17" width="10" height="2" rx="1" fill="#a259ff"/><rect x="13" y="21" width="10" height="2" rx="1" fill="#a259ff"/></svg>
+                      </div>
+                      <div class="organizer-card-title">Self Service</div>
+                      <a href="#" class="organizer-card-link">Manage order</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <script>
+    // Terms & Conditions modal logic
+    function openTermsModal() {
+      const modal = document.getElementById('termsModal');
+      modal.style.display = 'flex';
+      setTimeout(() => modal.classList.add('show'), 10);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      ['termsLink1','termsLink2','termsLink3'].forEach(function(id) {
+        const link = document.getElementById(id);
+        if (link) link.onclick = function(e) { e.preventDefault(); openTermsModal(); };
+      });
+    });
+    // Calendar grid logic removed since calendar was removed
+    
+    // Calendar event data for Google Calendar link
+    const calendarEvents = {
+      '2025-08-17': { salsa: true, bachata: true },
+      '2025-08-24': { salsa: true, bachata: true },
+      '2025-08-31': { salsa: true, bachata: true },
+      '2025-09-07': { salsa: true, bachata: true }
+    };
+
+    function getSelectedPricing() {
+      const selected = document.querySelector('.pricing-option.selected');
+      if (!selected) return 'both';
+      const text = selected.textContent.trim().toLowerCase();
+      if (text.includes('salsa') && text.includes('bachata')) return 'both';
+      if (text.includes('salsa')) return 'salsa';
+      if (text.includes('bachata')) return 'bachata';
+      return 'both';
+    }
+
+    // Pricing option selection logic
+    document.addEventListener('DOMContentLoaded', function() {
+      const options = document.querySelectorAll('.pricing-option');
+      const descBox = document.getElementById('pricing-desc');
+      const gcalLink = document.getElementById('gcal-link');
+      const gcalLinkSunday = document.getElementById('gcal-link-sunday');
+      function setDesc(option) {
+        const desc = option.getAttribute('data-desc') || '';
+        descBox.textContent = desc;
+      }
+      const priceTag = document.getElementById('price-tag');
+      const priceTotal = document.getElementById('price-total');
+      function updatePriceTag() {
+        const selected = document.querySelector('.pricing-option.selected');
+        let price = '$20 per hr';
+        let total = 'Total: 4 weeks x $20/hr = $80';
+        if (selected) {
+          const text = selected.textContent.trim().toLowerCase();
+          if (text.includes('salsa') && text.includes('bachata')) {
+            price = '$18 per hr';
+            total = 'Total: 4 weeks x $18/hr = $144';
+          } else if (text.includes('salsa')) {
+            price = '$20 per hr';
+            total = 'Total: 4 weeks x $20/hr = $80';
+          } else if (text.includes('bachata')) {
+            price = '$20 per hr';
+            total = 'Total: 4 weeks x $20/hr = $80';
+          }
+        }
+        if (priceTag) priceTag.textContent = price;
+        if (priceTotal) priceTotal.textContent = total;
+      }
+
+      function getGoogleCalUrl() {
+        // Dates: Aug 17, 24, Sept 7, 14 (corrected dates from the visible content)
+        // Salsa Only: 1:00pm-1:50pm  
+        // Bachata Only: 2:00pm-2:50pm
+        // Salsa & Bachata: 1:00pm-2:50pm
+        const selected = document.querySelector('.pricing-option.selected');
+        let title = 'Queer Salsa/Bachata Series';
+        let details = 'Join us for Queer Latin Dance SD 4-Week Intro to Salsa & Bachata Series!\n\nLocation: Studio K, 9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123\n\nSeries Dates: Aug 17, 24, Sept 7, 14, 2025\n\nNOTE: This will create the first class. Please manually add the other dates: Aug 24, Sept 7, and Sept 14.';
+        let location = 'Studio K, 9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123';
+        
+        let timeStart = '130000', timeEnd = '140000';
+        if (selected) {
+          const text = selected.textContent.trim().toLowerCase();
+          if (text.includes('salsa') && text.includes('bachata')) {
+            title = 'Queer Latin Dance: Salsa & Bachata Series';
+            timeStart = '130000';
+            timeEnd = '145000';
+            details += '\n\nClasses: Salsa (1:00pm-1:50pm) & Bachata (2:00pm-2:50pm)';
+          } else if (text.includes('salsa')) {
+            title = 'Queer Latin Dance: Salsa Series';
+            timeStart = '130000';
+            timeEnd = '135000';
+            details += '\n\nClass: Salsa (1:00pm-1:50pm)';
+          } else if (text.includes('bachata')) {
+            title = 'Queer Latin Dance: Bachata Series';
+            timeStart = '140000';
+            timeEnd = '145000';
+            details += '\n\nClass: Bachata (2:00pm-2:50pm)';
+          }
+        }
+        
+        // Use first date only since the dates aren't consecutive weekly
+        let start = '20250817T' + timeStart;
+        let end = '20250817T' + timeEnd;
+        
+        let url = 'https://calendar.google.com/calendar/render?action=TEMPLATE';
+        url += '&text=' + encodeURIComponent(title);
+        url += '&dates=' + start + '/' + end;
+        url += '&details=' + encodeURIComponent(details);
+        url += '&location=' + encodeURIComponent(location);
+        
+        return url;
+      }
+
+      function getGcalUrlSunday() {
+        // Sundays: 10/12, 10/19, 11/02, 11/09, 2025
+        // Salsa: 5:00pm–5:50pm, Bachata: 6:00pm–6:50pm
+        // We'll use 5:00pm–6:50pm for both classes
+        const title = 'Queer Salsa & Bachata Series (Sunday)';
+        const details = 'Join us for Sunday Salsa & Bachata lessons! Studio K, 9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123';
+        const location = 'Studio K, 9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123';
+        const dates = [
+          { start: '20251012', end: '20251012' },
+          { start: '20251019', end: '20251019' },
+          { start: '20251102', end: '20251102' },
+          { start: '20251109', end: '20251109' }
+        ];
+        const timeStart = '1700', timeEnd = '1850';
+        let recur = 'RRULE:FREQ=WEEKLY;COUNT=4';
+        let start = dates[0].start + 'T' + timeStart + '00';
+        let end = dates[0].end + 'T' + timeEnd + '00';
+        let url = 'https://calendar.google.com/calendar/render?action=TEMPLATE';
+        url += '&text=' + encodeURIComponent(title);
+        url += '&dates=' + start + '/' + end;
+        url += '&details=' + encodeURIComponent(details + '\n\nDates: Oct 12, 19, Nov 2, 9, 2025');
+        url += '&location=' + encodeURIComponent(location);
+        url += '&recur=' + encodeURIComponent(recur);
+        return url;
+      }
+      // Set calendar link
+      if (gcalLinkSunday) gcalLinkSunday.href = getGcalUrlSunday();
+
+      function updateGcalLink() {
+        if (gcalLink) gcalLink.href = getGoogleCalUrl();
+      }
+
+      options.forEach(option => {
+        option.addEventListener('click', function() {
+          options.forEach(opt => opt.classList.remove('selected'));
+          this.classList.add('selected');
+          setDesc(this);
+          updatePriceTag();
+          updateGcalLink();
+        });
+        option.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            options.forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            setDesc(this);
+            updatePriceTag();
+            updateGcalLink();
+          }
+        });
+      });
+      // Optionally, show Salsa Only by default
+      options[0].classList.add('selected');
+      setDesc(options[0]);
+      updatePriceTag();
+      updateGcalLink();
+      // Get Tickets button logic
+              const getTicketsBtn = document.getElementById('get-tickets-btn');
+      getTicketsBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const selected = document.querySelector('.pricing-option.selected');
+        let option = '4WK-S2 - Salsa & Bachata';
+        let price = '144';
+        if (selected) {
+          const text = selected.textContent.trim().toLowerCase();
+          if (text.includes('salsa') && text.includes('bachata')) {
+            option = '4WK-S2 - Salsa & Bachata';
+            price = '144';
+          } else if (text.includes('salsa')) {
+            option = '4WK-S2 - Salsa Only';
+            price = '80';
+          } else if (text.includes('bachata')) {
+            option = '4WK-S2 - Bachata Only';
+            price = '80';
+          }
+        }
+        // Pass option and price as URL parameters
+        window.location.href = `payment1.html?option=${encodeURIComponent(option)}&price=${encodeURIComponent(price)}`;
+      });
+    });
+
+    // Remove poster swipe gallery logic
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+{
+  "upcoming": [
+    {
+      "id": "dropin-intro",
+      "date": "ongoing",
+      "month": "DROP",
+      "day": "IN",
+      "title": "Drop-in",
+      "flyerUrl": "images/lessons/4weekseriesdropin.png",
+      "description": "Drop-in classes for beginners",
+      "type": "dropin",
+      "link": "dropin.html"
+    },
+    {
+      "id": "intensive-series",
+      "date": "ongoing",
+      "month": "INT",
+      "day": "ENS",
+      "title": "4 Week Series 1",
+      "flyerUrl": "images/lessons/4weekseries1.png",
+      "description": "Advanced 4-week intensive course",
+      "type": "series",
+      "link": "4weekseries1.html"
+    },
+            {
+      "id": "4week-series",
+      "date": "ongoing", 
+      "month": "4WK",
+      "day": "SER",
+      "title": "4 Week Series 2",
+      "flyerUrl": "images/lessons/4weekseries2.png",
+      "description": "Structured 4-week intro course",
+      "type": "series",
+      "link": "4weekseries2.html"
+    },
+    {
+      "id": "private-lessons",
+      "date": "ongoing",
+      "month": "PRIV",
+      "day": "ATE",
+      "title": "Private Lessons",
+      "flyerUrl": "images/eventpage/privateflyer.png", 
+      "description": "1-2 hour private lessons",
+      "type": "private",
+      "link": "privates.html"
+    }
+  ],
+  "coming_soon": [
+    {
+      "id": "online-lessons",
+      "date": "tba",
+      "month": "TBA",
+      "day": "",
+      "title": "Online Lessons",
+      "flyerUrl": "images/lessons/onlinelessonscover.png",
+      "description": "Virtual dance lessons coming soon",
+      "type": "online",
+      "link": ""
+    }
+  ]
+}

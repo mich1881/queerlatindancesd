@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment System Test</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      padding: 20px; 
+      background: #f0f0f0; 
+    }
+    .test-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .test-btn {
+      display: inline-block;
+      background: #716cff;
+      color: white;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .form-test {
+      background: #f8f9ff;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>🧪 Payment System Test</h1>
+    
+    <h2>Test Links to Payment Page:</h2>
+    <a href="payment1.html?option=both&price=52&pricing_type=dropin" class="test-btn">
+      Drop-in Both ($52)
+    </a>
+    
+    <a href="payment1.html?option=salsa&price=26&pricing_type=dropin" class="test-btn">
+      Drop-in Salsa ($26)
+    </a>
+    
+    <a href="payment1.html?option=both&price=144&pricing_type=series" class="test-btn">
+      Series Both ($144)
+    </a>
+    
+    <a href="payment1.html?option=both&price=170&pricing_type=private" class="test-btn">
+      Private Both ($170)
+    </a>
+    
+    <div class="form-test">
+      <h3>📋 Form Button Test</h3>
+      <p><strong>Instructions:</strong> Click the buttons below to test if the forms show/hide properly.</p>
+      
+      <button id="testZelle" style="background:#6c1cd1;color:white;padding:10px 20px;border:none;border-radius:5px;margin:5px;">
+        Test Zelle Form
+      </button>
+      
+      <button id="testVenmo" style="background:#3d95ce;color:white;padding:10px 20px;border:none;border-radius:5px;margin:5px;">
+        Test Venmo Form
+      </button>
+      
+      <button id="testPaypal" style="background:#ffc439;color:black;padding:10px 20px;border:none;border-radius:5px;margin:5px;">
+        Test PayPal Form
+      </button>
+      
+      <div id="testForm" style="display:none;background:#e8f4f8;padding:15px;margin-top:10px;border-radius:5px;">
+        <h4>✅ Form Toggle Test Successful!</h4>
+        <p>This div appeared when you clicked a button. The form toggle mechanism is working.</p>
+        <button onclick="document.getElementById('testForm').style.display='none'" style="background:#dc3545;color:white;border:none;padding:5px 10px;border-radius:3px;">
+          Close
+        </button>
+      </div>
+    </div>
+    
+    <div class="form-test">
+      <h3>📊 URL Parameter Test</h3>
+      <p id="urlParams">Loading URL parameters...</p>
+    </div>
+    
+    <div class="form-test">
+      <h3>📄 JSON Loading Test</h3>
+      <p id="jsonTest">Testing pricing config load...</p>
+      <button onclick="testJsonLoad()" style="background:#28a745;color:white;border:none;padding:8px 16px;border-radius:4px;">
+        Test JSON Load
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Test basic functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🚀 Test page loaded');
+      
+      // Test URL parameter reading
+      function getParam(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+      }
+      
+      const params = {
+        option: getParam('option'),
+        price: getParam('price'),
+        pricing_type: getParam('pricing_type')
+      };
+      
+      document.getElementById('urlParams').innerHTML = 
+        `<strong>URL Parameters:</strong><br>` +
+        `Option: ${params.option || 'none'}<br>` +
+        `Price: ${params.price || 'none'}<br>` +
+        `Pricing Type: ${params.pricing_type || 'none'}`;
+      
+      // Test form toggle
+      document.getElementById('testZelle').onclick = function() {
+        document.getElementById('testForm').style.display = 'block';
+        console.log('✅ Zelle button clicked');
+      };
+      
+      document.getElementById('testVenmo').onclick = function() {
+        document.getElementById('testForm').style.display = 'block';
+        console.log('✅ Venmo button clicked');
+      };
+      
+      document.getElementById('testPaypal').onclick = function() {
+        document.getElementById('testForm').style.display = 'block';
+        console.log('✅ PayPal button clicked');
+      };
+    });
+    
+    // Test JSON loading
+    async function testJsonLoad() {
+      const jsonTestDiv = document.getElementById('jsonTest');
+      try {
+        jsonTestDiv.innerHTML = '🔄 Loading pricing-config.json...';
+        const response = await fetch('pricing-config.json');
+        const data = await response.json();
+        jsonTestDiv.innerHTML = `✅ JSON loaded successfully!<br><strong>Sample data:</strong> Series Both = $${data.series.both.price}`;
+        console.log('✅ JSON test successful:', data);
+      } catch (error) {
+        jsonTestDiv.innerHTML = `❌ JSON load failed: ${error.message}`;
+        console.error('❌ JSON test failed:', error);
+      }
+    }
+  </script>
+</body>
+</html>

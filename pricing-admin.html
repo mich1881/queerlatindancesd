@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Admin | Queer Latin Dance SD</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Nunito', Arial, sans-serif;
+      background: linear-gradient(120deg, #e1d9ff 0%, #b1e3ff 50%, #c1b1ff 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .admin-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px rgba(162, 89, 255, 0.2);
+      padding: 2rem;
+    }
+    
+    .admin-title {
+      color: #716cff;
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    
+    .warning-box {
+      background: #fff3cd;
+      border: 2px solid #ffeaa7;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      color: #856404;
+    }
+    
+    .section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: #f8f9ff;
+      border-radius: 12px;
+      border: 2px solid #e1d9ff;
+    }
+    
+    .section-title {
+      color: #444;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .pricing-item {
+      background: #fff;
+      border-radius: 8px;
+      padding: 1rem;
+      border: 1px solid #ddd;
+    }
+    
+    .pricing-item h4 {
+      color: #716cff;
+      margin-bottom: 0.5rem;
+    }
+    
+    .form-group {
+      margin-bottom: 0.75rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+      color: #444;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 0.95rem;
+    }
+    
+    .save-btn {
+      background: #716cff;
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .save-btn:hover {
+      background: #5a4fff;
+    }
+    
+    .load-btn {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .load-btn:hover {
+      background: #218838;
+    }
+    
+    .preview-btn {
+      background: #17a2b8;
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+    
+    .preview-btn:hover {
+      background: #138496;
+    }
+    
+    .json-output {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      padding: 1rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+    
+    .success-message {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      border-radius: 4px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    
+    .error-message {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      border-radius: 4px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <h1 class="admin-title">🎵 Pricing Configuration Admin</h1>
+    
+    <div class="warning-box">
+      <strong>⚠️ Important:</strong> This interface allows you to update pricing for your dance classes. 
+      Changes will affect the payment page immediately. Make sure to test after updating!
+    </div>
+    
+    <div class="success-message" id="successMessage"></div>
+    <div class="error-message" id="errorMessage"></div>
+    
+    <div class="admin-controls">
+      <button class="load-btn" onclick="loadCurrentPricing()">📥 Load Current Pricing</button>
+      <button class="save-btn" onclick="savePricing()">💾 Save Changes</button>
+      <button class="preview-btn" onclick="generatePreview()">👁️ Preview JSON</button>
+    </div>
+    
+    <!-- Series Pricing -->
+    <div class="section">
+      <h2 class="section-title">📚 Series Pricing</h2>
+      <div class="pricing-grid">
+        <div class="pricing-item">
+          <h4>Both Salsa & Bachata</h4>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="series-both-price" value="144">
+          </div>
+          <div class="form-group">
+            <label>Per Hour Rate</label>
+            <input type="text" id="series-both-perHour" value="$18 per hour">
+          </div>
+          <div class="form-group">
+            <label>Calculation Text</label>
+            <input type="text" id="series-both-calculation" value="Salsa & Bachata: 8 hours of lessons x $18 per hour = $144">
+          </div>
+        </div>
+        
+        <div class="pricing-item">
+          <h4>Salsa Only</h4>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="series-salsa-price" value="80">
+          </div>
+          <div class="form-group">
+            <label>Per Hour Rate</label>
+            <input type="text" id="series-salsa-perHour" value="$20 per hour">
+          </div>
+          <div class="form-group">
+            <label>Calculation Text</label>
+            <input type="text" id="series-salsa-calculation" value="Salsa Only: 4 hours of lessons x $20 per hour = $80">
+          </div>
+        </div>
+        
+        <div class="pricing-item">
+          <h4>Bachata Only</h4>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="series-bachata-price" value="80">
+          </div>
+          <div class="form-group">
+            <label>Per Hour Rate</label>
+            <input type="text" id="series-bachata-perHour" value="$20 per hour">
+          </div>
+          <div class="form-group">
+            <label>Calculation Text</label>
+            <input type="text" id="series-bachata-calculation" value="Bachata Only: 4 hours of lessons x $20 per hour = $80">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Drop-in Pricing -->
+    <div class="section">
+      <h2 class="section-title">💃 Drop-in Pricing</h2>
+      <div class="pricing-grid">
+        <div class="pricing-item">
+          <h4>Both Salsa & Bachata</h4>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="dropin-both-price" value="52">
+          </div>
+          <div class="form-group">
+            <label>Per Class Rate</label>
+            <input type="text" id="dropin-both-perHour" value="$26 per class">
+          </div>
+          <div class="form-group">
+            <label>Calculation Text</label>
+            <input type="text" id="dropin-both-calculation" value="Salsa & Bachata: 2 classes x $26 per class = $52">
+          </div>
+        </div>
+        
+        <div class="pricing-item">
+          <h4>Salsa Only</h4>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="dropin-salsa-price" value="26">
+          </div>
+          <div class="form-group">
+            <label>Per Class Rate</label>
+            <input type="text" id="dropin-salsa-perHour" value="$26 per class">
+          </div>
+          <div class="form-group">
+            <label>Calculation Text</label>
+            <input type="text" id="dropin-salsa-calculation" value="Salsa Only: 1 class x $26 per class = $26">
+          </div>
+        </div>
+        
+        <div class="pricing-item">
+          <h4>Bachata Only</h4>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="dropin-bachata-price" value="26">
+          </div>
+          <div class="form-group">
+            <label>Per Class Rate</label>
+            <input type="text" id="dropin-bachata-perHour" value="$26 per class">
+          </div>
+          <div class="form-group">
+            <label>Calculation Text</label>
+            <input type="text" id="dropin-bachata-calculation" value="Bachata Only: 1 class x $26 per class = $26">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Private Lesson Pricing -->
+    <div class="section">
+      <h2 class="section-title">👫 Private Lesson Pricing</h2>
+      <div class="pricing-grid">
+        <div class="pricing-item">
+          <h4>Both Salsa & Bachata</h4>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="private-both-price" value="170">
+          </div>
+          <div class="form-group">
+            <label>Per Hour Rate</label>
+            <input type="text" id="private-both-perHour" value="$85 per hour">
+          </div>
+          <div class="form-group">
+            <label>Calculation Text</label>
+            <input type="text" id="private-both-calculation" value="Salsa & Bachata: 2 hours x $85 per hour = $170">
+          </div>
+        </div>
+        
+        <div class="pricing-item">
+          <h4>Salsa Only</h4>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="private-salsa-price" value="85">
+          </div>
+          <div class="form-group">
+            <label>Per Hour Rate</label>
+            <input type="text" id="private-salsa-perHour" value="$85 per hour">
+          </div>
+          <div class="form-group">
+            <label>Calculation Text</label>
+            <input type="text" id="private-salsa-calculation" value="Salsa Only: 1 hour x $85 per hour = $85">
+          </div>
+        </div>
+        
+        <div class="pricing-item">
+          <h4>Bachata Only</h4>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="private-bachata-price" value="85">
+          </div>
+          <div class="form-group">
+            <label>Per Hour Rate</label>
+            <input type="text" id="private-bachata-perHour" value="$85 per hour">
+          </div>
+          <div class="form-group">
+            <label>Calculation Text</label>
+            <input type="text" id="private-bachata-calculation" value="Bachata Only: 1 hour x $85 per hour = $85">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- JSON Preview -->
+    <div class="section">
+      <h2 class="section-title">📄 JSON Preview</h2>
+      <div id="jsonPreview" class="json-output">Click "Preview JSON" to see the configuration</div>
+    </div>
+  </div>
+
+  <script>
+    function loadCurrentPricing() {
+      fetch('pricing-config.json')
+        .then(response => response.json())
+        .then(data => {
+          populateForm(data);
+          showMessage('✅ Current pricing loaded successfully!', 'success');
+        })
+        .catch(error => {
+          console.error('Error loading pricing:', error);
+          showMessage('❌ Error loading current pricing. Using default values.', 'error');
+        });
+    }
+    
+    function populateForm(data) {
+      // Series pricing
+      if (data.series) {
+        if (data.series.both) {
+          document.getElementById('series-both-price').value = data.series.both.price;
+          document.getElementById('series-both-perHour').value = data.series.both.perHour;
+          document.getElementById('series-both-calculation').value = data.series.both.calculation;
+        }
+        if (data.series.salsa) {
+          document.getElementById('series-salsa-price').value = data.series.salsa.price;
+          document.getElementById('series-salsa-perHour').value = data.series.salsa.perHour;
+          document.getElementById('series-salsa-calculation').value = data.series.salsa.calculation;
+        }
+        if (data.series.bachata) {
+          document.getElementById('series-bachata-price').value = data.series.bachata.price;
+          document.getElementById('series-bachata-perHour').value = data.series.bachata.perHour;
+          document.getElementById('series-bachata-calculation').value = data.series.bachata.calculation;
+        }
+      }
+      
+      // Drop-in pricing
+      if (data.dropin) {
+        if (data.dropin.both) {
+          document.getElementById('dropin-both-price').value = data.dropin.both.price;
+          document.getElementById('dropin-both-perHour').value = data.dropin.both.perHour;
+          document.getElementById('dropin-both-calculation').value = data.dropin.both.calculation;
+        }
+        if (data.dropin.salsa) {
+          document.getElementById('dropin-salsa-price').value = data.dropin.salsa.price;
+          document.getElementById('dropin-salsa-perHour').value = data.dropin.salsa.perHour;
+          document.getElementById('dropin-salsa-calculation').value = data.dropin.salsa.calculation;
+        }
+        if (data.dropin.bachata) {
+          document.getElementById('dropin-bachata-price').value = data.dropin.bachata.price;
+          document.getElementById('dropin-bachata-perHour').value = data.dropin.bachata.perHour;
+          document.getElementById('dropin-bachata-calculation').value = data.dropin.bachata.calculation;
+        }
+      }
+      
+      // Private lesson pricing
+      if (data.private) {
+        if (data.private.both) {
+          document.getElementById('private-both-price').value = data.private.both.price;
+          document.getElementById('private-both-perHour').value = data.private.both.perHour;
+          document.getElementById('private-both-calculation').value = data.private.both.calculation;
+        }
+        if (data.private.salsa) {
+          document.getElementById('private-salsa-price').value = data.private.salsa.price;
+          document.getElementById('private-salsa-perHour').value = data.private.salsa.perHour;
+          document.getElementById('private-salsa-calculation').value = data.private.salsa.calculation;
+        }
+        if (data.private.bachata) {
+          document.getElementById('private-bachata-price').value = data.private.bachata.price;
+          document.getElementById('private-bachata-perHour').value = data.private.bachata.perHour;
+          document.getElementById('private-bachata-calculation').value = data.private.bachata.calculation;
+        }
+      }
+    }
+    
+    function generateConfig() {
+      return {
+        "series": {
+          "both": {
+            "price": parseInt(document.getElementById('series-both-price').value),
+            "calculation": document.getElementById('series-both-calculation').value,
+            "label": "Salsa & Bachata Series",
+            "perHour": document.getElementById('series-both-perHour').value
+          },
+          "salsa": {
+            "price": parseInt(document.getElementById('series-salsa-price').value),
+            "calculation": document.getElementById('series-salsa-calculation').value,
+            "label": "Salsa Only Series",
+            "perHour": document.getElementById('series-salsa-perHour').value
+          },
+          "bachata": {
+            "price": parseInt(document.getElementById('series-bachata-price').value),
+            "calculation": document.getElementById('series-bachata-calculation').value,
+            "label": "Bachata Only Series",
+            "perHour": document.getElementById('series-bachata-perHour').value
+          }
+        },
+        "dropin": {
+          "both": {
+            "price": parseInt(document.getElementById('dropin-both-price').value),
+            "calculation": document.getElementById('dropin-both-calculation').value,
+            "label": "Salsa & Bachata Drop-in",
+            "perHour": document.getElementById('dropin-both-perHour').value
+          },
+          "salsa": {
+            "price": parseInt(document.getElementById('dropin-salsa-price').value),
+            "calculation": document.getElementById('dropin-salsa-calculation').value,
+            "label": "Salsa Only Drop-in",
+            "perHour": document.getElementById('dropin-salsa-perHour').value
+          },
+          "bachata": {
+            "price": parseInt(document.getElementById('dropin-bachata-price').value),
+            "calculation": document.getElementById('dropin-bachata-calculation').value,
+            "label": "Bachata Only Drop-in",
+            "perHour": document.getElementById('dropin-bachata-perHour').value
+          }
+        },
+        "private": {
+          "both": {
+            "price": parseInt(document.getElementById('private-both-price').value),
+            "calculation": document.getElementById('private-both-calculation').value,
+            "label": "Salsa & Bachata Private Lesson",
+            "perHour": document.getElementById('private-both-perHour').value
+          },
+          "salsa": {
+            "price": parseInt(document.getElementById('private-salsa-price').value),
+            "calculation": document.getElementById('private-salsa-calculation').value,
+            "label": "Salsa Only Private Lesson",
+            "perHour": document.getElementById('private-salsa-perHour').value
+          },
+          "bachata": {
+            "price": parseInt(document.getElementById('private-bachata-price').value),
+            "calculation": document.getElementById('private-bachata-calculation').value,
+            "label": "Bachata Only Private Lesson",
+            "perHour": document.getElementById('private-bachata-perHour').value
+          }
+        },
+        "stripeLinks": {
+          "series": {
+            "both": "https://buy.stripe.com/4gM4gA4Kuasw31V8N60Ny0b",
+            "salsa": "https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c",
+            "bachata": "https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c"
+          },
+          "dropin": {
+            "both": "https://buy.stripe.com/bJe28s2Cm9osfOHgfy0Ny0e",
+            "salsa": "https://buy.stripe.com/4gM14o3Gq1W0gSL1kE0Ny0d",
+            "bachata": "https://buy.stripe.com/4gM14o3Gq1W0gSL1kE0Ny0d"
+          },
+          "private": {
+            "both": "https://buy.stripe.com/4gM4gA4Kuasw31V8N60Ny0b",
+            "salsa": "https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c",
+            "bachata": "https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c"
+          }
+        }
+      };
+    }
+    
+    function generatePreview() {
+      const config = generateConfig();
+      document.getElementById('jsonPreview').textContent = JSON.stringify(config, null, 2);
+    }
+    
+    function savePricing() {
+      const config = generateConfig();
+      const jsonString = JSON.stringify(config, null, 2);
+      
+      // Create a download link
+      const blob = new Blob([jsonString], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'pricing-config.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      showMessage('✅ Configuration saved! Upload the downloaded file to your server.', 'success');
+      generatePreview();
+    }
+    
+    function showMessage(message, type) {
+      const successEl = document.getElementById('successMessage');
+      const errorEl = document.getElementById('errorMessage');
+      
+      // Hide both messages first
+      successEl.style.display = 'none';
+      errorEl.style.display = 'none';
+      
+      if (type === 'success') {
+        successEl.textContent = message;
+        successEl.style.display = 'block';
+      } else {
+        errorEl.textContent = message;
+        errorEl.style.display = 'block';
+      }
+      
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        successEl.style.display = 'none';
+        errorEl.style.display = 'none';
+      }, 5000);
+    }
+    
+    // Load current pricing on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      loadCurrentPricing();
+    });
+  </script>
+</body>
+</html>

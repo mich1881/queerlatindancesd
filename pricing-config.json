@@ -1,0 +1,79 @@
+{
+  "series": {
+    "both": {
+      "price": 144,
+      "calculation": "8 hours of lessons x $18 per hour = $144",
+      "label": "Salsa & Bachata Series",
+      "perHour": "$18 per hour"
+    },
+    "salsa": {
+      "price": 80,
+      "calculation": "Salsa Only: 4 hours of lessons x $20 per hour = $80",
+      "label": "Salsa Only Series",
+      "perHour": "$20 per hour"
+    },
+    "bachata": {
+      "price": 80,
+      "calculation": "Bachata Only: 4 hours of lessons x $20 per hour = $80",
+      "label": "Bachata Only Series",
+      "perHour": "$20 per hour"
+    }
+  },
+  "dropin": {
+    "both": {
+      "price": 52,
+      "calculation": "Salsa & Bachata: 2 classes x $26 per class = $52",
+      "label": "Salsa & Bachata Drop-in",
+      "perHour": "$26 per class"
+    },
+    "salsa": {
+      "price": 26,
+      "calculation": "Salsa Only: 1 class x $26 per class = $26",
+      "label": "Salsa Only Drop-in",
+      "perHour": "$26 per class"
+    },
+    "bachata": {
+      "price": 26,
+      "calculation": "Bachata Only: 1 class x $26 per class = $26",
+      "label": "Bachata Only Drop-in",
+      "perHour": "$26 per class"
+    }
+  },
+  "private": {
+    "both": {
+      "price": 170,
+      "calculation": "Salsa & Bachata: 2 hours x $85 per hour = $170",
+      "label": "Salsa & Bachata Private Lesson",
+      "perHour": "$85 per hour"
+    },
+    "salsa": {
+      "price": 85,
+      "calculation": "Salsa Only: 1 hour x $85 per hour = $85",
+      "label": "Salsa Only Private Lesson",
+      "perHour": "$85 per hour"
+    },
+    "bachata": {
+      "price": 85,
+      "calculation": "Bachata Only: 1 hour x $85 per hour = $85",
+      "label": "Bachata Only Private Lesson",
+      "perHour": "$85 per hour"
+    }
+  },
+  "stripeLinks": {
+    "series": {
+      "both": "https://buy.stripe.com/4gM4gA4Kuasw31V8N60Ny0b",
+      "salsa": "https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c",
+      "bachata": "https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c"
+    },
+    "dropin": {
+      "both": "https://buy.stripe.com/bJe28s2Cm9osfOHgfy0Ny0e",
+      "salsa": "https://buy.stripe.com/4gM14o3Gq1W0gSL1kE0Ny0d",
+      "bachata": "https://buy.stripe.com/4gM14o3Gq1W0gSL1kE0Ny0d"
+    },
+    "private": {
+      "both": "https://buy.stripe.com/4gM4gA4Kuasw31V8N60Ny0b",
+      "salsa": "https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c",
+      "bachata": "https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c"
+    }
+  }
+}

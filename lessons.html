@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Offers | Queer Latin Dance SD</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Navigation and footer styles are now global. Unique lessons page styles are moved to style.css. -->
+</head>
+<body>
+<header>
+  <a href="index.html">
+    <img src="images/logos/logo1.png" alt="Queer Latin Dance SD Logo" class="logo1" />
+  </a>
+  <!-- Desktop Navigation -->
+  <nav>
+            <a href="about.html">About</a>
+            <a href="Events.html">Events</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="directory.html">Directory</a>
+            <a href="lessons.html">Lessons</a>
+  </nav>
+      <!-- Mobile Navigation Toggle -->
+  <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- Mobile Navigation Menu -->
+<div class="mobile-nav-menu">
+  <nav>
+            <a href="about.html">About</a>
+            <a href="Events.html">Events</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="directory.html">Directory</a>
+            <a href="lessons.html">Lessons</a>
+  </nav>
+</div>
+  <div class="lessons-title">Class Offerings</div>
+  <div class="offers-row" id="upcoming-lessons">
+    <!-- Lessons will be loaded dynamically from lessons-data.json -->
+  </div>
+  
+  <div class="offers-row" id="coming-soon-lessons">
+    <!-- Coming soon lessons will be loaded here -->
+  </div>
+  <style>
+        @font-face {
+  font-family: 'Cherry Bomb One';
+  src: url('fonts/Cherry_Bomb_One/CherryBombOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+    .offer-card-bg {
+      background: url('images/lessons/4weekseries2.png') center center/cover no-repeat !important;
+      color: #fff;
+      position: relative;
+      box-shadow: 0 4px 24px #716cff22;
+      border: none;
+    }
+    .offer-card-bg .offer-title,
+    .offer-card-bg .offer-main {
+      background: rgba(152, 101, 255, 0.702);
+      border-radius: 10px;
+      padding: 0.3em 0.7em;
+      color: #fff;
+    }
+    .offer-card-bg3 {
+      background: url('images/eventpage/privateflyer.png') center center/cover no-repeat !important;
+      color: #fff;
+      position: relative;
+      box-shadow: 0 4px 24px #716cff22;
+      border: none;
+    }
+        .offer-card-bg4 {
+      background: url('images/lessons/onlinelessonscover.png') center center/cover no-repeat !important;
+      position: relative;
+      border: none;
+      width: 90%;
+      max-width: 1000px;
+      margin: 0 auto;
+      box-shadow: 0 4px 24px #716cff22;
+    }
+    
+    @media (max-width: 768px) {
+      .offer-card-bg4 {
+        width: 100vw;
+        max-width: 100vw;
+        margin-left: calc(-1 * ((100vw - 100%) / 2));
+        margin-right: calc(-1 * ((100vw - 100%) / 2));
+        border-radius: 0;
+        box-shadow: none;
+        background: url('images/lessons/onlinelessonscover.png') center center/contain no-repeat !important;
+      }
+      
+      /* Footer mobile styles */
+      .footer-newsletter h2 {
+        font-size: 1.5rem;
+      }
+      .footer-social h3 {
+        font-size: 1.3rem;
+      }
+    }
+    .offer-card-bg3 .offer-title,
+    .offer-card-bg3 .offer-main {
+      background: rgba(152, 101, 255, 0.702);
+      border-radius: 10px;
+      padding: 0.3em 0.7em;
+      color: #fff;
+    }
+    .coming-soon-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-360deg);
+      font-family: 'Cherry Bomb One', 'Nunito', 'Passion One', sans-serif;
+      font-size: 7vw;
+      font-weight: 900;
+      color: #ffffff;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+      z-index: 2;
+    }
+    
+    .lesson-button-label {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #716cff 0%, #b57edc 100%);
+      color: #ffffff;
+      padding: 0.8rem 2rem;
+      border-radius: 25px;
+      font-family: 'Nunito', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(113, 108, 255, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      z-index: 2;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    
+    .offer-card:hover .lesson-button-label {
+      transform: translateX(-50%) scale(1.05);
+      box-shadow: 0 6px 20px rgba(113, 108, 255, 0.6);
+      background: linear-gradient(135deg, #5a4fff 0%, #a259ff 100%);
+    }
+
+    @media (max-width: 768px) {
+  .mobile-flyer-list {
+    display: flex !important;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin: 1.5rem 0;
+    align-items: center;
+    width: 100%;
+  }
+  .mobile-flyer-list a {
+    display: block;
+    width: 92vw;
+    max-width: 420px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px #716cff22;
+    background: #fff;
+    margin: 0 auto;
+  }
+  .mobile-flyer-list img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 18px;
+  }
+  .mobile-flyer-label {
+    display: block;
+    text-align: center;
+    font-family: 'Nunito', Arial, sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #fff;
+    background: linear-gradient(135deg, #716cff 0%, #b57edc 100%);
+    padding: 0.7rem 0;
+    border-radius: 0 0 18px 18px;
+    margin-top: -8px;
+    box-shadow: 0 2px 8px #716cff33;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .mobile-flyer-list a:active .mobile-flyer-label,
+  .mobile-flyer-list a:focus .mobile-flyer-label,
+  .mobile-flyer-list a:hover .mobile-flyer-label {
+    background: linear-gradient(135deg, #5a4fff 0%, #a259ff 100%);
+    color: #fff;
+  }
+  .mobile-flyer-list a,
+  .mobile-flyer-label {
+    text-decoration: none !important;
+  }
+  .offer-card-bg4 {
+      background: url('images/lessons/onlinelessonscover.png') center center/cover no-repeat !important;
+      position: relative;
+      border: none;
+      width: 100%;
+      max-width: 1000px;
+      height: auto;
+      margin: 0 auto;
+      box-shadow: 0 4px 24px #716cff22;
+    }
+}
+
+@media (min-width: 701px) {
+  .mobile-flyer-list { display: none !important; }
+}
+    /* Make flyers closer together */
+    .offers-row {
+      gap: 1.1rem !important;
+    }
+    
+    @media (max-width: 768px) {
+      .offers-row {
+        gap: 1rem !important;
+      }
+    }
+    .offer-card-bg-dropin {
+      background: url('images/lessons/4weekseriesdropin.png') center center/cover no-repeat !important;
+      color: #fff;
+      position: relative;
+      box-shadow: 0 4px 24px #716cff22;
+      border: none;
+    }
+    @media (max-width: 768px) {
+  .offer-card {
+    width: 100vw;
+    max-width: 100vw;
+    aspect-ratio: 4/5;
+    border-radius: 0;
+    overflow: hidden;
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    margin: 0 auto 1.2rem auto;
+    display: block;
+    background-color: transparent !important;
+    box-shadow: none;
+  }
+}
+  </style>
+  <footer class="footer">
+      <div class="footer-bottom">
+        <div class="footer-newsletter">
+          <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
+          <form>
+            <input type="email" placeholder="Enter your email ..." required>
+            <button type="submit">Subscribe</button>
+          </form>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="Events.html">Events</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="directory.html">Directory</a>
+            <a href="lessons.html">Lessons</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
+        </div>
+        <div class="footer-social">
+          <h3>Follow Us</h3>
+          <div class="footer-social-icons">
+            <a href="https://www.instagram.com/queerlatindancesd/"><img src="images/icons/instagramlogo.png" alt="Instagram"></a>
+            <a href="https://www.youtube.com/@QueerLatinDance"><img src="images/icons/youtubeicon.png" alt="YouTube"></a>
+            <a href="https://www.tiktok.com/@queerlatindance"><img src="images/icons/tiktokicon2.png" alt="TikTok"></a>
+            <a href="https://linktr.ee/queerlatindancesd"><img src="images/icons/linktreelogo.png" alt="Linktree"></a>
+            <a href="https://chat.whatsapp.com/Hn9iICBTIPm9mCIEGcDRSr?mode=r_c"><img src="images/icons/whatsappicon.jpg" alt="WhatsApp"></a>
+          </div>
+          <div class="footer-copyright">
+            © 2025 Queer Latin Dance. All Rights Reserved.
+          </div>
+        </div>
+      </div>
+    </footer>
+      <script src="script.js"></script>
+      <script>
+        // Function to load lessons from JSON and display them
+        async function loadLessons() {
+          try {
+            const response = await fetch('lessons-data.json');
+            const lessonsData = await response.json();
+            
+            const upcomingLessons = document.getElementById('upcoming-lessons');
+            const comingSoonLessons = document.getElementById('coming-soon-lessons');
+            
+            // Clear existing content
+            upcomingLessons.innerHTML = '';
+            comingSoonLessons.innerHTML = '';
+            
+            // Function to create lesson HTML
+            function createLessonHTML(lesson) {
+              const isComingSoon = lesson.date === 'tba' || lesson.date === 'coming-soon';
+              const comingSoonBadge = isComingSoon ? '<span class="coming-soon-badge">Coming Soon!</span>' : '';
+              const cardClass = getCardClass(lesson.type);
+              
+              return `
+                <a class="offer-card ${cardClass}" href="${lesson.link}" style="position:relative;overflow:hidden;background: url('${lesson.flyerUrl}') center center/cover no-repeat !important;">
+                  <div class="lesson-button-label">${lesson.title}</div>
+                  ${comingSoonBadge}
+                </a>
+              `;
+            }
+            
+            // Function to get appropriate CSS class
+            function getCardClass(type) {
+              switch(type) {
+                case 'dropin':
+                  return 'offer-card-bg-dropin';
+                case 'series':
+                  return 'offer-card-bg';
+                case 'private':
+                  return 'offer-card-bg3';
+                case 'online':
+                  return 'offer-card-bg4';
+                default:
+                  return 'offer-card-bg';
+              }
+            }
+            
+            // Load upcoming lessons
+            lessonsData.upcoming.forEach(lesson => {
+              upcomingLessons.innerHTML += createLessonHTML(lesson);
+            });
+            
+            // Load coming soon lessons
+            lessonsData.coming_soon.forEach(lesson => {
+              comingSoonLessons.innerHTML += createLessonHTML(lesson);
+            });
+            
+          } catch (error) {
+            console.error('Error loading lessons:', error);
+            // Fallback: could show default lessons or error message
+          }
+        }
+        
+        // Run the function when page loads
+        document.addEventListener('DOMContentLoaded', loadLessons);
+      </script>
+      <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.innerWidth <= 768) {
+      // Wait for lesson cards to be loaded
+      setTimeout(function() {
+        document.querySelectorAll('.offer-card-bg4').forEach(function(card) {
+          card.removeAttribute('style'); // Remove inline style
+          card.style.background = "url('images/lessons/onlinelessonscover.png') center center/contain no-repeat";
+          card.style.width = "100vw";
+          card.style.maxWidth = "100vw";
+          card.style.marginLeft = "calc(-1 * ((100vw - 100%) / 2))";
+          card.style.marginRight = "calc(-1 * ((100vw - 100%) / 2))";
+          card.style.borderRadius = "0";
+        });
+      }, 300); // Wait for dynamic cards to render
+    }
+  });
+</script>
+</body>
+</html>

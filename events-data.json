@@ -1,0 +1,61 @@
+{
+  "upcoming": [
+    {
+      "id": "sep2025-banda",
+      "date": "2025-09-21",
+      "month": "SEP",
+      "day": "21",
+      "title": "Banda Workshop",
+      "flyerUrl": "images/eventpage/qsssepflyer.png",
+      "description": "Join us for an exciting banda workshop!"
+    },
+    {
+      "id": "20251026-qss",
+      "date": "2025-10-26",
+      "month": "OCT",
+      "day": "25",
+      "title": "QSS",
+      "flyerUrl": "https://dl.dropboxusercontent.com/scl/fi/whzjwnwmlpylint6gctci/october-qss-fall-vibes.png?rlkey=c5qmoed2na0u5rr5omqw4my67",
+      "inviteUrl": "https://partiful.com/e/z6Qf24ZhADBU6rijifAm",
+      "description": ""
+    }
+  ],
+  "past": [
+    {
+      "id": "aug2025-summer",
+      "date": "2025-08-15",
+      "month": "AUG",
+      "day": "10",
+      "title": "Summer Salsa Social",
+      "flyerUrl": "images/eventpage/qssaugflyer.png",
+      "description": "Summer salsa social event"
+    },
+    {
+      "id": "jul2025-summer",
+      "date": "2025-07-13",
+      "month": "JUL",
+      "day": "13",
+      "title": "Summer Salsa Social",
+      "flyerUrl": "images/eventpage/qssjulyflyer.png",
+      "description": "July summer salsa social"
+    },
+    {
+      "id": "jun2025-sober",
+      "date": "2025-06-21",
+      "month": "JUN",
+      "day": "21",
+      "title": "Sober Pride Event",
+      "flyerUrl": "images/eventpage/soberprideflyer.jpeg",
+      "description": "Sober pride celebration"
+    },
+    {
+      "id": "may2025-social",
+      "date": "2025-05-25",
+      "month": "MAY",
+      "day": "25",
+      "title": "May Social",
+      "flyerUrl": "images/eventpage/qssmayflyer.jpeg",
+      "description": "May social event"
+    }
+  ]
+}

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Manager - Queer Latin Dance SD</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        textarea {
+            height: 80px;
+            resize: vertical;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        button:hover {
+            background: #5a67d8;
+        }
+        
+        .delete-btn {
+            background: #e53e3e;
+        }
+        
+        .delete-btn:hover {
+            background: #c53030;
+        }
+        
+        .event-list {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .event-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .event-item h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        
+        .event-item p {
+            margin: 5px 0;
+            color: #666;
+        }
+        
+        .flyer-preview {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .instructions {
+            background: #e6fffa;
+            border: 1px solid #38b2ac;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions h3 {
+            color: #2c7a7b;
+            margin-top: 0;
+        }
+        
+        .export-section {
+            text-align: center;
+            padding: 20px;
+            background: #f0f8ff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Tab styles */
+        .tab-buttons {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .tab-buttons button {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        #tabEvents {
+            background: #667eea;
+            color: white;
+        }
+
+        #tabLessons {
+            background: #e6fffa;
+            color: #2c7a7b;
+        }
+
+        #tabEvents.active, #tabLessons.active {
+            background: #667eea;
+            color: white;
+        }
+
+        #tabEvents.inactive, #tabLessons.inactive {
+            background: #e6fffa;
+            color: #2c7a7b;
+        }
+
+        #eventsSection, #lessonsSection {
+            display: none;
+        }
+
+        #eventsSection.active, #lessonsSection.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Manager</h1>
+        <div class="tab-buttons">
+            <button id="tabEvents" class="active">Events</button>
+            <button id="tabLessons" class="inactive">Lessons</button>
+        </div>
+        <div id="eventsSection" class="active">
+            <div class="instructions">
+                <h3>How to Use:</h3>
+                <p>1. Add new events using the form below</p>
+                <p>2. For flyer images, you can:</p>
+                <ul>
+                    <li>Upload to your existing <code>images/eventpage/</code> folder and use relative path like <code>images/eventpage/newflyer.png</code></li>
+                    <li>Use external URLs (e.g., from Google Drive, Dropbox, or image hosting services)</li>
+                    <li>Use services like <a href="https://imgur.com" target="_blank">Imgur</a> or <a href="https://imgbb.com" target="_blank">ImgBB</a> for free image hosting</li>
+                </ul>
+                <p>3. Click "Export Events Data" to download the updated JSON file</p>
+                <p>4. Replace your existing <code>events-data.json</code> file with the downloaded one</p>
+            </div>
+            <div class="export-section">
+                <button onclick="exportEventsData()">📥 Export Events Data (JSON)</button>
+                <p style="margin: 10px 0 0 0; color: #666; font-size: 14px;">Download this file and replace events-data.json on your website</p>
+            </div>
+            <div class="form-section">
+                <h2>Add New Event</h2>
+                <form id="eventForm">
+                    <div class="form-group">
+                        <label for="eventTitle">Event Title:</label>
+                        <input type="text" id="eventTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDate">Event Date:</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="flyerUrl">Flyer Image URL or Path:</label>
+                        <input type="text" id="flyerUrl" placeholder="e.g., images/eventpage/newflyer.png or https://imgur.com/abc123.jpg" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inviteUrl">Invite URL (Partiful, etc):</label>
+                        <input type="text" id="inviteUrl" placeholder="e.g., https://partiful.com/e/your-event-link">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDescription">Description (optional):</label>
+                        <textarea id="eventDescription" placeholder="Brief description of the event"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventType">Event Type:</label>
+                        <select id="eventType">
+                            <option value="upcoming">Upcoming Event</option>
+                            <option value="past">Past Event</option>
+                        </select>
+                    </div>
+                    <button type="submit">Add Event</button>
+                </form>
+            </div>
+            <div class="form-section">
+                <h2>Upload Events Data (JSON)</h2>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <input type="file" id="eventsFile" name="eventsFile" accept=".json" required>
+                    <button type="submit">Upload Events Data</button>
+                    <div id="uploadStatus"></div>
+                </form>
+            </div>
+            <div class="event-list">
+                <h2>Current Events</h2>
+                <div id="eventsList"></div>
+            </div>
+        </div>
+        <div id="lessonsSection" class="inactive">
+            <div class="instructions">
+                <h3>How to Use:</h3>
+                <p>1. Upload lessons-data.json below</p>
+                <p>2. Click "Export Lessons Data" to download the updated JSON file</p>
+                <p>3. Replace your existing <code>lessons-data.json</code> file with the downloaded one</p>
+            </div>
+            <div class="export-section">
+                <button onclick="exportLessonsData()">📥 Export Lessons Data (JSON)</button>
+                <p style="margin: 10px 0 0 0; color: #666; font-size: 14px;">Download this file and replace lessons-data.json on your website</p>
+            </div>
+            <div class="form-section">
+                <h2>Add New Lesson</h2>
+                <form id="lessonForm">
+                    <div class="form-group">
+                        <label for="lessonTitle">Lesson Title:</label>
+                        <input type="text" id="lessonTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lessonDate">Lesson Date:</label>
+                        <input type="date" id="lessonDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lessonTime">Lesson Time:</label>
+                        <input type="text" id="lessonTime" placeholder="e.g., 7:00 PM - 8:00 PM" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lessonLocation">Location:</label>
+                        <input type="text" id="lessonLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lessonPriceSalsa">Price (Salsa Only):</label>
+                        <input type="number" id="lessonPriceSalsa" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lessonPriceBachata">Price (Bachata Only):</label>
+                        <input type="number" id="lessonPriceBachata" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lessonPriceBoth">Price (Salsa & Bachata):</label>
+                        <input type="number" id="lessonPriceBoth" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lessonFlyerUrl">Flyer Image URL or Path:</label>
+                        <input type="text" id="lessonFlyerUrl" placeholder="e.g., images/lessons/flyer.png or https://imgur.com/abc123.jpg" required oninput="updateLessonFlyerPreview()">
+                    </div>
+                    <div class="form-group">
+                        <label for="lessonDescription">Description (optional):</label>
+                        <textarea id="lessonDescription" placeholder="Brief description of the lesson"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="lessonType">Lesson Type:</label>
+                        <select id="lessonType">
+                            <option value="upcoming">Upcoming Lesson</option>
+                            <option value="coming_soon">Coming Soon Lesson</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Flyer Preview:</label>
+                        <img id="lessonFlyerPreview" src="" alt="Flyer Preview" style="max-width:200px; max-height:200px; display:none; border-radius:5px; margin-top:10px;">
+                    </div>
+                    <button type="submit">Add Lesson</button>
+                </form>
+            </div>
+            <div class="form-section">
+                <h2>Upload Lessons Data (JSON)</h2>
+                <form id="lessonsUploadForm" enctype="multipart/form-data">
+                    <input type="file" id="lessonsFile" name="lessonsFile" accept=".json" required>
+                    <button type="submit">Upload Lessons Data</button>
+                    <div id="lessonsUploadStatus"></div>
+                </form>
+            </div>
+            <div class="event-list">
+                <h2>Current Lessons</h2>
+                <div id="lessonsList"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Initialize with existing events data or empty structure
+        let eventsData = {
+            upcoming: [
+                {
+                    "id": "sep2025-banda",
+                    "date": "2025-09-21",
+                    "month": "SEP",
+                    "day": "21",
+                    "title": "Banda Workshop",
+                    "flyerUrl": "images/eventpage/qsssepflyer.png",
+                    "description": "Join us for an exciting banda workshop!"
+                }
+            ],
+            past: [
+                {
+                    "id": "aug2025-summer",
+                    "date": "2025-08-15",
+                    "month": "AUG", 
+                    "day": "10",
+                    "title": "Summer Salsa Social",
+                    "flyerUrl": "images/eventpage/qssaugflyer.png",
+                    "description": "Summer salsa social event"
+                },
+                {
+                    "id": "jul2025-summer",
+                    "date": "2025-07-13",
+                    "month": "JUL",
+                    "day": "13", 
+                    "title": "Summer Salsa Social",
+                    "flyerUrl": "images/eventpage/qssjulyflyer.png",
+                    "description": "July summer salsa social"
+                },
+                {
+                    "id": "jun2025-sober",
+                    "date": "2025-06-21",
+                    "month": "JUN",
+                    "day": "21",
+                    "title": "Sober Pride Event",
+                    "flyerUrl": "images/eventpage/soberprideflyer.jpeg", 
+                    "description": "Sober pride celebration"
+                },
+                {
+                    "id": "may2025-social",
+                    "date": "2025-05-25",
+                    "month": "MAY",
+                    "day": "25",
+                    "title": "May Social",
+                    "flyerUrl": "images/eventpage/qssmayflyer.jpeg",
+                    "description": "May social event"
+                }
+            ]
+        };
+
+        let lessonsData = { upcoming: [], coming_soon: [] };
+
+        // Generate unique ID for events
+        function generateEventId(title, date) {
+            const cleanTitle = title.toLowerCase().replace(/[^a-z0-9]/g, '');
+            const dateStr = date.replace(/-/g, '');
+            return `${dateStr}-${cleanTitle}`.substring(0, 20);
+        }
+
+        // Get month abbreviation and day from date
+        function getDateParts(dateString) {
+            const date = new Date(dateString);
+            const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 
+                          'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            return {
+                month: months[date.getMonth()],
+                day: date.getDate().toString()
+            };
+        }
+
+        // Add event function
+        document.getElementById('eventForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('eventTitle').value;
+            const date = document.getElementById('eventDate').value;
+            const flyerUrl = document.getElementById('flyerUrl').value;
+            const inviteUrl = document.getElementById('inviteUrl').value;
+            const description = document.getElementById('eventDescription').value;
+            const eventType = document.getElementById('eventType').value;
+            
+            const dateParts = getDateParts(date);
+            
+            const newEvent = {
+                id: generateEventId(title, date),
+                date: date,
+                month: dateParts.month,
+                day: dateParts.day,
+                title: title,
+                flyerUrl: flyerUrl,
+                inviteUrl: inviteUrl || "",
+                description: description || ""
+            };
+            
+            // Add to appropriate array
+            eventsData[eventType].push(newEvent);
+            
+            // Sort events by date
+            eventsData.upcoming.sort((a, b) => new Date(a.date) - new Date(b.date));
+            eventsData.past.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // Clear form
+            document.getElementById('eventForm').reset();
+            
+            // Refresh display
+            displayEvents();
+        });
+
+        // Display events function
+        function displayEvents() {
+            const eventsList = document.getElementById('eventsList');
+            eventsList.innerHTML = '';
+            
+            // Display upcoming events
+            if (eventsData.upcoming.length > 0) {
+                eventsList.innerHTML += '<h3 style="color: #2d3748; margin-top: 20px;">Upcoming Events</h3>';
+                eventsData.upcoming.forEach((event, index) => {
+                    eventsList.innerHTML += createEventHTML(event, 'upcoming', index);
+                });
+            }
+            
+            // Display past events
+            if (eventsData.past.length > 0) {
+                eventsList.innerHTML += '<h3 style="color: #2d3748; margin-top: 20px;">Past Events</h3>';
+                eventsData.past.forEach((event, index) => {
+                    eventsList.innerHTML += createEventHTML(event, 'past', index);
+                });
+            }
+        }
+
+        // Create event HTML
+        function createEventHTML(event, type, index) {
+            return `
+                <div class="event-item">
+                    <h4>${event.title}</h4>
+                    <p><strong>Date:</strong> ${event.date} (${event.month} ${event.day})</p>
+                    <p><strong>Flyer:</strong> ${event.flyerUrl}</p>
+                    ${event.description ? `<p><strong>Description:</strong> ${event.description}</p>` : ''}
+                    <img src="${event.flyerUrl}" alt="${event.title}" class="flyer-preview" 
+                         onerror="this.style.display='none'" onload="this.style.display='block'">
+                    <br>
+                    <button class="delete-btn" onclick="deleteEvent('${type}', ${index})">Delete Event</button>
+                </div>
+            `;
+        }
+
+        // Delete event function
+        function deleteEvent(type, index) {
+            if (confirm('Are you sure you want to delete this event?')) {
+                eventsData[type].splice(index, 1);
+                displayEvents();
+            }
+        }
+
+        // Export events data
+        function exportEventsData() {
+            const dataStr = JSON.stringify(eventsData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = 'events-data.json';
+            link.click();
+        }
+
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const fileInput = document.getElementById('eventsFile');
+          const statusDiv = document.getElementById('uploadStatus');
+          const file = fileInput.files[0];
+          if (!file) return;
+
+          const formData = new FormData();
+          formData.append('eventsFile', file);
+
+          const response = await fetch('/upload-events-data', {
+            method: 'POST',
+            body: formData
+          });
+
+          if (response.ok) {
+            statusDiv.textContent = 'Upload successful!';
+          } else {
+            statusDiv.textContent = 'Upload failed.';
+          }
+        });
+
+        // Lessons manager functions
+        document.getElementById('lessonsUploadForm').addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const fileInput = document.getElementById('lessonsFile');
+          const statusDiv = document.getElementById('lessonsUploadStatus');
+          const file = fileInput.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            try {
+              lessonsData = JSON.parse(e.target.result);
+              displayLessons();
+              statusDiv.textContent = 'Upload successful!';
+            } catch {
+              statusDiv.textContent = 'Upload failed.';
+            }
+          };
+          reader.readAsText(file);
+        });
+
+        document.getElementById('lessonForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const title = document.getElementById('lessonTitle').value;
+            const date = document.getElementById('lessonDate').value;
+            const time = document.getElementById('lessonTime').value;
+            const location = document.getElementById('lessonLocation').value;
+            const priceSalsa = document.getElementById('lessonPriceSalsa').value;
+            const priceBachata = document.getElementById('lessonPriceBachata').value;
+            const priceBoth = document.getElementById('lessonPriceBoth').value;
+            const flyerUrl = document.getElementById('lessonFlyerUrl').value;
+            const description = document.getElementById('lessonDescription').value;
+            const lessonType = document.getElementById('lessonType').value;
+            const newLesson = {
+                title: title,
+                date: date,
+                time: time,
+                location: location,
+                priceSalsa: priceSalsa,
+                priceBachata: priceBachata,
+                priceBoth: priceBoth,
+                flyerUrl: flyerUrl,
+                description: description || ""
+            };
+            lessonsData[lessonType].push(newLesson);
+            document.getElementById('lessonForm').reset();
+            document.getElementById('lessonFlyerPreview').style.display = 'none';
+            displayLessons();
+        });
+
+        function updateLessonFlyerPreview() {
+            const url = document.getElementById('lessonFlyerUrl').value;
+            const preview = document.getElementById('lessonFlyerPreview');
+            if (url) {
+                preview.src = url;
+                preview.style.display = 'block';
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
+            }
+        }
+
+        function displayLessons() {
+          const lessonsList = document.getElementById('lessonsList');
+          lessonsList.innerHTML = '';
+          if (lessonsData.upcoming && lessonsData.upcoming.length > 0) {
+            lessonsList.innerHTML += '<h3 style="color: #2d3748; margin-top: 20px;">Upcoming Lessons</h3>';
+            lessonsData.upcoming.forEach((lesson, idx) => {
+              lessonsList.innerHTML += createLessonHTML(lesson, 'upcoming', idx);
+            });
+          }
+          if (lessonsData.coming_soon && lessonsData.coming_soon.length > 0) {
+            lessonsList.innerHTML += '<h3 style="color: #2d3748; margin-top: 20px;">Coming Soon Lessons</h3>';
+            lessonsData.coming_soon.forEach((lesson, idx) => {
+              lessonsList.innerHTML += createLessonHTML(lesson, 'coming_soon', idx);
+            });
+          }
+        }
+
+        function createLessonHTML(lesson, type, idx) {
+          return `
+            <div class="event-item">
+              <h4>${lesson.title || ''}</h4>
+              <p><strong>Date:</strong> ${lesson.date || ''}</p>
+              <p><strong>Time:</strong> ${lesson.time || ''}</p>
+              <p><strong>Location:</strong> ${lesson.location || ''}</p>
+              <p><strong>Price (Salsa Only):</strong> $${lesson.priceSalsa || ''}</p>
+              <p><strong>Price (Bachata Only):</strong> $${lesson.priceBachata || ''}</p>
+              <p><strong>Price (Salsa & Bachata):</strong> $${lesson.priceBoth || ''}</p>
+              <p><strong>Flyer:</strong> ${lesson.flyerUrl || ''}</p>
+              ${lesson.description ? `<p><strong>Description:</strong> ${lesson.description}</p>` : ''}
+              <img src="${lesson.flyerUrl || ''}" alt="${lesson.title || ''}" class="flyer-preview"
+                   onerror="this.style.display='none'" onload="this.style.display='block'">
+              <br>
+              <button class="delete-btn" onclick="deleteLesson('${type}', ${idx})">Delete Lesson</button>
+            </div>
+          `;
+        }
+
+        function deleteLesson(type, idx) {
+          if (confirm('Are you sure you want to delete this lesson?')) {
+            lessonsData[type].splice(idx, 1);
+            displayLessons();
+          }
+        }
+
+        function exportLessonsData() {
+          const dataStr = JSON.stringify(lessonsData, null, 2);
+          const dataBlob = new Blob([dataStr], {type: 'application/json'});
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(dataBlob);
+          link.download = 'lessons-data.json';
+          link.click();
+        }
+
+        async function loadEventsFromJson() {
+          try {
+            const response = await fetch('events-data.json');
+            eventsData = await response.json();
+            displayEvents();
+          } catch (error) {
+            console.error('Failed to load events-data.json:', error);
+            displayEvents(); // fallback to hardcoded data
+          }
+        }
+
+        async function loadLessonsFromJson() {
+          try {
+            const response = await fetch('lessons-data.json');
+            lessonsData = await response.json();
+            displayLessons();
+          } catch (error) {
+            console.error('Failed to load lessons-data.json:', error);
+            displayLessons();
+          }
+        }
+        window.addEventListener('DOMContentLoaded', function() {
+          loadEventsFromJson();
+          loadLessonsFromJson();
+        });
+
+        // Initialize display
+        displayEvents();
+        displayLessons();
+
+        // Tab switching functionality
+        document.getElementById('tabEvents').onclick = function() {
+            document.getElementById('eventsSection').classList.add('active');
+            document.getElementById('eventsSection').classList.remove('inactive');
+            document.getElementById('lessonsSection').classList.remove('active');
+            document.getElementById('lessonsSection').classList.add('inactive');
+            this.classList.add('active');
+            this.classList.remove('inactive');
+            document.getElementById('tabLessons').classList.add('inactive');
+            document.getElementById('tabLessons').classList.remove('active');
+        };
+        document.getElementById('tabLessons').onclick = function() {
+            document.getElementById('lessonsSection').classList.add('active');
+            document.getElementById('lessonsSection').classList.remove('inactive');
+            document.getElementById('eventsSection').classList.remove('active');
+            document.getElementById('eventsSection').classList.add('inactive');
+            this.classList.add('active');
+            this.classList.remove('inactive');
+            document.getElementById('tabEvents').classList.add('inactive');
+            document.getElementById('tabEvents').classList.remove('active');
+        };
+    </script>
+</body>
+</html>

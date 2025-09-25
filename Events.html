@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Events - Queer Latin Dance SD</title>
+  <!-- YouTube Shorts background, only visible at top of page -->
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Events page specific navigation styles */
+    /* === EVENTS PAGE STYLES === */
+    .events-title {
+      font-family: 'PassionOne','Lilita One', 'Signika', 'Huninn', Arial, sans-serif;
+      font-size: 5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    /* Events List Styling */
+    .events-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Large flyer images for Events page */
+    .event-item {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .event-flyer {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .flyer-image {
+      width: 80%;
+      max-width: 600px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      object-fit: contain;
+      object-position: center;
+      filter: none !important;
+      outline: none !important;
+      border: none !important;
+    }
+
+    .event-date {
+      position: absolute;
+      top: 15px;
+      left: 70px;
+      z-index: 2;
+      background: #b57edc;
+      color: #fff;
+      border-radius: 3px;
+      padding: 0.4rem 0.8rem;
+      min-width: 50px;
+      text-align: center;
+      display: block;
+      margin: 0;
+    }  
+
+    .event-day {
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-bottom: 0.2rem;
+    }
+
+    .event-number {
+      font-size: 1.8rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    /* Mobile responsive styles */
+    @media (max-width: 768px) {
+      .events-list {
+        max-width: 100%;
+        padding: 0 0.5rem;
+      }
+
+      .event-item {
+        width: 100%;
+        max-width: 100%;
+      }
+.event-date {
+        top: 10px;
+        left: 20px;
+        padding: 0.3rem 0.6rem;
+        min-width: 40px;
+      }
+      .event-flyer {
+        width: 100%;
+      }
+
+      .flyer-image {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+      }
+
+      .events-title {
+        font-size: 3.5rem;
+      }
+
+      /* Footer mobile styles */
+      .footer-newsletter h2 {
+        font-size: 1.5rem;
+      }
+
+      .footer-social h3 {
+        font-size: 1.3rem;
+      }
+    }
+
+    .code-of-conduct-section {
+      background: #dcbffe00;
+      border-radius: 5px;
+      padding: 2.5em 1.5em 2em 1.5em;
+      margin: 2.5em auto 2em auto;
+      max-width: 1500px;
+      color: #ffffff;
+    }
+    .code-btn {
+      display: block;
+      margin: 0.5em auto 0.5em auto;
+      padding: 0.15em 0.8em;
+      font-size: 1.2rem;
+      background: #8611f4;
+      color: #fff;
+      border: none;
+      border-radius: 500px;
+      cursor: pointer;
+      font-family: 'Huninn', Arial, sans-serif;
+      width: fit-content;
+      min-width: 0;
+      max-width: 100%;
+      margin-bottom: 150px;
+    }
+    .code-of-conduct-title {
+      margin-top: 150px;
+      margin-bottom: 30px;
+      font-size: 3rem;
+      text-align: center;
+      color: #ead2f8;
+      font-family: 'PassionOne', Arial, sans-serif;
+      letter-spacing: 0.5px;
+      line-height: 100px;
+    }
+
+    .code-of-conduct-desc {
+      text-align: center;
+      margin-bottom: 1.5em;
+      color: #fff9f9;
+      font-size: 1.2rem;
+    }
+    
+    .code-of-conduct-list {
+      list-style: none;
+      padding-left: 0;
+      margin-left: 0;
+      font-family: 'Nunito','Signika', Arial, sans-serif;
+      font-size: 1.2rem;
+      margin: 0 auto;
+      text-align: left;
+      max-width: 600px;
+      width: 100%;
+      display: block;
+    }
+    .code-of-conduct-list > li {
+      margin-bottom: 1.2em;
+    }
+    .code-of-conduct-list strong {
+      display: block;
+      margin-bottom: 0.3em;
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-family: 'PassionOne', Arial, sans-serif;
+    }
+    .code-of-conduct-list ul {
+      list-style: disc inside;
+      margin-left: 1.2em;
+      padding-left: 0.5em;
+      text-align: left;
+    }
+    .code-of-conduct-list ul li {
+      margin-bottom: 0.3em;
+      color: #ffffff;
+      font-size: 10px;
+      font-family: 'Nunito','Signika', Arial, sans-serif;
+      list-style-type: disc;
+      text-align: left;
+      padding-left: 0;
+      position: relative;
+    }
+    .code-of-conduct-list ul li:before {
+      display: none;
+    }
+    .code-of-conduct-list > li {
+      margin-bottom: 1.2em;
+    }
+    .code-of-conduct-list strong {
+      display: block;
+      margin-bottom: 0.3em;
+      font-size: 1.4rem;
+      color: #ffffff;
+      font-family: 'Huninn', Arial, sans-serif;
+    }
+    .code-of-conduct-list ul li {
+      margin-bottom: 0.3em;
+      padding-left: 1.2em;
+      position: relative;
+      color: #ffffff;
+      font-size: 1em;
+    }
+    .code-of-conduct-list ul li:before {
+      content: '';
+      display: none;
+    }
+    .code-of-conduct-thankyou {
+      text-align: center;
+      margin-top: 2em;
+      font-style: italic;
+      color: #ffffff;
+      font-size: 1.3em;
+    }
+  </style>
+</head>
+<body class="events-page">
+  <header>
+    <a href="index.html">
+      <img src="images/logos/logo1.png" alt="Queer Latin Dance SD Logo" class="logo1" />
+    <nav>
+    <a href="about.html">About</a>
+    <a href="Events.html">Events</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="directory.html">Directory</a>
+    <a href="lessons.html">Lessons</a>
+    </nav>
+      <!-- Mobile Navigation Toggle -->
+  <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- Mobile Navigation Menu -->
+<div class="mobile-nav-menu">
+  <nav>
+    <a href="about.html">About</a>
+    <a href="Events.html">Events</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="directory.html">Directory</a>
+    <a href="lessons.html">Lessons</a>
+  </nav>
+</div>
+  </header>
+  
+  <main>
+    <!-- <div class="video-hero-section">
+    <iframe
+      id="bg-video"
+      src="https://www.youtube.com/embed/5Jawc-xi-4o?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&loop=1&playlist=5Jawc-xi-4o"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+      style="position:absolute;top:10%;left:50%;width:56.25vw;height:85vh;min-width:100vw;min-height:177.78vw;transform:translate(-50%,-50%);z-index:-1;object-fit:cover;opacity:1;pointer-events:none;"
+    ></iframe>
+    <div style="position:absolute;top:10%;left:50%;width:56.25vw;height:85vh;min-width:100vw;min-height:177.78vw;transform:translate(-50%,-50%);background:rgba(0, 0, 0, 0.614);z-index:-1;pointer-events:none;"></div>
+  </div> -->
+  
+  <section class="event-page">
+      <h1 class="events-title">UPCOMING EVENTS</h1>
+      <div class="events-list" id="upcoming-events">
+        <!-- Events will be loaded dynamically from events-data.json -->
+      </div>
+      <h1 class="events-title" id="past-events-title" style="display: none;">PAST EVENTS</h1>
+      <div class="events-list" id="past-events" style="display: none;">
+        <!-- Past events will be loaded dynamically from events-data.json -->
+      </div>
+      <!-- Add more .event-card blocks as needed -->
+
+    </section>
+  </main>
+    <!--
+  <div class="calendar-container">
+    <iframe 
+      src="https://calendar.google.com/calendar/embed?src=queerlatindancesd%40gmail.com&ctz=America%2FLos_Angeles"
+      style="border:0"
+      width="1000"
+      height="700"
+      frameborder="0"
+      scrolling="no">
+    </iframe>
+  </div>
+-->
+   <section class="code-of-conduct-section">
+      <button id="showCodeBtn" class="code-btn">Queer Latin Dance San Diego Code of Conduct</button>
+    </section>
+    <div id="codeOfConductOverlay" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(30,0,60,0.97);z-index:9999;align-items:center;justify-content:center;padding:20px;overflow-y:auto;">
+      <div style="background:none;color:#fff;width:100vw;max-width:none;padding:0;margin:0;box-shadow:none;border-radius:0;position:relative;min-height:100vh;">
+        <button id="closeCodeBtn" style="position:absolute;top:18px;right:24px;font-size:2.2em;background:none;border:none;color:#fff;cursor:pointer;font-weight:bold;z-index:10001;">&times;</button>
+        <div style="max-width:1000px;margin:3em auto 2em auto;">
+          <img src="images/eventpage/code_of_conduct.png" alt="Queer Latin Dance San Diego Code of Conduct" style="max-width:100%;max-height:100vh;width:auto;height:auto;object-fit:contain;display:block;margin:0 auto;">
+        </div>
+      </div>
+    </div>
+  <footer class="footer">
+      <div class="footer-bottom">
+        <div class="footer-newsletter">
+          <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
+          <form>
+            <input type="email" placeholder="Enter your email ..." required>
+            <button type="submit">Subscribe</button>
+          </form>
+         <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="Events.html">Events</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="directory.html">Directory</a>
+            <a href="lessons.html">Lessons</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
+        </div>
+        <div class="footer-social">
+          <h3>Follow Us</h3>
+          <div class="footer-social-icons">
+            <a href="https://www.instagram.com/queerlatindancesd/"><img src="images/icons/instagramlogo.png" alt="Instagram"></a>
+            <a href="https://www.youtube.com/@QueerLatinDance"><img src="images/icons/youtubeicon.png" alt="YouTube"></a>
+            <a href="https://www.tiktok.com/@queerlatindance"><img src="images/icons/tiktokicon2.png" alt="TikTok"></a>
+            <a href="https://linktr.ee/queerlatindancesd"><img src="images/icons/linktreelogo.png" alt="Linktree"></a>
+            <a href="https://chat.whatsapp.com/Hn9iICBTIPm9mCIEGcDRSr?mode=r_c"><img src="images/icons/whatsappicon.jpg" alt="WhatsApp"></a>
+          </div>
+          <div class="footer-copyright">
+            © 2025 Queer Latin Dance. All Rights Reserved.
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+      // Fallback data in case JSON loading fails
+      const fallbackEventsData = {
+        "upcoming": [
+          {
+            "id": "sep2025-banda",
+            "date": "2025-09-21",
+            "month": "SEP",
+            "day": "21",
+            "title": "Banda Workshop",
+            "flyerUrl": "images/eventpage/qsssepflyer.png",
+            "description": "Join us for an exciting banda workshop!"
+          }
+        ],
+        "past": [
+          {
+            "id": "aug2025-summer",
+            "date": "2025-08-15",
+            "month": "AUG", 
+            "day": "15",
+            "title": "Summer Salsa Social",
+            "flyerUrl": "images/eventpage/qssaugflyer.png",
+            "description": "Summer salsa social event"
+          },
+          {
+            "id": "jul2025-summer",
+            "date": "2025-07-20",
+            "month": "JUL",
+            "day": "20", 
+            "title": "Summer Salsa Social",
+            "flyerUrl": "images/eventpage/qssjulyflyer.png",
+            "description": "July summer salsa social"
+          },
+          {
+            "id": "jun2025-sober",
+            "date": "2025-06-21",
+            "month": "JUN",
+            "day": "21",
+            "title": "Sober Pride Event",
+            "flyerUrl": "images/eventpage/soberprideflyer.jpeg", 
+            "description": "Sober pride celebration"
+          },
+          {
+            "id": "may2025-social",
+            "date": "2025-05-25",
+            "month": "MAY",
+            "day": "25",
+            "title": "May Social",
+            "flyerUrl": "images/eventpage/qssmayflyer.jpeg",
+            "description": "May social event"
+          }
+        ]
+      };
+
+      // Function to load events from JSON and display them
+      async function loadEvents() {
+        let eventsData = null;
+        
+        try {
+          console.log('Attempting to load events-data.json...');
+          const response = await fetch('events-data.json');
+          eventsData = await response.json();
+          console.log('✅ Successfully loaded events from JSON file');
+        } catch (error) {
+          console.log('❌ Failed to load JSON file, using fallback data');
+          console.log('Error details:', error);
+          eventsData = fallbackEventsData;
+        }
+        
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Set to start of today to avoid time comparison issues
+        const upcomingEvents = document.getElementById('upcoming-events');
+        const pastEvents = document.getElementById('past-events');
+        const pastEventsTitle = document.getElementById('past-events-title');
+        
+        // Clear existing content
+        upcomingEvents.innerHTML = '';
+        pastEvents.innerHTML = '';
+        
+        // Function to create event HTML
+        function createEventHTML(event) {
+          const flyerImg = `<img src="${event.flyerUrl}" alt="${event.title} Flyer" class="flyer-image" />`;
+          const flyerContent = event.inviteUrl
+            ? `<a href="${event.inviteUrl}" target="_blank" rel="noopener noreferrer">${flyerImg}</a>`
+            : flyerImg;
+          return `
+            <div class="event-item" data-date="${event.date}">
+              <div class="event-flyer">
+                ${flyerContent}
+                <div class="event-date">
+                  <div class="event-day">${event.month}</div>
+                  <div class="event-number">${event.day}</div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+        
+        // Load upcoming events
+        console.log('Today is:', today.toDateString());
+        eventsData.upcoming.forEach(event => {
+          const eventDate = new Date(event.date);
+          eventDate.setHours(0, 0, 0, 0); // Set to start of event date
+          console.log(`Event ${event.title} (${event.date}):`, eventDate.toDateString(), 'vs Today:', today.toDateString(), 'Future?', eventDate >= today);
+          if (eventDate >= today) {
+            upcomingEvents.innerHTML += createEventHTML(event);
+          } else {
+            // Move to past events if date has passed
+            console.log('Moving to past:', event.title);
+            eventsData.past.unshift(event);
+          }
+        });
+        
+        // Load past events (sorted by date, most recent first)
+        eventsData.past.sort((a, b) => new Date(b.date) - new Date(a.date));
+        eventsData.past.forEach(event => {
+          pastEvents.innerHTML += createEventHTML(event);
+        });
+        
+        // Show past events section if it has events
+        if (eventsData.past.length > 0) {
+          pastEvents.style.display = 'flex';
+          pastEventsTitle.style.display = 'block';
+        }
+        
+        console.log('Events loaded successfully! Upcoming:', eventsData.upcoming.length, 'Past:', eventsData.past.length);
+      }
+      
+      // Run the function when page loads
+      document.addEventListener('DOMContentLoaded', loadEvents);
+    </script>
+<script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('showCodeBtn').onclick = function() {
+    document.getElementById('codeOfConductOverlay').style.display = 'flex';
+  };
+  document.getElementById('closeCodeBtn').onclick = function() {
+    document.getElementById('codeOfConductOverlay').style.display = 'none';
+  };
+  // Also close overlay on ESC
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.getElementById('codeOfConductOverlay').style.display = 'none';
+  });
+});
+</script>
+</body>
+</html>
