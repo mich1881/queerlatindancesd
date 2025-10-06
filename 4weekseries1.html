@@ -822,23 +822,23 @@ Perfect for total beginners and those who want to build confidence and sharpen t
       getTicketsBtn.addEventListener('click', function(e) {
         e.preventDefault();
         const selected = document.querySelector('.pricing-option.selected');
-        let option = '4WK-S1 - Salsa & Bachata';
+        let option = 'both'; // Use standardized option name
         let price = '144';
         if (selected) {
           const text = selected.textContent.trim().toLowerCase();
           if (text.includes('salsa') && text.includes('bachata')) {
-            option = '4WK-S1 - Salsa & Bachata';
+            option = 'both'; // Use standardized option name
             price = '144';
           } else if (text.includes('salsa')) {
-            option = '4WK-S1 - Salsa Only';
+            option = 'salsa'; // Use standardized option name
             price = '80';
           } else if (text.includes('bachata')) {
-            option = '4WK-S1 - Bachata Only';
+            option = 'bachata'; // Use standardized option name
             price = '80';
           }
         }
-        // Pass option and price as URL parameters
-        window.location.href = `payment1.html?option=${encodeURIComponent(option)}&price=${encodeURIComponent(price)}`;
+        // Pass option, price, and pricing_type as URL parameters
+        window.location.href = `payment1.html?option=${encodeURIComponent(option)}&price=${encodeURIComponent(price)}&pricing_type=series`;
       });
       // Set calendar link
       const gcalLinkFriday = document.getElementById('gcal-link-friday');

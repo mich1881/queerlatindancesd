@@ -1,0 +1,23 @@
+name = "queer-latin-dance-payment-form"
+main = "cloudflare-worker.js"
+compatibility_date = "2023-12-01"
+
+# Environment variables for production
+[env.production.vars]
+ADMIN_EMAIL = "queerlatindancesd@gmail.com"
+FROM_EMAIL = "noreply@queerlatindancesd.com"
+
+# For development/testing
+[env.staging.vars]
+ADMIN_EMAIL = "test@example.com"
+FROM_EMAIL = "noreply@test.com"
+
+# Optional: Custom domain routing
+# [triggers]
+# crons = []
+
+# Optional: KV storage for tracking submissions
+# [[kv_namespaces]]
+# binding = "SUBMISSIONS"
+# id = "your-kv-namespace-id"
+# preview_id = "your-preview-kv-namespace-id"

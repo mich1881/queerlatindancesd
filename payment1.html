@@ -88,6 +88,18 @@
       text-align: center;
       box-sizing: border-box;
       overflow: hidden;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .choose-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      cursor: pointer;
+    }
+
+    .choose-btn:active {
+      transform: translateY(0px);
     }
     .choose-btn img {
       height: 1.0em !important;
@@ -193,6 +205,24 @@
       border: none;
       cursor: pointer;
       margin-bottom: 1rem;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .modal-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      cursor: pointer;
+    }
+
+    .modal-submit:active {
+      transform: translateY(0px);
+    }
+
+    .modal-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
     }
     .paypal-submit {
       background: linear-gradient(90deg,#ffe066 10%,#b57edc 90%);
@@ -581,7 +611,7 @@
           </div>
         </div>
       </div>
-      <div class="payment-note">After payment, you will receive a confirmation email within 24 hours.</div>
+      <div class="payment-note">After payment, you will receive a confirmation email along with the Course Overview.</div>
       <div class="payment-fee-note">
         <span class="payment-fee-highlight">Note: PayPal and Stripe charge processing fees. Zelle and Venmo are recommended for no-fee payments.</span>
       </div>
@@ -1039,8 +1069,23 @@
       }
       
       // PayPal form handler
-      document.getElementById('paypalFormInner').onsubmit = function(ev) {
+      document.getElementById('paypalFormInner').onsubmit = async function(ev) {
         ev.preventDefault();
+        ev.stopPropagation();
+        
+        // Prevent double submission
+        if (this.dataset.submitting === 'true') {
+          console.log('⚠️ Form already submitting, ignoring duplicate submission');
+          return;
+        }
+        this.dataset.submitting = 'true';
+        
+        // Disable submit button
+        const submitBtn = this.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Submitting...';
+        }
         const firstName = this.firstName.value;
         const lastName = this.lastName.value;
         const email = this.email.value;
@@ -1062,14 +1107,27 @@
           pronouns,
           paymentMethod: 'PayPal',
           series,
-          amount: `$${amount}`
+          amount: `$${amount}`,
+          timestamp: new Date().toISOString() // Add timestamp to help identify duplicates
         };
         if (pricingType === 'private') {
           formData.date = getParam('date') || '';
           formData.time = getParam('time') || '';
         }
-        console.log('Submitting to Google Sheet (PayPal):', formData);
-        sendToGoogleSheet(formData);
+        console.log('Submitting to backend (PayPal):', formData);
+        
+        try {
+          await sendToBackend(formData);
+          // Backend handles Google Sheets backup - no need for duplicate submission
+        } catch (error) {
+          // Re-enable form if submission fails
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Continue to PayPal';
+          }
+          this.dataset.submitting = 'false';
+          return; // Exit early on error
+        }
         
         let seriesLabel = getSeriesLabel(series, pricingType);
         let details = `<b>💳 PayPal Payment</b><br><br>` +
@@ -1102,12 +1160,35 @@
             link.click();
             document.body.removeChild(link);
           }
+          // Reset form submission flag after redirect
+          setTimeout(() => {
+            this.dataset.submitting = 'false';
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Continue to PayPal';
+            }
+          }, 3000);
         }, 1000); // Give time for overlay to show
       };
 
       // Zelle form handler
-      document.getElementById('zelleFormInner').onsubmit = function(ev) {
+      document.getElementById('zelleFormInner').onsubmit = async function(ev) {
         ev.preventDefault();
+        ev.stopPropagation();
+        
+        // Prevent double submission
+        if (this.dataset.submitting === 'true') {
+          console.log('⚠️ Form already submitting, ignoring duplicate submission');
+          return;
+        }
+        this.dataset.submitting = 'true';
+        
+        // Disable submit button
+        const submitBtn = this.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Submitting...';
+        }
         const firstName = this.firstName.value;
         const lastName = this.lastName.value;
         const email = this.email.value;
@@ -1129,14 +1210,27 @@
           pronouns,
           paymentMethod: 'Zelle',
           series,
-          amount
+          amount,
+          timestamp: new Date().toISOString() // Add timestamp to help identify duplicates
         };
         if (pricingType === 'private') {
           formData.date = getParam('date') || '';
           formData.time = getParam('time') || '';
         }
-        console.log('Submitting to Google Sheet (Zelle):', formData);
-        sendToGoogleSheet(formData);
+        console.log('Submitting to backend (Zelle):', formData);
+        
+        try {
+          await sendToBackend(formData);
+          // Backend handles Google Sheets backup - no need for duplicate submission
+        } catch (error) {
+          // Re-enable form if submission fails
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Show Zelle Details';
+          }
+          this.dataset.submitting = 'false';
+          return; // Exit early on error
+        }
         let seriesLabel = getSeriesLabel(series, pricingType);
         let details = `<b>💰 Zelle Payment</b><br><br>` +
           `<b>Amount:</b> ${amount}<br>` +
@@ -1153,11 +1247,35 @@
         
         // Show overlay with payment details
         showPaymentOverlay(details);
+        
+        // Reset form submission flag
+        setTimeout(() => {
+          this.dataset.submitting = 'false';
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Show Zelle Details';
+          }
+        }, 3000);
       };
 
       // Venmo form handler
-      document.getElementById('venmoFormInner').onsubmit = function(ev) {
+      document.getElementById('venmoFormInner').onsubmit = async function(ev) {
         ev.preventDefault();
+        ev.stopPropagation();
+        
+        // Prevent double submission
+        if (this.dataset.submitting === 'true') {
+          console.log('⚠️ Form already submitting, ignoring duplicate submission');
+          return;
+        }
+        this.dataset.submitting = 'true';
+        
+        // Disable submit button
+        const submitBtn = this.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Submitting...';
+        }
         const firstName = this.firstName.value;
         const lastName = this.lastName.value;
         const email = this.email.value;
@@ -1179,14 +1297,27 @@
           pronouns,
           paymentMethod: 'Venmo',
           series,
-          amount: `$${amount}`
+          amount: `$${amount}`,
+          timestamp: new Date().toISOString() // Add timestamp to help identify duplicates
         };
         if (pricingType === 'private') {
           formData.date = getParam('date') || '';
           formData.time = getParam('time') || '';
         }
-        console.log('Submitting to Google Sheet (Venmo):', formData);
-        sendToGoogleSheet(formData);
+        console.log('Submitting to backend (Venmo):', formData);
+        
+        try {
+          await sendToBackend(formData);
+          // Backend handles Google Sheets backup - no need for duplicate submission
+        } catch (error) {
+          // Re-enable form if submission fails
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Continue to Venmo';
+          }
+          this.dataset.submitting = 'false';
+          return; // Exit early on error
+        }
         let seriesLabel = getSeriesLabel(series, pricingType);
         let details = `<b>📱 Venmo Payment</b><br><br>` +
           `<b>Amount:</b> $${amount}<br>` +
@@ -1206,7 +1337,18 @@
         
         // Open Venmo after showing overlay
         setTimeout(() => {
+          // Create Venmo URL (if not already defined)
+          const venmoUrl = `https://venmo.com/u/michf18?txn=pay&note=${encodeURIComponent(firstName + ' ' + lastName + ' - ' + seriesLabel)}`;
           window.location.href = venmoUrl;
+          
+          // Reset form submission flag after redirect
+          setTimeout(() => {
+            this.dataset.submitting = 'false';
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Continue to Venmo';
+            }
+          }, 2000);
         }, 1500); // Give time for overlay to show and user to read
       };
       /*
@@ -1272,39 +1414,105 @@
       }
     });
     
-    // Google Sheets - Enhanced with debugging
+    // Send to your backend (which handles both Google Sheets and email)
+    let backendRequestInProgress = false;
+    let submittedFormIds = new Set(); // Track submitted forms to prevent duplicates
+    let lastSubmissionTime = 0; // Track timing to prevent rapid submissions
+    
+    // Generate a unique form ID based on form data and timestamp
+    function generateFormId(formData) {
+      const timestamp = Date.now();
+      const key = `${formData.firstName}_${formData.lastName}_${formData.email}_${formData.paymentMethod}_${formData.series}_${timestamp}`;
+      return btoa(key).replace(/[^a-zA-Z0-9]/g, '').substring(0, 20);
+    }
+    
+    async function sendToBackend(formData) {
+      const currentTime = Date.now();
+      
+      // Rate limiting: prevent submissions within 3 seconds of each other
+      if (currentTime - lastSubmissionTime < 3000) {
+        console.log('⚠️ Rate limit: Please wait before submitting again');
+        return;
+      }
+      
+      // Prevent concurrent requests first
+      if (backendRequestInProgress) {
+        console.log('⚠️ Backend request already in progress, skipping duplicate');
+        return;
+      }
+      
+      // Add unique submission ID to form data for server-side deduplication
+      const submissionId = generateFormId(formData);
+      formData.submissionId = submissionId;
+      
+      // Check client-side duplicate prevention
+      const dataFingerprint = `${formData.firstName}-${formData.lastName}-${formData.email}-${formData.series}`;
+      if (submittedFormIds.has(dataFingerprint)) {
+        console.log('⚠️ Duplicate form submission detected (client-side), skipping:', dataFingerprint);
+        return;
+      }
+      
+      // Mark as in progress and add to submitted set
+      submittedFormIds.add(dataFingerprint);
+      backendRequestInProgress = true;
+      lastSubmissionTime = currentTime;
+      
+      // Your backend URL - update this when you deploy
+      // Choose your backend deployment option:
+      // const backendUrl = 'http://localhost:3000/api/payment-form'; // Local development
+      // const backendUrl = 'https://your-backend-url.railway.app/api/payment-form'; // Railway
+      const backendUrl = 'https://restless-feather-b6a9.michf18.workers.dev/api/payment-form'; // Cloudflare Workers
+      
+      console.log('🔄 Sending data to backend...', formData);
+      
+      try {
+        const response = await fetch(backendUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+          console.log('✅ Backend response:', result);
+          alert('✅ Registration submitted! Check your email for payment instructions.');
+          return result;
+        } else {
+          console.error('❌ Backend error:', result);
+          alert('❌ Error: ' + (result.error || 'Unknown error occurred'));
+          throw new Error(result.error || 'Backend error');
+        }
+      } catch (error) {
+        console.error('❌ Network error:', error);
+        alert('❌ Network error: ' + error.message + '\n\nPlease try again or contact support.');
+        throw error;
+      } finally {
+        // Always reset the flag when done
+        backendRequestInProgress = false;
+      }
+    }
+    
+    // Keep Google Sheets as backup (optional)
     function sendToGoogleSheet(formData) {
       const url = 'https://script.google.com/macros/s/AKfycbzwit7Dtxt6SK-KrgfqHRiz7W41UwnLLu59rJvJdzHUW7yvqmYVa8eXxP6efibH_sre7Q/exec';
       
-      console.log('🔄 Attempting to send data to Google Sheets...', formData);
+      console.log('🔄 Sending backup to Google Sheets...', formData);
       
       const data = new FormData();
       for (const key in formData) {
         data.append(key, formData[key]);
-        console.log(`📝 Added field: ${key} = ${formData[key]}`);
       }
-      
-      console.log('🌐 Sending to URL:', url);
       
       fetch(url, {
         method: 'POST',
         body: data,
-        mode: 'no-cors' // Prevents browser blocking on localhost/non-https
+        mode: 'no-cors'
       })
-      .then((response) => {
-        console.log('✅ Fetch completed (no-cors mode - cannot read response)');
-        console.log('Response status:', response.type); // Will be 'opaque' in no-cors mode
-        alert('✅ Registration submitted!');
-      })
-      .catch(error => {
-        console.error('❌ Google Sheet error:', error);
-        console.error('Error details:', {
-          message: error.message,
-          stack: error.stack,
-          name: error.name
-        });
-        alert('❌ Error submitting registration: ' + error.message + '\n\nCheck the browser console for more details.');
-      });
+      .then(() => console.log('✅ Backup sent to Google Sheets'))
+      .catch(error => console.error('❌ Google Sheet backup error:', error));
     }
   </script>
   </div>
