@@ -36,6 +36,14 @@ export default {
           });
         }
 
+        // Debug environment variables
+        console.log('🔍 Environment check:', {
+          hasResendKey: !!env.RESEND_API_KEY,
+          resendKeyLength: env.RESEND_API_KEY ? env.RESEND_API_KEY.length : 0,
+          fromEmail: env.FROM_EMAIL,
+          adminEmail: env.ADMIN_EMAIL
+        });
+
         // Send email to student with payment instructions
         const studentEmailSent = await sendPaymentInstructionsEmail(formData, env);
         
@@ -88,6 +96,34 @@ async function sendPaymentInstructionsEmail(formData, env) {
   try {
     const emailContent = generatePaymentInstructionsEmail(formData);
     
+    // Try Resend first (if API key is available)
+    if (env.RESEND_API_KEY) {
+      const emailData = {
+        from: env.FROM_EMAIL || 'onboarding@resend.dev',
+        to: [formData.email],
+        subject: `Payment Instructions - ${formData.series || 'Dance Class'} Registration`,
+        html: emailContent,
+      };
+
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailData),
+      });
+
+      if (response.ok) {
+        console.log('✅ Student email sent successfully via Resend');
+        return true;
+      } else {
+        const errorText = await response.text();
+        console.error('❌ Resend API error:', errorText);
+      }
+    }
+
+    // Fallback to MailChannels
     const emailData = {
       personalizations: [
         {
@@ -95,7 +131,7 @@ async function sendPaymentInstructionsEmail(formData, env) {
         },
       ],
       from: {
-        email: env.FROM_EMAIL || 'noreply@queerlatindancesd.com',
+        email: env.FROM_EMAIL || 'noreply@michf18.workers.dev',
         name: 'Queer Latin Dance SD',
       },
       subject: `Payment Instructions - ${formData.series || 'Dance Class'} Registration`,
@@ -107,7 +143,6 @@ async function sendPaymentInstructionsEmail(formData, env) {
       ],
     };
 
-    // Use Cloudflare Email Workers API or MailChannels
     const response = await fetch('https://api.mailchannels.net/tx/v1/send', {
       method: 'POST',
       headers: {
@@ -117,10 +152,13 @@ async function sendPaymentInstructionsEmail(formData, env) {
     });
 
     if (!response.ok) {
-      throw new Error(`Email API error: ${response.status}`);
+      const errorText = await response.text();
+      console.error(`❌ MailChannels error: ${response.status} - ${errorText}`);
+      throw new Error(`Email API error: ${response.status} - ${errorText}`);
     }
 
-    console.log('✅ Student email sent successfully');
+    const result = await response.json();
+    console.log('✅ Student email sent successfully via MailChannels:', result);
     return true;
 
   } catch (error) {
@@ -134,6 +172,34 @@ async function sendAdminNotificationEmail(formData, env) {
   try {
     const emailContent = generateAdminNotificationEmail(formData);
     
+    // Try Resend first (if API key is available)
+    if (env.RESEND_API_KEY) {
+      const emailData = {
+        from: env.FROM_EMAIL || 'onboarding@resend.dev',
+        to: [env.ADMIN_EMAIL || 'queerlatindancesd@gmail.com'],
+        subject: `New Registration: ${formData.firstName} ${formData.lastName} - ${formData.paymentMethod}`,
+        html: emailContent,
+      };
+
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailData),
+      });
+
+      if (response.ok) {
+        console.log('✅ Admin notification sent successfully via Resend');
+        return true;
+      } else {
+        const errorText = await response.text();
+        console.error('❌ Resend admin email error:', errorText);
+      }
+    }
+
+    // Fallback to MailChannels
     const emailData = {
       personalizations: [
         {
@@ -141,7 +207,7 @@ async function sendAdminNotificationEmail(formData, env) {
         },
       ],
       from: {
-        email: env.FROM_EMAIL || 'noreply@queerlatindancesd.com',
+        email: env.FROM_EMAIL || 'noreply@michf18.workers.dev',
         name: 'Queer Latin Dance SD Registration System',
       },
       subject: `New Registration: ${formData.firstName} ${formData.lastName} - ${formData.paymentMethod}`,
@@ -162,10 +228,13 @@ async function sendAdminNotificationEmail(formData, env) {
     });
 
     if (!response.ok) {
-      throw new Error(`Admin email API error: ${response.status}`);
+      const errorText = await response.text();
+      console.error(`❌ MailChannels admin error: ${response.status} - ${errorText}`);
+      throw new Error(`Admin email API error: ${response.status} - ${errorText}`);
     }
 
-    console.log('✅ Admin notification sent successfully');
+    const result = await response.json();
+    console.log('✅ Admin notification sent successfully via MailChannels:', result);
     return true;
 
   } catch (error) {
