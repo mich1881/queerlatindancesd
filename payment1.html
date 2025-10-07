@@ -380,43 +380,122 @@
     }
 
     @media (max-width: 768px) {
+      /* Enhanced payment overlay for mobile */
       .payment-overlay-content {
         width: 95vw;
-        padding: 1.5rem 1rem;
-        margin: 1rem;
+        max-width: 95vw;
+        padding: 1rem 0.8rem;
+        margin: 0.5rem;
+        max-height: 95vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
 
       .payment-overlay-title {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+        margin-bottom: 0.8rem;
       }
 
       .payment-overlay-message {
-        font-size: 1rem;
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
       }
 
       .payment-details-box {
-        padding: 1rem;
-        font-size: 1rem;
+        padding: 0.8rem;
+        font-size: 0.9rem;
+        margin: 0.8rem 0;
       }
 
       .payment-overlay-close {
         width: 100%;
-        padding: 1rem 2rem;
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        margin-top: 0.8rem;
       }
 
+      /* Enhanced payment form mobile styles */
+      .payment-form.active {
+        max-height: 90vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 1rem 0.8rem;
+      }
+
+      .payment-form h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .form-input {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .modal-instructions {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .modal-submit {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .whatsapp-invite {
+        margin-top: 0.8rem;
+        padding: 0.6rem;
+        font-size: 0.85rem;
+      }
+
+      /* Enhanced modal styles for mobile */
+      #conductModal > div, #termsModal > div {
+        width: 95vw !important;
+        max-width: 95vw !important;
+        margin: 0.5rem !important;
+        padding: 1rem 0.8rem !important;
+        max-height: 95vh !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+
+      #conductModal h2, #termsModal h2 {
+        font-size: 1.2rem !important;
+        margin-bottom: 0.6rem !important;
+        padding-right: 2rem !important;
+      }
+
+      #conductModal .modal-close-x, #termsModal .modal-close-x {
+        top: 10px !important;
+        right: 15px !important;
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 28px !important;
+        background: rgba(0,0,0,0.1) !important;
+        border-radius: 50% !important;
+      }
+
+      #conductModal .modal-close-x:hover, #termsModal .modal-close-x:hover {
+        background: rgba(0,0,0,0.2) !important;
+      }
+
+      /* Main container mobile adjustments */
       .payment-container {
-        padding: 1.5rem 1rem;
+        padding: 1rem 0.8rem;
         margin-top: 10px;
-        margin-left: 1rem;
-        margin-right: 1rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        max-width: calc(100vw - 1rem);
       }
 
       .choose-btn {
         width: 100%;
         min-width: auto;
         max-width: 100%;
-        font-size: 1rem;
-        padding: 0.5em 0.8em;
+        font-size: 0.95rem;
+        padding: 0.5em 0.7em;
       }
 
       .choose-btn img {
@@ -426,13 +505,19 @@
       }
 
       .no-fees-badge {
-        font-size: 0.7em;
-        margin-left: 0.5em;
-        padding: 0.1em 0.4em;
+        font-size: 0.65em;
+        margin-left: 0.4em;
+        padding: 0.1em 0.3em;
       }
 
       .mobile-spacing {
         height: 60px !important;
+      }
+
+      /* Ensure body scrolling works properly on mobile */
+      body {
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
       }
     }
   </style>
@@ -654,7 +739,7 @@
     <!-- Code of Conduct Modal (moved out of Venmo modal) -->
     <div id="conductModal" class="modal-fade" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#0008;z-index:2100;align-items:center;justify-content:center;">
       <div style="background:#fff;border-radius:18px;max-width:540px;width:96vw;padding:1.5em 1.2em;box-shadow:0 4px 32px #a259ff33;position:relative;overflow-y:auto;max-height:92vh;font-size:0.97em;">
-        <button type="button" class="modal-close-x" aria-label="Close" onclick="document.getElementById('conductModal').classList.remove('show'); setTimeout(()=>{document.getElementById('conductModal').style.display='none';},500);">&times;</button>
+        <button type="button" class="modal-close-x" aria-label="Close" onclick="closeConductModal()">&times;</button>
         <h2 style="color:#a259ff;font-size:1.4em;margin-bottom:0.7em;">Queer Latin Dance San Diego - Code of Conduct</h2>
         <div style="color:#444;line-height:1.7;font-size:1.04em;max-height:70vh;overflow-y:auto;">
           This group is built on joy, connection, and mutual respect. By participating, you agree to uphold the following values:<br><br>
@@ -686,7 +771,7 @@
     <!-- Terms & Conditions Modal (moved out of Venmo modal) -->
     <div id="termsModal" class="modal-fade" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#0008;z-index:2000;align-items:center;justify-content:center;">
       <div style="background:#fff;border-radius:18px;max-width:540px;width:96vw;padding:1.5em 1.2em;box-shadow:0 4px 32px #a259ff33;position:relative;overflow-y:auto;max-height:92vh;font-size:0.97em;">
-        <button type="button" class="modal-close-x" aria-label="Close" onclick="document.getElementById('termsModal').classList.remove('show'); setTimeout(()=>{document.getElementById('termsModal').style.display='none';},500);">&times;</button>
+        <button type="button" class="modal-close-x" aria-label="Close" onclick="closeTermsModal()">&times;</button>
         <h2 style="color:#716cff;font-size:1.4em;margin-bottom:0.7em;">Queer Latin Dance San Diego - Terms & Conditions</h2>
         <div style="color:#444;line-height:1.7;font-size:1.04em;max-height:70vh;overflow-y:auto;">
           <b>Registration & Payment</b><br>
@@ -730,6 +815,15 @@
       detailsBox.innerHTML = paymentDetails;
       overlay.style.display = 'flex';
       
+      // Mobile enhancements
+      if (window.innerWidth <= 768) {
+        document.body.style.overflow = 'hidden';
+        const overlayContent = overlay.querySelector('.payment-overlay-content');
+        if (overlayContent) {
+          overlayContent.scrollTop = 0;
+        }
+      }
+      
       setTimeout(() => {
         overlay.classList.add('show');
       }, 10);
@@ -744,6 +838,10 @@
       
       setTimeout(() => {
         overlay.style.display = 'none';
+        // Restore body scrolling on mobile
+        if (window.innerWidth <= 768) {
+          document.body.style.overflow = 'auto';
+        }
       }, 500);
     }
 
@@ -760,11 +858,48 @@
       const modal = document.getElementById('termsModal');
       modal.style.display = 'flex';
       setTimeout(() => modal.classList.add('show'), 10);
+      
+      // Mobile modal enhancements
+      if (window.innerWidth <= 768) {
+        document.body.style.overflow = 'hidden';
+        const modalContent = modal.querySelector('div');
+        if (modalContent) {
+          modalContent.scrollTop = 0;
+        }
+      }
     }
     function openConductModal() {
       const modal = document.getElementById('conductModal');
       modal.style.display = 'flex';
       setTimeout(() => modal.classList.add('show'), 10);
+      
+      // Mobile modal enhancements
+      if (window.innerWidth <= 768) {
+        document.body.style.overflow = 'hidden';
+        const modalContent = modal.querySelector('div');
+        if (modalContent) {
+          modalContent.scrollTop = 0;
+        }
+      }
+    }
+    
+    // Enhanced modal close functions for mobile
+    function closeTermsModal() {
+      const modal = document.getElementById('termsModal');
+      modal.classList.remove('show');
+      setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }, 500);
+    }
+    
+    function closeConductModal() {
+      const modal = document.getElementById('conductModal');
+      modal.classList.remove('show');
+      setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }, 500);
     }
     document.addEventListener('DOMContentLoaded', function() {
       // All terms links
@@ -838,6 +973,7 @@
         const pricingType = getParam('pricing_type') || 'series'; // default to series
         
         console.log('🔧 Initializing pricing with:', { pricing, price, pricingType, pricingConfig });
+        console.log('🔧 Raw URL params:', { pricing, price, pricingType });
         
         let priceData = null;
         
@@ -853,11 +989,12 @@
             normalizedPricing = 'bachata';
           }
         }
+        console.log('🔧 After normalization:', { originalPricing: pricing, normalizedPricing, pricingType });
         if (pricingConfig && pricingConfig[pricingType] && pricingConfig[pricingType][normalizedPricing]) {
           priceData = pricingConfig[pricingType][normalizedPricing];
           console.log('✅ Found price data:', priceData);
         } else {
-          console.log('❌ No price data found for:', { pricingType, pricing });
+          console.log('❌ No price data found for:', { pricingType, normalizedPricing, availableOptions: pricingConfig ? Object.keys(pricingConfig[pricingType] || {}) : 'no config' });
         }
         
         if (priceData) {
@@ -1020,9 +1157,30 @@
           syncForms();
           if (form) {
             form.classList.add('active');
-            // Scroll the form into view
+            
+            // Enhanced mobile scrolling
             setTimeout(() => {
-              form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              if (window.innerWidth <= 768) {
+                // On mobile, ensure the form is fully visible
+                form.scrollIntoView({ 
+                  behavior: 'smooth', 
+                  block: 'start',
+                  inline: 'nearest'
+                });
+                
+                // Additional scroll adjustment for mobile to ensure bottom content is accessible
+                setTimeout(() => {
+                  const formRect = form.getBoundingClientRect();
+                  const viewportHeight = window.innerHeight;
+                  const scrollOffset = Math.max(0, formRect.bottom - viewportHeight + 100);
+                  if (scrollOffset > 0) {
+                    window.scrollBy({ top: scrollOffset, behavior: 'smooth' });
+                  }
+                }, 300);
+              } else {
+                // Desktop behavior
+                form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }
             }, 200);
           } else {
             console.error('❌ Form not found:', formId);
@@ -1033,16 +1191,36 @@
       
       // Helper function to calculate amount based on pricing type and option
       function calculateAmount(option, pricingType) {
+        console.log('🔢 calculateAmount called with:', { option, pricingType });
+        
         if (pricingConfig && pricingConfig[pricingType] && pricingConfig[pricingType][option]) {
-          return pricingConfig[pricingType][option].price.toString();
+          const price = pricingConfig[pricingType][option].price.toString();
+          console.log('🔢 Using pricingConfig price:', price);
+          return price;
         }
+        
         // Fallback to original hardcoded values if config is not available
         if (pricingType === 'dropin') {
-          return option === 'both' ? '52' : '26';
+          const price = option === 'both' ? '52' : '26';
+          console.log('🔢 Dropin price:', price);
+          return price;
         } else if (pricingType === 'private') {
-          return option === 'both' ? '170' : '85';
+          const price = option === 'both' ? '170' : '85';
+          console.log('🔢 Private price:', price);
+          return price;
         } else {
-          return option === 'both' ? '144' : '80';
+          // Handle specific 4-week series options
+          if (option && option.includes('Salsa & Bachata')) {
+            console.log('🔢 Found "Salsa & Bachata" in option, returning 144');
+            return '144';
+          } else if (option && (option.includes('Salsa Only') || option.includes('Bachata Only'))) {
+            console.log('🔢 Found single dance option, returning 80');
+            return '80';
+          }
+          // Fallback for generic options
+          const price = option === 'both' ? '144' : '80';
+          console.log('🔢 Fallback series price:', price);
+          return price;
         }
       }
       
@@ -1050,6 +1228,10 @@
       function getSeriesLabel(option, pricingType) {
         if (pricingConfig && pricingConfig[pricingType] && pricingConfig[pricingType][option]) {
           return pricingConfig[pricingType][option].label;
+        }
+        // If the option already contains a descriptive label, return it as-is
+        if (option && (option.includes('4WK-') || option.includes('Series') || option.includes('Drop-in') || option.includes('Private'))) {
+          return option;
         }
         // Fallback to original hardcoded labels if config is not available
         if (pricingType === 'dropin') {
@@ -1065,7 +1247,7 @@
           if (option === 'salsa') return 'Salsa Only Series';
           if (option === 'bachata') return 'Bachata Only Series';
         }
-        return '';
+        return option || '';
       }
       
       // PayPal form handler
@@ -1368,46 +1550,65 @@
           const pricing = getParam('option');
           const pricingType = getParam('pricing_type') || 'series';
           
-          if (!pricing || !['both', 'salsa', 'bachata'].includes(pricing)) {
+          console.log('🏛️ Stripe button clicked with:', { pricing, pricingType });
+          
+          // Enhanced validation that handles actual option values
+          if (!pricing) {
             alert('Please select a valid series before paying.');
             return;
           }
+          
+          // Normalize the pricing option for Stripe link selection
+          let normalizedPricing = 'both'; // default
+          if (pricing.toLowerCase().includes('salsa') && pricing.toLowerCase().includes('bachata')) {
+            normalizedPricing = 'both';
+          } else if (pricing.toLowerCase().includes('salsa')) {
+            normalizedPricing = 'salsa';
+          } else if (pricing.toLowerCase().includes('bachata')) {
+            normalizedPricing = 'bachata';
+          }
+          
+          console.log('🏛️ Normalized pricing for Stripe:', normalizedPricing);
           
           let stripeLink = '';
           
           // Get Stripe link from configuration
           if (pricingConfig && pricingConfig.stripeLinks && 
               pricingConfig.stripeLinks[pricingType] && 
-              pricingConfig.stripeLinks[pricingType][pricing]) {
-            stripeLink = pricingConfig.stripeLinks[pricingType][pricing];
+              pricingConfig.stripeLinks[pricingType][normalizedPricing]) {
+            stripeLink = pricingConfig.stripeLinks[pricingType][normalizedPricing];
+            console.log('🏛️ Using config Stripe link:', stripeLink);
           } else {
             // Fallback to original hardcoded Stripe links
             if (pricingType === 'dropin') {
-              if (pricing === 'both') {
+              if (normalizedPricing === 'both') {
                 stripeLink = 'https://buy.stripe.com/bJe28s2Cm9osfOHgfy0Ny0e'; // $52
-              } else if (pricing === 'salsa' || pricing === 'bachata') {
+              } else if (normalizedPricing === 'salsa' || normalizedPricing === 'bachata') {
                 stripeLink = 'https://buy.stripe.com/4gM14o3Gq1W0gSL1kE0Ny0d'; // $26
               }
             } else if (pricingType === 'private') {
               // Private lesson pricing
-              if (pricing === 'both') {
+              if (normalizedPricing === 'both') {
                 stripeLink = 'https://buy.stripe.com/4gM4gA4Kuasw31V8N60Ny0b'; // $170
-              } else if (pricing === 'salsa' || pricing === 'bachata') {
+              } else if (normalizedPricing === 'salsa' || normalizedPricing === 'bachata') {
                 stripeLink = 'https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c'; // $85
               }
             } else {
               // Series pricing (existing logic)
-              if (pricing === 'both') {
+              if (normalizedPricing === 'both') {
                 stripeLink = 'https://buy.stripe.com/4gM4gA4Kuasw31V8N60Ny0b'; // $144
-              } else if (pricing === 'salsa' || pricing === 'bachata') {
+              } else if (normalizedPricing === 'salsa' || normalizedPricing === 'bachata') {
                 stripeLink = 'https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c'; // $80
               }
             }
+            console.log('🏛️ Using fallback Stripe link:', stripeLink);
           }
           
           if (stripeLink) {
+            console.log('🏛️ Redirecting to Stripe:', stripeLink);
             window.location.href = stripeLink;
           } else {
+            console.error('🏛️ No Stripe link found for:', { pricingType, normalizedPricing });
             alert('Stripe payment link not configured for this option.');
           }
         };
