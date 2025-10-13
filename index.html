@@ -625,8 +625,8 @@
   <nav>
     <a href="about.html">About</a>
     <a href="Events.html">Events</a>
-    <a href="directory.html">Directory</a>
     <a href="gallery.html">Gallery</a> 
+    <a href="directory.html">Directory</a>
     <a href="lessons.html">Lessons</a>
   </nav>
   
@@ -841,8 +841,8 @@ dance.
       <div class="footer-bottom">
         <div class="footer-newsletter">
           <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
-          <form>
-            <input type="email" placeholder="Enter your email ..." required>
+          <form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec">
+            <input type="email" name="email" placeholder="Enter your email ..." required autocomplete="email">
             <button type="submit">Subscribe</button>
           </form>
           <div class="footer-links">
@@ -869,28 +869,29 @@ dance.
         </div>
       </div>
     </footer>
-
-  <script src="script.js"></script>
 <script>
-document.querySelector('.footer-newsletter form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const form = this;
-  fetch(form.action, {
-    method: 'POST',
-    body: new FormData(form),
-    mode: 'no-cors'
-  })
-  .then(() => {
-    alert('Success! You have subscribed to the newsletter.');
-    form.reset();
-  })
-  .catch(() => {
-    alert('There was an error. Please try again.');
-  });
-});
-</script>
-<script>
+// Mobile navigation toggle
 document.addEventListener('DOMContentLoaded', function() {
+  const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+  const mobileNavMenu = document.querySelector('.mobile-nav-menu');
+  
+  if (mobileNavToggle && mobileNavMenu) {
+    mobileNavToggle.addEventListener('click', function() {
+      mobileNavMenu.classList.toggle('active');
+      mobileNavToggle.classList.toggle('active');
+    });
+    
+    // Close menu when clicking on a link
+    const mobileNavLinks = mobileNavMenu.querySelectorAll('a');
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        mobileNavMenu.classList.remove('active');
+        mobileNavToggle.classList.remove('active');
+      });
+    });
+  }
+
+  // Newsletter gallery swipe functionality
   const newsletterGallery = document.querySelector('.newsletter-swipe-gallery');
   if (newsletterGallery) {
     const images = newsletterGallery.querySelectorAll('.swipe-img');
@@ -948,8 +949,25 @@ document.addEventListener('DOMContentLoaded', function() {
     startAutoSwipe();
   }
 });
-</script>
-<script>
+
+// Newsletter form submissions
+document.querySelector('.footer-newsletter form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = this;
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    mode: 'no-cors'
+  })
+  .then(() => {
+    alert('Success! You have subscribed to the newsletter.');
+    form.reset();
+  })
+  .catch(() => {
+    alert('There was an error. Please try again.');
+  });
+});
+
 document.querySelector('.newsletter-subscribe form').addEventListener('submit', function(e) {
   e.preventDefault();
   const form = this;
@@ -988,7 +1006,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-
 <script>
 // FAQ Toggle functionality
 function toggleFAQ(button) {

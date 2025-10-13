@@ -70,6 +70,11 @@
         color: #fff !important;
       }
       
+      /* Hide "Logo:" label on mobile */
+      .directory-table td[data-label="Logo"]:before {
+        display: none !important;
+      }
+      
       /* Footer mobile styles */
       .footer-newsletter h2 {
         font-size: 1.5rem;
@@ -167,7 +172,7 @@
     <table class="directory-table">
       <thead>
         <tr>
-          <th>Logo</th>
+          <th></th>
           <th>Name</th>
           <th>Instructors</th>
           <th>Address</th>
@@ -229,27 +234,26 @@
           <td data-label="Address">Location may vary, San Diego</td>
         </tr>
         <tr>
-          <td data-label="Logo"><img src="images/logos/thesalsabeatlogo.jpg" alt="The Salsa Beat Logo" class="directory-logo" onerror="this.parentNode.innerHTML='<div class=&quot;logo-placeholder&quot;>TSB</div>'"></td>
-          <td data-label="Name"><a href="https://www.thesalsabeat.com/" target="_blank">The Salsa Beat</a></td>
-          <td data-label="Instructors">Ericka & Juan-2-3</td>
-          <td data-label="Address">Studio K, 9340 Clairemont Mesa Blvd, San Diego, CA 92123</td>
-        </tr>
-          <tr>
           <td data-label="Logo"><img src="images/logos/queertangologo.jpg" alt="Queer Tango Logo" class="directory-logo" onerror="this.parentNode.innerHTML='<div class=&quot;logo-placeholder&quot;>QT</div>'"></td>
           <td data-label="Name"><a href="https://www.instagram.com/queertangosd/" target="_blank">Queer Tango</a></td>
           <td data-label="Instructors">Nicole & Brittany</td>
           <td data-label="Address">YogaOne, 1920 Fort Stockton Dr, San Diego</td>
         </tr>
+        <tr>
+          <td data-label="Logo"><img src="images/logos/thesalsabeatlogo.jpg" alt="The Salsa Beat Logo" class="directory-logo" onerror="this.parentNode.innerHTML='<div class=&quot;logo-placeholder&quot;>TSB</div>'"></td>
+          <td data-label="Name"><a href="https://www.thesalsabeat.com/" target="_blank">The Salsa Beat</a></td>
+          <td data-label="Instructors">Ericka & Juan-2-3</td>
+          <td data-label="Address">Studio K, 9340 Clairemont Mesa Blvd, San Diego, CA 92123</td>
+        </tr>
       </tbody>
     </table>
   </section>
-
   <section class="directory-section" style="margin-top: 3rem;">
     <h1>Performers, Musicians & DJs</h1>
     <table class="directory-table">
       <thead>
         <tr>
-          <th>Logo</th>
+          <th></th>
           <th>Name</th>
           <th>Type</th>
           <th>Address</th>
