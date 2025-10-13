@@ -2,9 +2,7 @@
    QUEER LATIN DANCE SD - CSS FILE
    ======================================== */
 /* === FONT IMPORTS & DECLARATIONS === */
-@import url('https://fonts.googleapis.com/css2?family=Huninn:wght@400;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Boldonse:opsz,wght@6..144,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=TikTok+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Signika:wght@400;600;700&display=swap');
 /* Example: Add at the very top of style.css */
 @font-face {
   font-family: 'Signika';
