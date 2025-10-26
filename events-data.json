@@ -2,12 +2,22 @@
   "upcoming": [
     {
       "id": "sep2025-banda",
+      "date": "2025-11-14",
+      "month": "NOV",
+      "day": "14",
+      "title": "QSS",
+      "flyerUrl": "images/eventpage/qssnovflyer.png",
+      "inviteUrl": "https://partiful.com/e/iQ6QZai2ymRWOULbxGVo",
+      "description": "Join us for an exciting QSS!"
+    },
+    {
+      "id": "sep2025-banda",
       "date": "2025-09-21",
       "month": "SEP",
       "day": "21",
-      "title": "Banda Workshop",
+      "title": "QSS",
       "flyerUrl": "images/eventpage/qsssepflyer.png",
-      "description": "Join us for an exciting banda workshop!"
+      "description": "Join us for an exciting QSS!"
     },
     {
       "id": "20251026-qss",
