@@ -31,9 +31,19 @@
     }
   ],
   "past": [
+        {
+      "id": "20251026-qss",
+      "date": "2025-10-11",
+      "month": "OCT",
+      "day": "11",
+      "title": "She Fest Intro to Salsa On2 Workshop",
+      "flyerUrl": "images/eventpage/shefest2025flyer.jpg",
+      "inviteUrl": "https://www.instagram.com/p/DPk6z9AkUmx/",
+      "description": "https://www.instagram.com/p/DPk6z9AkUmx/"
+    },
     {
       "id": "aug2025-summer",
-      "date": "2025-08-15",
+      "date": "2025-08-10",
       "month": "AUG",
       "day": "10",
       "title": "Summer Salsa Social",
