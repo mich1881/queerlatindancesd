@@ -46,6 +46,12 @@
   <div class="offers-row" id="coming-soon-lessons">
     <!-- Coming soon lessons will be loaded here -->
   </div>
+
+  <div class="lessons-title" id="previous-lessons-title" style="display: none;">Previous Lessons</div>
+  <div class="offers-row" id="previous-lessons">
+    <!-- Previous lessons will be loaded here -->
+  </div>
+  
   <style>
         @font-face {
   font-family: 'Cherry Bomb One';
@@ -293,10 +299,13 @@
             
             const upcomingLessons = document.getElementById('upcoming-lessons');
             const comingSoonLessons = document.getElementById('coming-soon-lessons');
+            const previousLessons = document.getElementById('previous-lessons');
+            const previousLessonsTitle = document.getElementById('previous-lessons-title');
             
             // Clear existing content
             upcomingLessons.innerHTML = '';
             comingSoonLessons.innerHTML = '';
+            previousLessons.innerHTML = '';
             
             // Function to create lesson HTML
             function createLessonHTML(lesson) {
@@ -337,6 +346,16 @@
             lessonsData.coming_soon.forEach(lesson => {
               comingSoonLessons.innerHTML += createLessonHTML(lesson);
             });
+            
+            // Load previous lessons
+            if (lessonsData.previous && lessonsData.previous.length > 0) {
+              previousLessonsTitle.style.display = 'block';
+              lessonsData.previous.forEach(lesson => {
+                previousLessons.innerHTML += createLessonHTML(lesson);
+              });
+            } else {
+              previousLessonsTitle.style.display = 'none';
+            }
             
           } catch (error) {
             console.error('Error loading lessons:', error);
