@@ -45,6 +45,7 @@ function generateGalleryConfig() {
   
   const allGalleries = {};
   let totalImages = 0;
+  let allEventImages = []; // Collect all images for "All Events" gallery
   
   // Process each gallery
   Object.entries(galleryFolders).forEach(([galleryKey, config]) => {
@@ -84,7 +85,30 @@ function generateGalleryConfig() {
     const imagePaths = sortedFiles.map(file => `images/${config.folder}/${file}`);
     allGalleries[galleryKey] = imagePaths;
     totalImages += imagePaths.length;
+    
+    // Add all images to the "All Events" collection with timestamps for sorting
+    imagePaths.forEach(imagePath => {
+      const filename = path.basename(imagePath);
+      const match = filename.match(/IMG_(\d+)/i);
+      const imageNumber = match ? parseInt(match[1]) : 0;
+      
+      // Add with sort priority for newest-first ordering
+      allEventImages.push({
+        path: imagePath,
+        imageNumber: imageNumber,
+        folder: config.folder
+      });
+    });
   });
+  
+  // Create "All Events" gallery by combining and sorting all images newest-first
+  allEventImages.sort((a, b) => {
+    // Sort by image number, newest (highest number) first
+    return b.imageNumber - a.imageNumber;
+  });
+  
+  // Add "All Events" gallery to the collection
+  allGalleries['allevents'] = allEventImages.map(img => img.path);
   
   // Custom sorting function for 4weekseries1 (newest first)
   function sort4WeekSeries(files) {
@@ -152,8 +176,12 @@ if (typeof module !== 'undefined' && module.exports) {
   console.log('');
   console.log('📊 Gallery breakdown:');
   Object.entries(allGalleries).forEach(([key, images]) => {
-    const config = galleryFolders[key];
-    console.log(`   ${config.displayName}: ${images.length} images`);
+    if (key === 'allevents') {
+      console.log(`   All Events: ${images.length} images`);
+    } else {
+      const config = galleryFolders[key];
+      console.log(`   ${config.displayName}: ${images.length} images`);
+    }
   });
   console.log('');
   console.log('🔧 Next steps:');
