@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Basic Test</title>
+</head>
+<body>
+    <h1>Basic Test Page</h1>
+    <p>If you can see this, HTML is working.</p>
+    
+    <script>
+        console.log('🧪 Basic test script running');
+        document.body.innerHTML += '<p style="color: green;">✅ JavaScript is working!</p>';
+        
+        // Test if course-app.js can be loaded
+        const script = document.createElement('script');
+        script.src = 'course-app.js';
+        script.onload = function() {
+            console.log('✅ course-app.js loaded successfully');
+            document.body.innerHTML += '<p style="color: blue;">✅ course-app.js loaded!</p>';
+            
+            // Test if CoursePlatform can be instantiated
+            try {
+                const testApp = new CoursePlatform();
+                console.log('✅ CoursePlatform instantiated:', testApp);
+                document.body.innerHTML += '<p style="color: purple;">✅ CoursePlatform works!</p>';
+            } catch (error) {
+                console.error('❌ CoursePlatform error:', error);
+                document.body.innerHTML += '<p style="color: red;">❌ CoursePlatform error: ' + error.message + '</p>';
+            }
+        };
+        script.onerror = function() {
+            console.error('❌ Failed to load course-app.js');
+            document.body.innerHTML += '<p style="color: red;">❌ Failed to load course-app.js</p>';
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

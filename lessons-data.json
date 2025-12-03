@@ -1,32 +1,21 @@
 {
   "upcoming": [
     {
-      "id": "dropin-intro",
-      "date": "ongoing",
-      "month": "DROP",
-      "day": "IN",
-      "title": "Drop-in",
-      "flyerUrl": "images/lessons/4weekseriesdropin.png",
-      "description": "Drop-in classes for beginners",
-      "type": "dropin",
-      "link": "dropin.html"
-    },
-    {
       "id": "intensive-series",
-      "date": "ongoing",
-      "month": "INT",
-      "day": "ENS",
+      "date": "january-2025",
+      "month": "JAN",
+      "day": "2025",
       "title": "4 Week Series 1",
       "flyerUrl": "images/lessons/4weekseries1.png",
       "description": "Advanced 4-week intensive course",
       "type": "series",
       "link": "4weekseries1.html"
     },
-            {
+    {
       "id": "4week-series",
-      "date": "ongoing", 
-      "month": "4WK",
-      "day": "SER",
+      "date": "january-2025", 
+      "month": "JAN",
+      "day": "2025",
       "title": "4 Week Series 2",
       "flyerUrl": "images/lessons/4weekseries2.png",
       "description": "Structured 4-week intro course",
@@ -43,6 +32,17 @@
       "description": "1-2 hour private lessons",
       "type": "private",
       "link": "privates.html"
+    },
+    {
+      "id": "dropin-intro",
+      "date": "ongoing",
+      "month": "DROP",
+      "day": "IN",
+      "title": "Drop-in",
+      "flyerUrl": "images/lessons/4weekseriesdropin.png",
+      "description": "Drop-in classes for beginners",
+      "type": "dropin",
+      "link": "dropin.html"
     }
   ],
   "coming_soon": [

@@ -15,12 +15,16 @@ export default {
       });
     }
 
-    // Only handle POST requests to /api/payment-form
-    if (request.method === 'POST' && new URL(request.url).pathname === '/api/payment-form') {
+    const url = new URL(request.url);
+    const pathname = url.pathname;
+
+    // Handle both event payments and course payments
+    if (request.method === 'POST' && (pathname === '/api/payment-form' || pathname === '/api/course-payment')) {
       try {
         const formData = await request.json();
         
         console.log('📝 Received form submission:', formData);
+        console.log('📍 Endpoint:', pathname);
 
         // Validate required fields
         if (!formData.email || !formData.firstName || !formData.lastName) {
@@ -44,11 +48,17 @@ export default {
           adminEmail: env.ADMIN_EMAIL
         });
 
+        // Determine if this is a course or event payment
+        const isCoursePayment = pathname === '/api/course-payment' || formData.type === 'course';
+        
+        // Add course/event type to formData for tracking
+        formData.registrationType = isCoursePayment ? 'online-course' : 'in-person-event';
+        
         // Send email to student with payment instructions
-        const studentEmailSent = await sendPaymentInstructionsEmail(formData, env);
+        const studentEmailSent = await sendPaymentInstructionsEmail(formData, env, isCoursePayment);
         
         // Send notification email to admin
-        const adminEmailSent = await sendAdminNotificationEmail(formData, env);
+        const adminEmailSent = await sendAdminNotificationEmail(formData, env, isCoursePayment);
 
         // Send backup to Google Sheets with deduplication
         await sendToGoogleSheetsWithDeduplication(formData, env);
@@ -81,6 +91,144 @@ export default {
       }
     }
 
+    // Handle course access checking
+    if (request.method === 'POST' && pathname === '/api/course-access') {
+      try {
+        const { email, courseId } = await request.json();
+        
+        console.log('🔍 Checking course access for:', email, courseId);
+        
+        // Check Google Sheets for course access
+        const accessData = await checkCourseAccessInGoogleSheets(email, courseId, env);
+        
+        return new Response(JSON.stringify({ 
+          success: true,
+          hasAccess: accessData.hasAccess,
+          courses: accessData.ownedCourses,
+          accessType: accessData.accessType, // 'paid', 'granted', 'pending'
+          message: accessData.message
+        }), {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }
+        });
+        
+      } catch (error) {
+        console.error('❌ Error checking course access:', error);
+        return new Response(JSON.stringify({ 
+          success: false, 
+          error: 'Error checking course access: ' + error.message 
+        }), {
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }
+        });
+      }
+    }
+
+    // Handle admin course access management
+    if (request.method === 'POST' && pathname === '/api/admin/grant-access') {
+      try {
+        const { adminKey, email, courseId, action } = await request.json();
+        
+        // Simple admin key check (in production, use proper authentication)
+        if (adminKey !== env.ADMIN_KEY) {
+          return new Response(JSON.stringify({ 
+            success: false, 
+            error: 'Invalid admin key' 
+          }), {
+            status: 401,
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'
+            }
+          });
+        }
+        
+        console.log('👑 Admin action:', { email, courseId, action });
+        
+        // Update Google Sheets with admin action
+        const result = await updateCourseAccessInGoogleSheets(email, courseId, action, env);
+        
+        return new Response(JSON.stringify({ 
+          success: true,
+          message: `Course access ${action} successfully for ${email}`,
+          result
+        }), {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }
+        });
+        
+      } catch (error) {
+        console.error('❌ Error managing course access:', error);
+        return new Response(JSON.stringify({ 
+          success: false, 
+          error: 'Error managing course access: ' + error.message 
+        }), {
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }
+        });
+      }
+    }
+
+    // Handle getting all pending payments for admin
+    if (request.method === 'POST' && pathname === '/api/admin/pending-payments') {
+      try {
+        const { adminKey } = await request.json();
+        
+        // Simple admin key check
+        if (adminKey !== env.ADMIN_KEY) {
+          return new Response(JSON.stringify({ 
+            success: false, 
+            error: 'Invalid admin key' 
+          }), {
+            status: 401,
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'
+            }
+          });
+        }
+        
+        // Get pending payments from Google Sheets
+        const pendingPayments = await getPendingPaymentsFromGoogleSheets(env);
+        
+        return new Response(JSON.stringify({ 
+          success: true,
+          pendingPayments
+        }), {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }
+        });
+        
+      } catch (error) {
+        console.error('❌ Error getting pending payments:', error);
+        return new Response(JSON.stringify({ 
+          success: false, 
+          error: 'Error getting pending payments: ' + error.message 
+        }), {
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          }
+        });
+      }
+    }
+
     // Return 404 for other routes
     return new Response('Not Found', { 
       status: 404,
@@ -92,16 +240,17 @@ export default {
 };
 
 // Send payment instructions email to student
-async function sendPaymentInstructionsEmail(formData, env) {
+async function sendPaymentInstructionsEmail(formData, env, isCoursePayment = false) {
   try {
-    const emailContent = generatePaymentInstructionsEmail(formData);
+    const emailContent = generatePaymentInstructionsEmail(formData, isCoursePayment);
     
     // Try Resend first (if API key is available)
     if (env.RESEND_API_KEY) {
+      const subjectPrefix = isCoursePayment ? 'Online Course' : 'Dance Class';
       const emailData = {
         from: env.FROM_EMAIL || 'onboarding@resend.dev',
         to: [formData.email],
-        subject: `Payment Instructions - ${formData.series || 'Dance Class'} Registration`,
+        subject: `Payment Instructions - ${formData.series || formData.courseName || subjectPrefix} Registration`,
         html: emailContent,
       };
 
@@ -134,7 +283,7 @@ async function sendPaymentInstructionsEmail(formData, env) {
         email: env.FROM_EMAIL || 'noreply@michf18.workers.dev',
         name: 'Queer Latin Dance SD',
       },
-      subject: `Payment Instructions - ${formData.series || 'Dance Class'} Registration`,
+      subject: `Payment Instructions - ${formData.series || formData.courseName || subjectPrefix} Registration`,
       content: [
         {
           type: 'text/html',
@@ -168,9 +317,9 @@ async function sendPaymentInstructionsEmail(formData, env) {
 }
 
 // Send notification email to admin
-async function sendAdminNotificationEmail(formData, env) {
+async function sendAdminNotificationEmail(formData, env, isCoursePayment = false) {
   try {
-    const emailContent = generateAdminNotificationEmail(formData);
+    const emailContent = generateAdminNotificationEmail(formData, isCoursePayment);
     
     // Try Resend first (if API key is available)
     if (env.RESEND_API_KEY) {
@@ -244,7 +393,7 @@ async function sendAdminNotificationEmail(formData, env) {
 }
 
 // Generate payment instructions email for student
-function generatePaymentInstructionsEmail(formData) {
+function generatePaymentInstructionsEmail(formData, isCoursePayment = false) {
   const paymentMethod = formData.paymentMethod;
   let paymentInstructions = '';
   
@@ -299,7 +448,7 @@ function generatePaymentInstructionsEmail(formData) {
   <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
     <div style="text-align: center; margin-bottom: 30px;">
       <h1 style="color: #716cff; margin-bottom: 10px;">🎉 Registration Confirmed!</h1>
-      <p style="font-size: 18px; color: #666;">Thank you for registering for our dance series!</p>
+      <p style="font-size: 18px; color: #666;">Thank you for registering for our ${isCoursePayment ? 'online dance course' : 'dance series'}!</p>
     </div>
     
     <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
@@ -308,7 +457,8 @@ function generatePaymentInstructionsEmail(formData) {
       <p><strong>Email:</strong> ${formData.email}</p>
       ${formData.phone ? `<p><strong>Phone:</strong> ${formData.phone}</p>` : ''}
       ${formData.pronouns ? `<p><strong>Pronouns:</strong> ${formData.pronouns}</p>` : ''}
-      <p><strong>Series:</strong> ${formData.series || 'Dance Class'}</p>
+      <p><strong>${isCoursePayment ? 'Course' : 'Series'}:</strong> ${formData.series || formData.courseName || 'Dance Class'}</p>
+      <p><strong>Type:</strong> ${isCoursePayment ? '🌐 Online Course' : '🏫 In-Person Class'}</p>
       <p><strong>Payment Method:</strong> ${formData.paymentMethod}</p>
       <p><strong>Amount:</strong> ${formData.amount}</p>
       ${formData.date ? `<p><strong>Date:</strong> ${formData.date}</p>` : ''}
@@ -347,7 +497,7 @@ function generatePaymentInstructionsEmail(formData) {
 }
 
 // Generate admin notification email
-function generateAdminNotificationEmail(formData) {
+function generateAdminNotificationEmail(formData, isCoursePayment = false) {
   return `
   <!DOCTYPE html>
   <html>
@@ -364,7 +514,8 @@ function generateAdminNotificationEmail(formData) {
       <p><strong>Email:</strong> <a href="mailto:${formData.email}">${formData.email}</a></p>
       ${formData.phone ? `<p><strong>Phone:</strong> <a href="tel:${formData.phone}">${formData.phone}</a></p>` : ''}
       ${formData.pronouns ? `<p><strong>Pronouns:</strong> ${formData.pronouns}</p>` : ''}
-      <p><strong>Series:</strong> ${formData.series || 'Dance Class'}</p>
+      <p><strong>${isCoursePayment ? 'Course' : 'Series'}:</strong> ${formData.series || formData.courseName || 'Dance Class'}</p>
+      <p><strong>Type:</strong> ${isCoursePayment ? '🌐 Online Course' : '🏫 In-Person Class'}</p>
       <p><strong>Payment Method:</strong> ${formData.paymentMethod}</p>
       <p><strong>Amount:</strong> ${formData.amount}</p>
       ${formData.date ? `<p><strong>Date:</strong> ${formData.date}</p>` : ''}
@@ -425,5 +576,135 @@ async function sendToGoogleSheetsWithDeduplication(formData, env) {
     }
   } catch (error) {
     console.error('❌ Google Sheets backup error:', error);
+  }
+}
+
+// ===== GOOGLE SHEETS INTEGRATION FOR COURSE ACCESS CONTROL =====
+
+async function checkCourseAccessInGoogleSheets(email, courseId, env) {
+  try {
+    const sheetsUrl = 'https://script.google.com/macros/s/AKfycbzwit7Dtxt6SK-KrgfqHRiz7W41UwnLLu59rJvJdzHUW7yvqmYVa8eXxP6efibH_sre7Q/exec';
+    
+    // Query Google Sheets for course access
+    const params = new URLSearchParams({
+      action: 'checkCourseAccess',
+      email: email,
+      courseId: courseId || 'all'
+    });
+    
+    const response = await fetch(`${sheetsUrl}?${params.toString()}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    
+    if (!response.ok) {
+      console.error('❌ Google Sheets API error:', response.status, response.statusText);
+      // Return default deny access on API error
+      return {
+        hasAccess: false,
+        ownedCourses: [],
+        accessType: 'error',
+        message: 'Unable to verify course access - please contact support'
+      };
+    }
+    
+    const data = await response.json();
+    console.log('📊 Google Sheets response:', data);
+    
+    // Process the response from Google Sheets
+    // Expected format: { success: true, courses: [...], hasAccess: true/false }
+    if (data.success) {
+      return {
+        hasAccess: courseId ? data.hasAccess : data.courses.length > 0,
+        ownedCourses: data.courses || [],
+        accessType: data.accessType || 'paid',
+        message: data.message || 'Access verified successfully'
+      };
+    } else {
+      return {
+        hasAccess: false,
+        ownedCourses: [],
+        accessType: 'denied',
+        message: data.message || 'Access denied - payment not found'
+      };
+    }
+    
+  } catch (error) {
+    console.error('❌ Error checking Google Sheets:', error);
+    return {
+      hasAccess: false,
+      ownedCourses: [],
+      accessType: 'error',
+      message: 'System error - please contact support'
+    };
+  }
+}
+
+async function updateCourseAccessInGoogleSheets(email, courseId, action, env) {
+  try {
+    const sheetsUrl = 'https://script.google.com/macros/s/AKfycbzwit7Dtxt6SK-KrgfqHRiz7W41UwnLLu59rJvJdzHUW7yvqmYVa8eXxP6efibH_sre7Q/exec';
+    
+    const params = new URLSearchParams({
+      action: 'updateCourseAccess',
+      email: email,
+      courseId: courseId,
+      accessAction: action, // 'grant', 'revoke', 'confirm-payment'
+      timestamp: new Date().toISOString(),
+      updatedBy: 'admin'
+    });
+    
+    const response = await fetch(sheetsUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString()
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      console.log('✅ Course access updated in Google Sheets');
+      return data;
+    } else {
+      console.error('❌ Error updating Google Sheets:', response.status, response.statusText);
+      return { success: false, error: 'Failed to update Google Sheets' };
+    }
+    
+  } catch (error) {
+    console.error('❌ Error updating course access:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+async function getPendingPaymentsFromGoogleSheets(env) {
+  try {
+    const sheetsUrl = 'https://script.google.com/macros/s/AKfycbzwit7Dtxt6SK-KrgfqHRiz7W41UwnLLu59rJvJdzHUW7yvqmYVa8eXxP6efibH_sre7Q/exec';
+    
+    const params = new URLSearchParams({
+      action: 'getPendingPayments',
+      type: 'online-course'
+    });
+    
+    const response = await fetch(`${sheetsUrl}?${params.toString()}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      console.log('📊 Pending payments from Google Sheets:', data);
+      return data.payments || [];
+    } else {
+      console.error('❌ Error getting pending payments:', response.status, response.statusText);
+      return [];
+    }
+    
+  } catch (error) {
+    console.error('❌ Error getting pending payments:', error);
+    return [];
   }
 }

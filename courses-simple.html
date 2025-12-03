@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Platform - Simple Test</title>
+    <link rel="stylesheet" href="course-styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="screen">
+            <div class="loading-content">
+                <h2>🎵 Loading Course Platform...</h2>
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+
+        <!-- Auth Screen -->
+        <div id="auth-screen" class="screen hidden">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h1>🎭 Queer Latin Dance</h1>
+                    <p>Online Course Platform</p>
+                </div>
+                
+                <div class="auth-tabs">
+                    <button class="tab-btn active" onclick="switchAuthTab('login')">Sign In</button>
+                    <button class="tab-btn" onclick="switchAuthTab('register')">Sign Up</button>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form">
+                    <h3>Welcome Back! 💃</h3>
+                    <div class="input-group">
+                        <input type="email" id="login-email" placeholder="Email address" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="login-password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Sign In</button>
+                    <button type="button" class="demo-btn" onclick="window.demoLogin()">🎭 Quick Demo Login</button>
+                    <button type="button" class="admin-demo-btn" onclick="window.adminDemoLogin()">⭐ Admin Demo Login</button>
+                    <p class="auth-note">Demo: Use any email and password to try it out!</p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboard-screen" class="screen hidden">
+            <nav class="dashboard-nav">
+                <div class="nav-left">
+                    <h2>🎭 Queer Latin Dance</h2>
+                </div>
+                <div class="nav-right">
+                    <span id="user-welcome">Welcome!</span>
+                    <button id="admin-btn" onclick="showAdminPanel()" class="admin-btn" style="display:none;">Admin</button>
+                    <button onclick="logout()" class="logout-btn">Sign Out</button>
+                </div>
+            </nav>
+
+            <main class="dashboard-main">
+                <section class="my-courses-section">
+                    <h2>My Courses</h2>
+                    <div id="my-courses-grid" class="courses-grid">
+                        <!-- User's purchased courses will be populated here -->
+                    </div>
+                </section>
+
+                <section class="available-courses-section">
+                    <h2>Available Courses</h2>
+                    <div id="available-courses-grid" class="courses-grid">
+                        <!-- Available courses for purchase will be populated here -->
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="admin-panel" class="screen hidden">
+            <nav class="admin-nav">
+                <h2>👑 Admin Panel</h2>
+                <button onclick="showDashboard()" class="back-btn">← Back to Dashboard</button>
+            </nav>
+            
+            <div class="admin-content">
+                <div class="admin-section">
+                    <h3>Pending Course Payments</h3>
+                    <div id="pendingPaymentsList" class="payments-list">
+                        <!-- Pending payments will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Messages -->
+    <div id="status-messages"></div>
+
+    <!-- Global Functions -->
+    <script>
+        function switchAuthTab(tab) {
+            // Simple tab switching
+            console.log('Switching to tab:', tab);
+        }
+        
+        function showAdminPanel() {
+            if (courseApp) {
+                courseApp.showAdminPanel();
+            }
+        }
+        
+        function showDashboard() {
+            if (courseApp) {
+                courseApp.showDashboard();
+            }
+        }
+        
+        function logout() {
+            if (courseApp) {
+                courseApp.logout();
+            }
+        }
+    </script>
+    
+    <!-- Main Script -->
+    <script src="course-app.js"></script>
+    
+    <!-- Debug Script -->
+    <script>
+        // Debug logging
+        window.addEventListener('load', function() {
+            console.log('🧪 Simple courses page loaded');
+            console.log('🧪 courseApp available:', !!window.courseApp);
+            
+            setTimeout(() => {
+                if (window.courseApp) {
+                    console.log('✅ Course app initialized successfully');
+                    console.log('📚 Courses available:', Object.keys(courseApp.courses).length);
+                } else {
+                    console.error('❌ Course app failed to initialize');
+                }
+            }, 500);
+        });
+        
+        // Error handling
+        window.addEventListener('error', function(e) {
+            console.error('🚨 JavaScript error:', e.error);
+            document.body.innerHTML += `<div style="color: red; padding: 10px; border: 1px solid red; margin: 10px;">
+                <strong>JavaScript Error:</strong><br>
+                ${e.error.message}<br>
+                <small>File: ${e.filename}:${e.lineno}</small>
+            </div>`;
+        });
+    </script>
+</body>
+</html>

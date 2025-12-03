@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salsa Fundamentals - Offline Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .course-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .course-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5rem;
+        }
+        
+        .course-header p {
+            opacity: 0.9;
+            font-size: 1.2em;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        .video-section {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .video-wrapper {
+            position: relative;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        video {
+            width: 100%;
+            height: auto;
+            min-height: 300px;
+        }
+        
+        .lesson-info {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .lesson-info h2 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-bar {
+            background: #444;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .lessons-sidebar {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .lessons-sidebar h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .lesson-item {
+            background: #3a3a3a;
+            margin-bottom: 0.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .lesson-item:hover {
+            background: #4a4a4a;
+            transform: translateX(5px);
+        }
+        
+        .lesson-item.active {
+            background: #667eea;
+            border-left-color: #fff;
+        }
+        
+        .lesson-item.completed {
+            opacity: 0.7;
+        }
+        
+        .lesson-item.completed::before {
+            content: "✓ ";
+            color: #4ade80;
+            font-weight: bold;
+        }
+        
+        .lesson-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .lesson-duration {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .offline-notice {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4ade80;
+            color: #1a1a1a;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .course-header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="course-header">
+        <h1>🕺💃 Salsa Fundamentals</h1>
+        <p>Complete Offline Course - Yours Forever!</p>
+    </div>
+    
+    <div class="container">
+        <div class="video-section">
+            <div class="video-wrapper">
+                <video id="course-video" controls>
+                    <source src="videos/lesson-1-basic-steps.mp4" type="video/mp4">
+                    Your browser doesn't support video playback.
+                </video>
+            </div>
+            
+            <div class="lesson-info">
+                <h2 id="current-lesson-title">Welcome & Basic Steps</h2>
+                <p id="current-lesson-description">Learn the fundamental salsa steps and timing</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="lesson-progress"></div>
+                </div>
+                <p id="progress-text">0% Complete</p>
+            </div>
+        </div>
+        
+        <div class="lessons-sidebar">
+            <h3>Course Lessons</h3>
+            <div id="lessons-list">
+                <!-- Lessons will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="offline-notice">
+        📱 Offline Ready - No Internet Required!
+    </div>
+    
+    <script>
+        // Offline Course Player
+        class OfflineCoursePlayer {
+            constructor() {
+                this.currentLessonIndex = 0;
+                this.lessons = [
+                    {
+                        id: 1,
+                        title: 'Welcome & Basic Steps',
+                        video: 'videos/lesson-1-basic-steps.mp4',
+                        duration: '15:30',
+                        description: 'Learn the fundamental salsa steps and timing'
+                    },
+                    {
+                        id: 2,
+                        title: 'Basic Timing & Rhythm',
+                        video: 'videos/lesson-2-timing-rhythm.mp4',
+                        duration: '18:45',
+                        description: 'Understanding salsa rhythm and musical timing'
+                    },
+                    {
+                        id: 3,
+                        title: 'Partner Connection Basics',
+                        video: 'videos/lesson-3-partner-connection.mp4',
+                        duration: '22:15',
+                        description: 'How to connect with your dance partner'
+                    },
+                    {
+                        id: 4,
+                        title: 'Cross Body Lead',
+                        video: 'videos/lesson-4-cross-body-lead.mp4',
+                        duration: '20:00',
+                        description: 'The most important move in salsa dancing'
+                    },
+                    {
+                        id: 5,
+                        title: 'Basic Spins & Turns',
+                        video: 'videos/lesson-5-spins-turns.mp4',
+                        duration: '19:30',
+                        description: 'Adding flair with spins and turns'
+                    },
+                    {
+                        id: 6,
+                        title: 'Leading & Following',
+                        video: 'videos/lesson-6-leading-following.mp4',
+                        duration: '17:45',
+                        description: 'Communication through dance'
+                    },
+                    {
+                        id: 7,
+                        title: 'Basic Styling',
+                        video: 'videos/lesson-7-styling.mp4',
+                        duration: '21:20',
+                        description: 'Adding your personal style to salsa'
+                    },
+                    {
+                        id: 8,
+                        title: 'Putting It All Together',
+                        video: 'videos/lesson-8-putting-together.mp4',
+                        duration: '25:10',
+                        description: 'Practice session with all techniques'
+                    }
+                ];
+                
+                this.init();
+            }
+            
+            init() {
+                this.renderLessons();
+                this.setupVideoEvents();
+                this.loadProgress();
+            }
+            
+            renderLessons() {
+                const lessonsList = document.getElementById('lessons-list');
+                
+                this.lessons.forEach((lesson, index) => {
+                    const lessonElement = document.createElement('div');
+                    lessonElement.className = 'lesson-item';
+                    if (index === 0) lessonElement.classList.add('active');
+                    
+                    // Check if lesson is completed
+                    const progress = this.getLessonProgress(lesson.id);
+                    if (progress >= 90) {
+                        lessonElement.classList.add('completed');
+                    }
+                    
+                    lessonElement.innerHTML = `
+                        <div class="lesson-title">${lesson.title}</div>
+                        <div class="lesson-duration">${lesson.duration}</div>
+                    `;
+                    
+                    lessonElement.onclick = () => this.loadLesson(index);
+                    lessonsList.appendChild(lessonElement);
+                });
+            }
+            
+            loadLesson(index) {
+                if (index < 0 || index >= this.lessons.length) return;
+                
+                this.currentLessonIndex = index;
+                const lesson = this.lessons[index];
+                
+                // Update video source
+                const video = document.getElementById('course-video');
+                video.src = lesson.video;
+                
+                // Update lesson info
+                document.getElementById('current-lesson-title').textContent = lesson.title;
+                document.getElementById('current-lesson-description').textContent = lesson.description;
+                
+                // Update active lesson in sidebar
+                document.querySelectorAll('.lesson-item').forEach((item, i) => {
+                    if (i === index) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+                
+                // Reset progress display
+                this.updateProgress(0);
+            }
+            
+            setupVideoEvents() {
+                const video = document.getElementById('course-video');
+                
+                video.addEventListener('timeupdate', () => {
+                    if (video.duration > 0) {
+                        const progress = (video.currentTime / video.duration) * 100;
+                        this.updateProgress(progress);
+                        this.saveLessonProgress(this.lessons[this.currentLessonIndex].id, progress);
+                    }
+                });
+                
+                video.addEventListener('ended', () => {
+                    this.handleVideoComplete();
+                });
+            }
+            
+            updateProgress(progress) {
+                const progressFill = document.getElementById('lesson-progress');
+                const progressText = document.getElementById('progress-text');
+                
+                progressFill.style.width = `${progress}%`;
+                progressText.textContent = `${Math.round(progress)}% Complete`;
+            }
+            
+            handleVideoComplete() {
+                const currentLesson = this.lessons[this.currentLessonIndex];
+                this.saveLessonProgress(currentLesson.id, 100);
+                
+                // Mark lesson as completed
+                const lessonItems = document.querySelectorAll('.lesson-item');
+                lessonItems[this.currentLessonIndex].classList.add('completed');
+                
+                // Auto-advance to next lesson after 2 seconds
+                if (this.currentLessonIndex < this.lessons.length - 1) {
+                    setTimeout(() => {
+                        this.loadLesson(this.currentLessonIndex + 1);
+                    }, 2000);
+                }
+            }
+            
+            saveLessonProgress(lessonId, progress) {
+                const progressData = JSON.parse(localStorage.getItem('courseProgress') || '{}');
+                progressData[lessonId] = progress;
+                localStorage.setItem('courseProgress', JSON.stringify(progressData));
+            }
+            
+            getLessonProgress(lessonId) {
+                const progressData = JSON.parse(localStorage.getItem('courseProgress') || '{}');
+                return progressData[lessonId] || 0;
+            }
+            
+            loadProgress() {
+                // Restore progress indicators for all lessons
+                this.lessons.forEach((lesson, index) => {
+                    const progress = this.getLessonProgress(lesson.id);
+                    if (progress >= 90) {
+                        const lessonItems = document.querySelectorAll('.lesson-item');
+                        lessonItems[index].classList.add('completed');
+                    }
+                });
+            }
+        }
+        
+        // Initialize the offline course player
+        document.addEventListener('DOMContentLoaded', () => {
+            new OfflineCoursePlayer();
+        });
+    </script>
+</body>
+</html>

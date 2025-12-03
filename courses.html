@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queer Latin Dance - Online Courses</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="course-styles.css">
+</head>
+<body>
+    <div id="course-app">
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="screen active">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <h2>Loading your dance journey...</h2>
+            </div>
+        </div>
+
+        <!-- Authentication Screen -->
+        <div id="auth-screen" class="screen hidden">
+            <div class="auth-container">
+                <div class="logo-section">
+                    <h1>🕺💃 Queer Latin Dance</h1>
+                    <h2>Online Course Portal</h2>
+                    <p>Learn to dance with pride and passion</p>
+                </div>
+                
+                <div class="auth-tabs">
+                    <button class="tab-btn active" onclick="switchAuthTab('login')">Sign In</button>
+                    <button class="tab-btn" onclick="switchAuthTab('register')">Sign Up</button>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form">
+                    <h3>Welcome Back! 💃</h3>
+                    <div class="input-group">
+                        <input type="email" id="login-email" placeholder="Email address" required>
+                        <span class="input-icon">📧</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="login-password" placeholder="Password" required>
+                        <span class="input-icon">🔒</span>
+                    </div>
+                    <button type="submit" class="auth-btn">Sign In</button>
+                    <button type="button" class="demo-btn" onclick="window.demoLogin()">🎭 Quick Demo Login</button>
+                    <button type="button" class="admin-demo-btn" onclick="window.adminDemoLogin()">⭐ Admin Demo Login</button>
+                    <p class="auth-note">Demo: Use any email and password to try it out!</p>
+                </form>
+                
+                <!-- Register Form -->
+                <form id="register-form" class="auth-form hidden">
+                    <h3>Join Our Dance Community! 🎉</h3>
+                    <div class="input-group">
+                        <input type="text" id="register-name" placeholder="Your full name" required>
+                        <span class="input-icon">👤</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="register-email" placeholder="Email address" required>
+                        <span class="input-icon">📧</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="register-password" placeholder="Create password (min 6 chars)" minlength="6" required>
+                        <span class="input-icon">🔒</span>
+                    </div>
+                    <button type="submit" class="auth-btn">Create Account</button>
+                    <p class="auth-terms">By signing up, you agree to learn amazing dance moves! 💫</p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboard-screen" class="screen hidden">
+            <nav class="course-nav">
+                <div class="nav-left">
+                    <h2>🕺 Dance Academy</h2>
+                    <a href="index.html" class="back-link">← Back to Main Site</a>
+                </div>
+                <div class="nav-right">
+                    <span id="user-welcome">Welcome!</span>
+                    <button id="admin-btn" onclick="showAdminPanel()" class="admin-btn" style="display:none;">Admin</button>
+                    <button onclick="logout()" class="logout-btn">Sign Out</button>
+                </div>
+            </nav>
+
+            <div class="dashboard-content">
+                <div class="welcome-hero">
+                    <h1>Welcome to Your Dance Journey! 💃🕺</h1>
+                    <p>Continue learning or explore new courses below</p>
+                </div>
+
+                <!-- My Courses Section -->
+                <section class="course-section">
+                    <h2 class="section-title">My Courses</h2>
+                    <div id="my-courses-grid" class="courses-grid">
+                        <div class="no-courses-message">
+                            <div class="no-courses-icon">📚</div>
+                            <h3>No courses yet!</h3>
+                            <p>Purchase your first course below to get started</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Available Courses Section -->
+                <section class="course-section">
+                    <h2 class="section-title">Available Courses</h2>
+                    <div id="available-courses-grid" class="courses-grid">
+                        <!-- Courses will be populated here -->
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Course Player Screen -->
+        <div id="player-screen" class="screen hidden">
+            <nav class="player-nav">
+                <button onclick="showDashboard()" class="back-btn">← Back to My Courses</button>
+                <h2 id="current-course-title">Course Title</h2>
+            </nav>
+
+            <div class="player-container">
+                <div class="video-section">
+                    <div class="video-wrapper">
+                        <video id="course-video" controls controlslist="nodownload noremoteplayback">
+                            <source src="" type="video/mp4">
+                            Your browser doesn't support video playback.
+                        </video>
+                        <div class="video-overlay">
+                            <div class="watermark" id="video-watermark">Student Portal</div>
+                        </div>
+                    </div>
+                    
+                    <div class="lesson-controls">
+                        <h3 id="current-lesson-title">Select a lesson to begin</h3>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="lesson-progress"></div>
+                            </div>
+                            <span id="progress-text">0% Complete</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-sidebar">
+                    <div class="sidebar-header">
+                        <h3>Course Content</h3>
+                        <span id="course-progress-summary">0 of 0 lessons</span>
+                    </div>
+                    <div id="lessons-list" class="lessons-list">
+                        <!-- Lessons will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Instructions Screen -->
+        <div id="payment-screen" class="screen hidden">
+            <div class="payment-container">
+                <div class="payment-header">
+                    <h1>💰 Complete Your Purchase</h1>
+                    <p>You're almost ready to start dancing!</p>
+                </div>
+                
+                <div class="course-summary">
+                    <h3 id="payment-course-title">Course Title</h3>
+                    <p id="payment-course-description">Course description</p>
+                    <div class="price-display">
+                        <span class="price" id="payment-course-price">$49</span>
+                        <span class="price-note">One-time payment • Lifetime access</span>
+                    </div>
+                </div>
+                
+                <div class="payment-instructions">
+                    <h3>📱 Send Payment Via:</h3>
+                    
+                    <div class="payment-option">
+                        <h4>💳 PayPal</h4>
+                        <p><strong>Send to:</strong> <code>michelle@queerlatindance.com</code></p>
+                        <p><strong>Include in note:</strong> Your email + course name</p>
+                    </div>
+                    
+                    <div class="payment-option">
+                        <h4>💰 Venmo</h4>
+                        <p><strong>Send to:</strong> <code>@QueerLatinDance</code></p>
+                        <p><strong>Include in note:</strong> Your email + course name</p>
+                    </div>
+                    
+                    <div class="payment-option">
+                        <h4>🏦 Zelle</h4>
+                        <p><strong>Send to:</strong> <code>michelle@queerlatindance.com</code></p>
+                        <p><strong>Include in memo:</strong> Your email + course name</p>
+                    </div>
+                </div>
+                
+                <div class="payment-example">
+                    <h4>📝 Example Payment Note:</h4>
+                    <div class="example-note">
+                        <code id="payment-example-text">carlos@email.com - Salsa Fundamentals</code>
+                    </div>
+                </div>
+                
+                <div class="payment-timeline">
+                    <h4>⏱️ What Happens Next:</h4>
+                    <ol>
+                        <li>Send payment with your email + course name</li>
+                        <li>We'll verify your payment (usually within 24 hours)</li>
+                        <li>You'll receive email confirmation</li>
+                        <li>Log back in to access your course!</li>
+                    </ol>
+                </div>
+                
+                <div class="payment-actions">
+                    <button onclick="showDashboard()" class="back-btn">← Back to Courses</button>
+                    <button onclick="markPaymentSent()" class="payment-sent-btn">✅ I've Sent Payment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Panel Screen -->
+        <div id="admin-panel" class="screen hidden">
+            <nav class="course-nav">
+                <div class="nav-left">
+                    <h2>👑 Admin Panel</h2>
+                    <button onclick="showDashboard()" class="back-link">← Back to Dashboard</button>
+                </div>
+                <div class="nav-right">
+                    <button onclick="logout()" class="logout-btn">Sign Out</button>
+                </div>
+            </nav>
+
+            <div class="admin-content">
+                <div class="admin-section">
+                    <h2>📋 Pending Course Payments</h2>
+                    <p>Review and approve course access for students</p>
+                    
+                    <div class="admin-actions">
+                        <button onclick="courseApp.loadPendingPayments()" class="btn-refresh">
+                            🔄 Refresh Payments
+                        </button>
+                    </div>
+                    
+                    <div id="pendingPaymentsList" class="payments-list">
+                        <p class="loading">Loading pending payments...</p>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h2>📊 Course Statistics</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">0</div>
+                            <div class="stat-label">Active Students</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">0</div>
+                            <div class="stat-label">Pending Payments</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">0</div>
+                            <div class="stat-label">Total Revenue</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-section">
+                    <h2>➕ Quick Access Grant</h2>
+                    <p>Grant course access manually (demo mode)</p>
+                    <div class="admin-form">
+                        <input type="email" id="admin-student-email" placeholder="Student email address" />
+                        <select id="admin-course-select">
+                            <option value="">Select Course</option>
+                            <option value="salsa-fundamentals">Salsa Fundamentals</option>
+                            <option value="bachata-sensual">Bachata Sensual</option>
+                            <option value="advanced-salsa">Advanced Salsa</option>
+                        </select>
+                        <button onclick="grantCourseAccess()" class="btn-grant">Grant Access</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <script src="course-app.js"></script>
+    
+    <!-- Fallback for JavaScript issues -->
+    <script>
+        // Simple fallback to ensure something shows up
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                // If no screen is active after 2 seconds, show auth screen
+                const activeScreen = document.querySelector('.screen.active');
+                if (!activeScreen) {
+                    console.log('🔧 Fallback: Making auth screen visible');
+                    document.getElementById('auth-screen').classList.add('active');
+                }
+            }, 2000);
+        });
+        
+        // Debug info
+        console.log('📄 HTML loaded, JavaScript should initialize soon...');
+        
+        // Quick admin function for testing
+        window.grantAccessQuick = function(email, courseId) {
+            if (typeof courseApp !== 'undefined') {
+                // Grant access directly for testing
+                const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                if (currentUser.email === email) {
+                    if (!currentUser.ownedCourses) {
+                        currentUser.ownedCourses = [];
+                    }
+                    if (!currentUser.ownedCourses.includes(courseId)) {
+                        currentUser.ownedCourses.push(courseId);
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        courseApp.currentUser = currentUser;
+                        courseApp.showSuccess(`✅ Quick access granted for ${courseId}!`);
+                        courseApp.updateCourseAccessUI();
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+    </script>
+
+    <!-- Payment Overlay Modal -->
+    <div id="paymentOverlay" class="payment-overlay">
+        <div class="payment-container">
+            <div class="payment-title">Complete Your Payment</div>
+            <div class="payment-desc">
+                Select a payment method below to finish registration for your course.<br>
+                <span id="selectedSeries" style="display:block;margin-top:0.7em;font-size:1.08rem;color:#716cff;font-weight:700;"></span>
+                <span id="selectedPrice" style="display:block;margin-top:0.2em;font-size:1.08rem;color:#222;font-weight:700;"></span>
+            </div>
+            
+            <div class="payment-methods">
+                <!-- Order Summary -->
+                <div style="width:100%;background:#f9f9f9;border-radius:12px;padding:1.2em 1em 1em 1em;margin-bottom:1.2em;box-shadow:0 2px 8px #a259ff11;text-align:left;">
+                    <div style="font-size:1.18rem;font-weight:700;color:#444;margin-bottom:0.7em;">Order Summary</div>
+                    <div id="orderSummaryDetails" style="margin-bottom:0.5em;font-size:1.08rem;color:#222;font-weight:700;"></div>
+                    <div style="background:#fff;border-radius:8px;padding:0.7em 1em;margin-bottom:0.5em;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span>Total</span>
+                            <span id="orderSummaryTotal" style="font-weight:900;font-size:1.3rem;color:#222;"></span>
+                        </div>
+                        <div id="orderSummaryCalc" style="font-size:0.98rem;color:#888;"></div>
+                    </div>
+                </div>
+                
+                <!-- Payment Information -->
+                <div style="width:100%;background:#f9f9f9;border-radius:12px;padding:1.2em 1em 1em 1em;margin-bottom:1.2em;box-shadow:0 2px 8px #a259ff11;text-align:left;">
+                    <div style="font-size:1.18rem;font-weight:700;color:#444;margin-bottom:0.7em;">Payment Information</div>
+                    <div style="display:flex;flex-direction:column;gap:0.3em;margin-top:1.2em;">
+                        <div style="display:flex;flex-direction:column;align-items:center;gap:0.3em;">
+                            
+                            <a id="zelleBtn" href="#" class="choose-btn zelle">
+                                <span style="display:flex;align-items:center;gap:0.5em;"><img src="images/icons/zelleicon.png" alt="Zelle" style="height:1.0em;width:auto;max-width:1.2em;max-height:1.0em;vertical-align:middle;object-fit:contain;"/>Zelle</span><span class="no-fees-badge">No Fees</span>
+                            </a>
+                            
+                            <!-- Zelle Form -->
+                            <div id="zelleForm" class="payment-form">
+                                <h3>Zelle Payment Instructions</h3>
+                                <form id="zelleFormInner">
+                                    <div class="form-row">
+                                        <div class="form-col">
+                                            <label>First Name</label><br>
+                                            <input type="text" name="firstName" required class="form-input" />
+                                        </div>
+                                        <div class="form-col">
+                                            <label>Last Name</label><br>
+                                            <input type="text" name="lastName" required class="form-input" />
+                                        </div>
+                                    </div>
+                                    <label>Email</label><br><input type="email" name="email" required class="form-input form-input-full" /><br>
+                                    <label>Phone</label><br><input type="tel" name="phone" class="form-input form-input-full" /><br>
+                                    <label>Pronouns</label><br><input type="text" name="pronouns" class="form-input form-input-full" /><br>
+                                    <div class="modal-instructions zelle-instructions">
+                                        <b>Step 1:</b> Open your banking app and select Zelle.<br>
+                                        <b>Step 2:</b> Send payment to <b>michelle@queerlatindance.com</b><br>
+                                        <b>Step 3:</b> Enter the correct amount and include your email + course name in the memo.<br>
+                                        <b>Step 4:</b> Click below to confirm payment sent.
+                                    </div>
+                                    <button type="submit" class="modal-submit zelle-submit">Show Zelle Details</button>
+                                </form>
+                            </div>
+
+                            <button id="venmoBtn" type="button" class="choose-btn venmo">
+                                <span style="display:flex;align-items:center;gap:0.5em;"><img src="images/icons/venmoicon.png" alt="Venmo" style="height:1.0em;width:auto;max-width:1.2em;max-height:1.0em;vertical-align:middle;object-fit:contain;"/>Venmo</span><span class="no-fees-badge">No Fees</span>
+                            </button>
+                            
+                            <!-- Venmo Form -->
+                            <div id="venmoForm" class="payment-form">
+                                <h3>Venmo Payment Instructions</h3>
+                                <form id="venmoFormInner">
+                                    <div class="form-row">
+                                        <div class="form-col">
+                                            <label>First Name</label><br>
+                                            <input type="text" name="firstName" required class="form-input" />
+                                        </div>
+                                        <div class="form-col">
+                                            <label>Last Name</label><br>
+                                            <input type="text" name="lastName" required class="form-input" />
+                                        </div>
+                                    </div>
+                                    <label>Email</label><br><input type="email" name="email" required class="form-input form-input-full" /><br>
+                                    <label>Phone</label><br><input type="tel" name="phone" class="form-input form-input-full" /><br>
+                                    <label>Pronouns</label><br><input type="text" name="pronouns" class="form-input form-input-full" /><br>
+                                    <div class="modal-instructions venmo-instructions">
+                                        <b>Step 1:</b> Open Venmo app.<br>
+                                        <b>Step 2:</b> Send payment to <b>@QueerLatinDance</b>.<br>
+                                        <b>Step 3:</b> Enter the correct amount and include your email + course name in the note.<br>
+                                        <b>Step 4:</b> Click below to continue to Venmo.
+                                    </div>
+                                    <button type="submit" class="modal-submit venmo-submit">Continue to Venmo</button>
+                                </form>
+                            </div>
+
+                            <button id="stripeBtn" type="button" class="choose-btn stripe">
+                                <span style="display:flex;align-items:center;gap:0.5em;"><img src="images/icons/stripeicon.png" alt="Stripe" style="height:1.0em;width:auto;max-width:1.2em;max-height:1.0em;vertical-align:middle;object-fit:contain;"/>Stripe (Pay with Credit Card)</span>
+                            </button>
+
+                            <button id="paypalBtn" type="button" class="choose-btn paypal">
+                                <span style="display:flex;align-items:center;gap:0.5em;"><img src="images/icons/paypalicon.png" alt="PayPal" style="height:1.0em;width:auto;max-width:1.2em;max-height:1.0em;vertical-align:middle;object-fit:contain;"/>PayPal</span>
+                            </button>
+                            
+                            <!-- PayPal Form -->
+                            <div id="paypalForm" class="payment-form">
+                                <h3>PayPal Payment Instructions</h3>
+                                <form id="paypalFormInner">
+                                    <div class="form-row">
+                                        <div class="form-col">
+                                            <label>First Name</label><br>
+                                            <input type="text" name="firstName" required class="form-input" />
+                                        </div>
+                                        <div class="form-col">
+                                            <label>Last Name</label><br>
+                                            <input type="text" name="lastName" required class="form-input" />
+                                        </div>
+                                    </div>
+                                    <label>Email</label><br><input type="email" name="email" required class="form-input form-input-full" /><br>
+                                    <label>Phone</label><br><input type="tel" name="phone" class="form-input form-input-full" /><br>
+                                    <label>Pronouns</label><br><input type="text" name="pronouns" class="form-input form-input-full" /><br>
+                                    <div class="modal-instructions paypal-instructions">
+                                        <b>Step 1:</b> Click below to continue to PayPal.<br>
+                                        <b>Step 2:</b> Log in to PayPal (if prompted).<br>
+                                        <b>Step 3:</b> Confirm the amount and complete payment.<br>
+                                        <b>Step 4:</b> We will confirm your registration by email.
+                                    </div>
+                                    <button type="submit" class="modal-submit paypal-submit">Continue to PayPal</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-note">After payment, you will receive a confirmation email along with course access.</div>
+                    <div class="payment-fee-note">
+                        <span class="payment-fee-highlight">Note: PayPal and Stripe charge processing fees. Zelle and Venmo are recommended for no-fee payments.</span>
+                    </div>
+                </div>
+                
+                <!-- Safe Checkout -->
+                <div style="width:100%;background:#fff;border-radius:12px;padding:1em 1em 1em 1em;margin-bottom:1.2em;box-shadow:0 2px 8px #a259ff11;text-align:center;">
+                    <div style="font-size:1.08rem;font-weight:700;color:#444;margin-bottom:0.7em;">GUARANTEED SAFE CHECKOUT</div>
+                    <div style="display:flex;align-items:center;justify-content:center;gap:1em;flex-wrap:wrap;">
+                        <span style="display:flex;align-items:center;gap:0.3em;background:#eaf6fa;padding:0.3em 0.7em;border-radius:8px;font-size:0.98rem;color:#2d9cdb;font-weight:700;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#6fcf97"/><path d="M17 8l-5.5 7L7 12" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+                            Authentic Guarantee
+                        </span>
+                        <img src="images/icons/visaicon.png" alt="Visa" style="height:24px;max-width:40px;object-fit:contain;" />
+                        <img src="images/icons/paypalicon.png" alt="PayPal" style="height:24px;max-width:40px;object-fit:contain;" />
+                        <img src="images/icons/amexicon.png" alt="Amex" style="height:24px;max-width:40px;object-fit:contain;" />
+                        <img src="images/icons/discovericon.png" alt="Discover" style="height:24px;max-width:40px;object-fit:contain;" />
+                    </div>
+                </div>
+            </div>
+            
+            <button type="button" class="payment-overlay-close" onclick="closePaymentOverlay()">
+                Close
+            </button>
+        </div>
+
+    </div>
+</body>
+</html>

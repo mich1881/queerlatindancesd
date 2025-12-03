@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Test</title>
+</head>
+<body>
+    <h1>Email Delivery Test</h1>
+    <form id="testForm">
+        <label>Your Email:</label><br>
+        <input type="email" id="testEmail" required placeholder="your.email@gmail.com"><br><br>
+        <button type="submit">Test Email Delivery</button>
+    </form>
+    
+    <div id="result" style="margin-top: 20px;"></div>
+    
+    <script>
+        document.getElementById('testForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('testEmail').value;
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.innerHTML = '<p>Sending test email...</p>';
+            
+            try {
+                const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/api/payment-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        firstName: 'Test',
+                        lastName: 'User',
+                        series: 'Email Test Course',
+                        paymentMethod: 'test',
+                        phone: '555-1234'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    resultDiv.innerHTML = `
+                        <div style="color: green; padding: 10px; border: 1px solid green; border-radius: 5px;">
+                            <strong>✅ Email sent successfully!</strong><br>
+                            Check your inbox (and spam folder) for the payment instructions email.<br><br>
+                            Backend response: ${result.message}<br>
+                            Student email sent: ${result.studentEmailSent}<br>
+                            Admin email sent: ${result.adminEmailSent}
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div style="color: red; padding: 10px; border: 1px solid red; border-radius: 5px;">
+                            <strong>❌ Error:</strong> ${result.error || 'Unknown error'}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div style="color: red; padding: 10px; border: 1px solid red; border-radius: 5px;">
+                        <strong>❌ Network Error:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

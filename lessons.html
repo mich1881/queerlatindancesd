@@ -59,6 +59,13 @@
   font-weight: normal;
   font-style: normal;
 }
+    .offer-card-bg3 {
+      background: url('images/eventpage/privateflyer.png') center center/cover no-repeat !important;
+      color: #fff;
+      position: relative;
+      box-shadow: 0 4px 24px #716cff22;
+      border: none;
+    }
     .offer-card-bg {
       background: url('images/lessons/4weekseries2.png') center center/cover no-repeat !important;
       color: #fff;
@@ -72,13 +79,6 @@
       border-radius: 10px;
       padding: 0.3em 0.7em;
       color: #fff;
-    }
-    .offer-card-bg3 {
-      background: url('images/eventpage/privateflyer.png') center center/cover no-repeat !important;
-      color: #fff;
-      position: relative;
-      box-shadow: 0 4px 24px #716cff22;
-      border: none;
     }
         .offer-card-bg4 {
       background: url('images/lessons/onlinelessonscover.png') center center/cover no-repeat !important;
@@ -150,6 +150,23 @@
       z-index: 2;
       transition: all 0.3s ease;
       white-space: nowrap;
+    }    
+    .coming-january-banner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-52deg);
+      background: #13c43c;
+      color: #ffffff;
+      padding: 0.5rem 6rem;
+      font-family: 'Nunito', Arial, sans-serif;
+      font-weight: 1000;
+      font-size: 0.9rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+      white-space: nowrap;
+      width: 160%;
     }
     
     .offer-card:hover .lesson-button-label {
@@ -310,13 +327,22 @@
             // Function to create lesson HTML
             function createLessonHTML(lesson) {
               const isComingSoon = lesson.date === 'tba' || lesson.date === 'coming-soon';
+              const isComingJanuary = lesson.date === 'january-2025';
               const comingSoonBadge = isComingSoon ? '<span class="coming-soon-badge">Coming Soon!</span>' : '';
+              const comingJanuaryBanner = isComingJanuary ? '<div class="coming-january-banner">Coming Soon in January</div>' : '';
+              
+              // Check if this is a 4-week series that has ended (only for upcoming section)
+              const isEndedSeries = (lesson.id === 'intensive-series' || lesson.id === '4week-series') && lesson.date === 'ongoing';
+              const seriesEndedBanner = isEndedSeries ? '<div class="series-ended-banner">Series Ended</div>' : '';
+              
               const cardClass = getCardClass(lesson.type);
               
               return `
                 <a class="offer-card ${cardClass}" href="${lesson.link}" style="position:relative;overflow:hidden;background: url('${lesson.flyerUrl}') center center/cover no-repeat !important;">
                   <div class="lesson-button-label">${lesson.title}</div>
                   ${comingSoonBadge}
+                  ${seriesEndedBanner}
+                  ${comingJanuaryBanner}
                 </a>
               `;
             }
@@ -327,11 +353,13 @@
                 case 'dropin':
                   return 'offer-card-bg-dropin';
                 case 'series':
-                  return 'offer-card-bg';
+                  return 'offer-card-bg'; 
                 case 'private':
                   return 'offer-card-bg3';
                 case 'online':
                   return 'offer-card-bg4';
+                case 'series-new':
+                  return 'offer-card-bg-new';
                 default:
                   return 'offer-card-bg';
               }
