@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Error Check</title>
+    <style>
+        body { padding: 20px; font-family: Arial, sans-serif; }
+        .error { color: red; background: #ffe6e6; padding: 10px; margin: 10px 0; border: 1px solid red; }
+        .success { color: green; background: #e6ffe6; padding: 10px; margin: 10px 0; border: 1px solid green; }
+        .info { background: #f0f0f0; padding: 10px; margin: 10px 0; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Error Check Test</h1>
+    
+    <div id="status">Loading...</div>
+    
+    <button onclick="checkEverything()">Check Everything</button>
+    <button onclick="forceReload()">Force Reload</button>
+
+    <script>
+        // Error tracking
+        window.errors = [];
+        
+        window.addEventListener('error', function(e) {
+            const errorMsg = `JavaScript Error: ${e.error.message} at ${e.filename}:${e.lineno}`;
+            window.errors.push(errorMsg);
+            updateStatus();
+        });
+        
+        function updateStatus() {
+            const status = document.getElementById('status');
+            let html = '';
+            
+            // Check if course-app.js loaded
+            if (typeof CoursePlatform === 'undefined') {
+                html += '<div class="error">❌ CoursePlatform class not loaded</div>';
+            } else {
+                html += '<div class="success">✅ CoursePlatform class loaded</div>';
+            }
+            
+            // Check if courseApp instance exists
+            if (typeof window.courseApp === 'undefined') {
+                html += '<div class="error">❌ courseApp instance not created</div>';
+            } else {
+                html += '<div class="success">✅ courseApp instance exists</div>';
+                
+                // Check courses
+                if (window.courseApp.courses) {
+                    const courseCount = Object.keys(window.courseApp.courses).length;
+                    html += `<div class="success">✅ Courses loaded: ${courseCount}</div>`;
+                    
+                    // Check Salsa Fundamentals specifically
+                    if (window.courseApp.courses['salsa-fundamentals']) {
+                        html += '<div class="success">✅ Salsa Fundamentals found</div>';
+                    } else {
+                        html += '<div class="error">❌ Salsa Fundamentals NOT found</div>';
+                    }
+                } else {
+                    html += '<div class="error">❌ No courses object</div>';
+                }
+            }
+            
+            // Show errors
+            if (window.errors.length > 0) {
+                html += '<div class="error">JavaScript Errors:<br>' + window.errors.join('<br>') + '</div>';
+            } else {
+                html += '<div class="success">✅ No JavaScript errors detected</div>';
+            }
+            
+            status.innerHTML = html;
+        }
+        
+        function checkEverything() {
+            updateStatus();
+        }
+        
+        function forceReload() {
+            location.reload();
+        }
+        
+        // Initial check
+        setTimeout(updateStatus, 1000);
+        setTimeout(updateStatus, 3000); // Check again after 3 seconds
+    </script>
+    
+    <!-- Load the course app -->
+    <script src="course-app.js"></script>
+    
+    <script>
+        // Final check after course-app.js loads
+        setTimeout(updateStatus, 2000);
+    </script>
+</body>
+</html>

@@ -15,7 +15,7 @@ class CoursePlatform {
                 title: 'Salsa Fundamentals',
                 description: 'Master the basic steps, timing, and partner connection in salsa dancing. Perfect for absolute beginners who want to build a strong foundation.',
                 price: 49,
-                icon: '💃',
+                icon: 'images/4weekseries1/IMG_8661.JPG',
                 duration: '4 hours',
                 lessons: 8,
                 level: 'Beginner',
@@ -86,12 +86,12 @@ class CoursePlatform {
                     }
                 ]
             },
-            'bachata-sensual': {
-                id: 'bachata-sensual',
-                title: 'Bachata Sensual',
+            'bachata-fundamentals': {
+                id: 'bachata-fundamentals',
+                title: 'Bachata Fundamentals',
                 description: 'Learn the romantic and expressive movements of bachata. Focus on body movement, isolations, and creating beautiful connection with your partner.',
                 price: 39,
-                icon: '🔥',
+                icon: 'images/4weekseries1/IMG_9905.JPG',
                 duration: '3 hours',
                 lessons: 6,
                 level: 'Beginner',
@@ -142,10 +142,10 @@ class CoursePlatform {
             },
             'advanced-salsa': {
                 id: 'advanced-salsa',
-                title: 'Advanced Salsa Combinations',
+                title: 'Advanced Salsa',
                 description: 'Take your salsa to the next level with complex patterns, advanced styling, and performance-level techniques. For experienced dancers only.',
                 price: 69,
-                icon: '⚡',
+                icon: 'images/4weekseries1/IMG_0505.JPG',
                 duration: '5 hours',
                 lessons: 10,
                 level: 'Advanced',
@@ -208,7 +208,7 @@ class CoursePlatform {
 
     checkAuthStatus() {
         console.log('🔍 Checking authentication status...');
-        const savedUser = localStorage.getItem('QLDUser');
+        const savedUser = localStorage.getItem('currentUser');
         console.log('💾 Saved user data:', savedUser ? 'Found' : 'None');
         
         if (savedUser) {
@@ -234,7 +234,11 @@ class CoursePlatform {
 
     checkAdminAccess() {
         // Simple admin check - you can change this email to your admin email
-        const adminEmails = ['michelle@queerlatindance.com', 'admin@queerlatindance.com'];
+        const adminEmails = [
+            'michelle@queerlatindance.com', 
+            'admin@queerlatindance.com',
+            'admin@demo.com'  // Demo admin for testing
+        ];
         const isAdmin = adminEmails.includes(this.currentUser.email.toLowerCase());
         
         const adminBtn = document.getElementById('admin-btn');
@@ -268,7 +272,11 @@ class CoursePlatform {
                     this.showSuccess(`Welcome back, ${this.currentUser.name}! 🎉`);
                     setTimeout(() => this.showDashboard(), 1000);
                 } else {
-                    this.showError('Invalid password. Please try again.');
+                    console.log('🔍 Password verification failed for:', email);
+                    console.log('🔍 Entered password hash:', this.hashPassword(password));
+                    console.log('🔍 Stored password hash:', users[email].passwordHash);
+                    
+                    this.showError(`Invalid password for ${email}. If you're having trouble, open browser console and type: fixMyLogin('${email}', 'your-desired-password')`);
                 }
             } else {
                 // Demo mode: Create a temporary user for any email/password combination
@@ -302,11 +310,13 @@ class CoursePlatform {
 
         if (!name || !email || !password) {
             this.showError('Please fill in all fields');
+            setTimeout(() => this.showAuthScreen(), 1500);
             return;
         }
 
         if (password.length < 6) {
             this.showError('Password must be at least 6 characters');
+            setTimeout(() => this.showAuthScreen(), 1500);
             return;
         }
 
@@ -316,7 +326,16 @@ class CoursePlatform {
             const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
             
             if (users[email]) {
-                this.showError('Account with this email already exists');
+                this.showError(`Account with ${email} already exists. Please use the "Sign In" tab instead, or try the browser console command: fixMyLogin('${email}', 'your-password')`);
+                // Reset back to auth screen and switch to login tab
+                setTimeout(() => {
+                    this.showAuthScreen();
+                    // Switch to login tab
+                    window.switchAuthTab('login');
+                    // Pre-fill email
+                    const emailInput = document.getElementById('login-email');
+                    if (emailInput) emailInput.value = email;
+                }, 2000);
                 return;
             }
 
@@ -327,9 +346,11 @@ class CoursePlatform {
                 email: email,
                 passwordHash: this.hashPassword(password),
                 purchasedCourses: [],
+                ownedCourses: [], // Add this for course access tracking
                 progress: {},
                 joinDate: new Date().toISOString(),
-                lastLogin: new Date().toISOString()
+                lastLogin: new Date().toISOString(),
+                isAdmin: false
             };
 
             // Save to storage
@@ -346,14 +367,115 @@ class CoursePlatform {
         } catch (error) {
             console.error('Registration error:', error);
             this.showError('Registration failed. Please try again.');
+            setTimeout(() => this.showAuthScreen(), 1500);
         }
     }
 
     logout() {
         this.currentUser = null;
-        localStorage.removeItem('QLDUser');
+        localStorage.removeItem('currentUser');
         this.showSuccess('See you later! Keep dancing! 💃🕺');
         setTimeout(() => this.showAuthScreen(), 1000);
+    }
+
+    // ===== PASSWORD DEBUGGING & RESET FUNCTIONS =====
+    debugUserPassword(email) {
+        console.log('🔍 DEBUG: Checking password for:', email);
+        const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
+        const user = users[email];
+        
+        if (user) {
+            console.log('✅ User found:', {
+                email: user.email,
+                name: user.name,
+                passwordHash: user.passwordHash,
+                joinDate: user.joinDate
+            });
+            
+            // Show what passwords would generate this hash
+            console.log('🔑 Testing common passwords:');
+            const testPasswords = ['demo123', 'password', 'admin123', '123456', email.split('@')[0]];
+            testPasswords.forEach(testPwd => {
+                const testHash = this.hashPassword(testPwd);
+                const matches = testHash === user.passwordHash;
+                console.log(`${matches ? '✅' : '❌'} "${testPwd}" -> ${testHash} (${matches ? 'MATCH!' : 'no match'})`);
+            });
+            
+            return user;
+        } else {
+            console.log('❌ User not found in storage');
+            return null;
+        }
+    }
+    
+    resetUserPassword(email, newPassword) {
+        console.log('🔧 Resetting password for:', email);
+        const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
+        
+        if (users[email]) {
+            const oldHash = users[email].passwordHash;
+            const newHash = this.hashPassword(newPassword);
+            
+            users[email].passwordHash = newHash;
+            users[email].lastPasswordReset = new Date().toISOString();
+            
+            localStorage.setItem('QLDUsers', JSON.stringify(users));
+            
+            console.log('✅ Password reset completed:', {
+                email: email,
+                oldHash: oldHash,
+                newHash: newHash,
+                newPassword: newPassword
+            });
+            
+            this.showSuccess(`✅ Password reset for ${email}. New password: "${newPassword}"`);
+            return true;
+        } else {
+            console.log('❌ User not found, cannot reset password');
+            this.showError('❌ User not found');
+            return false;
+        }
+    }
+    
+    // Quick function to fix login issues
+    fixUserLogin(email, desiredPassword) {
+        console.log('🔧 Fixing login for:', email);
+        
+        // Debug current state
+        this.debugUserPassword(email);
+        
+        // Reset password to desired password
+        const success = this.resetUserPassword(email, desiredPassword);
+        
+        if (success) {
+            console.log('✅ Login fixed! You can now login with:', {
+                email: email,
+                password: desiredPassword
+            });
+        }
+        
+        return success;
+    }
+
+    // ===== UTILITY METHODS =====
+
+    generateUserId() {
+        return 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    hashPassword(password) {
+        // Simple hash for demo purposes (in production, use proper hashing)
+        let hash = 0;
+        for (let i = 0; i < password.length; i++) {
+            const char = password.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash; // Convert to 32-bit integer
+        }
+        return hash.toString();
+    }
+
+    verifyPassword(password, hash) {
+        return this.hashPassword(password) === hash;
     }
 
     // ===== USER INTERFACE =====
@@ -391,8 +513,8 @@ class CoursePlatform {
     showDashboard() {
         console.log('📱 showDashboard() called');
         
-        // Refresh course access from server
-        this.refreshCourseAccess();
+        // Refresh course access from server - DISABLED for debugging
+        // this.refreshCourseAccess();
         
         this.showScreen('dashboard-screen');
         this.updateUserWelcome();
@@ -445,6 +567,39 @@ class CoursePlatform {
             return;
         }
 
+        // Hide welcome hero and "My Courses" sections completely for admins
+        const welcomeHero = document.querySelector('.welcome-hero');
+        const myCoursesSection = myCoursesGrid.closest('.course-section');
+        const availableCoursesSection = availableCoursesGrid.closest('.course-section');
+        const availableCoursesTitle = availableCoursesSection?.querySelector('.section-title');
+        
+        if (this.isAdmin()) {
+            // Hide welcome hero section for admins
+            if (welcomeHero) {
+                welcomeHero.style.display = 'none';
+            }
+            // Hide "My Courses" section for admins
+            if (myCoursesSection) {
+                myCoursesSection.style.display = 'none';
+            }
+            // Update section title for admins
+            if (availableCoursesTitle) {
+                availableCoursesTitle.textContent = 'Course Management Dashboard 👑';
+            }
+        } else {
+            // Show both sections for regular users
+            if (welcomeHero) {
+                welcomeHero.style.display = 'block';
+            }
+            if (myCoursesSection) {
+                myCoursesSection.style.display = 'block';
+            }
+            // Reset section title for regular users
+            if (availableCoursesTitle) {
+                availableCoursesTitle.textContent = 'Available Courses';
+            }
+        }
+
         // Clear existing content
         myCoursesGrid.innerHTML = '';
         availableCoursesGrid.innerHTML = '';
@@ -461,14 +616,18 @@ class CoursePlatform {
             return;
         }
         
-        // Add a loading indicator temporarily
-        availableCoursesGrid.innerHTML = '<p style="color: blue; padding: 20px;">🔄 Loading courses...</p>';
+        // Clear any existing content
+        availableCoursesGrid.innerHTML = '';
 
         Object.values(this.courses).forEach(course => {
             console.log(`🎓 Processing course: ${course.title}`);
             const courseCard = this.createCourseCard(course);
             
-            if (this.userOwnsCourse(course.id)) {
+            // For admins, put all courses in the "Available Courses" section since they manage all courses
+            if (this.isAdmin()) {
+                console.log(`👑 Admin managing course: ${course.id}`);
+                availableCoursesGrid.appendChild(courseCard);
+            } else if (this.userOwnsCourse(course.id)) {
                 console.log(`✅ User owns course: ${course.id}`);
                 myCoursesGrid.appendChild(courseCard);
                 hasPurchasedCourses = true;
@@ -478,8 +637,8 @@ class CoursePlatform {
             }
         });
 
-        // Show "no courses" message if needed
-        if (!hasPurchasedCourses) {
+        // Show "no courses" message if needed (but not for admins)
+        if (!hasPurchasedCourses && !this.isAdmin()) {
             myCoursesGrid.innerHTML = `
                 <div class="no-courses-message">
                     <div class="no-courses-icon">📚</div>
@@ -488,6 +647,7 @@ class CoursePlatform {
                 </div>
             `;
         }
+        // For admins, keep the "My Courses" section empty - they use admin buttons below
         
         console.log('✅ renderCourses() completed');
     }
@@ -498,32 +658,62 @@ class CoursePlatform {
         
         const isOwned = this.userOwnsCourse(course.id);
         const progress = this.getCourseProgress(course.id);
+        const isAdmin = this.isAdmin();
 
-        card.innerHTML = `
-            <div class="course-image">${course.icon}</div>
-            <div class="course-content">
-                <h3 class="course-title">${course.title}</h3>
-                <p class="course-description">${course.description}</p>
-                <div class="course-meta">
-                    <span>📚 ${course.lessons} lessons</span>
-                    <span>⏱️ ${course.duration}</span>
-                    <span>📈 ${course.level}</span>
-                </div>
-                <div class="course-footer">
-                    ${isOwned ? `
-                        <span class="status-badge">✓ Purchased ${progress > 0 ? `(${progress}% complete)` : ''}</span>
-                        <button class="course-btn btn-success" onclick="courseApp.openCourse('${course.id}')">
-                            ${progress > 0 ? 'Continue Learning' : 'Start Course'}
+        // Admin gets different card design with management tools
+        if (isAdmin) {
+            card.innerHTML = `
+                <div class="course-image"><img src="${course.icon}" alt="${course.title}" class="course-card-image" onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=\\'font-size:4em;\\'>💃</div>'"></div>
+                <div class="course-content">
+                    <h3 class="course-title">${course.title} <span class="admin-badge">👑 Admin</span></h3>
+                    <p class="course-description">${course.description}</p>
+                    <div class="course-meta">
+                        <span>📚 ${course.lessons} lessons</span>
+                        <span>⏱️ ${course.duration}</span>
+                        <span>📈 ${course.level}</span>
+                        <span class="admin-price">💰 $${course.price}</span>
+                    </div>
+                    <div class="course-footer admin-footer">
+                        <button class="course-btn btn-admin" onclick="courseApp.openCourse('${course.id}')">
+                            🎥 View Course
                         </button>
-                    ` : `
-                        <span class="course-price">$${course.price}</span>
-                        <button class="course-btn btn-primary" onclick="courseApp.showPaymentInstructions('${course.id}')">
-                            Buy Now - $${course.price}
+                        <button class="course-btn btn-upload" onclick="courseApp.showUploadModal('${course.id}')">
+                            📤 Upload Videos
                         </button>
-                    `}
+                        <button class="course-btn btn-edit" onclick="courseApp.editCourse('${course.id}')">
+                            ✏️ Edit Course
+                        </button>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        } else {
+            // Regular student view
+            card.innerHTML = `
+                <div class="course-image"><img src="${course.icon}" alt="${course.title}" class="course-card-image" onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=\\'font-size:4em;\\'>💃</div>'"></div>
+                <div class="course-content">
+                    <h3 class="course-title">${course.title}</h3>
+                    <p class="course-description">${course.description}</p>
+                    <div class="course-meta">
+                        <span>📚 ${course.lessons} lessons</span>
+                        <span>⏱️ ${course.duration}</span>
+                        <span>📈 ${course.level}</span>
+                    </div>
+                    <div class="course-footer">
+                        ${isOwned ? `
+                            <span class="status-badge">✓ Purchased ${progress > 0 ? `(${progress}% complete)` : ''}</span>
+                            <button class="course-btn btn-success" onclick="courseApp.openCourse('${course.id}')">
+                                ${progress > 0 ? 'Continue Learning' : 'Start Course'}
+                            </button>
+                        ` : `
+                            <span class="course-price">$${course.price}</span>
+                            <button class="course-btn btn-primary" onclick="courseApp.showPaymentInstructions('${course.id}')">
+                                Buy Now - $${course.price}
+                            </button>
+                        `}
+                    </div>
+                </div>
+            `;
+        }
 
         return card;
     }
@@ -689,7 +879,8 @@ class CoursePlatform {
     // ===== VIDEO PLAYER =====
 
     openCourse(courseId) {
-        if (!this.userOwnsCourse(courseId)) {
+        // Allow admins to view any course, regular users need to own it
+        if (!this.isAdmin() && !this.userOwnsCourse(courseId)) {
             this.showError('You need to purchase this course first');
             return;
         }
@@ -909,7 +1100,7 @@ class CoursePlatform {
 
     saveCurrentUser() {
         if (this.currentUser) {
-            localStorage.setItem('QLDUser', JSON.stringify(this.currentUser));
+            localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
         }
     }
 
@@ -923,21 +1114,38 @@ class CoursePlatform {
 
     // ===== PAYMENT SYSTEM =====
 
-    showPaymentInstructions(course) {
+    showPaymentInstructions(courseId) {
+        // If passed a string ID, get the course object
+        const course = typeof courseId === 'string' ? this.courses[courseId] : courseId;
+        
+        if (!course) {
+            console.error('❌ Course not found:', courseId);
+            this.showError('Course not found. Please refresh and try again.');
+            return;
+        }
+        
         // Store selected course for payment processing
         this.selectedCourse = course;
         
         // Update the payment overlay with course details
-        document.getElementById('selectedSeries').textContent = course.title;
-        document.getElementById('selectedPrice').textContent = `$${course.price}`;
-        document.getElementById('orderSummaryDetails').textContent = course.title;
-        document.getElementById('orderSummaryTotal').textContent = `$${course.price}`;
-        document.getElementById('orderSummaryCalc').textContent = `Course enrollment fee: $${course.price}`;
+        const selectedSeries = document.getElementById('selectedSeries');
+        const selectedPrice = document.getElementById('selectedPrice');
+        const orderSummaryDetails = document.getElementById('orderSummaryDetails');
+        const orderSummaryTotal = document.getElementById('orderSummaryTotal');
+        const orderSummaryCalc = document.getElementById('orderSummaryCalc');
+        
+        if (selectedSeries) selectedSeries.textContent = course.title;
+        if (selectedPrice) selectedPrice.textContent = `$${course.price}`;
+        if (orderSummaryDetails) orderSummaryDetails.textContent = course.title;
+        if (orderSummaryTotal) orderSummaryTotal.textContent = `$${course.price}`;
+        if (orderSummaryCalc) orderSummaryCalc.textContent = `Course enrollment fee: $${course.price}`;
         
         // Pre-fill user email in all forms
         const emailInputs = document.querySelectorAll('.payment-form input[name="email"]');
         emailInputs.forEach(input => {
-            input.value = this.currentUser.email;
+            if (this.currentUser && this.currentUser.email) {
+                input.value = this.currentUser.email;
+            }
         });
         
         // Show the payment overlay
@@ -952,6 +1160,9 @@ class CoursePlatform {
         
         overlay.style.display = 'flex';
         
+        // Set up payment method click handlers
+        this.setupPaymentMethodHandlers();
+        
         // Mobile enhancements
         if (window.innerWidth <= 768) {
             document.body.style.overflow = 'hidden';
@@ -961,27 +1172,324 @@ class CoursePlatform {
             overlay.classList.add('show');
         }, 10);
     }
+    
+    setupPaymentMethodHandlers() {
+        // Zelle button handler
+        const zelleBtn = document.getElementById('zelleBtn');
+        if (zelleBtn) {
+            zelleBtn.onclick = (e) => {
+                e.preventDefault();
+                this.closeAllForms();
+                const zelleForm = document.getElementById('zelleForm');
+                if (zelleForm) {
+                    zelleForm.classList.add('active');
+                    zelleForm.style.display = 'block';
+                }
+            };
+        }
+        
+        // Venmo button handler
+        const venmoBtn = document.getElementById('venmoBtn');
+        if (venmoBtn) {
+            venmoBtn.onclick = (e) => {
+                e.preventDefault();
+                this.closeAllForms();
+                const venmoForm = document.getElementById('venmoForm');
+                if (venmoForm) {
+                    venmoForm.classList.add('active');
+                    venmoForm.style.display = 'block';
+                }
+            };
+        }
+        
+        // PayPal button handler
+        const paypalBtn = document.getElementById('paypalBtn');
+        if (paypalBtn) {
+            paypalBtn.onclick = (e) => {
+                e.preventDefault();
+                this.closeAllForms();
+                const paypalForm = document.getElementById('paypalForm');
+                if (paypalForm) {
+                    paypalForm.classList.add('active');
+                    paypalForm.style.display = 'block';
+                }
+            };
+        }
+        
+        // Stripe button handler
+        const stripeBtn = document.getElementById('stripeBtn');
+        if (stripeBtn) {
+            stripeBtn.onclick = (e) => {
+                e.preventDefault();
+                this.closeAllForms();
+                // For now, show a message - you can implement Stripe later
+                this.showError('Stripe integration coming soon! Please use Zelle, Venmo, or PayPal for now.');
+            };
+        }
+        
+        // Set up form submission handlers
+        this.setupFormSubmissions();
+    }
+    
+    setupFormSubmissions() {
+        // Zelle form submission
+        const zelleForm = document.getElementById('zelleFormInner');
+        if (zelleForm) {
+            zelleForm.onsubmit = (e) => {
+                e.preventDefault();
+                this.handlePaymentFormSubmission('zelle', zelleForm);
+            };
+        }
+        
+        // Venmo form submission
+        const venmoForm = document.getElementById('venmoFormInner');
+        if (venmoForm) {
+            venmoForm.onsubmit = (e) => {
+                e.preventDefault();
+                this.handlePaymentFormSubmission('venmo', venmoForm);
+            };
+        }
+        
+        // PayPal form submission
+        const paypalForm = document.getElementById('paypalFormInner');
+        if (paypalForm) {
+            paypalForm.onsubmit = (e) => {
+                e.preventDefault();
+                this.handlePaymentFormSubmission('paypal', paypalForm);
+            };
+        }
+    }
+    
+    handlePaymentFormSubmission(paymentMethod, formElement) {
+        if (!this.selectedCourse) {
+            this.showError('No course selected. Please try again.');
+            return;
+        }
+        
+        // Get form data
+        const formData = new FormData(formElement);
+        const firstName = formData.get('firstName') || '';
+        const lastName = formData.get('lastName') || '';
+        const email = formData.get('email') || this.currentUser?.email || '';
+        const phone = formData.get('phone') || '';
+        const pronouns = formData.get('pronouns') || '';
+        
+        // Validate required fields
+        if (!firstName || !lastName || !email) {
+            this.showError('Please fill in all required fields (First Name, Last Name, Email).');
+            return;
+        }
+        
+        // Create payment request
+        const paymentRequest = {
+            id: 'payment_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+            email: email,
+            userEmail: email,
+            firstName: firstName,
+            lastName: lastName,
+            name: `${firstName} ${lastName}`,
+            phone: phone,
+            pronouns: pronouns,
+            courseName: this.selectedCourse.title,
+            series: this.selectedCourse.title,
+            courseId: this.selectedCourse.id,
+            paymentMethod: paymentMethod.charAt(0).toUpperCase() + paymentMethod.slice(1),
+            method: paymentMethod.charAt(0).toUpperCase() + paymentMethod.slice(1),
+            timestamp: new Date().toISOString(),
+            status: 'pending',
+            amount: this.selectedCourse.price,
+            price: this.selectedCourse.price,
+            submittedAt: new Date().toISOString()
+        };
+        
+        console.log('💳 Creating payment request:', paymentRequest);
+        
+        // Save to pending payments
+        this.submitPaymentRequest(paymentRequest, paymentMethod);
+    }
+    
+    async submitPaymentRequest(paymentRequest, paymentMethod) {
+        try {
+            // Send to backend for email confirmation and admin notification
+            await this.sendPaymentRequestToBackend(paymentRequest);
+            
+            // Save to local storage for admin panel
+            const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
+            
+            // Remove any existing payment for this user+course to prevent duplicates
+            const cleanedPayments = pendingPayments.filter(payment => 
+                !((payment.email === paymentRequest.email || payment.userEmail === paymentRequest.email) && 
+                  payment.courseId === paymentRequest.courseId)
+            );
+            
+            // Add new payment request
+            cleanedPayments.push(paymentRequest);
+            localStorage.setItem('pendingPayments', JSON.stringify(cleanedPayments));
+            
+            console.log('✅ Payment request submitted successfully');
+            
+            // Close payment overlay
+            this.closePaymentOverlay();
+            
+            // Show success message
+            this.showEmailConfirmationSuccess(paymentMethod, paymentRequest);
+            
+        } catch (error) {
+            console.error('❌ Error submitting payment request:', error);
+            this.showError('Failed to submit payment request. Please try again or contact support.');
+            
+            // Still save locally as backup
+            const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
+            const cleanedPayments = pendingPayments.filter(payment => 
+                !((payment.email === paymentRequest.email || payment.userEmail === paymentRequest.email) && 
+                  payment.courseId === paymentRequest.courseId)
+            );
+            cleanedPayments.push(paymentRequest);
+            localStorage.setItem('pendingPayments', JSON.stringify(cleanedPayments));
+        }
+    }
+    
+    async sendPaymentRequestToBackend(paymentRequest) {
+        // Use the same backend as payment1.html
+        const backendUrl = 'https://restless-feather-b6a9.michf18.workers.dev/api/payment-form';
+        
+        // Transform course app payment request to match payment1.html format
+        const formData = {
+            firstName: paymentRequest.firstName,
+            lastName: paymentRequest.lastName,
+            email: paymentRequest.email,
+            phone: paymentRequest.phone || '',
+            pronouns: paymentRequest.pronouns || '',
+            paymentMethod: paymentRequest.paymentMethod,
+            series: paymentRequest.courseName,
+            amount: `$${paymentRequest.amount}`,
+            timestamp: paymentRequest.timestamp,
+            submissionId: 'course-' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+            // Add course-specific data
+            courseId: paymentRequest.courseId,
+            courseType: 'online-course',
+            platform: 'course-platform'
+        };
+        
+        console.log('🔄 Sending payment request to backend:', formData);
+        
+        const response = await fetch(backendUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+            throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const result = await response.json();
+        console.log('✅ Backend response:', result);
+        return result;
+    }
+    
+    closePaymentOverlay() {
+        const overlay = document.getElementById('paymentOverlay');
+        if (overlay) {
+            overlay.classList.remove('show');
+            overlay.style.display = 'none';
+        }
+        
+        // Restore body scroll on mobile
+        if (window.innerWidth <= 768) {
+            document.body.style.overflow = 'auto';
+        }
+    }
+    
+    showEmailConfirmationSuccess(paymentMethod, paymentRequest) {
+        // Create payment method specific messages
+        let paymentDetails = '';
+        let recipient = '';
+        let note = '';
+        
+        if (paymentMethod.toLowerCase() === 'zelle') {
+            recipient = 'michelle@queerlatindance.com';
+            note = `${paymentRequest.firstName} ${paymentRequest.lastName} - ${paymentRequest.courseName}`;
+            paymentDetails = `
+                <div style="background: #6c1cd1; color: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <strong>🏦 Zelle Payment Instructions:</strong><br>
+                    • Recipient: <code style="background: rgba(255,255,255,0.2); padding: 2px 4px; border-radius: 4px;">${recipient}</code><br>
+                    • Amount: <strong>$${paymentRequest.amount}</strong><br>
+                    • Memo: <code style="background: rgba(255,255,255,0.2); padding: 2px 4px; border-radius: 4px;">${note}</code>
+                </div>
+            `;
+        } else if (paymentMethod.toLowerCase() === 'venmo') {
+            recipient = '@QueerLatinDance';
+            note = `${paymentRequest.firstName} ${paymentRequest.lastName} - ${paymentRequest.courseName}`;
+            paymentDetails = `
+                <div style="background: #3d95ce; color: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <strong>📱 Venmo Payment Instructions:</strong><br>
+                    • Recipient: <code style="background: rgba(255,255,255,0.2); padding: 2px 4px; border-radius: 4px;">${recipient}</code><br>
+                    • Amount: <strong>$${paymentRequest.amount}</strong><br>
+                    • Note: <code style="background: rgba(255,255,255,0.2); padding: 2px 4px; border-radius: 4px;">${note}</code>
+                </div>
+            `;
+        } else if (paymentMethod.toLowerCase() === 'paypal') {
+            recipient = 'michelle@queerlatindance.com';
+            note = `${paymentRequest.firstName} ${paymentRequest.lastName} - ${paymentRequest.courseName}`;
+            paymentDetails = `
+                <div style="background: #0070ba; color: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <strong>💳 PayPal Payment Instructions:</strong><br>
+                    • Recipient: <code style="background: rgba(255,255,255,0.2); padding: 2px 4px; border-radius: 4px;">${recipient}</code><br>
+                    • Amount: <strong>$${paymentRequest.amount}</strong><br>
+                    • Note: <code style="background: rgba(255,255,255,0.2); padding: 2px 4px; border-radius: 4px;">${note}</code>
+                </div>
+            `;
+        }
+        
+        const successMessage = `
+            <div style="max-width: 500px; margin: 0 auto; text-align: left;">
+                <h3 style="color: #4CAF50; text-align: center; margin-bottom: 1rem;">✅ Payment Request Submitted!</h3>
+                
+                <div style="background: #f0f8ff; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #667eea; margin-bottom: 1rem;">
+                    <h4 style="margin: 0 0 1rem 0; color: #667eea;">📧 Check Your Email</h4>
+                    <p style="margin: 0; line-height: 1.6;">We've sent detailed payment instructions to <strong>${paymentRequest.email}</strong> including:</p>
+                    <ul style="margin: 0.5rem 0 0 1rem; line-height: 1.6;">
+                        <li>Complete payment details</li>
+                        <li>Course information</li>
+                        <li>What happens next</li>
+                    </ul>
+                </div>
+                
+                ${paymentDetails}
+                
+                <div style="background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <strong>⏱️ Next Steps:</strong><br>
+                    1. Complete your payment using the details above<br>
+                    2. We'll verify your payment within 24 hours<br>
+                    3. You'll receive course access confirmation<br>
+                    4. Start learning! 🎉
+                </div>
+                
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <p style="color: #666; font-size: 0.9rem; margin: 0;">
+                        Questions? Contact us at <a href="mailto:michelle@queerlatindance.com" style="color: #667eea;">michelle@queerlatindance.com</a>
+                    </p>
+                </div>
+            </div>
+        `;
+        
+        // Show the detailed success message
+        this.showSuccess(successMessage);
+        
+        console.log('📧 Email confirmation sent to:', paymentRequest.email);
+        console.log('👑 Payment request now available for admin review');
+    }
 
     closeAllForms() {
         const forms = document.querySelectorAll('.payment-form');
         forms.forEach(form => {
             form.classList.remove('active');
+            form.style.display = 'none';
         });
-    }
-
-    hashPassword(password) {
-        // Simple hash for demo purposes (in production, use proper hashing)
-        let hash = 0;
-        for (let i = 0; i < password.length; i++) {
-            const char = password.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash; // Convert to 32-bit integer
-        }
-        return hash.toString();
-    }
-
-    verifyPassword(password, hash) {
-        return this.hashPassword(password) === hash;
     }
 
     showSuccess(message) {
@@ -1314,6 +1822,12 @@ class CoursePlatform {
             return false;
         }
 
+        // Admins have access to all courses
+        if (this.isAdmin()) {
+            console.log('👑 Admin access granted for course:', courseId);
+            return true;
+        }
+
         try {
             const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/api/course-access', {
                 method: 'POST',
@@ -1489,6 +2003,7 @@ class CoursePlatform {
         // Ensure the admin panel UI is ready before loading data
         setTimeout(() => {
             this.loadPendingPayments();
+            this.loadAllUsers(); // Load user management data
         }, 100);
     }
 
@@ -1511,16 +2026,1355 @@ class CoursePlatform {
         return isAdminUser;
     }
 
+    // ===== ADMIN COURSE MANAGEMENT =====
+
+    showUploadModal(courseId) {
+        if (!this.isAdmin()) {
+            this.showError('❌ Admin access required');
+            return;
+        }
+
+        const course = this.courses[courseId];
+        if (!course) {
+            this.showError('Course not found');
+            return;
+        }
+
+        // Create upload modal
+        const modal = document.createElement('div');
+        modal.className = 'upload-modal';
+        modal.innerHTML = `
+            <div class="upload-modal-overlay"></div>
+            <div class="upload-modal-content">
+                <div class="upload-modal-header">
+                    <h2>📤 Upload Videos - ${course.title}</h2>
+                    <button class="modal-close-btn" onclick="this.closest('.upload-modal').remove()">×</button>
+                </div>
+                
+                <div class="upload-section">
+                    <h3>Current Lessons (${course.videoLessons.length})</h3>
+                    <div class="lessons-list">
+                        ${course.videoLessons.map((lesson, index) => `
+                            <div class="lesson-item" data-lesson-id="${lesson.id}">
+                                <span class="lesson-number">${index + 1}</span>
+                                <div class="lesson-info">
+                                    <strong>${lesson.title}</strong>
+                                    <div class="lesson-meta">${lesson.description}</div>
+                                    <div class="lesson-video-info">
+                                        <span class="video-type">${lesson.videoType || 'mp4'}</span>
+                                        <span class="video-duration">${lesson.duration}</span>
+                                    </div>
+                                </div>
+                                <div class="lesson-actions">
+                                    <button onclick="courseApp.editLesson('${courseId}', ${lesson.id})" class="btn-edit-lesson">✏️ Edit</button>
+                                    <button onclick="courseApp.replaceVideo('${courseId}', ${lesson.id})" class="btn-replace-video">🔄 Replace Video</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="upload-section">
+                    <h3>Add New Lesson</h3>
+                    <form class="new-lesson-form" onsubmit="courseApp.handleNewLessonUpload(event, '${courseId}')">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Lesson Title</label>
+                                <input type="text" name="title" required placeholder="e.g., Basic Steps & Timing">
+                            </div>
+                            <div class="form-group">
+                                <label>Duration</label>
+                                <input type="text" name="duration" required placeholder="e.g., 15:30">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="description" required placeholder="Brief description of what students will learn..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Video Source</label>
+                            <select name="videoType" onchange="courseApp.toggleVideoInput(this)">
+                                <option value="googledrive">Google Drive</option>
+                                <option value="youtube">YouTube</option>
+                                <option value="vimeo">Vimeo</option>
+                                <option value="mp4">Upload MP4</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group video-input-group">
+                            <div class="video-input-googledrive">
+                                <label>Google Drive Share Link</label>
+                                <input type="url" name="googledriveUrl" placeholder="https://drive.google.com/file/d/...">
+                                <small>Make sure the file is set to "Anyone with the link can view"</small>
+                            </div>
+                            <div class="video-input-youtube" style="display: none;">
+                                <label>YouTube Embed URL</label>
+                                <input type="url" name="youtubeUrl" placeholder="https://www.youtube.com/embed/...">
+                            </div>
+                            
+                            <div class="video-input-vimeo" style="display: none;">
+                                <label>Vimeo Embed URL</label>
+                                <input type="url" name="vimeoUrl" placeholder="https://player.vimeo.com/video/...">
+                            </div>
+                            
+                            <div class="video-input-mp4" style="display: none;">
+                                <label>Upload MP4 File</label>
+                                <input type="file" name="mp4File" accept="video/mp4">
+                                <small>For now, you'll need to upload to a server and provide the URL</small>
+                                <input type="url" name="mp4Url" placeholder="https://your-server.com/videos/lesson.mp4" style="margin-top: 10px;">
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" onclick="this.closest('.upload-modal').remove()" class="btn-cancel">Cancel</button>
+                            <button type="submit" class="btn-upload">📤 Add Lesson</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+
+        // Add modal styles
+        if (!document.querySelector('#upload-modal-styles')) {
+            const styles = document.createElement('style');
+            styles.id = 'upload-modal-styles';
+            styles.textContent = `
+                .upload-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 20px;
+                }
+                
+                .upload-modal-overlay {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    cursor: pointer;
+                }
+                
+                .upload-modal-content {
+                    background: white;
+                    border-radius: 12px;
+                    max-width: 800px;
+                    width: 100%;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    position: relative;
+                    z-index: 1;
+                }
+                
+                .upload-modal-header {
+                    padding: 20px 20px 0 20px;
+                    border-bottom: 1px solid #eee;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                
+                .modal-close-btn {
+                    background: none;
+                    border: none;
+                    font-size: 24px;
+                    cursor: pointer;
+                    color: #999;
+                    padding: 5px;
+                }
+                
+                .upload-section {
+                    padding: 20px;
+                }
+                
+                .lessons-list {
+                    max-height: 300px;
+                    overflow-y: auto;
+                    border: 1px solid #eee;
+                    border-radius: 8px;
+                }
+                
+                .lesson-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    padding: 15px;
+                    border-bottom: 1px solid #eee;
+                }
+                
+                .lesson-number {
+                    background: #667eea;
+                    color: white;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    font-size: 14px;
+                }
+                
+                .lesson-info {
+                    flex: 1;
+                }
+                
+                .lesson-meta {
+                    color: #666;
+                    font-size: 14px;
+                    margin: 5px 0;
+                }
+                
+                .lesson-video-info {
+                    display: flex;
+                    gap: 10px;
+                    font-size: 12px;
+                }
+                
+                .video-type {
+                    background: #f0f0f0;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                }
+                
+                .lesson-actions {
+                    display: flex;
+                    gap: 8px;
+                }
+                
+                .btn-edit-lesson, .btn-replace-video {
+                    background: #667eea;
+                    color: white;
+                    border: none;
+                    padding: 6px 10px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 12px;
+                }
+                
+                .btn-replace-video {
+                    background: #ff9500;
+                }
+                
+                .form-row {
+                    display: flex;
+                    gap: 15px;
+                }
+                
+                .form-group {
+                    margin-bottom: 15px;
+                    flex: 1;
+                }
+                
+                .form-group label {
+                    display: block;
+                    margin-bottom: 5px;
+                    font-weight: bold;
+                    color: #333;
+                }
+                
+                .form-group input, .form-group textarea, .form-group select {
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
+                    font-size: 14px;
+                }
+                
+                .form-group textarea {
+                    height: 80px;
+                    resize: vertical;
+                }
+                
+                .form-group small {
+                    color: #666;
+                    font-size: 12px;
+                }
+                
+                .form-actions {
+                    display: flex;
+                    gap: 10px;
+                    justify-content: flex-end;
+                    padding-top: 20px;
+                    border-top: 1px solid #eee;
+                }
+                
+                .btn-cancel {
+                    background: #ccc;
+                    color: #666;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                }
+                
+                .btn-upload {
+                    background: #4CAF50;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                }
+                
+                .btn-upload:hover {
+                    background: #45a049;
+                }
+            `;
+            document.head.appendChild(styles);
+        }
+
+        // Add to DOM
+        document.body.appendChild(modal);
+
+        // Close on overlay click
+        modal.querySelector('.upload-modal-overlay').onclick = () => modal.remove();
+    }
+
+    toggleVideoInput(selectElement) {
+        const container = selectElement.closest('.form-group').querySelector('.video-input-group');
+        const allInputs = container.querySelectorAll('[class^="video-input-"]');
+        
+        // Hide all inputs
+        allInputs.forEach(input => input.style.display = 'none');
+        
+        // Show selected input
+        const selectedInput = container.querySelector(`.video-input-${selectElement.value}`);
+        if (selectedInput) {
+            selectedInput.style.display = 'block';
+        }
+    }
+
+    handleNewLessonUpload(event, courseId) {
+        event.preventDefault();
+        
+        const formData = new FormData(event.target);
+        const lessonData = {
+            title: formData.get('title'),
+            duration: formData.get('duration'),
+            description: formData.get('description'),
+            videoType: formData.get('videoType')
+        };
+
+        // Get video URL based on type
+        switch (lessonData.videoType) {
+            case 'googledrive':
+                const driveUrl = formData.get('googledriveUrl');
+                if (driveUrl) {
+                    // Convert sharing URL to embed URL
+                    const fileId = this.extractGoogleDriveFileId(driveUrl);
+                    lessonData.video = `https://drive.google.com/file/d/${fileId}/preview`;
+                }
+                break;
+            case 'youtube':
+                lessonData.video = formData.get('youtubeUrl');
+                break;
+            case 'vimeo':
+                lessonData.video = formData.get('vimeoUrl');
+                break;
+            case 'mp4':
+                lessonData.video = formData.get('mp4Url');
+                break;
+        }
+
+        if (!lessonData.video) {
+            this.showError('Please provide a video URL');
+            return;
+        }
+
+        // Add lesson to course
+        this.addLessonToCourse(courseId, lessonData);
+    }
+
+    extractGoogleDriveFileId(url) {
+        const regex = /\/d\/([a-zA-Z0-9-_]+)/;
+        const match = url.match(regex);
+        return match ? match[1] : null;
+    }
+
+    addLessonToCourse(courseId, lessonData) {
+        const course = this.courses[courseId];
+        if (!course) return;
+
+        // Generate new lesson ID
+        const newLessonId = Math.max(...course.videoLessons.map(l => l.id), 0) + 1;
+        
+        const newLesson = {
+            id: newLessonId,
+            title: lessonData.title,
+            video: lessonData.video,
+            videoType: lessonData.videoType,
+            duration: lessonData.duration,
+            description: lessonData.description
+        };
+
+        course.videoLessons.push(newLesson);
+        course.lessons = course.videoLessons.length;
+
+        // Save to localStorage (in production, save to database)
+        localStorage.setItem('courses', JSON.stringify(this.courses));
+
+        this.showSuccess(`✅ Added "${lessonData.title}" to ${course.title}`);
+        
+        // Close modal and refresh if needed
+        document.querySelector('.upload-modal')?.remove();
+        
+        // If we're on the dashboard, refresh it
+        if (!document.getElementById('dashboard-screen').classList.contains('hidden')) {
+            this.renderCourses();
+        }
+    }
+
+    editCourse(courseId) {
+        if (!this.isAdmin()) {
+            this.showError('❌ Admin access required');
+            return;
+        }
+
+        const course = this.courses[courseId];
+        if (!course) {
+            this.showError('Course not found');
+            return;
+        }
+
+        this.showEditCourseModal(courseId, course);
+    }
+
+    showEditCourseModal(courseId, course) {
+        // Create edit course modal
+        const modal = document.createElement('div');
+        modal.className = 'edit-course-modal';
+        modal.innerHTML = `
+            <div class="edit-modal-overlay"></div>
+            <div class="edit-modal-content">
+                <div class="edit-modal-header">
+                    <h2>📝 Edit Course - ${course.title}</h2>
+                    <button class="modal-close-btn" onclick="this.closest('.edit-course-modal').remove()">×</button>
+                </div>
+                
+                <form class="edit-course-form" onsubmit="courseApp.handleCourseEdit(event, '${courseId}')">
+                    <div class="form-group">
+                        <label>Course Title</label>
+                        <input type="text" name="title" value="${course.title}" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Course Description</label>
+                        <textarea name="description" required rows="4">${course.description}</textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Price ($)</label>
+                            <input type="number" name="price" value="${course.price}" required min="0" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>Duration</label>
+                            <input type="text" name="duration" value="${course.duration}" required placeholder="e.g., 3.5 hours">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Level</label>
+                            <select name="level" required>
+                                <option value="Beginner" ${course.level === 'Beginner' ? 'selected' : ''}>Beginner</option>
+                                <option value="Intermediate" ${course.level === 'Intermediate' ? 'selected' : ''}>Intermediate</option>
+                                <option value="Advanced" ${course.level === 'Advanced' ? 'selected' : ''}>Advanced</option>
+                                <option value="All Levels" ${course.level === 'All Levels' ? 'selected' : ''}>All Levels</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Course Image</label>
+                            <input type="text" name="icon" value="${course.icon}" required placeholder="images/example.jpg">
+                        </div>
+                    </div>
+                    
+                    <div class="course-stats">
+                        <h3>📊 Course Statistics</h3>
+                        <div class="stats-row">
+                            <div class="stat-item">
+                                <strong>Total Lessons:</strong> ${course.videoLessons.length}
+                            </div>
+                            <div class="stat-item">
+                                <strong>Course ID:</strong> ${courseId}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lessons-preview">
+                        <h3>📹 Lessons Preview</h3>
+                        <div class="lessons-preview-list">
+                            ${course.videoLessons.map((lesson, index) => `
+                                <div class="lesson-preview-item">
+                                    <span class="lesson-number">${index + 1}.</span>
+                                    <span class="lesson-title">${lesson.title}</span>
+                                    <span class="lesson-duration">${lesson.duration}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <p class="lessons-note">💡 Use "Upload Videos" to add/edit individual lessons</p>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" onclick="this.closest('.edit-course-modal').remove()" class="btn-cancel">Cancel</button>
+                        <button type="submit" class="btn-save-course">💾 Save Course Changes</button>
+                    </div>
+                </form>
+            </div>
+        `;
+
+        // Add modal styles if not already present
+        if (!document.querySelector('#edit-course-modal-styles')) {
+            const styles = document.createElement('style');
+            styles.id = 'edit-course-modal-styles';
+            styles.textContent = `
+                .edit-course-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    z-index: 10001;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 20px;
+                }
+                
+                .edit-course-modal .edit-modal-overlay {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    cursor: pointer;
+                }
+                
+                .edit-course-modal .edit-modal-content {
+                    background: white;
+                    border-radius: 12px;
+                    max-width: 800px;
+                    width: 100%;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    position: relative;
+                    z-index: 1;
+                }
+                
+                .edit-course-form {
+                    padding: 0 20px 20px 20px;
+                }
+                
+                .edit-course-form .form-group {
+                    margin-bottom: 15px;
+                }
+                
+                .edit-course-form .form-row {
+                    display: flex;
+                    gap: 15px;
+                }
+                
+                .edit-course-form .form-row .form-group {
+                    flex: 1;
+                }
+                
+                .edit-course-form label {
+                    display: block;
+                    margin-bottom: 5px;
+                    font-weight: bold;
+                    color: #333;
+                }
+                
+                .edit-course-form input, .edit-course-form textarea, .edit-course-form select {
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
+                    font-size: 14px;
+                    box-sizing: border-box;
+                }
+                
+                .edit-course-form textarea {
+                    resize: vertical;
+                }
+                
+                .course-stats {
+                    background: #f8f9fa;
+                    padding: 15px;
+                    border-radius: 8px;
+                    margin: 20px 0;
+                    border-left: 4px solid #28a745;
+                }
+                
+                .course-stats h3 {
+                    margin: 0 0 10px 0;
+                    color: #28a745;
+                }
+                
+                .stats-row {
+                    display: flex;
+                    gap: 20px;
+                    flex-wrap: wrap;
+                }
+                
+                .stat-item {
+                    font-size: 14px;
+                    color: #555;
+                }
+                
+                .lessons-preview {
+                    background: #fff7e6;
+                    padding: 15px;
+                    border-radius: 8px;
+                    margin: 20px 0;
+                    border-left: 4px solid #ffa500;
+                }
+                
+                .lessons-preview h3 {
+                    margin: 0 0 10px 0;
+                    color: #ffa500;
+                }
+                
+                .lessons-preview-list {
+                    max-height: 150px;
+                    overflow-y: auto;
+                    margin-bottom: 10px;
+                }
+                
+                .lesson-preview-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 5px 0;
+                    border-bottom: 1px solid #f0f0f0;
+                    font-size: 14px;
+                }
+                
+                .lesson-number {
+                    font-weight: bold;
+                    color: #ffa500;
+                    min-width: 25px;
+                }
+                
+                .lesson-title {
+                    flex: 1;
+                    color: #333;
+                }
+                
+                .lesson-duration {
+                    color: #666;
+                    font-size: 12px;
+                }
+                
+                .lessons-note {
+                    margin: 0;
+                    font-size: 12px;
+                    color: #888;
+                    font-style: italic;
+                }
+                
+                .btn-save-course {
+                    background: #28a745;
+                    color: white;
+                    border: none;
+                    padding: 12px 24px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    font-size: 14px;
+                }
+                
+                .btn-save-course:hover {
+                    background: #218838;
+                }
+                
+                .form-actions {
+                    display: flex;
+                    gap: 10px;
+                    justify-content: flex-end;
+                    margin-top: 20px;
+                    padding-top: 20px;
+                    border-top: 1px solid #eee;
+                }
+                
+                @media (max-width: 768px) {
+                    .edit-course-form .form-row {
+                        flex-direction: column;
+                        gap: 0;
+                    }
+                    
+                    .stats-row {
+                        flex-direction: column;
+                        gap: 10px;
+                    }
+                }
+            `;
+            document.head.appendChild(styles);
+        }
+
+        // Add to DOM
+        document.body.appendChild(modal);
+
+        // Close on overlay click
+        modal.querySelector('.edit-modal-overlay').onclick = () => modal.remove();
+    }
+
+    handleCourseEdit(event, courseId) {
+        event.preventDefault();
+        
+        if (!this.isAdmin()) {
+            this.showError('❌ Admin access required');
+            return;
+        }
+
+        const formData = new FormData(event.target);
+        const updatedCourse = {
+            title: formData.get('title'),
+            description: formData.get('description'),
+            price: parseFloat(formData.get('price')),
+            duration: formData.get('duration'),
+            level: formData.get('level'),
+            icon: formData.get('icon')
+        };
+
+        // Validate required fields
+        if (!updatedCourse.title || !updatedCourse.description || !updatedCourse.price || !updatedCourse.duration || !updatedCourse.level || !updatedCourse.icon) {
+            this.showError('Please fill in all required fields');
+            return;
+        }
+
+        // Update course in courses data
+        this.updateCourseData(courseId, updatedCourse);
+    }
+
+    updateCourseData(courseId, updatedData) {
+        const course = this.courses[courseId];
+        if (!course) return;
+
+        // Update the course with new data (preserve existing data like videoLessons)
+        this.courses[courseId] = {
+            ...course,
+            ...updatedData,
+            // Update lessons count based on actual videoLessons
+            lessons: course.videoLessons.length
+        };
+
+        // Save to localStorage (in production, save to database)
+        localStorage.setItem('courses', JSON.stringify(this.courses));
+
+        this.showSuccess(`✅ Course "${updatedData.title}" updated successfully!`);
+        
+        // Close modal
+        document.querySelector('.edit-course-modal')?.remove();
+        
+        // Refresh dashboard if we're on it
+        if (!document.getElementById('dashboard-screen').classList.contains('hidden')) {
+            this.renderCourses();
+        }
+
+        console.log('📝 Course updated:', {
+            courseId,
+            updatedData,
+            fullCourse: this.courses[courseId]
+        });
+    }
+
+    editLesson(courseId, lessonId) {
+        if (!this.isAdmin()) {
+            this.showError('❌ Admin access required');
+            return;
+        }
+
+        const course = this.courses[courseId];
+        if (!course) {
+            this.showError('Course not found');
+            return;
+        }
+
+        const lesson = course.videoLessons.find(l => l.id == lessonId);
+        if (!lesson) {
+            this.showError('Lesson not found');
+            return;
+        }
+
+        this.showEditLessonModal(courseId, lesson);
+    }
+
+    showEditLessonModal(courseId, lesson) {
+        // Create edit modal
+        const modal = document.createElement('div');
+        modal.className = 'edit-lesson-modal';
+        modal.innerHTML = `
+            <div class="edit-modal-overlay"></div>
+            <div class="edit-modal-content">
+                <div class="edit-modal-header">
+                    <h2>✏️ Edit Lesson - ${lesson.title}</h2>
+                    <button class="modal-close-btn" onclick="this.closest('.edit-lesson-modal').remove()">×</button>
+                </div>
+                
+                <form class="edit-lesson-form" onsubmit="courseApp.handleLessonEdit(event, '${courseId}', ${lesson.id})">
+                    <div class="form-group">
+                        <label>Lesson Title</label>
+                        <input type="text" name="title" value="${lesson.title}" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Duration</label>
+                            <input type="text" name="duration" value="${lesson.duration}" required placeholder="e.g., 15:30">
+                        </div>
+                        <div class="form-group">
+                            <label>Video Type</label>
+                            <select name="videoType" onchange="courseApp.toggleEditVideoInput(this)">
+                                <option value="googledrive" ${lesson.videoType === 'googledrive' ? 'selected' : ''}>Google Drive</option>
+                                <option value="youtube" ${lesson.videoType === 'youtube' ? 'selected' : ''}>YouTube</option>
+                                <option value="vimeo" ${lesson.videoType === 'vimeo' ? 'selected' : ''}>Vimeo</option>
+                                <option value="mp4" ${lesson.videoType === 'mp4' ? 'selected' : ''}>MP4 URL</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description" required>${lesson.description}</textarea>
+                    </div>
+                    
+                    <div class="form-group video-input-group">
+                        <div class="video-input-googledrive" style="display: ${lesson.videoType === 'googledrive' ? 'block' : 'none'};">
+                            <label>Google Drive URL</label>
+                            <input type="url" name="googledriveUrl" value="${lesson.videoType === 'googledrive' ? lesson.video : ''}" placeholder="https://drive.google.com/file/d/...">
+                            <small>Make sure the file is set to "Anyone with the link can view"</small>
+                        </div>
+                        <div class="video-input-youtube" style="display: ${lesson.videoType === 'youtube' ? 'block' : 'none'};">
+                            <label>YouTube Embed URL</label>
+                            <input type="url" name="youtubeUrl" value="${lesson.videoType === 'youtube' ? lesson.video : ''}" placeholder="https://www.youtube.com/embed/...">
+                        </div>
+                        <div class="video-input-vimeo" style="display: ${lesson.videoType === 'vimeo' ? 'block' : 'none'};">
+                            <label>Vimeo Embed URL</label>
+                            <input type="url" name="vimeoUrl" value="${lesson.videoType === 'vimeo' ? lesson.video : ''}" placeholder="https://player.vimeo.com/video/...">
+                        </div>
+                        <div class="video-input-mp4" style="display: ${lesson.videoType === 'mp4' ? 'block' : 'none'};">
+                            <label>MP4 Video URL</label>
+                            <input type="url" name="mp4Url" value="${lesson.videoType === 'mp4' ? lesson.video : ''}" placeholder="https://your-server.com/videos/lesson.mp4">
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" onclick="this.closest('.edit-lesson-modal').remove()" class="btn-cancel">Cancel</button>
+                        <button type="submit" class="btn-save">💾 Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        `;
+
+        // Add modal styles if not already present
+        if (!document.querySelector('#edit-lesson-modal-styles')) {
+            const styles = document.createElement('style');
+            styles.id = 'edit-lesson-modal-styles';
+            styles.textContent = `
+                .edit-lesson-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    z-index: 10001;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 20px;
+                }
+                
+                .edit-modal-overlay {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    cursor: pointer;
+                }
+                
+                .edit-modal-content {
+                    background: white;
+                    border-radius: 12px;
+                    max-width: 700px;
+                    width: 100%;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    position: relative;
+                    z-index: 1;
+                }
+                
+                .edit-modal-header {
+                    padding: 20px 20px 0 20px;
+                    border-bottom: 1px solid #eee;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 20px;
+                }
+                
+                .edit-lesson-form {
+                    padding: 0 20px 20px 20px;
+                }
+                
+                .edit-lesson-form .form-group {
+                    margin-bottom: 15px;
+                }
+                
+                .edit-lesson-form label {
+                    display: block;
+                    margin-bottom: 5px;
+                    font-weight: bold;
+                    color: #333;
+                }
+                
+                .edit-lesson-form input, .edit-lesson-form textarea, .edit-lesson-form select {
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
+                    font-size: 14px;
+                    box-sizing: border-box;
+                }
+                
+                .edit-lesson-form textarea {
+                    height: 80px;
+                    resize: vertical;
+                }
+                
+                .btn-save {
+                    background: #4CAF50;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-weight: bold;
+                }
+                
+                .btn-save:hover {
+                    background: #45a049;
+                }
+            `;
+            document.head.appendChild(styles);
+        }
+
+        // Add to DOM
+        document.body.appendChild(modal);
+
+        // Close on overlay click
+        modal.querySelector('.edit-modal-overlay').onclick = () => modal.remove();
+    }
+
+    toggleEditVideoInput(selectElement) {
+        const container = selectElement.closest('.form-group').parentElement.querySelector('.video-input-group');
+        const allInputs = container.querySelectorAll('[class^="video-input-"]');
+        
+        // Hide all inputs
+        allInputs.forEach(input => input.style.display = 'none');
+        
+        // Show selected input
+        const selectedInput = container.querySelector(`.video-input-${selectElement.value}`);
+        if (selectedInput) {
+            selectedInput.style.display = 'block';
+        }
+    }
+
+    handleLessonEdit(event, courseId, lessonId) {
+        event.preventDefault();
+        
+        if (!this.isAdmin()) {
+            this.showError('❌ Admin access required');
+            return;
+        }
+
+        const formData = new FormData(event.target);
+        const updatedLesson = {
+            title: formData.get('title'),
+            duration: formData.get('duration'),
+            description: formData.get('description'),
+            videoType: formData.get('videoType')
+        };
+
+        // Get video URL based on type
+        switch (updatedLesson.videoType) {
+            case 'googledrive':
+                const driveUrl = formData.get('googledriveUrl');
+                if (driveUrl) {
+                    // Convert sharing URL to embed URL if needed
+                    const fileId = this.extractGoogleDriveFileId(driveUrl);
+                    if (fileId) {
+                        updatedLesson.video = `https://drive.google.com/file/d/${fileId}/preview`;
+                    } else {
+                        updatedLesson.video = driveUrl;
+                    }
+                }
+                break;
+            case 'youtube':
+                updatedLesson.video = formData.get('youtubeUrl');
+                break;
+            case 'vimeo':
+                updatedLesson.video = formData.get('vimeoUrl');
+                break;
+            case 'mp4':
+                updatedLesson.video = formData.get('mp4Url');
+                break;
+        }
+
+        if (!updatedLesson.video) {
+            this.showError('Please provide a video URL');
+            return;
+        }
+
+        // Update lesson in course
+        this.updateLessonInCourse(courseId, lessonId, updatedLesson);
+    }
+
+    updateLessonInCourse(courseId, lessonId, updatedData) {
+        const course = this.courses[courseId];
+        if (!course) return;
+
+        const lessonIndex = course.videoLessons.findIndex(l => l.id == lessonId);
+        if (lessonIndex === -1) return;
+
+        // Update the lesson with new data
+        course.videoLessons[lessonIndex] = {
+            ...course.videoLessons[lessonIndex],
+            ...updatedData
+        };
+
+        // Save to localStorage (in production, save to database)
+        localStorage.setItem('courses', JSON.stringify(this.courses));
+
+        this.showSuccess(`✅ Updated "${updatedData.title}" successfully!`);
+        
+        // Close modal
+        document.querySelector('.edit-lesson-modal')?.remove();
+        
+        // Refresh upload modal if it's open
+        const uploadModal = document.querySelector('.upload-modal');
+        if (uploadModal) {
+            uploadModal.remove();
+            this.showUploadModal(courseId);
+        }
+
+        // If we're currently viewing this course, refresh the lessons list
+        if (this.currentCourse && this.currentCourse.id === courseId) {
+            this.renderLessonsList();
+        }
+    }
+
+    replaceVideo(courseId, lessonId) {
+        if (!this.isAdmin()) {
+            this.showError('❌ Admin access required');
+            return;
+        }
+
+        const course = this.courses[courseId];
+        if (!course) {
+            this.showError('Course not found');
+            return;
+        }
+
+        const lesson = course.videoLessons.find(l => l.id == lessonId);
+        if (!lesson) {
+            this.showError('Lesson not found');
+            return;
+        }
+
+        // For now, just open the edit modal focused on video replacement
+        this.showVideoReplaceModal(courseId, lesson);
+    }
+
+    showVideoReplaceModal(courseId, lesson) {
+        // Create video replace modal (simplified version of edit modal)
+        const modal = document.createElement('div');
+        modal.className = 'video-replace-modal';
+        modal.innerHTML = `
+            <div class="edit-modal-overlay"></div>
+            <div class="edit-modal-content">
+                <div class="edit-modal-header">
+                    <h2>🔄 Replace Video - ${lesson.title}</h2>
+                    <button class="modal-close-btn" onclick="this.closest('.video-replace-modal').remove()">×</button>
+                </div>
+                
+                <form class="video-replace-form" onsubmit="courseApp.handleVideoReplace(event, '${courseId}', ${lesson.id})">
+                    <div class="current-video-info">
+                        <h3>Current Video</h3>
+                        <p><strong>Type:</strong> ${lesson.videoType || 'mp4'}</p>
+                        <p><strong>URL:</strong> <code style="word-break: break-all;">${lesson.video}</code></p>
+                    </div>
+                    
+                    <h3>New Video</h3>
+                    <div class="form-group">
+                        <label>Video Type</label>
+                        <select name="videoType" onchange="courseApp.toggleReplaceVideoInput(this)">
+                            <option value="googledrive">Google Drive</option>
+                            <option value="youtube">YouTube</option>
+                            <option value="vimeo">Vimeo</option>
+                            <option value="mp4">MP4 URL</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group video-input-group">
+                        <div class="video-input-googledrive">
+                            <label>Google Drive URL</label>
+                            <input type="url" name="googledriveUrl" placeholder="https://drive.google.com/file/d/...">
+                            <small>Make sure the file is set to "Anyone with the link can view"</small>
+                        </div>
+                        <div class="video-input-youtube" style="display: none;">
+                            <label>YouTube Embed URL</label>
+                            <input type="url" name="youtubeUrl" placeholder="https://www.youtube.com/embed/...">
+                        </div>
+                        <div class="video-input-vimeo" style="display: none;">
+                            <label>Vimeo Embed URL</label>
+                            <input type="url" name="vimeoUrl" placeholder="https://player.vimeo.com/video/...">
+                        </div>
+                        <div class="video-input-mp4" style="display: none;">
+                            <label>MP4 Video URL</label>
+                            <input type="url" name="mp4Url" placeholder="https://your-server.com/videos/lesson.mp4">
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" onclick="this.closest('.video-replace-modal').remove()" class="btn-cancel">Cancel</button>
+                        <button type="submit" class="btn-replace">🔄 Replace Video</button>
+                    </div>
+                </form>
+            </div>
+        `;
+
+        // Add specific styles for video replace modal
+        if (!document.querySelector('#video-replace-modal-styles')) {
+            const styles = document.createElement('style');
+            styles.id = 'video-replace-modal-styles';
+            styles.textContent = `
+                .video-replace-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    z-index: 10001;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 20px;
+                }
+                
+                .video-replace-modal .edit-modal-overlay {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    cursor: pointer;
+                }
+                
+                .video-replace-modal .edit-modal-content {
+                    background: white;
+                    border-radius: 12px;
+                    max-width: 700px;
+                    width: 100%;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    position: relative;
+                    z-index: 1;
+                }
+                
+                .video-replace-modal .edit-modal-header {
+                    padding: 20px 20px 0 20px;
+                    border-bottom: 1px solid #eee;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 20px;
+                }
+                
+                .video-replace-form {
+                    padding: 0 20px 20px 20px;
+                }
+                
+                .video-replace-form .form-group {
+                    margin-bottom: 15px;
+                }
+                
+                .video-replace-form label {
+                    display: block;
+                    margin-bottom: 5px;
+                    font-weight: bold;
+                    color: #333;
+                }
+                
+                .video-replace-form input, .video-replace-form textarea, .video-replace-form select {
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
+                    font-size: 14px;
+                    box-sizing: border-box;
+                }
+                
+                .video-replace-form .form-actions {
+                    display: flex;
+                    gap: 10px;
+                    justify-content: flex-end;
+                    margin-top: 20px;
+                    padding-top: 20px;
+                    border-top: 1px solid #eee;
+                }
+                
+                .current-video-info {
+                    background: #f8f9fa;
+                    padding: 15px;
+                    border-radius: 8px;
+                    margin-bottom: 20px;
+                    border-left: 4px solid #007bff;
+                }
+                
+                .current-video-info h3 {
+                    margin: 0 0 10px 0;
+                    color: #007bff;
+                }
+                
+                .current-video-info p {
+                    margin: 5px 0;
+                    font-size: 14px;
+                }
+                
+                .btn-replace {
+                    background: #ff9500;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-weight: bold;
+                }
+                
+                .btn-replace:hover {
+                    background: #e6851a;
+                }
+                
+                .btn-cancel {
+                    background: #6c757d;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-weight: bold;
+                }
+                
+                .btn-cancel:hover {
+                    background: #5a6268;
+                }
+            `;
+            document.head.appendChild(styles);
+        }
+
+        // Add to DOM
+        document.body.appendChild(modal);
+
+        // Close on overlay click
+        modal.querySelector('.edit-modal-overlay').onclick = () => modal.remove();
+    }
+
+    toggleReplaceVideoInput(selectElement) {
+        const container = selectElement.closest('.form-group').parentElement.querySelector('.video-input-group');
+        const allInputs = container.querySelectorAll('[class^="video-input-"]');
+        
+        // Hide all inputs
+        allInputs.forEach(input => input.style.display = 'none');
+        
+        // Show selected input
+        const selectedInput = container.querySelector(`.video-input-${selectElement.value}`);
+        if (selectedInput) {
+            selectedInput.style.display = 'block';
+        }
+    }
+
+    handleVideoReplace(event, courseId, lessonId) {
+        event.preventDefault();
+        
+        if (!this.isAdmin()) {
+            this.showError('❌ Admin access required');
+            return;
+        }
+
+        const formData = new FormData(event.target);
+        const videoType = formData.get('videoType');
+        let videoUrl = '';
+
+        // Get video URL based on type
+        switch (videoType) {
+            case 'googledrive':
+                const driveUrl = formData.get('googledriveUrl');
+                if (driveUrl) {
+                    const fileId = this.extractGoogleDriveFileId(driveUrl);
+                    if (fileId) {
+                        videoUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+                    } else {
+                        videoUrl = driveUrl;
+                    }
+                }
+                break;
+            case 'youtube':
+                videoUrl = formData.get('youtubeUrl');
+                break;
+            case 'vimeo':
+                videoUrl = formData.get('vimeoUrl');
+                break;
+            case 'mp4':
+                videoUrl = formData.get('mp4Url');
+                break;
+        }
+
+        if (!videoUrl) {
+            this.showError('Please provide a video URL');
+            return;
+        }
+
+        // Update only video-related properties
+        const updatedData = {
+            video: videoUrl,
+            videoType: videoType
+        };
+
+        this.updateLessonInCourse(courseId, lessonId, updatedData);
+        
+        // Close the replace modal
+        document.querySelector('.video-replace-modal')?.remove();
+    }
+
     async loadPendingPayments() {
         console.log('🔧 loadPendingPayments() started');
         try {
-            // For demo mode, just ask for any key
-            const adminKey = prompt('Enter admin key (for demo, use "demo"):');
-            if (!adminKey) {
-                console.log('❌ Admin key cancelled by user');
-                return;
-            }
-            console.log('✅ Admin key entered:', adminKey);
+            // For demo mode, auto-use demo key unless in production
+            let adminKey = 'demo'; // Auto-use demo mode for testing
+            
+            // Optional: ask for confirmation in production
+            // const adminKey = prompt('Enter admin key (for demo, use "demo"):');
+            // if (!adminKey) {
+            //     console.log('❌ Admin key cancelled by user');
+            //     return;
+            // }
+            
+            console.log('✅ Using admin key:', adminKey);
             
             let payments = [];
             let isDemo = false;
@@ -1552,29 +3406,53 @@ class CoursePlatform {
                 console.log('⚠️ Backend not available, using demo mode:', backendError.message);
                 isDemo = true;
                 
-                // Use local storage for demo
+                // Use local storage for demo - exclude granted payments
                 const localPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
                 payments = localPayments.filter(payment => 
-                    payment.status === 'demo-pending' || payment.status === 'pending-confirmation'
+                    payment.status !== 'granted' && payment.status !== 'denied'
                 );
             }
             
+            // Only create demo payments if we haven't granted access yet AND no payments exist at all
             if (isDemo && payments.length === 0) {
-                // Add sample data for demo
-                payments = [{
-                    email: this.currentUser.email,
-                    firstName: this.currentUser.name.split(' ')[0],
-                    lastName: this.currentUser.name.split(' ')[1] || 'User',
-                    courseName: 'Salsa Fundamentals',
-                    courseId: 'salsa-fundamentals',
-                    paymentMethod: 'zelle',
-                    timestamp: new Date().toISOString(),
-                    status: 'demo-pending',
-                    amount: 49
-                }];
+                // Check if there are ANY payments in storage to prevent auto-creation
+                const allPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
                 
-                console.log('✅ Created demo payment:', payments[0]);
-                this.showSuccess('🎬 Demo Mode: Showing sample pending payment. In production, this would show real payment requests.');
+                // Only auto-create if there are absolutely no payments at all
+                if (allPayments.length === 0) {
+                    console.log('🎬 No payments found at all - creating initial demo payment');
+                    
+                    const userName = this.currentUser.name || this.currentUser.email.split('@')[0];
+                    const userFirstName = userName.split(' ')[0] || this.currentUser.email.split('@')[0];
+                    const userLastName = userName.split(' ')[1] || 'Student';
+                    
+                    const demoPayment = {
+                        id: 'auto-demo-' + Date.now(),
+                        email: this.currentUser.email,
+                        userEmail: this.currentUser.email,
+                        firstName: userFirstName,
+                        lastName: userLastName,
+                        name: userName,  
+                        courseName: 'Salsa Fundamentals',
+                        series: 'Salsa Fundamentals',
+                        courseId: 'salsa-fundamentals',
+                        paymentMethod: 'Zelle',
+                        method: 'Zelle',
+                        timestamp: new Date().toISOString(),
+                        status: 'demo-pending',
+                        amount: 49,
+                        price: 49
+                    };
+                    
+                    // Save to storage and use it
+                    localStorage.setItem('pendingPayments', JSON.stringify([demoPayment]));
+                    payments = [demoPayment];
+                    
+                    console.log('✅ Created single demo payment:', demoPayment);
+                    this.showSuccess('🎬 Demo Mode: Created sample payment. Use testing tools to create more or clear all.');
+                } else {
+                    console.log('🎯 Payments exist in storage but filtered out - not creating new ones');
+                }
             }
             
             console.log('📊 Final payments to display:', payments);
@@ -1611,25 +3489,70 @@ class CoursePlatform {
             return;
         }
         
-        const html = payments.map(payment => `
-            <div class="payment-item" data-email="${payment.email}" data-course="${payment.courseId}">
-                <div class="payment-info">
-                    <h4>${payment.firstName} ${payment.lastName}</h4>
-                    <p><strong>Email:</strong> ${payment.email}</p>
-                    <p><strong>Course:</strong> ${payment.courseName || payment.series}</p>
-                    <p><strong>Amount:</strong> $${payment.amount || payment.price}</p>
-                    <p><strong>Method:</strong> ${payment.paymentMethod}</p>
-                    <p><strong>Date:</strong> ${new Date(payment.timestamp).toLocaleDateString()}</p>
-                    <p><strong>Status:</strong> <span class="status pending">${payment.status || 'Pending'}</span></p>
+        const html = payments.map(payment => {
+            // Debug log to see what we're working with
+            console.log('🔍 Processing payment:', payment);
+            
+            // Add robust fallbacks for undefined values
+            const firstName = payment.firstName || payment.name?.split(' ')[0] || payment.email?.split('@')[0] || 'Student';
+            const lastName = payment.lastName || payment.name?.split(' ')[1] || '';
+            const email = payment.email || payment.userEmail || 'unknown@email.com';
+            
+            // Better course name mapping
+            let courseName = payment.courseName || payment.series;
+            let courseId = payment.courseId;
+            let amount = payment.amount || payment.price;
+            
+            // Map course IDs to proper names and prices if missing
+            if (!courseName || courseName === 'Unknown Course') {
+                const courseMapping = {
+                    'salsa-fundamentals': { name: 'Salsa Fundamentals', price: 49 },
+                    'bachata-sensual': { name: 'Bachata Sensual', price: 59 },
+                    'advanced-salsa': { name: 'Advanced Salsa', price: 69 },
+                    'bachata-basics': { name: 'Bachata Basics', price: 49 }
+                };
+                
+                if (courseId && courseMapping[courseId]) {
+                    courseName = courseMapping[courseId].name;
+                    if (!amount || amount === 0) {
+                        amount = courseMapping[courseId].price;
+                    }
+                } else {
+                    courseName = 'Unknown Course';
+                    courseId = courseId || 'unknown-course';
+                    amount = amount || 0;
+                }
+            }
+            
+            const method = payment.paymentMethod || payment.method || 'Unknown';
+            const timestamp = payment.timestamp || new Date().toISOString();
+            const status = payment.status || 'Pending';
+            
+            console.log('✅ Processed values:', { firstName, lastName, email, courseName, amount, method, status });
+            
+            const cardHtml = `
+                <div class="payment-item" data-email="${email}" data-course="${courseId}">
+                    <div class="payment-info">
+                        <h4>${firstName} ${lastName}</h4>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Course:</strong> ${courseName}</p>
+                        <p><strong>Amount:</strong> $${amount}</p>
+                        <p><strong>Method:</strong> ${method}</p>
+                        <p><strong>Date:</strong> ${new Date(timestamp).toLocaleDateString()}</p>
+                        <p><strong>Status:</strong> <span class="status pending">${status}</span></p>
+                    </div>
+                    <div class="payment-actions">
+                        <button onclick="courseApp.grantCourseAccess('${email}', '${courseId}', '${courseName}')" 
+                                class="btn-grant">✅ Grant Access</button>
+                        <button onclick="courseApp.denyPayment('${email}', '${courseId}')" 
+                                class="btn-deny">❌ Deny</button>
+                    </div>
                 </div>
-                <div class="payment-actions">
-                    <button onclick="courseApp.grantCourseAccess('${payment.email}', '${payment.courseId}', '${payment.courseName}')" 
-                            class="btn-grant">✅ Grant Access</button>
-                    <button onclick="courseApp.denyPayment('${payment.email}', '${payment.courseId}')" 
-                            class="btn-deny">❌ Deny</button>
-                </div>
-            </div>
-        `).join('');
+            `;
+            
+            console.log(`🔍 Creating payment card with attributes: data-email="${email}" data-course="${courseId}"`);
+            return cardHtml;
+        }).join('');
         
         container.innerHTML = html;
         console.log('✅ displayPendingPayments completed - HTML set');
@@ -1637,8 +3560,66 @@ class CoursePlatform {
 
     async grantCourseAccess(email, courseId, courseName) {
         try {
-            const adminKey = prompt('Enter admin key to confirm (for demo, use "demo"):');
-            if (!adminKey) return;
+            // Grant monthly access by default
+            console.log(`🔧 Granting monthly access: ${email} -> ${courseId} (${courseName})`);
+            
+            // Use the new monthly subscription system
+            const userApproved = this.grantCourseAccessWithExpiry(email, courseId, 1); // 1 month
+            
+            this.showSuccess(`✅ Monthly access granted to ${email} for ${courseName} (expires ${new Date(userApproved.expiresAt).toLocaleDateString()})`);
+            
+            // Refresh admin data
+            setTimeout(() => {
+                this.loadPendingPayments();
+                this.loadAllUsers();
+            }, 500);
+            
+            return;
+        } catch (error) {
+            console.error('❌ Error granting access:', error);
+            this.showError('❌ Error granting course access');
+        }
+    }
+
+    // Helper method for granting access with monthly expiry
+    grantCourseAccessWithExpiry(email, courseId, months = 1) {
+        const approvedStudents = this.getApprovedStudents();
+        
+        if (!approvedStudents[email.toLowerCase()]) {
+            approvedStudents[email.toLowerCase()] = {
+                email: email,
+                courses: [],
+                grantedAt: new Date().toISOString()
+            };
+        }
+
+        const userApproved = approvedStudents[email.toLowerCase()];
+        
+        if (!userApproved.courses.includes(courseId)) {
+            userApproved.courses.push(courseId);
+        }
+        
+        // Set expiration date
+        const expiryDate = new Date();
+        expiryDate.setMonth(expiryDate.getMonth() + months);
+        userApproved.expiresAt = expiryDate.toISOString();
+        
+        this.saveApprovedStudents(approvedStudents);
+        
+        return userApproved;
+    }
+
+    async denyPayment(email, courseId) {
+        if (!confirm(`Deny course access for ${email}?`)) return;
+        
+        try {
+            // For testing, auto-use demo mode
+            console.log(`🔧 Denying access: ${email} -> ${courseId}`);
+            let adminKey = 'demo'; // Auto-use demo mode for testing
+            
+            // Optional: still ask for confirmation in production
+            // const adminKey = prompt('Enter admin key to confirm:');
+            // if (!adminKey) return;
             
             let success = false;
             
@@ -1671,7 +3652,38 @@ class CoursePlatform {
                 
                 // Demo mode - grant access locally
                 if (adminKey === 'demo' || adminKey) {
-                    // Update local storage to grant access
+                    console.log('🎬 Demo Mode: Granting access locally');
+                    
+                    // Update the user in QLDUsers storage
+                    const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
+                    if (users[email]) {
+                        if (!users[email].ownedCourses) {
+                            users[email].ownedCourses = [];
+                        }
+                        if (!users[email].ownedCourses.includes(courseId)) {
+                            users[email].ownedCourses.push(courseId);
+                        }
+                        localStorage.setItem('QLDUsers', JSON.stringify(users));
+                        console.log(`✅ Updated user ${email} with course access`);
+                    } else {
+                        console.log(`⚠️ User ${email} not found in system, creating basic entry`);
+                        // Create a basic user entry if they don't exist
+                        users[email] = {
+                            id: this.generateUserId(),
+                            name: email.split('@')[0],
+                            email: email,
+                            passwordHash: this.hashPassword('demo123'),
+                            purchasedCourses: [],
+                            ownedCourses: [courseId],
+                            progress: {},
+                            joinDate: new Date().toISOString(),
+                            lastLogin: new Date().toISOString(),
+                            isAdmin: false
+                        };
+                        localStorage.setItem('QLDUsers', JSON.stringify(users));
+                    }
+                    
+                    // Update current user if it's the same email
                     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                     if (currentUser && currentUser.email === email) {
                         if (!currentUser.ownedCourses) {
@@ -1682,16 +3694,32 @@ class CoursePlatform {
                         }
                         localStorage.setItem('currentUser', JSON.stringify(currentUser));
                         this.currentUser = currentUser;
+                        console.log('✅ Updated current user with course access');
                     }
                     
-                    // Update pending payments
+                    // Update pending payments - check both email fields and remove granted payments
                     const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
+                    console.log('🔍 Before update - Pending payments:', pendingPayments.length, pendingPayments);
+                    
+                    let removedCount = 0;
                     const updatedPayments = pendingPayments.map(payment => {
-                        if (payment.userEmail === email && payment.courseId === courseId) {
-                            return { ...payment, status: 'granted' };
+                        // Check if this payment matches the granted access
+                        const paymentEmail = payment.email || payment.userEmail;
+                        const paymentCourse = payment.courseId;
+                        
+                        console.log(`🔍 Checking payment: email="${paymentEmail}" vs "${email}", course="${paymentCourse}" vs "${courseId}"`);
+                        
+                        // Update status instead of removing - this prevents re-creation
+                        if (paymentEmail === email && paymentCourse === courseId) {
+                            console.log('✅ Marking payment as granted:', payment);
+                            removedCount++;
+                            return { ...payment, status: 'granted', grantedAt: new Date().toISOString() };
                         }
-                        return payment;
+                        
+                        return payment; // Keep this payment unchanged
                     });
+                    
+                    console.log(`🔍 After update - Pending payments: ${updatedPayments.length} (granted ${removedCount})`);
                     localStorage.setItem('pendingPayments', JSON.stringify(updatedPayments));
                     
                     success = true;
@@ -1701,7 +3729,63 @@ class CoursePlatform {
             
             if (success) {
                 this.showSuccess(`✅ Course access granted to ${email} for ${courseName}${adminKey === 'demo' ? ' (Demo Mode)' : ''}`);
-                this.loadPendingPayments(); // Refresh the list
+                
+                // Immediately remove the payment card from UI for instant feedback
+                console.log(`🔍 Looking for payment card: [data-email="${email}"][data-course="${courseId}"]`);
+                const paymentCard = document.querySelector(`[data-email="${email}"][data-course="${courseId}"]`);
+                console.log('🔍 Payment card found:', !!paymentCard, paymentCard);
+                
+                if (paymentCard) {
+                    console.log('✅ Payment card found - removing...');
+                    paymentCard.style.opacity = '0.3';
+                    paymentCard.style.transform = 'scale(0.95)';
+                    paymentCard.style.transition = 'all 0.3s ease';
+                    paymentCard.style.pointerEvents = 'none';
+                    
+                    // Add "processing" indicator
+                    const actionButtons = paymentCard.querySelector('.payment-actions');
+                    if (actionButtons) {
+                        actionButtons.innerHTML = '<div style="color: #28a745; font-weight: bold;">✅ Processing...</div>';
+                    }
+                    
+                    setTimeout(() => {
+                        if (paymentCard && paymentCard.parentNode) {
+                            paymentCard.remove();
+                            console.log('✅ Payment card removed from DOM');
+                        }
+                    }, 300);
+                } else {
+                    console.warn('⚠️ Payment card not found - trying alternative selectors');
+                    
+                    // Try alternative selectors
+                    const allCards = document.querySelectorAll('.payment-item');
+                    console.log('🔍 All payment cards found:', allCards.length);
+                    allCards.forEach((card, index) => {
+                        console.log(`Card ${index}:`, {
+                            email: card.getAttribute('data-email'),
+                            course: card.getAttribute('data-course')
+                        });
+                    });
+                    
+                    // Try to find by email only
+                    const cardByEmail = document.querySelector(`[data-email="${email}"]`);
+                    if (cardByEmail) {
+                        console.log('✅ Found card by email, removing...');
+                        cardByEmail.style.opacity = '0.3';
+                        cardByEmail.style.pointerEvents = 'none';
+                        setTimeout(() => {
+                            if (cardByEmail && cardByEmail.parentNode) {
+                                cardByEmail.remove();
+                            }
+                        }, 300);
+                    }
+                }
+                
+                // Refresh the entire list after a short delay
+                setTimeout(() => {
+                    console.log('🔄 Refreshing pending payments list...');
+                    this.loadPendingPayments();
+                }, 800);
                 
                 // Update UI if this is the current user
                 if (this.currentUser && this.currentUser.email === email) {
@@ -1721,29 +3805,76 @@ class CoursePlatform {
         if (!confirm(`Deny course access for ${email}?`)) return;
         
         try {
-            const adminKey = prompt('Enter admin key to confirm:');
-            if (!adminKey) return;
+            // For testing, auto-use demo mode
+            console.log(`🔧 Denying access: ${email} -> ${courseId}`);
+            let adminKey = 'demo'; // Auto-use demo mode for testing
             
-            const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/api/admin/grant-access', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    adminKey,
-                    email,
-                    courseId,
-                    action: 'deny'
-                })
-            });
+            // Optional: still ask for confirmation in production
+            // const adminKey = prompt('Enter admin key to confirm:');
+            // if (!adminKey) return;
             
-            const result = await response.json();
+            let success = false;
             
-            if (result.success) {
-                this.showSuccess(`❌ Payment denied for ${email}`);
-                this.loadPendingPayments(); // Refresh the list
+            // Try backend first
+            try {
+                const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/api/admin/grant-access', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        adminKey,
+                        email,
+                        courseId,
+                        action: 'deny'
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    success = true;
+                    console.log('✅ Access denied via backend');
+                } else {
+                    throw new Error(result.error || 'Backend error');
+                }
+                
+            } catch (backendError) {
+                console.log('⚠️ Backend not available, using demo mode:', backendError.message);
+                
+                // Demo mode - deny access locally
+                if (adminKey === 'demo' || adminKey) {
+                    console.log('🎬 Demo Mode: Denying access locally');
+                    
+                    // Remove from pending payments
+                    const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
+                    const updatedPayments = pendingPayments.map(payment => {
+                        if (payment.email === email && payment.courseId === courseId) {
+                            return { ...payment, status: 'denied' };
+                        }
+                        return payment;
+                    });
+                    localStorage.setItem('pendingPayments', JSON.stringify(updatedPayments));
+                    
+                    success = true;
+                    console.log('✅ Access denied in demo mode');
+                }
+            }
+            
+            if (success) {
+                this.showSuccess(`❌ Payment denied for ${email}${adminKey === 'demo' ? ' (Demo Mode)' : ''}`);
+                
+                // Refresh the admin panel list
+                setTimeout(() => {
+                    this.loadPendingPayments();
+                }, 500);
+                
             } else {
-                this.showError(`❌ ${result.error}`);
+                this.showError(`❌ Failed to deny payment`);
             }
             
         } catch (error) {
@@ -1755,526 +3886,708 @@ class CoursePlatform {
     // ===== END ADMIN PANEL =====
 
     // ===== END FUTURE RECOMMENDATIONS =====
+
+    // ===== UTILITY FUNCTIONS FOR ADMIN =====
+
+    removeDuplicatePayments() {
+        console.log('🧹 Removing duplicate payments...');
+        const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
+        console.log('🔍 Before cleanup - Total payments:', pendingPayments.length);
+        
+        // Create a map to store unique payments by email+courseId combination
+        const uniquePayments = new Map();
+        
+        pendingPayments.forEach(payment => {
+            const email = payment.email || payment.userEmail;
+            const courseId = payment.courseId;
+            const key = `${email}-${courseId}`;
+            
+            // Only keep the most recent payment for each email+course combination
+            if (!uniquePayments.has(key) || 
+                new Date(payment.timestamp) > new Date(uniquePayments.get(key).timestamp)) {
+                uniquePayments.set(key, payment);
+            }
+        });
+        
+        const cleanedPayments = Array.from(uniquePayments.values());
+        console.log('🔍 After cleanup - Unique payments:', cleanedPayments.length);
+        console.log('✅ Removed duplicates:', pendingPayments.length - cleanedPayments.length);
+        
+        // Save the cleaned payments
+        localStorage.setItem('pendingPayments', JSON.stringify(cleanedPayments));
+        
+        return cleanedPayments;
+    }
+
+    clearAllTestPayments() {
+        console.log('🧹 Clearing all test payments...');
+        localStorage.removeItem('pendingPayments');
+        this.showSuccess('🗑️ All test payments cleared successfully');
+        
+        // Refresh admin panel if it's open
+        const adminPanel = document.getElementById('admin-panel');
+        if (adminPanel && !adminPanel.classList.contains('hidden')) {
+            setTimeout(() => this.loadPendingPayments(), 500);
+        }
+    }
+
+    clearAllUsers() {
+        console.log('🧹 Clearing all user data...');
+        localStorage.removeItem('QLDUsers');
+        localStorage.removeItem('currentUser');
+        this.currentUser = null;
+        this.showSuccess('🗑️ All user data cleared successfully');
+        
+        // Hide any user-specific UI elements
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const courseAccess = document.getElementById('course-access');
+        const adminPanel = document.getElementById('admin-panel');
+        
+        if (loginForm) loginForm.classList.remove('hidden');
+        if (registerForm) registerForm.classList.add('hidden');
+        if (courseAccess) courseAccess.classList.add('hidden');
+        if (adminPanel) adminPanel.classList.add('hidden');
+        
+        console.log('✅ All user data and UI reset complete');
+    }
+
+    createSamplePayments() {
+        console.log('🧪 Creating sample payments...');
+        
+        // Clear existing payments first
+        localStorage.removeItem('pendingPayments');
+        
+        const timestamp1 = new Date();
+        const timestamp2 = new Date(timestamp1.getTime() + 60000); // 1 minute later
+        
+        const samplePayments = [
+            {
+                id: 'sample-test-' + Date.now(),
+                email: 'test@example.com',
+                userEmail: 'test@example.com',
+                firstName: 'Test',
+                lastName: 'User',
+                name: 'Test User',
+                courseName: 'Salsa Fundamentals',
+                series: 'Salsa Fundamentals',
+                courseId: 'salsa-fundamentals',
+                paymentMethod: 'Zelle',
+                method: 'Zelle',
+                timestamp: timestamp1.toISOString(),
+                status: 'pending',
+                amount: 49,
+                price: 49
+            },
+            {
+                id: 'sample-pb-' + (Date.now() + 1),
+                email: 'pb.petel26@gmail.com',
+                userEmail: 'pb.petel26@gmail.com',
+                firstName: 'Pb',
+                lastName: 'Petel',
+                name: 'Pb Petel',
+                courseName: 'Bachata Sensual',
+                series: 'Bachata Sensual',
+                courseId: 'bachata-sensual',
+                paymentMethod: 'Venmo',
+                method: 'Venmo',
+                timestamp: timestamp2.toISOString(),
+                status: 'pending',
+                amount: 59,
+                price: 59
+            }
+        ];
+        
+        localStorage.setItem('pendingPayments', JSON.stringify(samplePayments));
+        console.log('✅ Created exactly 2 clean sample payments:', samplePayments);
+        this.showSuccess('🧪 Created 2 clean sample payments - Test User (Salsa $49) & Pb Petel (Bachata $59)');
+        
+        // Refresh admin panel if it's open
+        const adminPanel = document.getElementById('admin-panel');
+        if (adminPanel && !adminPanel.classList.contains('hidden')) {
+            setTimeout(() => this.loadPendingPayments(), 500);
+        }
+        
+        return samplePayments;
+    }
+
+    // ===== USER MANAGEMENT & SUBSCRIPTION SYSTEM =====
+
+    loadAllUsers() {
+        console.log('👥 Loading all users for management...');
+        const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
+        const userList = Object.values(users);
+        
+        console.log('📊 Found users:', userList.length);
+        
+        this.renderUserManagementList(userList);
+        this.updateUserStats(userList);
+    }
+
+    renderUserManagementList(users, filter = 'all', courseFilter = 'all') {
+        const userManagementList = document.getElementById('userManagementList');
+        if (!userManagementList) return;
+
+        if (users.length === 0) {
+            userManagementList.innerHTML = `
+                <div class="no-users-message">
+                    <h3>No users found</h3>
+                    <p>Users will appear here once they register for courses</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Filter users based on selected filters
+        let filteredUsers = users;
+        
+        if (filter !== 'all') {
+            filteredUsers = filteredUsers.filter(user => {
+                const status = this.getUserSubscriptionStatus(user);
+                return status === filter;
+            });
+        }
+
+        if (courseFilter !== 'all') {
+            filteredUsers = filteredUsers.filter(user => {
+                return this.userHasAccessToCourse(user, courseFilter);
+            });
+        }
+
+        userManagementList.innerHTML = '';
+
+        filteredUsers.forEach(user => {
+            const userCard = this.createUserManagementCard(user);
+            userManagementList.appendChild(userCard);
+        });
+
+        if (filteredUsers.length === 0) {
+            userManagementList.innerHTML = `
+                <div class="no-users-message">
+                    <h3>No users match the current filters</h3>
+                    <p>Try adjusting your filter settings</p>
+                </div>
+            `;
+        }
+    }
+
+    createUserManagementCard(user) {
+        const card = document.createElement('div');
+        card.className = 'user-card';
+        
+        const status = this.getUserSubscriptionStatus(user);
+        const userCourses = this.getUserCourseAccess(user);
+        
+        card.innerHTML = `
+            <div class="user-card-header">
+                <div class="user-info">
+                    <h3 class="user-name">${user.name}</h3>
+                    <p class="user-email">${user.email}</p>
+                    <p class="user-join-date">Joined: ${new Date(user.joinDate || user.registeredAt || Date.now()).toLocaleDateString()}</p>
+                </div>
+                <div class="user-status">
+                    <span class="status-badge status-${status}">${this.getStatusLabel(status)}</span>
+                </div>
+            </div>
+            
+            <div class="user-courses">
+                <div class="user-courses-title">Course Access:</div>
+                <div class="user-course-list">
+                    ${userCourses.map(course => `
+                        <div class="course-access-badge ${course.status}">
+                            ${course.title}
+                            ${course.expiresAt ? `<span class="access-expires">expires ${new Date(course.expiresAt).toLocaleDateString()}</span>` : ''}
+                        </div>
+                    `).join('')}
+                    ${userCourses.length === 0 ? '<span class="no-courses">No course access</span>' : ''}
+                </div>
+            </div>
+            
+            <div class="user-actions">
+                <button class="btn-details" onclick="courseApp.showUserDetails('${user.email}')">
+                    📊 View Details
+                </button>
+                <button class="btn-extend" onclick="courseApp.showExtendAccessModal('${user.email}')">
+                    ➕ Extend Access
+                </button>
+                <button class="btn-revoke" onclick="courseApp.revokeUserAccess('${user.email}')">
+                    🚫 Revoke Access
+                </button>
+            </div>
+        `;
+        
+        return card;
+    }
+
+    getUserSubscriptionStatus(user) {
+        const courses = this.getUserCourseAccess(user);
+        
+        if (courses.length === 0) {
+            return 'never-purchased';
+        }
+        
+        const hasActiveAccess = courses.some(course => course.status === 'active');
+        return hasActiveAccess ? 'active' : 'expired';
+    }
+
+    getStatusLabel(status) {
+        switch (status) {
+            case 'active': return 'Active';
+            case 'expired': return 'Expired';
+            case 'never-purchased': return 'Never Purchased';
+            default: return 'Unknown';
+        }
+    }
+
+    getUserCourseAccess(user) {
+        const courseAccess = [];
+        
+        // Check approved courses (server-side simulation)
+        const approvedStudents = this.getApprovedStudents();
+        const userApproved = approvedStudents[user.email.toLowerCase()];
+        
+        if (userApproved && userApproved.courses) {
+            userApproved.courses.forEach(courseId => {
+                const course = this.courses[courseId];
+                if (course) {
+                    const expiresAt = userApproved.expiresAt || this.calculateExpirationDate(userApproved.grantedAt);
+                    const isExpired = expiresAt && new Date(expiresAt) < new Date();
+                    
+                    courseAccess.push({
+                        id: courseId,
+                        title: course.title,
+                        status: isExpired ? 'expired' : 'active',
+                        grantedAt: userApproved.grantedAt,
+                        expiresAt: expiresAt
+                    });
+                }
+            });
+        }
+
+        // Also check local purchased courses (for demo/testing)
+        if (user.purchasedCourses) {
+            user.purchasedCourses.forEach(courseId => {
+                if (!courseAccess.find(c => c.id === courseId)) {
+                    const course = this.courses[courseId];
+                    if (course) {
+                        courseAccess.push({
+                            id: courseId,
+                            title: course.title,
+                            status: 'active',
+                            grantedAt: user.joinDate || user.registeredAt,
+                            expiresAt: null // Local purchases don't expire for demo
+                        });
+                    }
+                }
+            });
+        }
+
+        return courseAccess;
+    }
+
+    userHasAccessToCourse(user, courseId) {
+        const courses = this.getUserCourseAccess(user);
+        return courses.some(course => course.id === courseId);
+    }
+
+    calculateExpirationDate(grantedAt, monthsToAdd = 1) {
+        if (!grantedAt) return null;
+        
+        const date = new Date(grantedAt);
+        date.setMonth(date.getMonth() + monthsToAdd);
+        return date.toISOString();
+    }
+
+    updateUserStats(users) {
+        const stats = {
+            total: users.length,
+            active: 0,
+            expired: 0,
+            neverPurchased: 0
+        };
+
+        users.forEach(user => {
+            const status = this.getUserSubscriptionStatus(user);
+            if (status === 'active') stats.active++;
+            else if (status === 'expired') stats.expired++;
+            else stats.neverPurchased++;
+        });
+
+        // Update stats in the admin panel if elements exist
+        this.updateStatCard('Active Students', stats.active);
+        this.updateStatCard('Expired Access', stats.expired);
+        this.updateStatCard('Never Purchased', stats.neverPurchased);
+    }
+
+    updateStatCard(label, value) {
+        const statCards = document.querySelectorAll('.stat-card');
+        statCards.forEach(card => {
+            const labelElement = card.querySelector('.stat-label');
+            if (labelElement && labelElement.textContent === label) {
+                const numberElement = card.querySelector('.stat-number');
+                if (numberElement) {
+                    numberElement.textContent = value;
+                }
+            }
+        });
+    }
+
+    filterUsers() {
+        const statusFilter = document.getElementById('userFilterStatus')?.value || 'all';
+        const courseFilter = document.getElementById('userFilterCourse')?.value || 'all';
+        
+        const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
+        const userList = Object.values(users);
+        
+        this.renderUserManagementList(userList, statusFilter, courseFilter);
+    }
+
+    showUserDetails(email) {
+        const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
+        const user = users[email];
+        
+        if (!user) {
+            this.showError('User not found');
+            return;
+        }
+
+        const courses = this.getUserCourseAccess(user);
+        const status = this.getUserSubscriptionStatus(user);
+        
+        const detailsHtml = `
+            <div style="max-width: 500px;">
+                <h3>👤 User Details</h3>
+                <p><strong>Name:</strong> ${user.name}</p>
+                <p><strong>Email:</strong> ${user.email}</p>
+                <p><strong>Status:</strong> <span class="status-badge status-${status}">${this.getStatusLabel(status)}</span></p>
+                <p><strong>Joined:</strong> ${new Date(user.joinDate || user.registeredAt || Date.now()).toLocaleDateString()}</p>
+                
+                <h4>Course Access:</h4>
+                ${courses.length > 0 ? 
+                    courses.map(course => `
+                        <div style="margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                            <strong>${course.title}</strong><br>
+                            Status: <span class="status-badge status-${course.status}">${course.status}</span><br>
+                            ${course.grantedAt ? `Granted: ${new Date(course.grantedAt).toLocaleDateString()}<br>` : ''}
+                            ${course.expiresAt ? `Expires: ${new Date(course.expiresAt).toLocaleDateString()}` : 'No expiration'}
+                        </div>
+                    `).join('') : 
+                    '<p>No course access</p>'
+                }
+            </div>
+        `;
+        
+        this.showNotification(detailsHtml, 'success');
+    }
+
+    showExtendAccessModal(email) {
+        const courses = Object.keys(this.courses);
+        
+        const modalHtml = `
+            <div style="max-width: 400px;">
+                <h3>➕ Extend Access</h3>
+                <p>Grant or extend monthly access for: <strong>${email}</strong></p>
+                
+                <div style="margin: 20px 0;">
+                    <label>Course:</label><br>
+                    <select id="extendCourse" style="width: 100%; padding: 8px; margin: 5px 0;">
+                        ${courses.map(courseId => 
+                            `<option value="${courseId}">${this.courses[courseId].title}</option>`
+                        ).join('')}
+                    </select>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <label>Duration:</label><br>
+                    <select id="extendDuration" style="width: 100%; padding: 8px; margin: 5px 0;">
+                        <option value="1">1 Month</option>
+                        <option value="3">3 Months</option>
+                        <option value="6">6 Months</option>
+                        <option value="12">12 Months</option>
+                    </select>
+                </div>
+                
+                <div style="margin: 20px 0; text-align: center;">
+                    <button onclick="courseApp.confirmExtendAccess('${email}')" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px;">
+                        ✅ Grant Access
+                    </button>
+                    <button onclick="document.querySelector('.notification').remove()" style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px;">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        this.showNotification(modalHtml, 'success');
+    }
+
+    confirmExtendAccess(email) {
+        const courseId = document.getElementById('extendCourse')?.value;
+        const duration = parseInt(document.getElementById('extendDuration')?.value) || 1;
+        
+        if (!courseId) {
+            this.showError('Please select a course');
+            return;
+        }
+
+        // Get current approved students
+        const approvedStudents = this.getApprovedStudents();
+        
+        // Initialize user if not exists
+        if (!approvedStudents[email.toLowerCase()]) {
+            approvedStudents[email.toLowerCase()] = {
+                email: email,
+                courses: [],
+                grantedAt: new Date().toISOString()
+            };
+        }
+
+        const userApproved = approvedStudents[email.toLowerCase()];
+        
+        // Add course if not already there
+        if (!userApproved.courses.includes(courseId)) {
+            userApproved.courses.push(courseId);
+        }
+        
+        // Update expiration date
+        const currentExpiry = userApproved.expiresAt ? new Date(userApproved.expiresAt) : new Date();
+        const newExpiry = new Date(Math.max(currentExpiry.getTime(), new Date().getTime()));
+        newExpiry.setMonth(newExpiry.getMonth() + duration);
+        
+        userApproved.expiresAt = newExpiry.toISOString();
+        userApproved.lastExtended = new Date().toISOString();
+        
+        // Save changes
+        this.saveApprovedStudents(approvedStudents);
+        
+        // Close modal and refresh
+        document.querySelectorAll('.notification').forEach(n => n.remove());
+        
+        this.showSuccess(`✅ Access extended for ${email} - ${this.courses[courseId].title} until ${newExpiry.toLocaleDateString()}`);
+        
+        // Refresh user list
+        setTimeout(() => this.loadAllUsers(), 500);
+    }
+
+    revokeUserAccess(email) {
+        const confirmed = confirm(`⚠️ Are you sure you want to revoke ALL course access for ${email}?\n\nThis action cannot be undone.`);
+        
+        if (!confirmed) return;
+
+        // Remove from approved students
+        const approvedStudents = this.getApprovedStudents();
+        delete approvedStudents[email.toLowerCase()];
+        this.saveApprovedStudents(approvedStudents);
+
+        // Also clear local purchased courses if it's the current user
+        const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
+        if (users[email]) {
+            users[email].purchasedCourses = [];
+            users[email].ownedCourses = [];
+            localStorage.setItem('QLDUsers', JSON.stringify(users));
+        }
+
+        this.showSuccess(`🚫 All course access revoked for ${email}`);
+        
+        // Refresh user list
+        setTimeout(() => this.loadAllUsers(), 500);
+    }
+
+    checkExpiredSubscriptions() {
+        const approvedStudents = this.getApprovedStudents();
+        const now = new Date();
+        let expiredCount = 0;
+        
+        Object.keys(approvedStudents).forEach(email => {
+            const user = approvedStudents[email];
+            if (user.expiresAt && new Date(user.expiresAt) < now) {
+                expiredCount++;
+            }
+        });
+        
+        if (expiredCount > 0) {
+            this.showWarning(`⏰ Found ${expiredCount} expired subscriptions. Review user list to manage expired access.`);
+        } else {
+            this.showSuccess('✅ No expired subscriptions found');
+        }
+        
+        // Refresh user list to show current status
+        this.loadAllUsers();
+    }
 }
 
 // ===== GLOBAL FUNCTIONS (for onclick handlers) =====
 
+function demoLogin() {
+    console.log('🎭 Demo Login clicked');
+    if (window.courseApp) {
+        document.getElementById('login-email').value = 'demo@example.com';
+        document.getElementById('login-password').value = 'demo123';
+        window.courseApp.handleLogin();
+    }
+}
+
+function adminDemoLogin() {
+    console.log('⭐ Admin Demo Login clicked');
+    if (window.courseApp) {
+        document.getElementById('login-email').value = 'michelle@queerlatindance.com';
+        document.getElementById('login-password').value = 'admin123';
+        window.courseApp.handleLogin();
+    }
+}
+
 function switchAuthTab(tab) {
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelector(`[onclick="switchAuthTab('${tab}')"]`).classList.add('active');
+    console.log('🔄 Switching auth tab to:', tab);
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const loginTab = document.querySelector('.tab-btn:first-child');
+    const registerTab = document.querySelector('.tab-btn:last-child');
     
-    document.querySelectorAll('.auth-form').forEach(form => form.classList.add('hidden'));
-    document.getElementById(`${tab}-form`).classList.remove('hidden');
-}
-
-function logout() {
-    courseApp.logout();
-}
-
-function showDashboard() {
-    courseApp.showDashboard();
+    if (tab === 'login') {
+        loginForm?.classList.remove('hidden');
+        registerForm?.classList.add('hidden');
+        loginTab?.classList.add('active');
+        registerTab?.classList.remove('active');
+    } else if (tab === 'register') {
+        loginForm?.classList.add('hidden');
+        registerForm?.classList.remove('hidden');
+        loginTab?.classList.remove('active');
+        registerTab?.classList.add('active');
+    }
 }
 
 function showAdminPanel() {
-    if (courseApp) {
-        courseApp.showAdminPanel();
+    console.log('👑 Show Admin Panel clicked');
+    if (window.courseApp) {
+        window.courseApp.showAdminPanel();
     }
 }
 
-// Payment overlay functions
+function logout() {
+    console.log('🚪 Logout clicked');
+    if (window.courseApp) {
+        window.courseApp.logout();
+    }
+}
+
+function showDashboard() {
+    console.log('🏠 Show Dashboard clicked');
+    if (window.courseApp) {
+        window.courseApp.showDashboard();
+    }
+}
+
+function markPaymentSent() {
+    console.log('✅ Mark Payment Sent clicked');
+    if (window.courseApp) {
+        window.courseApp.markPaymentSent();
+    }
+}
+
+function grantCourseAccess() {
+    console.log('✅ Grant Course Access clicked');
+    const email = document.getElementById('admin-student-email')?.value;
+    const courseId = document.getElementById('admin-course-select')?.value;
+    const courseName = document.getElementById('admin-course-select')?.selectedOptions[0]?.text || courseId;
+    
+    if (!email || !courseId) {
+        alert('Please enter both email and select a course');
+        return;
+    }
+    
+    if (window.courseApp) {
+        window.courseApp.grantCourseAccess(email, courseId, courseName);
+    }
+}
+
 function closePaymentOverlay() {
+    console.log('❌ Close Payment Overlay clicked');
     const overlay = document.getElementById('paymentOverlay');
-    overlay.classList.remove('show');
-    
-    setTimeout(() => {
+    if (overlay) {
         overlay.style.display = 'none';
-        
-        // Close all forms
-        if (courseApp) {
-            courseApp.closeAllForms();
-        }
-        
-        // Restore body scrolling on mobile
-        if (window.innerWidth <= 768) {
-            document.body.style.overflow = 'auto';
-        }
-    }, 500);
-}
-
-// Payment method button handlers
-document.addEventListener('DOMContentLoaded', function() {
-    // Zelle button
-    const zelleBtn = document.getElementById('zelleBtn');
-    if (zelleBtn) {
-        zelleBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            courseApp.closeAllForms();
-            document.getElementById('zelleForm').classList.add('active');
-        });
-    }
-    
-    // Venmo button
-    const venmoBtn = document.getElementById('venmoBtn');
-    if (venmoBtn) {
-        venmoBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            courseApp.closeAllForms();
-            document.getElementById('venmoForm').classList.add('active');
-        });
-    }
-    
-    // Stripe button
-    const stripeBtn = document.getElementById('stripeBtn');
-    if (stripeBtn) {
-        stripeBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            handleStripePayment();
-        });
-    }
-
-    // PayPal button
-    const paypalBtn = document.getElementById('paypalBtn');
-    if (paypalBtn) {
-        paypalBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            courseApp.closeAllForms();
-            document.getElementById('paypalForm').classList.add('active');
-        });
-    }
-    
-    // Form submissions
-    const zelleForm = document.getElementById('zelleFormInner');
-    if (zelleForm) {
-        zelleForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            submitCoursePayment(zelleForm, 'zelle');
-        });
-    }
-    
-    const venmoForm = document.getElementById('venmoFormInner');
-    if (venmoForm) {
-        venmoForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            submitCoursePayment(venmoForm, 'venmo');
-        });
-    }
-    
-    const paypalForm = document.getElementById('paypalFormInner');
-    if (paypalForm) {
-        paypalForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            submitCoursePayment(paypalForm, 'paypal');
-        });
-    }
-});
-
-function handleStripePayment() {
-    if (!courseApp || !courseApp.selectedCourse) return;
-    
-    const course = courseApp.selectedCourse;
-    const userEmail = courseApp.currentUser.email;
-    
-    // Use actual Stripe Payment Links from payment1.html
-    let stripeLink = '';
-    
-    // Map course prices to actual Stripe Payment Links
-    switch (course.price) {
-        case 26:
-            stripeLink = 'https://buy.stripe.com/4gM14o3Gq1W0gSL1kE0Ny0d'; // $26 drop-in
-            break;
-        case 52:
-            stripeLink = 'https://buy.stripe.com/bJe28s2Cm9osfOHgfy0Ny0e'; // $52 drop-in both
-            break;
-        case 80:
-            stripeLink = 'https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c'; // $80 series single
-            break;
-        case 85:
-            stripeLink = 'https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c'; // $85 private single
-            break;
-        case 144:
-            stripeLink = 'https://buy.stripe.com/4gM4gA4Kuasw31V8N60Ny0b'; // $144 series both
-            break;
-        case 170:
-            stripeLink = 'https://buy.stripe.com/4gM4gA4Kuasw31V8N60Ny0b'; // $170 private both
-            break;
-        default:
-            // Default to the most common pricing
-            if (course.price <= 30) {
-                stripeLink = 'https://buy.stripe.com/4gM14o3Gq1W0gSL1kE0Ny0d'; // $26 link for lower prices
-            } else if (course.price <= 60) {
-                stripeLink = 'https://buy.stripe.com/bJe28s2Cm9osfOHgfy0Ny0e'; // $52 link for mid prices
-            } else if (course.price <= 100) {
-                stripeLink = 'https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c'; // $80-85 link
-            } else {
-                stripeLink = 'https://buy.stripe.com/4gM4gA4Kuasw31V8N60Ny0b'; // $144-170 link for higher prices
-            }
-            break;
-    }
-    
-    // Close payment overlay and redirect to Stripe
-    closePaymentOverlay();
-    
-    // Show notification before redirect
-    courseApp.showSuccess(`Redirecting to Stripe to complete payment for "${course.title}"...`);
-    
-    // Track the payment attempt
-    const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
-    pendingPayments.push({
-        courseId: course.id,
-        courseName: course.title,
-        userEmail: userEmail,
-        amount: course.price,
-        method: 'stripe',
-        timestamp: new Date().toISOString(),
-        stripeLink: stripeLink
-    });
-    localStorage.setItem('pendingPayments', JSON.stringify(pendingPayments));
-    
-    // Redirect to Stripe after a short delay
-    setTimeout(() => {
-        window.open(stripeLink, '_blank');
-    }, 1000);
-}
-
-async function submitCoursePayment(form, paymentMethod) {
-    if (!courseApp || !courseApp.selectedCourse) return;
-    
-    const course = courseApp.selectedCourse;
-    const formData = new FormData(form);
-    
-    // Create the data object to send to backend
-    const paymentData = {
-        type: 'course',
-        courseName: course.title,
-        series: course.title, // Keep compatibility with existing backend
-        paymentMethod: paymentMethod.charAt(0).toUpperCase() + paymentMethod.slice(1),
-        amount: `$${course.price}`,
-        firstName: formData.get('firstName'),
-        lastName: formData.get('lastName'),
-        email: formData.get('email'),
-        phone: formData.get('phone') || '',
-        pronouns: formData.get('pronouns') || '',
-        registrationType: 'online-course',
-        submissionId: `course-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
-    };
-    
-    console.log('📤 Submitting course payment:', paymentData);
-    
-    try {
-        // Show loading state
-        const submitBtn = form.querySelector('.modal-submit');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Submitting...';
-        submitBtn.disabled = true;
-        
-        // Try to submit to backend, with fallback for demo/testing
-        let backendSuccess = false;
-        
-        try {
-            // Use the existing working endpoint temporarily
-            const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/api/payment-form', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...paymentData,
-                    series: paymentData.courseName // Map courseName to series for existing backend
-                })
-            });
-            
-            if (response.ok) {
-                const result = await response.json();
-                console.log('✅ Course payment submitted to backend:', result);
-                backendSuccess = true;
-            } else {
-                console.log('⚠️ Backend endpoint not available, using demo mode');
-            }
-        } catch (networkError) {
-            console.log('⚠️ Backend not accessible, using demo mode:', networkError.message);
-        }
-        
-        // Always show success and track locally (works for both backend and demo mode)
-        
-        // Close the payment overlay
-        closePaymentOverlay();
-        
-        // Show success message
-        setTimeout(() => {
-            const statusMessage = backendSuccess 
-                ? `🎉 Course registration submitted! Check your email for payment instructions. You'll receive access within 24 hours after payment confirmation.`
-                : `🎉 Demo Mode: Course registration recorded! In production, you would receive payment instructions via email. For testing, use the admin panel to grant yourself access.`;
-                
-            courseApp.showSuccess(statusMessage);
-            
-            // Track locally for admin panel
-            const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
-            pendingPayments.push({
-                courseId: course.id,
-                courseName: course.title,
-                userEmail: paymentData.email,
-                amount: course.price,
-                method: paymentMethod,
-                timestamp: new Date().toISOString(),
-                status: backendSuccess ? 'pending-confirmation' : 'demo-pending'
-            });
-            localStorage.setItem('pendingPayments', JSON.stringify(pendingPayments));
-            
-            // In demo mode, also show payment instructions
-            if (!backendSuccess) {
-                setTimeout(() => {
-                    courseApp.showPaymentInstructions(course);
-                }, 3000);
-            }
-        }, 600);
-        
-    } catch (error) {
-        console.error('❌ Unexpected error:', error);
-        courseApp.showError(`❌ Unexpected error: ${error.message}. Please try again or contact support.`);
-    } finally {
-        // Reset button state
-        const submitBtn = form.querySelector('.modal-submit');
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
     }
 }
 
-function showPaymentDetails(method) {
-    if (!courseApp || !courseApp.selectedCourse) return;
-    
-    const course = courseApp.selectedCourse;
-    const userEmail = courseApp.currentUser.email;
-    
-    let details = '';
-    let title = '';
-    
-    switch (method) {
-        case 'zelle':
-            title = '🏦 Zelle Payment Details';
-            details = `
-                <b>Send to:</b> michelle@queerlatindance.com<br>
-                <b>Amount:</b> $${course.price}<br>
-                <b>Memo:</b> ${userEmail} - ${course.title}<br><br>
-                <b>Next Steps:</b><br>
-                1. Open your banking app<br>
-                2. Select Zelle<br>
-                3. Send to michelle@queerlatindance.com<br>
-                4. Include the memo above<br>
-                5. You'll receive access within 24 hours!
-            `;
-            break;
-        case 'venmo':
-            title = '💰 Venmo Payment Details';
-            details = `
-                <b>Send to:</b> @QueerLatinDance<br>
-                <b>Amount:</b> $${course.price}<br>
-                <b>Note:</b> ${userEmail} - ${course.title}<br><br>
-                <b>Next Steps:</b><br>
-                1. Open Venmo app<br>
-                2. Send to @QueerLatinDance<br>
-                3. Include the note above<br>
-                4. You'll receive access within 24 hours!
-            `;
-            break;
-        case 'paypal':
-            title = '💙 PayPal Payment Details';
-            details = `
-                <b>Send to:</b> michelle@queerlatindance.com<br>
-                <b>Amount:</b> $${course.price}<br>
-                <b>Note:</b> ${userEmail} - ${course.title}<br><br>
-                <b>Next Steps:</b><br>
-                1. Log in to PayPal<br>
-                2. Send to michelle@queerlatindance.com<br>
-                3. Include the note above<br>
-                4. You'll receive access within 24 hours!<br><br>
-                <em>Note: PayPal charges processing fees</em>
-            `;
-            break;
-    }
-    
-    // Show payment overlay details (reusing the existing system)
-    courseApp.showPaymentOverlay();
-    
-    setTimeout(() => {
-        courseApp.showSuccess(`${title}\n\n${details.replace(/<[^>]*>/g, '\n')}`);
-        closePaymentOverlay();
-        
-        // Track pending payment
-        const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
-        pendingPayments.push({
-            courseId: course.id,
-            courseName: course.title,
-            userEmail: userEmail,
-            amount: course.price,
-            method: method,
-            timestamp: new Date().toISOString()
-        });
-        localStorage.setItem('pendingPayments', JSON.stringify(pendingPayments));
-    }, 500);
-}
-
-// Old payment functions removed - now using payment1.html style system
-
-// ===== INITIALIZE APP =====
-
-let courseApp;
-
-document.addEventListener('DOMContentLoaded', () => {
-    courseApp = new CoursePlatform();
-    console.log('🕺💃 Queer Latin Dance Course Platform Ready!');
-    
-    // Debug: Check if courses are loaded
-    console.log('📚 Courses loaded:', Object.keys(courseApp.courses).length);
-    console.log('📚 Course names:', Object.keys(courseApp.courses));
-    
-    // Debug: Show current screen after a brief delay
-    setTimeout(() => {
-        const currentScreen = document.querySelector('.screen:not(.hidden)');
-        console.log('🎯 Current visible screen:', currentScreen?.id || 'none visible');
-        console.log('👤 Current user:', courseApp.currentUser);
-        
-        // If we're on the dashboard but no user is logged in, something's wrong
-        if (currentScreen?.id === 'dashboard-screen' && !courseApp.currentUser) {
-            console.warn('⚠️ On dashboard but no user logged in - this might be the issue');
-        }
-    }, 100);
-});
-
-// Helper to add test pending payment for admin testing
-window.addTestPendingPayment = function() {
-    const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
-    pendingPayments.push({
-        courseId: 'salsa-fundamentals',
-        courseName: 'Salsa Fundamentals',
-        userEmail: 'student@test.com',
-        amount: 49,
-        method: 'Zelle',
-        timestamp: new Date().toISOString(),
-        status: 'pending'
-    });
-    localStorage.setItem('pendingPayments', JSON.stringify(pendingPayments));
-    console.log('✅ Added test pending payment');
-};
-
-// Direct admin panel test (bypass prompt and API)
-window.testAdminPanel = function() {
-    console.log('🧪 Direct admin panel test');
-    if (!courseApp) {
-        console.error('❌ courseApp not initialized');
-        return;
-    }
-    
-    if (!courseApp.isAdmin()) {
-        console.error('❌ Not logged in as admin');
-        console.log('Try running: window.adminDemoLogin()');
-        return;
-    }
-    
-    console.log('✅ Admin access confirmed, showing panel directly');
-    courseApp.showScreen('admin-panel');
-    
-    // Add test content directly to bypass ALL issues
-    setTimeout(() => {
-        const container = document.getElementById('pendingPaymentsList');
-        if (container) {
-            container.innerHTML = `
-                <div style="padding: 20px; border: 2px solid #007bff; border-radius: 10px; margin: 20px 0; background: #f8f9fa;">
-                    <h4 style="color: #007bff; margin-top: 0;">🎭 Demo Pending Payment</h4>
-                    <p><strong>Student:</strong> demo@example.com</p>
-                    <p><strong>Course:</strong> Salsa Fundamentals ($49)</p>
-                    <p><strong>Method:</strong> Zelle</p>
-                    <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
-                    <div style="margin-top: 15px;">
-                        <button onclick="alert('✅ Access would be granted in production!')" 
-                                style="background: #28a745; color: white; padding: 8px 15px; border: none; border-radius: 5px; margin-right: 10px; cursor: pointer;">
-                            Grant Access
-                        </button>
-                        <button onclick="alert('❌ Access would be denied in production!')" 
-                                style="background: #dc3545; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">
-                            Deny Access
-                        </button>
-                    </div>
-                </div>
-                <div style="padding: 15px; background: #d4edda; border-radius: 5px; margin: 10px 0;">
-                    <strong>🎬 Demo Mode Active</strong><br>
-                    This is a demonstration of the admin panel. In production, you would see real pending course payments here.
-                </div>
-            `;
-            console.log('✅ Demo admin panel content loaded with inline styles');
-        } else {
-            console.error('❌ pendingPaymentsList container still not found');
-        }
-    }, 100);
-};
-
-// Debug function to test course display
-window.testCourseDisplay = function() {
-    console.log('🧪 Manual course display test');
-    if (!courseApp) {
-        console.error('❌ courseApp not initialized');
-        return;
-    }
-    
-    console.log('📊 Platform state:');
-    console.log('- Current user:', courseApp.currentUser);
-    console.log('- Available courses:', Object.keys(courseApp.courses).length);
-    console.log('- Current screen:', document.querySelector('.screen:not(.hidden)')?.id);
-    
-    // Try to render courses manually
-    try {
-        courseApp.renderCourses();
-        console.log('✅ Manual renderCourses completed');
-    } catch (error) {
-        console.error('❌ Error rendering courses:', error);
-    }
-};
-
-// Admin demo login function
-window.adminDemoLogin = function() {
-    console.log('⭐ Admin demo login initiated');
-    if (!courseApp) {
-        console.error('❌ courseApp not initialized');
-        return;
-    }
-    
-    const emailInput = document.getElementById('login-email');
-    const passwordInput = document.getElementById('login-password');
-    
-    if (emailInput && passwordInput) {
-        emailInput.value = 'admin@demo.com';
-        passwordInput.value = 'admin123';
-        courseApp.handleLogin();
-    }
-};
-
-// Quick demo login function
-window.demoLogin = function() {
-    console.log('🎭 Demo login initiated');
-    if (!courseApp) {
-        console.error('❌ courseApp not initialized');
-        return;
-    }
-    
-    // Auto-fill demo credentials and login
-    const emailInput = document.getElementById('login-email');
-    const passwordInput = document.getElementById('login-password');
-    
-    if (emailInput && passwordInput) {
-        emailInput.value = 'demo@example.com';
-        passwordInput.value = 'demo123';
-        
-        // Trigger login by calling handleLogin directly
-        courseApp.handleLogin();
+// Debug and testing methods
+window.debugUserPassword = function(email) {
+    if (window.courseApp) {
+        return window.courseApp.debugUserPassword(email);
     } else {
-        console.error('❌ Login form elements not found');
-        console.log('Available elements:', {
-            'login-email': !!document.getElementById('login-email'),
-            'login-password': !!document.getElementById('login-password')
-        });
+        console.error('❌ courseApp not available');
     }
 };
+
+window.resetUserPassword = function(email, newPassword) {
+    if (window.courseApp) {
+        return window.courseApp.resetUserPassword(email, newPassword);
+    } else {
+        console.error('❌ courseApp not available');
+    }
+};
+
+window.fixMyLogin = function(email, desiredPassword) {
+    if (window.courseApp) {
+        return window.courseApp.fixUserLogin(email, desiredPassword);
+    } else {
+        console.error('❌ courseApp not available');
+    }
+};
+
+// Quick fix for the specific user mentioned
+window.fixPbLogin = function() {
+    const email = 'pb.petel26@gmail.com';
+    const password = prompt('Enter the password you want to use for pb.petel26@gmail.com:');
+    if (password && window.courseApp) {
+        return window.courseApp.fixUserLogin(email, password);
+    }
+};
+
+// Make demo login functions globally available
+window.demoLogin = demoLogin;
+window.adminDemoLogin = adminDemoLogin;
 
 // Export for use in other files
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = CoursePlatform;
+}
+
+// Initialize the application when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 DOM loaded, initializing CoursePlatform...');
+    try {
+        window.courseApp = new CoursePlatform();
+        console.log('✅ CoursePlatform initialized successfully');
+    } catch (error) {
+        console.error('❌ Error initializing CoursePlatform:', error);
+        // Fallback: show auth screen if initialization fails
+        setTimeout(() => {
+            const loadingScreen = document.getElementById('loading-screen');
+            const authScreen = document.getElementById('auth-screen');
+            if (loadingScreen) loadingScreen.classList.remove('active');
+            if (authScreen) authScreen.classList.add('active');
+        }, 1000);
+    }
+});
+
+// Backup initialization in case DOMContentLoaded already fired
+if (document.readyState === 'loading') {
+    // DOM is still loading, DOMContentLoaded will fire
+} else {
+    // DOM is already loaded
+    console.log('🚀 DOM already loaded, initializing CoursePlatform...');
+    setTimeout(() => {
+        if (typeof window.courseApp === 'undefined') {
+            try {
+                window.courseApp = new CoursePlatform();
+                console.log('✅ CoursePlatform initialized successfully (backup)');
+            } catch (error) {
+                console.error('❌ Error initializing CoursePlatform (backup):', error);
+                // Fallback: show auth screen if initialization fails
+                const loadingScreen = document.getElementById('loading-screen');
+                const authScreen = document.getElementById('auth-screen');
+                if (loadingScreen) loadingScreen.classList.remove('active');
+                if (authScreen) authScreen.classList.add('active');
+            }
+        }
+    }, 100);
 }

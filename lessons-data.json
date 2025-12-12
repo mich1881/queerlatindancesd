@@ -35,7 +35,7 @@
     },
     {
       "id": "dropin-intro",
-      "date": "ongoing",
+      "date": "january-2025",
       "month": "DROP",
       "day": "IN",
       "title": "Drop-in",
@@ -55,7 +55,7 @@
       "flyerUrl": "images/lessons/onlinelessonscover.png",
       "description": "Virtual dance lessons coming soon",
       "type": "online",
-      "link": ""
+      "link": "lessons.html"
     }
   ],
   "previous": [

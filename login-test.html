@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Test</title>
+    <link rel="stylesheet" href="course-styles.css">
+    <style>
+        body { padding: 20px; font-family: Arial, sans-serif; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; background: #f9f9f9; }
+        #status { min-height: 100px; background: #fff; padding: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Login and Course Display Test</h1>
+    
+    <!-- Minimal auth screen -->
+    <div id="auth-screen" class="screen">
+        <h2>Login Test</h2>
+        <form id="login-form" class="auth-form">
+            <input type="email" id="login-email" placeholder="Email" value="demo@example.com">
+            <input type="password" id="login-password" placeholder="Password" value="demo123">
+            <button type="submit">Login</button>
+        </form>
+        <button onclick="window.demoLogin()">Demo Login</button>
+        <button onclick="window.adminDemoLogin()">Admin Demo Login</button>
+    </div>
+    
+    <!-- Dashboard screen -->
+    <div id="dashboard-screen" class="screen hidden">
+        <h2>Dashboard</h2>
+        <div id="user-welcome">Welcome!</div>
+        <button onclick="logout()">Logout</button>
+        
+        <div id="my-courses-grid" class="courses-grid">
+            <!-- My courses -->
+        </div>
+        
+        <div id="available-courses-grid" class="courses-grid">
+            <!-- Available courses -->
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Status Log</h3>
+        <div id="status"></div>
+    </div>
+
+    <script src="course-app.js"></script>
+    <script>
+        // Status logging
+        function logStatus(message) {
+            const status = document.getElementById('status');
+            const time = new Date().toLocaleTimeString();
+            status.innerHTML += `<div>[${time}] ${message}</div>`;
+            console.log(message);
+        }
+        
+        function logout() {
+            if (window.courseApp) {
+                window.courseApp.logout();
+                logStatus('Logout clicked');
+            }
+        }
+        
+        window.addEventListener('load', function() {
+            logStatus('Page loaded');
+            
+            setTimeout(() => {
+                if (window.courseApp) {
+                    logStatus('✅ Course app initialized');
+                    logStatus(`📚 Total courses: ${Object.keys(window.courseApp.courses).length}`);
+                    logStatus(`🎓 Salsa Fundamentals exists: ${!!window.courseApp.courses['salsa-fundamentals']}`);
+                } else {
+                    logStatus('❌ Course app failed to initialize');
+                }
+            }, 1000);
+        });
+        
+        // Monitor screen changes
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    const target = mutation.target;
+                    if (target.id === 'dashboard-screen') {
+                        const isHidden = target.classList.contains('hidden');
+                        logStatus(`Dashboard screen: ${isHidden ? 'hidden' : 'visible'}`);
+                        
+                        if (!isHidden) {
+                            setTimeout(() => {
+                                const myCoursesGrid = document.getElementById('my-courses-grid');
+                                const availableCoursesGrid = document.getElementById('available-courses-grid');
+                                logStatus(`My courses cards: ${myCoursesGrid.children.length}`);
+                                logStatus(`Available courses cards: ${availableCoursesGrid.children.length}`);
+                            }, 500);
+                        }
+                    }
+                }
+            });
+        });
+        
+        observer.observe(document.body, {
+            attributes: true,
+            subtree: true,
+            attributeFilter: ['class']
+        });
+    </script>
+</body>
+</html>

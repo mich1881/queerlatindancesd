@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Debug Test</title>
+    <link rel="stylesheet" href="course-styles.css">
+    <style>
+        body { padding: 20px; font-family: Arial, sans-serif; }
+        .debug-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; background: #f9f9f9; }
+        .debug-section h3 { margin-top: 0; color: #333; }
+        pre { background: #fff; padding: 10px; border: 1px solid #ddd; overflow: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Course Debug Test</h1>
+    
+    <div class="debug-section">
+        <h3>1. Course App Initialization</h3>
+        <div id="init-status">Loading...</div>
+    </div>
+    
+    <div class="debug-section">
+        <h3>2. Available Courses</h3>
+        <div id="courses-info">Loading...</div>
+    </div>
+    
+    <div class="debug-section">
+        <h3>3. Course Card Rendering Test</h3>
+        <div id="test-cards" class="courses-grid"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h3>4. DOM Elements Check</h3>
+        <div id="dom-check">Loading...</div>
+    </div>
+
+    <script src="course-app.js"></script>
+    <script>
+        function debugCourses() {
+            console.log('🧪 Starting debug test...');
+            
+            // 1. Check initialization
+            const initStatus = document.getElementById('init-status');
+            if (window.courseApp) {
+                initStatus.innerHTML = '✅ Course app initialized successfully';
+                initStatus.style.color = 'green';
+                
+                // 2. Check courses
+                const coursesInfo = document.getElementById('courses-info');
+                const courses = window.courseApp.courses;
+                const courseKeys = Object.keys(courses);
+                
+                coursesInfo.innerHTML = `
+                    <p>📚 Total courses: ${courseKeys.length}</p>
+                    <pre>${JSON.stringify(courseKeys, null, 2)}</pre>
+                    <h4>Salsa Fundamentals Details:</h4>
+                    <pre>${JSON.stringify(courses['salsa-fundamentals'], null, 2)}</pre>
+                `;
+                
+                // 3. Test course card creation
+                const testCards = document.getElementById('test-cards');
+                if (courses['salsa-fundamentals']) {
+                    const card = window.courseApp.createCourseCard(courses['salsa-fundamentals']);
+                    testCards.appendChild(card);
+                    testCards.innerHTML += '<p style="color: green;">✅ Course card created successfully!</p>';
+                } else {
+                    testCards.innerHTML = '<p style="color: red;">❌ Salsa Fundamentals course not found!</p>';
+                }
+                
+                // 4. DOM elements check
+                const domCheck = document.getElementById('dom-check');
+                domCheck.innerHTML = `
+                    <p>dashboard-screen: ${!!document.getElementById('dashboard-screen')}</p>
+                    <p>my-courses-grid: ${!!document.getElementById('my-courses-grid')}</p>
+                    <p>available-courses-grid: ${!!document.getElementById('available-courses-grid')}</p>
+                `;
+                
+            } else {
+                initStatus.innerHTML = '❌ Course app failed to initialize';
+                initStatus.style.color = 'red';
+            }
+        }
+        
+        // Wait for everything to load
+        window.addEventListener('load', function() {
+            setTimeout(debugCourses, 1000);
+        });
+        
+        // Also try when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(debugCourses, 500);
+        });
+    </script>
+</body>
+</html>
