@@ -11,6 +11,11 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     /* Events page specific navigation styles */
+    /* Ensure header doesn't block snowflakes */
+    header {
+      z-index: 100 !important;
+    }
+    
     /* === EVENTS PAGE STYLES === */
     .events-title {
       font-family: 'PassionOne','Lilita One', 'Signika', 'Huninn', Arial, sans-serif;
@@ -246,13 +251,13 @@
     /* Snowflakes Animation */
     .snowflakes {
       position: fixed;
-      top: 0;
+      top: -8vh;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: 130vh;
       pointer-events: none;
-      z-index: 10;
-      overflow: hidden;
+      z-index: 1000;
+      overflow: visible;
     }
 
     .snowflake {
@@ -261,16 +266,20 @@
       font-size: 2rem;
       animation: fall linear infinite;
       user-select: none;
+      will-change: transform;
     }
 
     @keyframes fall {
       0% {
-        transform: translateY(-10vh) rotate(0deg);
+        transform: translateY(-15vh) rotate(0deg);
+        opacity: 0.8;
+      }
+      10% {
         opacity: 1;
       }
       100% {
         transform: translateY(110vh) rotate(360deg);
-        opacity: 0.8;
+        opacity: 0;
       }
     }
 
@@ -294,6 +303,21 @@
     .snowflake:nth-child(18) { left: 95%; animation-duration: 10s; animation-delay: 3.4s; font-size: 3.0rem; }
     .snowflake:nth-child(19) { left: 5%; animation-duration: 8s; animation-delay: 3.6s; font-size: 3.3rem; }
     .snowflake:nth-child(20) { left: 12%; animation-duration: 12s; animation-delay: 3.8s; font-size: 2.8rem; }
+    .snowflake:nth-child(21) { left: 22%; animation-duration: 9s; animation-delay: 4.0s; font-size: 2.5rem; }
+    .snowflake:nth-child(22) { left: 33%; animation-duration: 11s; animation-delay: 4.2s; font-size: 2.9rem; }
+    .snowflake:nth-child(23) { left: 47%; animation-duration: 7s; animation-delay: 4.4s; font-size: 3.2rem; }
+    .snowflake:nth-child(24) { left: 58%; animation-duration: 13s; animation-delay: 4.6s; font-size: 2.1rem; }
+    .snowflake:nth-child(25) { left: 67%; animation-duration: 10s; animation-delay: 4.8s; font-size: 2.7rem; }
+    .snowflake:nth-child(26) { left: 78%; animation-duration: 8s; animation-delay: 5.0s; font-size: 3.1rem; }
+    .snowflake:nth-child(27) { left: 87%; animation-duration: 12s; animation-delay: 5.2s; font-size: 2.4rem; }
+    .snowflake:nth-child(28) { left: 93%; animation-duration: 9s; animation-delay: 5.4s; font-size: 2.8rem; }
+    .snowflake:nth-child(29) { left: 8%; animation-duration: 11s; animation-delay: 5.6s; font-size: 3.0rem; }
+    .snowflake:nth-child(30) { left: 18%; animation-duration: 7s; animation-delay: 5.8s; font-size: 2.6rem; }
+    .snowflake:nth-child(31) { left: 28%; animation-duration: 10s; animation-delay: 6.0s; font-size: 2.9rem; }
+    .snowflake:nth-child(32) { left: 38%; animation-duration: 13s; animation-delay: 6.2s; font-size: 2.3rem; }
+    .snowflake:nth-child(33) { left: 52%; animation-duration: 8s; animation-delay: 6.4s; font-size: 3.1rem; }
+    .snowflake:nth-child(34) { left: 62%; animation-duration: 11s; animation-delay: 6.6s; font-size: 2.5rem; }
+    .snowflake:nth-child(35) { left: 72%; animation-duration: 9s; animation-delay: 6.8s; font-size: 2.8rem; }
   </style>
 </head>
 <body class="events-page">
@@ -302,23 +326,38 @@
     <div class="snowflake">❄</div>
     <div class="snowflake">❅</div>
     <div class="snowflake">❆</div>
+    <div class="snowflake">✻</div>
+    <div class="snowflake">✼</div>
+    <div class="snowflake">❉</div>
+    <div class="snowflake">✱</div>
+    <div class="snowflake">✲</div>
+    <div class="snowflake">✳</div>
+    <div class="snowflake">✴</div>
+    <div class="snowflake">❋</div>
+    <div class="snowflake">✺</div>
+    <div class="snowflake">✹</div>
+    <div class="snowflake">✸</div>
+    <div class="snowflake">✷</div>
     <div class="snowflake">❄</div>
     <div class="snowflake">❅</div>
     <div class="snowflake">❆</div>
+    <div class="snowflake">✻</div>
+    <div class="snowflake">❉</div>
+    <div class="snowflake">✼</div>
+    <div class="snowflake">❋</div>
+    <div class="snowflake">✱</div>
+    <div class="snowflake">✲</div>
     <div class="snowflake">❄</div>
+    <div class="snowflake">✳</div>
     <div class="snowflake">❅</div>
+    <div class="snowflake">✴</div>
     <div class="snowflake">❆</div>
-    <div class="snowflake">❄</div>
-    <div class="snowflake">❅</div>
-    <div class="snowflake">❆</div>
-    <div class="snowflake">❄</div>
-    <div class="snowflake">❅</div>
-    <div class="snowflake">❆</div>
-    <div class="snowflake">❄</div>
-    <div class="snowflake">❅</div>
-    <div class="snowflake">❆</div>
-    <div class="snowflake">❄</div>
-    <div class="snowflake">❅</div>
+    <div class="snowflake">✺</div>
+    <div class="snowflake">✻</div>
+    <div class="snowflake">✹</div>
+    <div class="snowflake">❉</div>
+    <div class="snowflake">✸</div>
+    <div class="snowflake">✷</div>
   </div>
 
   <header>

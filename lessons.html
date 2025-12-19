@@ -331,23 +331,12 @@
             
             // Function to create lesson HTML
             function createLessonHTML(lesson) {
-              const isComingSoon = lesson.date === 'tba' || lesson.date === 'coming-soon';
-              const isComingJanuary = lesson.date === 'january-2025';
-              const comingSoonBadge = isComingSoon ? '<span class="coming-soon-badge">Coming Soon!</span>' : '';
-              const comingJanuaryBanner = isComingJanuary ? '<div class="coming-january-banner">Coming Soon in January</div>' : '';
-              
-              // Check if this is a 4-week series that has ended (only for upcoming section)
-              const isEndedSeries = (lesson.id === 'intensive-series' || lesson.id === '4week-series') && lesson.date === 'ongoing';
-              const seriesEndedBanner = isEndedSeries ? '<div class="series-ended-banner">Series Ended</div>' : '';
-              
+              // Removed all banner logic - no more "Coming Soon" banners
               const cardClass = getCardClass(lesson.type);
               
               return `
                 <a class="offer-card ${cardClass}" href="${lesson.link}" style="position:relative;overflow:hidden;background: url('${lesson.flyerUrl}') center center/cover no-repeat !important;">
                   <div class="lesson-button-label">${lesson.title}</div>
-                  ${comingSoonBadge}
-                  ${seriesEndedBanner}
-                  ${comingJanuaryBanner}
                 </a>
               `;
             }
