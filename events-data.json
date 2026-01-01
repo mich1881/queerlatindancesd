@@ -1,5 +1,15 @@
 {
   "upcoming": [
+         {
+      "id": "sep2025-banda",
+      "date": "2026-02-13",
+      "month": "FEB",
+      "day": "13",
+      "title": "QSS",
+      "flyerUrl": "images/eventpage/qssfeb2026flyer.png",
+      "inviteUrl": "https://partiful.com/e/1vrpFTS8VkpOghtuXWvT",
+      "description": "Join us for an exciting QSS!"
+    },
      {
       "id": "sep2025-banda",
       "date": "2025-12-19",

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 15px;
+            background: #007cba;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #005a8b;
+        }
+        .debug {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 3px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Panel Testing</h1>
+    
+    <div class="test-section">
+        <h3>Quick Test Steps</h3>
+        <ol>
+            <li>Sign in with any email (e.g., pb.petel26@gmail.com)</li>
+            <li>Create a test payment</li>
+            <li>Go to admin panel</li>
+            <li>Grant access to the payment</li>
+            <li>Verify the payment disappears from the list</li>
+        </ol>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Controls</h3>
+        <button onclick="openCourseApp()">Open Course App</button>
+        <button onclick="debugPayments()">Debug Payments</button>
+        <button onclick="clearPendingPayments()">Clear Payments</button>
+        <button onclick="createTestPayment()">Create Test Payment</button>
+        <button onclick="testGrantAccess()">Test Grant Access</button>
+    </div>
+    
+    <div class="test-section">
+        <h3>Debug Output</h3>
+        <div id="debug-output" class="debug">Click "Debug Payments" to see current state...</div>
+    </div>
+
+    <script>
+        function openCourseApp() {
+            window.open('courses.html', '_blank');
+        }
+        
+        function debugPayments() {
+            const pending = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
+            
+            const output = `PENDING PAYMENTS: ${pending.length}
+${JSON.stringify(pending, null, 2)}
+
+CURRENT USER:
+${JSON.stringify(currentUser, null, 2)}
+
+ALL USERS: ${Object.keys(users).length}
+${JSON.stringify(users, null, 2)}`;
+            
+            document.getElementById('debug-output').textContent = output;
+            console.log('🔍 DEBUG OUTPUT:', { pending, currentUser, users });
+        }
+        
+        function clearPendingPayments() {
+            localStorage.setItem('pendingPayments', '[]');
+            alert('Cleared all pending payments');
+            debugPayments();
+        }
+        
+        function createTestPayment() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if (!currentUser) {
+                alert('Please sign in first in the course app');
+                return;
+            }
+            
+            const userName = currentUser.name || currentUser.email.split('@')[0];
+            const testPayment = {
+                email: currentUser.email,
+                userEmail: currentUser.email,
+                firstName: userName.split(' ')[0] || 'Test',
+                lastName: userName.split(' ')[1] || 'Student',
+                name: userName,
+                courseName: 'Salsa Fundamentals',
+                series: 'Salsa Fundamentals',
+                courseId: 'salsa-fundamentals',
+                paymentMethod: 'Zelle',
+                method: 'Zelle',
+                timestamp: new Date().toISOString(),
+                status: 'demo-pending',
+                amount: 49,
+                price: 49
+            };
+            
+            const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
+            pendingPayments.push(testPayment);
+            localStorage.setItem('pendingPayments', JSON.stringify(pendingPayments));
+            
+            alert('Test payment created!');
+            debugPayments();
+        }
+        
+        function testGrantAccess() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if (!currentUser) {
+                alert('Please sign in first in the course app');
+                return;
+            }
+            
+            // Simulate granting access
+            const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
+            if (users[currentUser.email]) {
+                if (!users[currentUser.email].ownedCourses) {
+                    users[currentUser.email].ownedCourses = [];
+                }
+                if (!users[currentUser.email].ownedCourses.includes('salsa-fundamentals')) {
+                    users[currentUser.email].ownedCourses.push('salsa-fundamentals');
+                }
+                localStorage.setItem('QLDUsers', JSON.stringify(users));
+                
+                // Update current user
+                currentUser.ownedCourses = users[currentUser.email].ownedCourses;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Remove pending payments
+                const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
+                const updatedPayments = pendingPayments.filter(payment => {
+                    const paymentEmail = payment.email || payment.userEmail;
+                    const paymentCourse = payment.courseId;
+                    return !(paymentEmail === currentUser.email && paymentCourse === 'salsa-fundamentals');
+                });
+                localStorage.setItem('pendingPayments', JSON.stringify(updatedPayments));
+                
+                alert('Access granted! Pending payment should be removed.');
+                debugPayments();
+            }
+        }
+        
+        // Load debug info on page load
+        window.onload = () => {
+            debugPayments();
+        };
+    </script>
+</body>
+</html>

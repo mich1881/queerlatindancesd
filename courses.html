@@ -6,6 +6,9 @@
     <title>Queer Latin Dance - Online Courses</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="course-styles.css">
+    
+    <!-- 🛡️ COMPREHENSIVE SOURCE CODE PROTECTION -->
+    <script src="protection.js"></script>
 </head>
 <body>
     <div id="course-app">
@@ -33,7 +36,7 @@
                 
                 <!-- Login Form -->
                 <form id="login-form" class="auth-form">
-                    <h3>Welcome Back! 💃</h3>
+                    <h3>Welcome Back!</h3>
                     <div class="input-group">
                         <input type="email" id="login-email" placeholder="Email address" required>
                         <span class="input-icon">📧</span>
@@ -45,12 +48,13 @@
                     <button type="submit" class="auth-btn">Sign In</button>
                     <button type="button" class="demo-btn" onclick="window.demoLogin()">🎭 Quick Demo Login</button>
                     <button type="button" class="admin-demo-btn" onclick="window.adminDemoLogin()">⭐ Admin Demo Login</button>
+                    <button type="button" class="forgot-password-btn" onclick="window.forgotPassword()">🔑 Forgot Password?</button>
                     <p class="auth-note">Demo: Use any email and password to try it out!</p>
                 </form>
                 
                 <!-- Register Form -->
                 <form id="register-form" class="auth-form hidden">
-                    <h3>Join Our Dance Community! 🎉</h3>
+                    <h3>Join Our Dance Community!</h3>
                     <div class="input-group">
                         <input type="text" id="register-name" placeholder="Your full name" required>
                         <span class="input-icon">👤</span>
@@ -73,8 +77,8 @@
         <div id="dashboard-screen" class="screen hidden">
             <nav class="course-nav">
                 <div class="nav-left">
-                    <h2>🕺 Dance Academy</h2>
-                    <a href="index.html" class="back-link">← Back to Main Site</a>
+                    <h2>Online Dance Lessons</h2>
+                    <a href="lessons.html" class="back-link">← Back to Lessons</a>
                 </div>
                 <div class="nav-right">
                     <span id="user-welcome">Welcome!</span>
@@ -85,7 +89,7 @@
 
             <div class="dashboard-content">
                 <div class="welcome-hero">
-                    <h1>Welcome to Your Dance Journey! 💃🕺</h1>
+                    <h1>Welcome to Your Dance Journey</h1>
                     <p>Continue learning or explore new courses below</p>
                 </div>
 
@@ -270,10 +274,72 @@
                         <select id="admin-course-select">
                             <option value="">Select Course</option>
                             <option value="salsa-fundamentals">Salsa Fundamentals</option>
-                            <option value="bachata-sensual">Bachata Sensual</option>
+                            <option value="bachata-fundamentals">Bachata Fundamentals</option>
                             <option value="advanced-salsa">Advanced Salsa</option>
                         </select>
                         <button onclick="grantCourseAccess()" class="btn-grant">Grant Access</button>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h2>👥 User Management</h2>
+                    <p>Manage active subscriptions and monthly access</p>
+                    
+                    <div class="admin-actions">
+                        <button onclick="courseApp.loadAllUsers()" class="btn-refresh">
+                            🔄 Refresh Users
+                        </button>
+                        <button onclick="courseApp.checkExpiredSubscriptions()" class="btn-check">
+                            ⏰ Check Expired Access
+                        </button>
+                    </div>
+                    
+                    <div class="user-management-filters">
+                        <select id="userFilterStatus" onchange="courseApp.filterUsers()">
+                            <option value="all">All Users</option>
+                            <option value="active">Active Subscriptions</option>
+                            <option value="expired">Expired Access</option>
+                            <option value="never-purchased">Never Purchased</option>
+                        </select>
+                        <select id="userFilterCourse" onchange="courseApp.filterUsers()">
+                            <option value="all">All Courses</option>
+                            <option value="salsa-fundamentals">Salsa Fundamentals</option>
+                            <option value="bachata-fundamentals">Bachata Fundamentals</option>
+                            <option value="advanced-salsa">Advanced Salsa</option>
+                        </select>
+                    </div>
+                    
+                    <div id="userManagementList" class="users-list">
+                        <p class="loading">Loading users...</p>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h2>🧪 Testing Tools</h2>
+                    <p>Create test payments to see how grant access works</p>
+                    <div class="admin-form">
+                        <button onclick="courseApp.createSamplePayments()" class="btn-test">
+                            🧪 Create Clean Sample Payments
+                        </button>
+                        <button onclick="courseApp.removeDuplicatePayments(); courseApp.loadPendingPayments()" class="btn-test">
+                            🧹 Remove Duplicate Payments
+                        </button>
+                        <button onclick="courseApp.clearAllTestPayments()" class="btn-clear">
+                            🗑️ Clear All Test Payments
+                        </button>
+                        <button onclick="courseApp.clearAllUsers()" class="btn-clear" style="background-color: #d32f2f;">
+                            🗑️ Clear All Users
+                        </button>
+                    </div>
+                    <div class="testing-info">
+                        <p><strong>How to test:</strong></p>
+                        <ol>
+                            <li>Click "Create Test Payment" to add a fake payment request</li>
+                            <li>The payment will appear in the pending payments list above</li>
+                            <li>Click "Grant Access" on the payment card</li>
+                            <li>Watch the card fade out and disappear</li>
+                            <li>The user now has access to that course</li>
+                        </ol>
                     </div>
                 </div>
             </div>
@@ -323,6 +389,56 @@
             }
             return false;
         };
+
+        // Create test payment for admin testing (deprecated - use createSamplePayments instead)
+        window.createTestPayment = function(email, courseId, courseName, amount = 49) {
+            console.log('⚠️ createTestPayment is deprecated. Use courseApp.createSamplePayments() instead');
+            
+            // Remove any existing payments for this user/course first to prevent duplicates
+            const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
+            const cleanedPayments = pendingPayments.filter(payment => 
+                !((payment.email === email || payment.userEmail === email) && payment.courseId === courseId)
+            );
+            
+            const testPayment = {
+                id: Date.now() + Math.random(), // Unique ID
+                email: email,
+                userEmail: email,
+                firstName: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
+                lastName: 'Student',
+                name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1) + ' Student',
+                courseName: courseName,
+                series: courseName,
+                courseId: courseId,
+                paymentMethod: 'Zelle',
+                method: 'Zelle',
+                timestamp: new Date().toISOString(),
+                status: 'pending',
+                amount: amount,
+                price: amount
+            };
+            
+            cleanedPayments.push(testPayment);
+            localStorage.setItem('pendingPayments', JSON.stringify(cleanedPayments));
+            
+            console.log('✅ Test payment created:', testPayment);
+            
+            if (typeof courseApp !== 'undefined' && courseApp.loadPendingPayments) {
+                setTimeout(() => courseApp.loadPendingPayments(), 100);
+            }
+            
+            return testPayment;
+        };
+
+        // Clear all test payments
+        window.clearTestPayments = function() {
+            localStorage.removeItem('pendingPayments');
+            console.log('🧹 All test payments cleared');
+            
+            if (typeof courseApp !== 'undefined' && courseApp.loadPendingPayments) {
+                setTimeout(() => courseApp.loadPendingPayments(), 100);
+            }
+        };
     </script>
 
     <!-- Payment Overlay Modal -->
@@ -337,149 +453,3 @@
             
             <div class="payment-methods">
                 <!-- Order Summary -->
-                <div style="width:100%;background:#f9f9f9;border-radius:12px;padding:1.2em 1em 1em 1em;margin-bottom:1.2em;box-shadow:0 2px 8px #a259ff11;text-align:left;">
-                    <div style="font-size:1.18rem;font-weight:700;color:#444;margin-bottom:0.7em;">Order Summary</div>
-                    <div id="orderSummaryDetails" style="margin-bottom:0.5em;font-size:1.08rem;color:#222;font-weight:700;"></div>
-                    <div style="background:#fff;border-radius:8px;padding:0.7em 1em;margin-bottom:0.5em;">
-                        <div style="display:flex;justify-content:space-between;align-items:center;">
-                            <span>Total</span>
-                            <span id="orderSummaryTotal" style="font-weight:900;font-size:1.3rem;color:#222;"></span>
-                        </div>
-                        <div id="orderSummaryCalc" style="font-size:0.98rem;color:#888;"></div>
-                    </div>
-                </div>
-                
-                <!-- Payment Information -->
-                <div style="width:100%;background:#f9f9f9;border-radius:12px;padding:1.2em 1em 1em 1em;margin-bottom:1.2em;box-shadow:0 2px 8px #a259ff11;text-align:left;">
-                    <div style="font-size:1.18rem;font-weight:700;color:#444;margin-bottom:0.7em;">Payment Information</div>
-                    <div style="display:flex;flex-direction:column;gap:0.3em;margin-top:1.2em;">
-                        <div style="display:flex;flex-direction:column;align-items:center;gap:0.3em;">
-                            
-                            <a id="zelleBtn" href="#" class="choose-btn zelle">
-                                <span style="display:flex;align-items:center;gap:0.5em;"><img src="images/icons/zelleicon.png" alt="Zelle" style="height:1.0em;width:auto;max-width:1.2em;max-height:1.0em;vertical-align:middle;object-fit:contain;"/>Zelle</span><span class="no-fees-badge">No Fees</span>
-                            </a>
-                            
-                            <!-- Zelle Form -->
-                            <div id="zelleForm" class="payment-form">
-                                <h3>Zelle Payment Instructions</h3>
-                                <form id="zelleFormInner">
-                                    <div class="form-row">
-                                        <div class="form-col">
-                                            <label>First Name</label><br>
-                                            <input type="text" name="firstName" required class="form-input" />
-                                        </div>
-                                        <div class="form-col">
-                                            <label>Last Name</label><br>
-                                            <input type="text" name="lastName" required class="form-input" />
-                                        </div>
-                                    </div>
-                                    <label>Email</label><br><input type="email" name="email" required class="form-input form-input-full" /><br>
-                                    <label>Phone</label><br><input type="tel" name="phone" class="form-input form-input-full" /><br>
-                                    <label>Pronouns</label><br><input type="text" name="pronouns" class="form-input form-input-full" /><br>
-                                    <div class="modal-instructions zelle-instructions">
-                                        <b>Step 1:</b> Open your banking app and select Zelle.<br>
-                                        <b>Step 2:</b> Send payment to <b>michelle@queerlatindance.com</b><br>
-                                        <b>Step 3:</b> Enter the correct amount and include your email + course name in the memo.<br>
-                                        <b>Step 4:</b> Click below to confirm payment sent.
-                                    </div>
-                                    <button type="submit" class="modal-submit zelle-submit">Show Zelle Details</button>
-                                </form>
-                            </div>
-
-                            <button id="venmoBtn" type="button" class="choose-btn venmo">
-                                <span style="display:flex;align-items:center;gap:0.5em;"><img src="images/icons/venmoicon.png" alt="Venmo" style="height:1.0em;width:auto;max-width:1.2em;max-height:1.0em;vertical-align:middle;object-fit:contain;"/>Venmo</span><span class="no-fees-badge">No Fees</span>
-                            </button>
-                            
-                            <!-- Venmo Form -->
-                            <div id="venmoForm" class="payment-form">
-                                <h3>Venmo Payment Instructions</h3>
-                                <form id="venmoFormInner">
-                                    <div class="form-row">
-                                        <div class="form-col">
-                                            <label>First Name</label><br>
-                                            <input type="text" name="firstName" required class="form-input" />
-                                        </div>
-                                        <div class="form-col">
-                                            <label>Last Name</label><br>
-                                            <input type="text" name="lastName" required class="form-input" />
-                                        </div>
-                                    </div>
-                                    <label>Email</label><br><input type="email" name="email" required class="form-input form-input-full" /><br>
-                                    <label>Phone</label><br><input type="tel" name="phone" class="form-input form-input-full" /><br>
-                                    <label>Pronouns</label><br><input type="text" name="pronouns" class="form-input form-input-full" /><br>
-                                    <div class="modal-instructions venmo-instructions">
-                                        <b>Step 1:</b> Open Venmo app.<br>
-                                        <b>Step 2:</b> Send payment to <b>@QueerLatinDance</b>.<br>
-                                        <b>Step 3:</b> Enter the correct amount and include your email + course name in the note.<br>
-                                        <b>Step 4:</b> Click below to continue to Venmo.
-                                    </div>
-                                    <button type="submit" class="modal-submit venmo-submit">Continue to Venmo</button>
-                                </form>
-                            </div>
-
-                            <button id="stripeBtn" type="button" class="choose-btn stripe">
-                                <span style="display:flex;align-items:center;gap:0.5em;"><img src="images/icons/stripeicon.png" alt="Stripe" style="height:1.0em;width:auto;max-width:1.2em;max-height:1.0em;vertical-align:middle;object-fit:contain;"/>Stripe (Pay with Credit Card)</span>
-                            </button>
-
-                            <button id="paypalBtn" type="button" class="choose-btn paypal">
-                                <span style="display:flex;align-items:center;gap:0.5em;"><img src="images/icons/paypalicon.png" alt="PayPal" style="height:1.0em;width:auto;max-width:1.2em;max-height:1.0em;vertical-align:middle;object-fit:contain;"/>PayPal</span>
-                            </button>
-                            
-                            <!-- PayPal Form -->
-                            <div id="paypalForm" class="payment-form">
-                                <h3>PayPal Payment Instructions</h3>
-                                <form id="paypalFormInner">
-                                    <div class="form-row">
-                                        <div class="form-col">
-                                            <label>First Name</label><br>
-                                            <input type="text" name="firstName" required class="form-input" />
-                                        </div>
-                                        <div class="form-col">
-                                            <label>Last Name</label><br>
-                                            <input type="text" name="lastName" required class="form-input" />
-                                        </div>
-                                    </div>
-                                    <label>Email</label><br><input type="email" name="email" required class="form-input form-input-full" /><br>
-                                    <label>Phone</label><br><input type="tel" name="phone" class="form-input form-input-full" /><br>
-                                    <label>Pronouns</label><br><input type="text" name="pronouns" class="form-input form-input-full" /><br>
-                                    <div class="modal-instructions paypal-instructions">
-                                        <b>Step 1:</b> Click below to continue to PayPal.<br>
-                                        <b>Step 2:</b> Log in to PayPal (if prompted).<br>
-                                        <b>Step 3:</b> Confirm the amount and complete payment.<br>
-                                        <b>Step 4:</b> We will confirm your registration by email.
-                                    </div>
-                                    <button type="submit" class="modal-submit paypal-submit">Continue to PayPal</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="payment-note">After payment, you will receive a confirmation email along with course access.</div>
-                    <div class="payment-fee-note">
-                        <span class="payment-fee-highlight">Note: PayPal and Stripe charge processing fees. Zelle and Venmo are recommended for no-fee payments.</span>
-                    </div>
-                </div>
-                
-                <!-- Safe Checkout -->
-                <div style="width:100%;background:#fff;border-radius:12px;padding:1em 1em 1em 1em;margin-bottom:1.2em;box-shadow:0 2px 8px #a259ff11;text-align:center;">
-                    <div style="font-size:1.08rem;font-weight:700;color:#444;margin-bottom:0.7em;">GUARANTEED SAFE CHECKOUT</div>
-                    <div style="display:flex;align-items:center;justify-content:center;gap:1em;flex-wrap:wrap;">
-                        <span style="display:flex;align-items:center;gap:0.3em;background:#eaf6fa;padding:0.3em 0.7em;border-radius:8px;font-size:0.98rem;color:#2d9cdb;font-weight:700;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#6fcf97"/><path d="M17 8l-5.5 7L7 12" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-                            Authentic Guarantee
-                        </span>
-                        <img src="images/icons/visaicon.png" alt="Visa" style="height:24px;max-width:40px;object-fit:contain;" />
-                        <img src="images/icons/paypalicon.png" alt="PayPal" style="height:24px;max-width:40px;object-fit:contain;" />
-                        <img src="images/icons/amexicon.png" alt="Amex" style="height:24px;max-width:40px;object-fit:contain;" />
-                        <img src="images/icons/discovericon.png" alt="Discover" style="height:24px;max-width:40px;object-fit:contain;" />
-                    </div>
-                </div>
-            </div>
-            
-            <button type="button" class="payment-overlay-close" onclick="closePaymentOverlay()">
-                Close
-            </button>
-        </div>
-
-    </div>
-</body>
-</html>

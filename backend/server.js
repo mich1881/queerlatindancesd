@@ -40,6 +40,7 @@ app.post('/api/payment-form', async (req, res) => {
             email,
             phone,
             pronouns,
+            danceRole,
             paymentMethod,
             series,
             amount,

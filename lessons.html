@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 🛡️ SOURCE CODE PROTECTION -->
-  <script src="protection.js"></script>
-  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Class Offers | Queer Latin Dance SD</title>
@@ -49,12 +46,6 @@
   <div class="offers-row" id="coming-soon-lessons">
     <!-- Coming soon lessons will be loaded here -->
   </div>
-
-  <div class="lessons-title" id="previous-lessons-title" style="display: none;">Previous Lessons</div>
-  <div class="offers-row" id="previous-lessons">
-    <!-- Previous lessons will be loaded here -->
-  </div>
-  
   <style>
         @font-face {
   font-family: 'Cherry Bomb One';
@@ -62,13 +53,6 @@
   font-weight: normal;
   font-style: normal;
 }
-    .offer-card-bg3 {
-      background: url('images/eventpage/privateflyer.png') center center/cover no-repeat !important;
-      color: #fff;
-      position: relative;
-      box-shadow: 0 4px 24px #716cff22;
-      border: none;
-    }
     .offer-card-bg {
       background: url('images/lessons/4weekseries2.png') center center/cover no-repeat !important;
       color: #fff;
@@ -82,6 +66,13 @@
       border-radius: 10px;
       padding: 0.3em 0.7em;
       color: #fff;
+    }
+    .offer-card-bg3 {
+      background: url('images/eventpage/privateflyer.png') center center/cover no-repeat !important;
+      color: #fff;
+      position: relative;
+      box-shadow: 0 4px 24px #716cff22;
+      border: none;
     }
         .offer-card-bg4 {
       background: url('images/lessons/onlinelessonscover.png') center center/cover no-repeat !important;
@@ -153,23 +144,6 @@
       z-index: 2;
       transition: all 0.3s ease;
       white-space: nowrap;
-    }    
-    .coming-january-banner {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-52deg);
-      background: #13c43c;
-      color: #ffffff;
-      padding: 0.5rem 6rem;
-      font-family: 'Nunito', Arial, sans-serif;
-      font-weight: 1000;
-      font-size: 0.9rem;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-      z-index: 10;
-      white-space: nowrap;
-      width: 160%;
     }
     
     .offer-card:hover .lesson-button-label {
@@ -277,8 +251,6 @@
   }
 }
   </style>
-</section>
-  
   <footer class="footer">
       <div class="footer-bottom">
         <div class="footer-newsletter">
@@ -321,22 +293,21 @@
             
             const upcomingLessons = document.getElementById('upcoming-lessons');
             const comingSoonLessons = document.getElementById('coming-soon-lessons');
-            const previousLessons = document.getElementById('previous-lessons');
-            const previousLessonsTitle = document.getElementById('previous-lessons-title');
             
             // Clear existing content
             upcomingLessons.innerHTML = '';
             comingSoonLessons.innerHTML = '';
-            previousLessons.innerHTML = '';
             
             // Function to create lesson HTML
             function createLessonHTML(lesson) {
-              // Removed all banner logic - no more "Coming Soon" banners
+              const isComingSoon = lesson.date === 'tba' || lesson.date === 'coming-soon';
+              const comingSoonBadge = isComingSoon ? '<span class="coming-soon-badge">Coming Soon!</span>' : '';
               const cardClass = getCardClass(lesson.type);
               
               return `
                 <a class="offer-card ${cardClass}" href="${lesson.link}" style="position:relative;overflow:hidden;background: url('${lesson.flyerUrl}') center center/cover no-repeat !important;">
                   <div class="lesson-button-label">${lesson.title}</div>
+                  ${comingSoonBadge}
                 </a>
               `;
             }
@@ -347,13 +318,11 @@
                 case 'dropin':
                   return 'offer-card-bg-dropin';
                 case 'series':
-                  return 'offer-card-bg'; 
+                  return 'offer-card-bg';
                 case 'private':
                   return 'offer-card-bg3';
                 case 'online':
                   return 'offer-card-bg4';
-                case 'series-new':
-                  return 'offer-card-bg-new';
                 default:
                   return 'offer-card-bg';
               }
@@ -368,16 +337,6 @@
             lessonsData.coming_soon.forEach(lesson => {
               comingSoonLessons.innerHTML += createLessonHTML(lesson);
             });
-            
-            // Load previous lessons
-            if (lessonsData.previous && lessonsData.previous.length > 0) {
-              previousLessonsTitle.style.display = 'block';
-              lessonsData.previous.forEach(lesson => {
-                previousLessons.innerHTML += createLessonHTML(lesson);
-              });
-            } else {
-              previousLessonsTitle.style.display = 'none';
-            }
             
           } catch (error) {
             console.error('Error loading lessons:', error);
