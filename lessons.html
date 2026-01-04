@@ -250,6 +250,30 @@
     box-shadow: none;
   }
 }
+.lesson-banner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #ff6b6b 0%, #716cff 100%);
+  color: #fff;
+  font-family: 'Nunito', Arial, sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 0.7em 0.2em;
+  z-index: 3;
+  letter-spacing: 1px;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 -2px 8px #716cff33;
+}
+@media (max-width: 768px) {
+  .lesson-banner {
+    font-size: 1rem;
+    padding: 0.6em 0.1em;
+    border-radius: 0;
+  }
+}
   </style>
   <footer class="footer">
       <div class="footer-bottom">
@@ -303,11 +327,12 @@
               const isComingSoon = lesson.date === 'tba' || lesson.date === 'coming-soon';
               const comingSoonBadge = isComingSoon ? '<span class="coming-soon-badge">Coming Soon!</span>' : '';
               const cardClass = getCardClass(lesson.type);
-              
+              const bannerHtml = lesson.banner ? `<div class="lesson-banner">${lesson.banner}</div>` : '';
               return `
                 <a class="offer-card ${cardClass}" href="${lesson.link}" style="position:relative;overflow:hidden;background: url('${lesson.flyerUrl}') center center/cover no-repeat !important;">
                   <div class="lesson-button-label">${lesson.title}</div>
                   ${comingSoonBadge}
+                  ${bannerHtml}
                 </a>
               `;
             }
