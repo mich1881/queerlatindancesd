@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 🛡️ SOURCE CODE PROTECTION - Load FIRST -->
-  <!-- Build: Jan 4, 2026 --> 
-  <script src="protection.js"></script>
-  
   <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;700&display=swap" rel="stylesheet">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -240,14 +236,6 @@
 .faq-title h2 span {
   display: block;
 }
-.read-more-link {
-  color: #716cff;
-  cursor: pointer;
-  font-size: 0.95em;
-  text-decoration: underline;
-  margin-top: 0.5em;
-  display: inline-block;
-}
 
 /* Mobile responsive styles */
 @media (max-width: 768px) {
@@ -281,10 +269,6 @@
   .faq-answer p {
     padding: 1rem;
   }
-  
-  .testimonial-arrow {
-    display: none !important;
-  }
 }
 
 /* === MISSION & ABOUT STYLES === */
@@ -301,32 +285,89 @@
 /* --- Mission Card Section --- */
 .mission-text {
   font-family: 'Nunito', Arial, sans-serif;
-  font-size: 1.1rem;
-  color: #5c2ca9;
+  font-size: 1.0rem;
+  color: #ffffff;
   text-align: center;
-  font-weight: 400;
+  font-weight: 100;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
   line-height: 1.6;
-  max-width: 800px;
 }
 .mission-card {
-  max-width: 1200px;
+  max-width: 1800px;
   height: auto;
+  min-height: 600px;
   margin: 2.5rem auto;
-  padding: 2rem;
+  padding: 4rem 2rem;
+  position: relative;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  opacity: 1;
 }
-
+.mission-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('images/SalsaSunsets/qssjun14.png') center center/cover no-repeat;
+  opacity: 0.83;
+  mask: 
+    linear-gradient(to right, transparent 0%, black 8%, #6825e3 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 8%, #6825e3 92%, transparent 100%);
+  -webkit-mask: 
+    linear-gradient(to right, transparent 0%, black 8%, rgb(104, 37, 227) 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 8%, #6825e3 92%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+  pointer-events: none;
+  z-index: -2;
+}
+.mission-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(45, 25, 85, 0.4);
+  pointer-events: none;
+  z-index: -1;
+}
+.mission-card h1, .mission-card h2 {
+  font-family: 'PassionOne','Lilita One','Signika',Arial,sans-serif;
+  font-size: 4.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 3px 3px 8px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.8);
+  position: relative;
+  z-index: 1;
+  text-transform: uppercase;
+}
 .mission-logo {
   max-width: 300px;
   height: auto;
   display: block;
   margin: 0 auto 1.5rem auto;
+  position: relative;
+  z-index: 10;
+}
+.mission-card p {
+  font-size: 1.2rem;
+  color: #C4F9CA;
+  text-align: left;
+  margin: 0 auto 1.2rem auto;
+  font-family: 'Nunito', Arial, sans-serif;
+  text-shadow: 2px 2px 4px rgb(0, 0, 0), 1px 1px 2px rgba(0,0,0,0.7);
+  position: relative;
 }
 /* === SALSA HISTORY SECTION === */
 .salsa-history-section {
@@ -414,8 +455,8 @@
 /* === RESPONSIVE STYLES === */
 @media (max-width: 900px) {
   .hero-content .hero-logo {
-    width: 500px;
-    max-width: 95vw;
+    width: 350px;
+    max-width: 85vw;
     margin: 2rem 0;
     top: 1.2rem;
   }
@@ -459,8 +500,8 @@
     border-radius: 20px;
   }
   .hero-content .hero-logo {
-    width: 380px;
-    max-width: 95vw;
+    width: 280px;
+    max-width: 90vw;
     margin: 1.5rem 0;
     top: 0.2rem;
   }
@@ -562,315 +603,14 @@
   .newspaper-columns .column p {
     text-align: justify;
   }
-}
-
-/* === TESTIMONIAL SECTION STYLES === */
-.testimonial-flex {
-  margin: 3rem 0;
-  padding: 2rem 1rem;
-  background: linear-gradient(135deg, #f8f4ff 0%, #e8d8ff 100%);
-  border-radius: 20px;
-  max-width: 1200px;
-  margin: 3rem auto;
-}
-
-.testimonial-content {
-  text-align: center;
-}
-
-.testimonial-logo {
-  max-width: 600px;
-  width: 100%;
-  height: auto;
-  margin: 0 auto 2rem auto;
-  display: block;
-}
-
-.testimonial-cards-container {
-  display: flex;
-  gap: 2rem;
-  max-width: 1000px;
-  margin: 2rem auto 0 auto;
-  padding: 0 1rem;
-  align-items: stretch; /* Ensure all cards are same height */
-}
-
-.testimonial-card {
-  background: #ffffff;
-  border-radius: 15px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(113, 108, 255, 0.15);
-  border: 2px solid #e8d8ff;
-  transition: all 0.3s ease;
+  .mission-card p {
+  font-size: 1.2rem;
+  color: #C4F9CA;
+  text-align: justify;
+  margin: 0 auto 1.2rem auto;
+  font-family: 'Nunito', Arial, sans-serif;
   position: relative;
-  flex: 1 1 0;
-  min-width: 0;
-  max-width: 480px;
-  min-height: 320px; /* Ensures all cards have the same minimum height */
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: stretch; /* Ensures content stretches to fill card */
 }
-
-.testimonial-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(113, 108, 255, 0.25);
-  border-color: #b57edc;
-}
-
-.testimonial-card::before {
-  content: '"';
-  position: absolute;
-  top: -10px;
-  left: 15px;
-  font-size: 3rem;
-  color: #716cff;
-  font-family: 'PassionOne', Arial, sans-serif;
-  line-height: 1;
-}
-
-.testimonial-text {
-  font-family: 'Nunito', Arial, sans-serif;
-  font-size: 1rem;
-  color: #4a4a4a;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  text-align: left;
-  padding-top: 0.5rem;
-}
-
-.testimonial-author {
-  font-family: 'Nunito', Arial, sans-serif;
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: #716cff;
-  text-align: right;
-  font-style: italic;
-}
-
-/* Mobile responsive for testimonials */
-@media (max-width: 768px) {
-  .testimonial-cards-container {
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 0 0.5rem;
-    max-width: 100%;
-    max-height: 660px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #716cff #e8d8ff;
-  }
-  .testimonial-card {
-    padding: 1.25rem;
-    max-width: 100%;
-    overflow: visible;
-    box-sizing: border-box;
-    height: auto !important;
-    min-height: unset !important;
-  }
-  .testimonial-arrow {
-    display: none !important;
-  }
-}
-
-/* === TESTIMONIAL FORM STYLES === */
-.submit-testimonial-container {
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.submit-testimonial-btn {
-  background: linear-gradient(135deg, #716cff 0%, #a259ff 100%);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 25px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(113, 108, 255, 0.3);
-}
-
-.submit-testimonial-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(113, 108, 255, 0.4);
-}
-
-.testimonial-form-container {
-  max-width: 600px;
-  margin: 2rem auto 0 auto;
-  padding: 0 1rem;
-  transition: all 0.3s ease;
-}
-
-.testimonial-form-container.hidden {
-  display: none;
-}
-
-.testimonial-form {
-  background: #ffffff;
-  border-radius: 15px;
-  padding: 2rem;
-  box-shadow: 0 8px 30px rgba(113, 108, 255, 0.15);
-  border: 2px solid #e8d8ff;
-}
-
-.testimonial-form h3 {
-  color: #716cff;
-  margin-bottom: 0.5rem;
-  font-family: 'Nunito', Arial, sans-serif;
-  font-size: 1.5rem;
-}
-
-.form-description {
-  color: #666;
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
-}
-
-.form-group {
-  margin-bottom: 1.2rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #333;
-  font-weight: 600;
-  font-family: 'Nunito', Arial, sans-serif;
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border: 2px solid #e8d8ff;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-family: 'Nunito', Arial, sans-serif;
-  transition: border-color 0.3s ease;
-  box-sizing: border-box;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: #716cff;
-  box-shadow: 0 0 0 3px rgba(113, 108, 255, 0.1);
-}
-
-.form-group textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-.form-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 1.5rem;
-}
-
-.submit-btn {
-  background: #716cff;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.submit-btn:hover {
-  background: #5a4fff;
-  transform: translateY(-1px);
-}
-
-.cancel-btn {
-  background: #f8f9fa;
-  color: #666;
-  border: 2px solid #e8d8ff;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.cancel-btn:hover {
-  background: #e8d8ff;
-  color: #333;
-}
-
-/* Mobile responsive for testimonial form */
-@media (max-width: 768px) {
-  .testimonial-form {
-    padding: 1.5rem;
-    margin: 0 0.5rem;
-  }
-  
-  .form-actions {
-    flex-direction: column;
-  }
-  
-  .submit-testimonial-btn {
-    padding: 0.75rem 1.25rem;
-    font-size: 0.95rem;
-  }
-}
-
-.testimonial-arrow {
-  background: #716cff;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  font-size: 2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1.1;
-  vertical-align: middle;
-  position: relative;
-  top: 2px; /* Slightly shifts arrow lower for better centering */
-}
-
-/* Dropdown styles for navigation */
-.nav-dropdown {
-  position: relative;
-  display: inline-block;
-}
-.nav-dropdown .dropdown-menu {
-  display: none;
-  position: absolute;
-  left: 0;
-  right: auto;
-  margin-left: -60px;
-  background: #fff;
-  min-width: 160px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-  z-index: 1000;
-}
-.nav-dropdown:hover .dropdown-menu,
-.nav-dropdown:focus-within .dropdown-menu {
-  display: block;
-}
-.nav-dropdown .dropdown-menu a {
-  color: #333;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-.nav-dropdown .dropdown-menu a:hover {
-  background: #f1f1f1;
 }
 
   </style>
@@ -883,18 +623,11 @@
   </a>
   <!-- Desktop Navigation -->
   <nav>
-    <a href="team.html">Team</a>
+    <a href="about.html">About</a>
     <a href="Events.html">Events</a>
     <a href="gallery.html">Gallery</a> 
     <a href="directory.html">Directory</a>
     <a href="lessons.html">Lessons</a>
-    <div class="nav-dropdown">
-      <a href="#" class="dropdown-toggle">Book Us</a>
-      <div class="dropdown-menu">
-        <a href="workshops.html">Workshops</a>
-        <a href="corporate-events.html">Corporate Events</a>
-      </div>
-    </div>
   </nav>
   
   <!-- Mobile Navigation Toggle -->
@@ -908,34 +641,24 @@
 <!-- Mobile Navigation Menu -->
 <div class="mobile-nav-menu">
   <nav>
-    <a href="team.html">Team</a>
+    <a href="about.html">About</a>
     <a href="Events.html">Events</a>
     <a href="gallery.html">Gallery</a>
     <a href="directory.html">Directory</a>
     <a href="lessons.html">Lessons</a>
-    <div class="nav-dropdown">
-      <a href="#" class="dropdown-toggle">Book Us</a>
-      <div class="dropdown-menu">
-        <a href="weddings.html">Weddings</a>
-        <a href="corporate-events.html">Corporate Events</a>
-      </div>
-    </div>
   </nav>
 </div>
 <main>
   <section class="hero-flex">
     <div class="hero-content">
-      <img src="images/home/qldsdlogo2.png" alt="Queer Latin Dance SD - Celebrates Your Identity in Every Step" class="hero-logo" />
-      <p class="mission"></p>
+      <img src="images/home/qldsdlogo.png" alt="Queer Latin Dance SD - Celebrates Your Identity in Every Step" class="hero-logo" />
+      <p class="mission">Queer Latin Dance is building community through dance. Lead, Follow, Switch, and Celebrate!</p>
       <a href="Events.html" class="cta-btn">See Upcoming Events</a>
     </div>
     <section id="photoGallery">
       <div class="swipe-gallery">
         <img src="images/home/photo1.png" alt="Sun Dance Day Fest 1" class="swipe-img faded-img active" />
-        <img src="images/4weekseries1/IMG_0507.jpg" alt="Sun Dance Day Fest 5" class="swipe-img faded-img" />
         <img src="images/home/photo2.png" alt="Sun Dance Day Fest 2" class="swipe-img faded-img" />
-        <img src="images/4weekseries1/IMG_0506.jpg" alt="Sun Dance Day Fest 6" class="swipe-img faded-img" />
-        <img src="images/Queer Salsa Social/IMG_0400.jpg" alt="Sun Dance Day Fest 7" class="swipe-img faded-img" />
         <img src="images/Michelle1.jpeg" alt="Group Hug" class="swipe-img faded-img" />
         <img src="images/home/photo3.png" alt="Sun Dance Day Fest 3" class="swipe-img faded-img" />
         <img src="images/home/photo4.png" alt="Sun Dance Day Fest 4" class="swipe-img faded-img" />
@@ -969,46 +692,7 @@
     </div>
   </div>
 </section>
-<!-- Testimonials Section -->
-<section class="testimonial-flex">
-  <div class="testimonial-content">
-    <img src="images/home/Testimonials1.png" alt="Queer Latin Dance SD - Celebrates Your Identity in Every Step" class="testimonial-logo" />
-    <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
-      <button id="testimonial-left" class="testimonial-arrow" aria-label="Previous testimonials" style="background:#716cff;color:#fff;border:none;border-radius:50%;width:40px;height:40px;font-size:2rem;cursor:pointer;">&lt;</button>
-      <div class="testimonial-cards-container" id="testimonialCards" style="width:100%;max-width:1000px;display:flex;gap:2rem;"></div>
-      <button id="testimonial-right" class="testimonial-arrow" aria-label="Next testimonials" style="background:#716cff;color:#fff;border:none;border-radius:50%;width:40px;height:40px;font-size:2rem;cursor:pointer;">&gt;</button>
-    </div>
-    <!-- Submit Testimonial Button -->
-    <div class="submit-testimonial-container">
-      <button class="submit-testimonial-btn" onclick="toggleTestimonialForm()">
-        Submit Your Testimonial
-      </button>
-    </div>
-    
-    <!-- Testimonial Submission Form (Hidden by default) -->
-    <div class="testimonial-form-container hidden" id="testimonialForm">
-      <form class="testimonial-form" onsubmit="submitTestimonial(event)">
-        <h3>Share Your Experience!</h3>
-        <div class="form-group">
-          <input type="text" id="testimonialName" name="name" required placeholder="Your Name">
-        </div>
-        
-        <div class="form-group">
-          <input type="email" id="testimonialEmail" name="email" placeholder="Email Address">
-        </div>
-        
-        <div class="form-group">
-          <textarea id="testimonialText" name="testimonial" required placeholder="Tell us about your experience with our classes, events, or community..." rows="4"></textarea>
-        </div>
-        
-        <div class="form-actions">
-          <button type="submit" class="submit-btn">Submit</button>
-          <button type="button" class="cancel-btn" onclick="toggleTestimonialForm()">Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
+
 <!-- FAQ Section -->
 <section class="faq-section">
   <div class="faq-container">
@@ -1088,6 +772,20 @@
     &nbsp;  &nbsp;Where words leave off, music begins...&nbsp;  &nbsp; ¡Vamos a Bailar! &nbsp;  &nbsp;Let's Dance!&nbsp;
   </span>
 </div>
+<section class="our-mission-section">
+  <div class="mission-card">
+    <img src="images/home/missionlogo.png" alt="Our Mission" class="mission-logo" />
+    <p class="mission-text">
+      Queer Latin Dance SD is a community-centered space for queer folks to connect, learn, and
+celebrate Latin dance and its rich cultural roots. We are committed to degendering dance by
+empowering everyone to lead, follow, or switch, regardless of gender. Our monthly donation
+based socials welcome all levels, no partner or experience needed. Inspired by other queer
+Latin dance communities, Michelle founded QLDSD with a vision for a growing community
+where members can build connections within themselves and with each other through
+dance.
+    </p>
+  </div>
+</section>
     <section class="salsa-history-section">
       <div class="history-header">
         <img src="images/home/historylogo.png" alt="The Vibrant History of Salsa" class="history-logo" />
@@ -1138,30 +836,17 @@
         </div>
       </div>
     </section>
-<section class="our-mission-section">
-  <div class="mission-card">
-    <img src="images/home/missionlogo.png" alt="Our Mission" class="mission-logo" />
-    <p class="mission-text">
-      Queer Latin Dance SD is a community-centered space for queer folks to connect, learn, and
-celebrate Latin dance and its rich cultural roots. We are committed to degendering dance by
-empowering everyone to lead, follow, or switch, regardless of gender. Our monthly donation
-based socials welcome all levels, no partner or experience needed. Inspired by other queer
-Latin dance communities, Michelle founded QLDSD with a vision for a growing community
-where members can build connections within themselves and with each other through
-dance.
-    </p>
-  </div>
-</section>
+
    <footer class="footer">
       <div class="footer-bottom">
         <div class="footer-newsletter">
           <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
-          <form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec">
-            <input type="email" name="email" placeholder="Enter your email ..." required autocomplete="email">
+          <form>
+            <input type="email" placeholder="Enter your email ..." required>
             <button type="submit">Subscribe</button>
           </form>
           <div class="footer-links">
-            <a href="team.html">Team</a>
+            <a href="about.html">About</a>
             <a href="Events.html">Events</a>
             <a href="gallery.html">Gallery</a>
             <a href="directory.html">Directory</a>
@@ -1184,8 +869,28 @@ dance.
         </div>
       </div>
     </footer>
+
+  <script src="script.js"></script>
 <script>
-  // Newsletter gallery swipe functionality
+document.querySelector('.footer-newsletter form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = this;
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    mode: 'no-cors'
+  })
+  .then(() => {
+    alert('Success! You have subscribed to the newsletter.');
+    form.reset();
+  })
+  .catch(() => {
+    alert('There was an error. Please try again.');
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
   const newsletterGallery = document.querySelector('.newsletter-swipe-gallery');
   if (newsletterGallery) {
     const images = newsletterGallery.querySelectorAll('.swipe-img');
@@ -1242,25 +947,9 @@ dance.
 
     startAutoSwipe();
   }
-
-// Newsletter form submissions
-document.querySelector('.footer-newsletter form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const form = this;
-  fetch(form.action, {
-    method: 'POST',
-    body: new FormData(form),
-    mode: 'no-cors'
-  })
-  .then(() => {
-    alert('Success! You have subscribed to the newsletter.');
-    form.reset();
-  })
-  .catch(() => {
-    alert('There was an error. Please try again.');
-  });
 });
-
+</script>
+<script>
 document.querySelector('.newsletter-subscribe form').addEventListener('submit', function(e) {
   e.preventDefault();
   const form = this;
@@ -1277,113 +966,6 @@ document.querySelector('.newsletter-subscribe form').addEventListener('submit', 
     alert('There was an error. Please try again.');
   });
 });
-fetch('testimonials.json')
-  .then(response => response.json())
-  .then(testimonials => {
-    const container = document.getElementById('testimonialCards');
-    if (!container) return;
-    let currentIndex = 0;
-    const cardsPerScroll = 2;
-    function isMobile() {
-      return window.innerWidth <= 768;
-    }
-    function render() {
-      container.innerHTML = '';
-      if (isMobile()) {
-        // Show ALL testimonials on mobile
-        testimonials.forEach((t, i) => {
-          const words = t.text.split(' ');
-          const card = document.createElement('div');
-          card.className = 'testimonial-card';
-          if (words.length > 75) {
-            const shortText = words.slice(0, 75).join(' ') + '...';
-            card.innerHTML = `
-              <div class="testimonial-text" id="testimonial-text-${i}" 
-                   data-full="${encodeURIComponent(t.text)}"
-                   data-short="${encodeURIComponent(shortText)}">
-                "${shortText}"
-              </div>
-              <div class="testimonial-author">- ${t.author}</div>
-              <a href="#" class="read-more-link" data-idx="${i}">Read more</a>
-            `;
-          } else {
-            card.innerHTML = `
-              <div class="testimonial-text">
-                "${t.text}"
-              </div>
-              <div class="testimonial-author">- ${t.author}</div>
-            `;
-          }
-          container.appendChild(card);
-        });
-      } else {
-        // Desktop: show 2 at a time
-        let showCount = Math.min(cardsPerScroll, testimonials.length - currentIndex);
-        for (let i = currentIndex; i < currentIndex + showCount; i++) {
-          const t = testimonials[i];
-          const words = t.text.split(' ');
-          const card = document.createElement('div');
-          card.className = 'testimonial-card';
-          if (words.length > 75) {
-            const shortText = words.slice(0, 75).join(' ') + '...';
-            card.innerHTML = `
-              <div class="testimonial-text" id="testimonial-text-${i}" 
-                   data-full="${encodeURIComponent(t.text)}"
-                   data-short="${encodeURIComponent(shortText)}">
-                "${shortText}"
-              </div>
-              <div class="testimonial-author">- ${t.author}</div>
-              <a href="#" class="read-more-link" data-idx="${i}">Read more</a>
-            `;
-          } else {
-            card.innerHTML = `
-              <div class="testimonial-text">
-                "${t.text}"
-              </div>
-              <div class="testimonial-author">- ${t.author}</div>
-            `;
-          }
-          container.appendChild(card);
-        }
-      }
-      // Attach read more/less toggle
-      container.querySelectorAll('.read-more-link').forEach(link => {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          const idx = this.getAttribute('data-idx');
-          const textDiv = document.getElementById('testimonial-text-' + idx);
-          const fullText = decodeURIComponent(textDiv.getAttribute('data-full'));
-          const shortText = decodeURIComponent(textDiv.getAttribute('data-short'));
-          if (this.textContent === 'Read more') {
-            textDiv.textContent = '"' + fullText + '"';
-            this.textContent = 'Read less';
-          } else {
-            textDiv.textContent = '"' + shortText + '"';
-            this.textContent = 'Read more';
-          }
-        });
-      });
-      // Remove any leftover toggle button
-      const toggleBtn = document.getElementById('testimonial-toggle-btn');
-      if (toggleBtn) toggleBtn.remove();
-    }
-    render();
-    window.addEventListener('resize', render);
-    document.getElementById('testimonial-left').addEventListener('click', function() {
-      if (!isMobile()) {
-        currentIndex = Math.max(0, currentIndex - cardsPerScroll);
-        render();
-      }
-    });
-    document.getElementById('testimonial-right').addEventListener('click', function() {
-      if (!isMobile()) {
-        if (currentIndex + cardsPerScroll < testimonials.length) {
-          currentIndex += cardsPerScroll;
-          render();
-        }
-      }
-    });
-  });
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -1406,6 +988,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+
 <script>
 // FAQ Toggle functionality
 function toggleFAQ(button) {
@@ -1431,54 +1014,7 @@ document.addEventListener('click', function(e) {
     });
   }
 });
-
-// Testimonial form functionality
-function toggleTestimonialForm() {
-  const form = document.getElementById('testimonialForm');
-  form.classList.toggle('hidden');
-}
-
-function submitTestimonial(event) {
-  event.preventDefault();
-  
-  const form = event.target;
-  const formData = new FormData(form);
-  
-  // Show loading state
-  const submitBtn = form.querySelector('.submit-btn');
-  const originalText = submitBtn.textContent;
-  submitBtn.textContent = 'Submitting...';
-  submitBtn.disabled = true;
-  
-  // Debug: Log the form data being sent
-  console.log('Sending testimonial data:', {
-    name: formData.get('name'),
-    email: formData.get('email'), 
-    testimonial: formData.get('testimonial')
-  });
-  
-  // Submit testimonial to Google Apps Script
-  fetch('https://script.google.com/macros/s/AKfycbzw7OClMYLeOySm-hAaDOYpblXjxaJQHK6P1LdBjsc2DHakEvmOsh4hiRknSGC6Kduawg/exec', {
-    method: 'POST',
-    body: formData,
-    mode: 'no-cors'
-  })
-  .then(() => {
-    // With no-cors mode, we can't check response status, so assume success
-    alert('Thank you! Your testimonial has been submitted successfully. We appreciate your feedback!');
-    form.reset();
-    toggleTestimonialForm();
-  })
-  .catch((error) => {
-    console.error('Full error details:', error);
-    alert('There was an error submitting your testimonial: ' + error.message + '. Please try again or contact us directly.');
-  })
-  .finally(() => {
-    submitBtn.textContent = originalText;
-    submitBtn.disabled = false;
-  });
-}
 </script>
-<script src="script.js"></script>
+
 </body>
 </html>
