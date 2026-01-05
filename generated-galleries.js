@@ -63,6 +63,27 @@ const generatedGalleries = {
       "images/4weekseries1/IMG_0370.png"
     ],
     'queersalsasocial': [
+      "images/Queer Salsa Social/IMG_0707.png",
+      "images/Queer Salsa Social/IMG_0711.png",
+      "images/Queer Salsa Social/IMG_0706.png",
+      "images/Queer Salsa Social/IMG_0712.png",
+      "images/Queer Salsa Social/IMG_0713.png",
+      "images/Queer Salsa Social/IMG_0714.png",
+      "images/Queer Salsa Social/IMG_0715.png",
+      "images/Queer Salsa Social/IMG_0717.png",
+      "images/Queer Salsa Social/IMG_0728.png",
+      "images/Queer Salsa Social/IMG_0729.png",
+      "images/Queer Salsa Social/IMG_0730.png",
+      "images/Queer Salsa Social/IMG_0733.png",
+      "images/Queer Salsa Social/IMG_0734.png",
+      "images/Queer Salsa Social/IMG_0735.png",
+      "images/Queer Salsa Social/IMG_0736.png",
+      "images/Queer Salsa Social/IMG_0739.png",
+      "images/Queer Salsa Social/IMG_0740.png",
+      "images/Queer Salsa Social/IMG_0744.png",
+      "images/Queer Salsa Social/IMG_0747.png",
+      "images/Queer Salsa Social/IMG_0748.png",
+      "images/Queer Salsa Social/IMG_0749.png",
       "images/Queer Salsa Social/IMG_0400.jpg",
       "images/Queer Salsa Social/IMG_0399.jpg",
       "images/Queer Salsa Social/IMG_0398.jpg",
@@ -74,7 +95,7 @@ const generatedGalleries = {
       "images/Queer Salsa Social/IMG_0392.jpg",
       "images/Queer Salsa Social/IMG_0391.jpg",
       "images/Queer Salsa Social/IMG_0390.jpg",
-      "images/Queer Salsa Social/IMG_0280.PNG"
+      "images/Queer Salsa Social/IMG_0280.png"
     ],
     'workshops': [
       "images/SoberPrideRecap/Michelle_PridePic.png",

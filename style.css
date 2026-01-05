@@ -275,10 +275,10 @@ textarea {
 /* === HEADER & NAVIGATION === */
 header {
   background: linear-gradient(
-    90deg,
+    95deg,
     #fb87f12e 20%,
-    #9751f264 60%,
-    rgba(220, 139, 255, 0.433) 100%
+    #320a66e7 60%,
+    rgba(149, 78, 179, 0.927) 100%
   );
   display: flex;
   align-items: center;
@@ -314,31 +314,6 @@ header h1 {
   margin: .3rem 0;
   height: auto;
   padding: 0;
-}
-
-
-nav {
-  margin: 0;
-  padding: 0;
-  flex: 1;
-  text-align: right;
-  display: flex;
-  gap: 0.6rem;
-  justify-content: flex-end;
-  align-items: center;
-}
-nav a {
-  color: rgb(167, 36, 255);
-  font-size:1.1rem;
-  margin: 0 0.3rem;
-  text-decoration: none;
-  font-weight: 800;
-  vertical-align: middle;
-  padding: 0;
-}
-nav a:hover {
-  color: #ffffff;
-  transition: text-shadow 0.2s, color 0.2s;
 }
 
 /* === MAIN CONTENT STYLES === */
@@ -938,16 +913,7 @@ body.events-page::before {
   flex-direction: column;
   align-items: center;
 }
-.gallery-photo {
-  width: 500px;
-  max-width: 100%;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(137,134,254,0.15);
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-  display: block;
-  object-fit: cover;
-}
+
 .gallery-photo:hover {
   transform: scale(1.03);
   box-shadow: 0 4px 24px #a259ff55;
@@ -2142,31 +2108,6 @@ header h1 {
   padding: 0;
 }
 
-
-nav {
-  margin: 0;
-  padding: 0;
-  flex: 1;
-  text-align: right;
-  display: flex;
-  gap: 0.6rem;
-  justify-content: flex-end;
-  align-items: center;
-}
-nav a {
-  color: rgb(167, 36, 255);
-  font-size:1.1rem;
-  margin: 0 0.3rem;
-  text-decoration: none;
-  font-weight: 800;
-  vertical-align: middle;
-  padding: 0;
-}
-nav a:hover {
-  color: #ffffff;
-  transition: text-shadow 0.2s, color 0.2s;
-}
-
 /* === MAIN CONTENT STYLES === */
 main {
   margin-top:0;
@@ -2964,7 +2905,7 @@ body.events-page::before {
 }
 .gallery-photo {
   width: 500px;
-  max-width: 100%;
+  max-width: 400px;
   border-radius: 16px;
   box-shadow: 0 2px 12px rgba(137,134,254,0.15);
   transition: transform 0.2s, box-shadow 0.2s;
@@ -4258,8 +4199,8 @@ header {
   background: linear-gradient(
     90deg,
     #fb87f12e 20%,
-    #9751f264 60%,
-    rgba(220, 139, 255, 0.433) 100%
+    #a466f58e 60%,
+    rgba(205, 105, 248, 0.804) 100%
   );
   display: flex;
   align-items: center;
@@ -4309,7 +4250,7 @@ nav {
   align-items: center;
 }
 nav a {
-  color: rgb(167, 36, 255);
+  color: rgb(255, 255, 255);
   font-size:1.1rem;
   margin: 0 0.3rem;
   text-decoration: none;
@@ -4318,7 +4259,7 @@ nav a {
   padding: 0;
 }
 nav a:hover {
-  color: #ffffff;
+  color: #b254fe;
   transition: text-shadow 0.2s, color 0.2s;
 }
 
@@ -4937,8 +4878,8 @@ body.events-page::before {
   align-items: center;
 }
 .gallery-photo {
-  width: 500px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 400px;
   border-radius: 16px;
   box-shadow: 0 2px 12px rgba(137,134,254,0.15);
   transition: transform 0.2s, box-shadow 0.2s;
