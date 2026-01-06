@@ -1,0 +1,236 @@
+UPDATED GOOGLE APPS SCRIPT WITH EMAIL NOTIFICATIONS
+====================================================
+
+Replace your existing script with this updated version:
+
+====================================================
+
+function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var timestamp = new Date();
+    
+    // Get form data
+    var eventType = e.parameter.eventType || '';
+    var fullName = e.parameter.fullName || '';
+    var email = e.parameter.email || '';
+    var phone = e.parameter.phone || '';
+    var contactMethod = e.parameter.contactMethod || '';
+    
+    // Event details
+    var privateEventType = e.parameter.privateEventType || '';
+    var corporateEventType = e.parameter.corporateEventType || '';
+    var companyName = e.parameter.companyName || '';
+    var eventFormat = e.parameter.eventFormat || '';
+    var guestOfHonor = e.parameter.guestOfHonor || '';
+    var eventDate = e.parameter.eventDate || '';
+    var startTime = e.parameter.startTime || '';
+    var endTime = e.parameter.endTime || '';
+    var location = e.parameter.location || '';
+    var guestCount = e.parameter.guestCount || '';
+    var ageRange = e.parameter.ageRange || '';
+    
+    // Venue details
+    var venueType = e.parameter.venueType || '';
+    var venueSize = e.parameter.venueSize || '';
+    var powerOutlets = e.parameter.powerOutlets || '';
+    var noiseRestrictions = e.parameter.noiseRestrictions || '';
+    var danceFloor = e.parameter.danceFloor || '';
+    
+    // Services
+    var services = e.parameter.services || '';
+    var microphone = e.parameter.microphone || '';
+    var musicPreferences = e.parameter.musicPreferences || '';
+    var doNotPlay = e.parameter.doNotPlay || '';
+    var lessonInterest = e.parameter.lessonInterest || '';
+    var lessonDuration = e.parameter.lessonDuration || '';
+    var lessonType = e.parameter.lessonType || '';
+    
+    // Workshop specific
+    var workshopType = e.parameter.workshopType || '';
+    var skillLevel = e.parameter.skillLevel || '';
+    var workshopParticipants = e.parameter.workshopParticipants || '';
+    var workshopLength = e.parameter.workshopLength || '';
+    var workshopStandalone = e.parameter.workshopStandalone || '';
+    var workshopEquipment = e.parameter.workshopEquipment || '';
+    var floorType = e.parameter.floorType || '';
+    
+    // Corporate specific
+    var musicStyle = e.parameter.musicStyle || '';
+    var formalCasual = e.parameter.formalCasual || '';
+    var speeches = e.parameter.speeches || '';
+    var backgroundDanceMusic = e.parameter.backgroundDanceMusic || '';
+    
+    // Additional
+    var venueBooked = e.parameter.venueBooked || '';
+    var onsiteContact = e.parameter.onsiteContact || '';
+    var hearAboutUs = e.parameter.hearAboutUs || '';
+    var additionalNotes = e.parameter.additionalNotes || '';
+    
+    // Append data to sheet
+    sheet.appendRow([
+      timestamp,
+      eventType,
+      fullName,
+      email,
+      phone,
+      contactMethod,
+      privateEventType,
+      corporateEventType,
+      companyName,
+      eventFormat,
+      guestOfHonor,
+      eventDate,
+      startTime,
+      endTime,
+      location,
+      guestCount,
+      ageRange,
+      venueType,
+      venueSize,
+      powerOutlets,
+      noiseRestrictions,
+      danceFloor,
+      services,
+      microphone,
+      musicPreferences,
+      doNotPlay,
+      lessonInterest,
+      lessonDuration,
+      lessonType,
+      workshopType,
+      skillLevel,
+      workshopParticipants,
+      workshopLength,
+      workshopStandalone,
+      workshopEquipment,
+      floorType,
+      musicStyle,
+      formalCasual,
+      speeches,
+      backgroundDanceMusic,
+      venueBooked,
+      onsiteContact,
+      hearAboutUs,
+      additionalNotes
+    ]);
+    
+    // SEND EMAILS
+    sendEmailNotifications(eventType, fullName, email, phone, eventDate, location, 
+                          privateEventType, corporateEventType, workshopType, 
+                          services, lessonInterest, additionalNotes);
+    
+    return ContentService.createTextOutput('Success');
+    
+  } catch (error) {
+    return ContentService.createTextOutput('Error: ' + error.toString());
+  }
+}
+
+function sendEmailNotifications(eventType, fullName, email, phone, eventDate, location, 
+                                privateEventType, corporateEventType, workshopType, 
+                                services, lessonInterest, additionalNotes) {
+  
+  // YOUR EMAIL ADDRESS - CHANGE THIS!
+  var adminEmail = "your-email@example.com";  // ← PUT YOUR EMAIL HERE
+  
+  // Determine event subtype
+  var eventSubtype = privateEventType || corporateEventType || workshopType || 'Not specified';
+  
+  // Format date nicely
+  var formattedDate = eventDate || 'Not specified';
+  
+  // EMAIL TO ADMIN (YOU)
+  var adminSubject = "🎉 New " + eventType + " Inquiry - " + fullName;
+  var adminBody = "You have received a new event inquiry!\n\n" +
+                  "═══════════════════════════════════\n" +
+                  "CONTACT INFORMATION\n" +
+                  "═══════════════════════════════════\n" +
+                  "Name: " + fullName + "\n" +
+                  "Email: " + email + "\n" +
+                  "Phone: " + phone + "\n\n" +
+                  "═══════════════════════════════════\n" +
+                  "EVENT DETAILS\n" +
+                  "═══════════════════════════════════\n" +
+                  "Event Type: " + eventType + "\n" +
+                  "Event Subtype: " + eventSubtype + "\n" +
+                  "Date: " + formattedDate + "\n" +
+                  "Location: " + location + "\n\n" +
+                  "═══════════════════════════════════\n" +
+                  "SERVICES REQUESTED\n" +
+                  "═══════════════════════════════════\n" +
+                  "Services: " + services + "\n" +
+                  "Lesson Interest: " + lessonInterest + "\n\n" +
+                  "═══════════════════════════════════\n" +
+                  "ADDITIONAL NOTES\n" +
+                  "═══════════════════════════════════\n" +
+                  (additionalNotes || "No additional notes provided.") + "\n\n" +
+                  "═══════════════════════════════════\n\n" +
+                  "View all details in your spreadsheet:\n" +
+                  "https://docs.google.com/spreadsheets/d/1nnrfRbGzJyAuW5OagRY_KQuxM-dzqlRVehszvJI20Qo/edit\n\n" +
+                  "Respond to this inquiry by contacting:\n" +
+                  email + " or " + phone;
+  
+  // EMAIL TO CLIENT (PERSON WHO SUBMITTED)
+  var clientSubject = "Thank You for Your Inquiry - Queer Latin Dance SD";
+  var clientBody = "Hi " + fullName + ",\n\n" +
+                   "Thank you for your interest in Queer Latin Dance SD!\n\n" +
+                   "We've received your " + eventType.toLowerCase() + " inquiry and are excited to help make your event unforgettable! " +
+                   "We'll review your request and get back to you within 24-48 hours.\n\n" +
+                   "═══════════════════════════════════\n" +
+                   "YOUR INQUIRY DETAILS\n" +
+                   "═══════════════════════════════════\n" +
+                   "Event Type: " + eventSubtype + "\n" +
+                   "Date: " + formattedDate + "\n" +
+                   "Location: " + location + "\n" +
+                   "Services Requested: " + services + "\n\n" +
+                   "If you have any immediate questions or need to update your request, please reply to this email or contact us at:\n\n" +
+                   "📧 Email: " + adminEmail + "\n" +
+                   "📱 Phone: [YOUR PHONE NUMBER]\n" +
+                   "🌐 Website: https://queerlatindancesd.com\n\n" +
+                   "We look forward to celebrating with you!\n\n" +
+                   "¡Vamos a Bailar!\n\n" +
+                   "The Queer Latin Dance SD Team\n" +
+                   "Lead, Follow, Switch, and Celebrate! 🌈💃🕺";
+  
+  // Send emails
+  try {
+    MailApp.sendEmail(adminEmail, adminSubject, adminBody);
+    MailApp.sendEmail(email, clientSubject, clientBody);
+  } catch (error) {
+    Logger.log("Error sending emails: " + error.toString());
+  }
+}
+
+====================================================
+
+IMPORTANT: CUSTOMIZE THESE LINES BEFORE SAVING:
+====================================================
+
+Line 122: var adminEmail = "your-email@example.com";  
+→ Change to YOUR email address
+
+Line 171: 📱 Phone: [YOUR PHONE NUMBER]
+→ Add your actual phone number
+
+Line 172: 🌐 Website: https://queerlatindancesd.com
+→ Update if your website URL is different
+
+====================================================
+
+AFTER UPDATING THE SCRIPT:
+====================================================
+
+1. Save the script (Ctrl+S or Cmd+S)
+2. Click "Deploy" > "Manage deployments"
+3. Click the pencil/edit icon
+4. Change "Version" to "New version"
+5. Click "Deploy"
+6. Test your form again!
+
+Now when someone submits a form:
+✅ Data saves to Google Sheet
+✅ You get an email notification with all details
+✅ The client gets a confirmation email
+
+====================================================

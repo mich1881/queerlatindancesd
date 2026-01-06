@@ -1,0 +1,188 @@
+GOOGLE APPS SCRIPT SETUP FOR EVENT INQUIRY FORMS
+================================================
+
+STEP 1: CREATE GOOGLE SHEET
+----------------------------
+1. Go to Google Sheets: https://sheets.google.com
+2. Create a new spreadsheet
+3. Name it "Event Inquiries - Queer Latin Dance SD"
+4. Copy the headers from "google-sheet-headers.txt" into Row 1
+
+STEP 2: CREATE GOOGLE APPS SCRIPT
+----------------------------------
+1. In your Google Sheet, click "Extensions" > "Apps Script"
+2. Delete any default code
+3. Paste the script below
+4. Click "Save" (disk icon)
+5. Name your project "Event Inquiry Handler"
+
+STEP 3: DEPLOY AS WEB APP
+--------------------------
+1. Click "Deploy" > "New deployment"
+2. Click "Select type" > "Web app"
+3. Description: "Event Inquiry Form Handler"
+4. Execute as: "Me"
+5. Who has access: "Anyone"
+6. Click "Deploy"
+7. Copy the web app URL (this is your form action URL)
+8. Paste this URL into the form action in your HTML files
+
+STEP 4: AUTHORIZE THE SCRIPT
+-----------------------------
+1. First time you deploy, you'll need to authorize
+2. Click "Authorize access"
+3. Choose your Google account
+4. Click "Advanced" > "Go to [your project name] (unsafe)"
+5. Click "Allow"
+
+======================================================
+
+GOOGLE APPS SCRIPT CODE:
+======================================================
+
+function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var timestamp = new Date();
+    
+    // Get form data
+    var eventType = e.parameter.eventType || '';
+    var fullName = e.parameter.fullName || '';
+    var email = e.parameter.email || '';
+    var phone = e.parameter.phone || '';
+    var contactMethod = e.parameter.contactMethod || '';
+    
+    // Event details
+    var privateEventType = e.parameter.privateEventType || '';
+    var corporateEventType = e.parameter.corporateEventType || '';
+    var companyName = e.parameter.companyName || '';
+    var eventFormat = e.parameter.eventFormat || '';
+    var guestOfHonor = e.parameter.guestOfHonor || '';
+    var eventDate = e.parameter.eventDate || '';
+    var startTime = e.parameter.startTime || '';
+    var endTime = e.parameter.endTime || '';
+    var location = e.parameter.location || '';
+    var guestCount = e.parameter.guestCount || '';
+    var ageRange = e.parameter.ageRange || '';
+    
+    // Venue details
+    var venueType = e.parameter.venueType || '';
+    var venueSize = e.parameter.venueSize || '';
+    var powerOutlets = e.parameter.powerOutlets || '';
+    var noiseRestrictions = e.parameter.noiseRestrictions || '';
+    var danceFloor = e.parameter.danceFloor || '';
+    
+    // Services
+    var services = e.parameter.services || '';
+    var microphone = e.parameter.microphone || '';
+    var musicPreferences = e.parameter.musicPreferences || '';
+    var doNotPlay = e.parameter.doNotPlay || '';
+    var lessonInterest = e.parameter.lessonInterest || '';
+    var lessonDuration = e.parameter.lessonDuration || '';
+    var lessonType = e.parameter.lessonType || '';
+    
+    // Workshop specific
+    var workshopType = e.parameter.workshopType || '';
+    var skillLevel = e.parameter.skillLevel || '';
+    var workshopParticipants = e.parameter.workshopParticipants || '';
+    var workshopLength = e.parameter.workshopLength || '';
+    var workshopStandalone = e.parameter.workshopStandalone || '';
+    var workshopEquipment = e.parameter.workshopEquipment || '';
+    var floorType = e.parameter.floorType || '';
+    
+    // Corporate specific
+    var musicStyle = e.parameter.musicStyle || '';
+    var formalCasual = e.parameter.formalCasual || '';
+    var speeches = e.parameter.speeches || '';
+    var backgroundDanceMusic = e.parameter.backgroundDanceMusic || '';
+    
+    // Additional
+    var venueBooked = e.parameter.venueBooked || '';
+    var onsiteContact = e.parameter.onsiteContact || '';
+    var hearAboutUs = e.parameter.hearAboutUs || '';
+    var additionalNotes = e.parameter.additionalNotes || '';
+    
+    // Append data to sheet
+    sheet.appendRow([
+      timestamp,
+      eventType,
+      fullName,
+      email,
+      phone,
+      contactMethod,
+      privateEventType,
+      corporateEventType,
+      companyName,
+      eventFormat,
+      guestOfHonor,
+      eventDate,
+      startTime,
+      endTime,
+      location,
+      guestCount,
+      ageRange,
+      venueType,
+      venueSize,
+      powerOutlets,
+      noiseRestrictions,
+      danceFloor,
+      services,
+      microphone,
+      musicPreferences,
+      doNotPlay,
+      lessonInterest,
+      lessonDuration,
+      lessonType,
+      workshopType,
+      skillLevel,
+      workshopParticipants,
+      workshopLength,
+      workshopStandalone,
+      workshopEquipment,
+      floorType,
+      musicStyle,
+      formalCasual,
+      speeches,
+      backgroundDanceMusic,
+      venueBooked,
+      onsiteContact,
+      hearAboutUs,
+      additionalNotes
+    ]);
+    
+    return ContentService.createTextOutput('Success');
+    
+  } catch (error) {
+    return ContentService.createTextOutput('Error: ' + error.toString());
+  }
+}
+
+======================================================
+
+STEP 5: UPDATE YOUR HTML FORMS
+-------------------------------
+Replace this line in each form:
+action="https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec"
+
+With your actual web app URL from Step 3.
+
+======================================================
+
+TESTING:
+--------
+1. Fill out one of your forms on your website
+2. Submit it
+3. Check your Google Sheet - you should see a new row with the data
+4. If it doesn't work, check the script execution logs in Apps Script
+
+======================================================
+
+OPTIONAL ENHANCEMENTS:
+----------------------
+1. Set up email notifications when a form is submitted
+2. Create data validation rules in your sheet
+3. Add conditional formatting to highlight urgent inquiries
+4. Create pivot tables to analyze inquiry sources
+5. Set up automated responses to form submitters
+
+======================================================

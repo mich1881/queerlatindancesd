@@ -278,9 +278,9 @@ textarea {
 header {
   background: linear-gradient(
     90deg,
-    #84087a8e 20%,
-    #632ea8d7 60%,
-    rgba(134, 72, 161, 0.79) 100%
+    #fb87f12e 20%,
+    #9751f264 60%,
+    rgba(220, 139, 255, 0.433) 100%
   );
   display: flex;
   align-items: center;
@@ -319,6 +319,29 @@ header h1 {
 }
 
 
+nav {
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  text-align: right;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+nav a {
+  color: rgb(167, 36, 255);
+  font-size:1.1rem;
+  margin: 0 0.3rem;
+  text-decoration: none;
+  font-weight: 800;
+  vertical-align: middle;
+  padding: 0;
+}
+nav a:hover {
+  color: #ffffff;
+  transition: text-shadow 0.2s, color 0.2s;
+}
 
 /* === MAIN CONTENT STYLES === */
 main {
@@ -685,32 +708,6 @@ button {
     min-height: 100vh;
     min-width: unset;
   }
-}
-
-/* === VIDEO BACKGROUND CONTAINER === */
-/* Ensure the body background shows below the cropped video */
-body.events-page::before {
-  content: '';
-  position: fixed;
-  top: 60vh;  /* Start where video ends */
-  left: 0;
-  width: 100%;
-  height: 40vh;  /* Fill remaining height */
-  background: linear-gradient(120deg,
-    #ffe29f 0%,   /* light yellow */
-    #ffb6b9 15%,  /* light pink */
-    #ffb6ff 30%,  /* light magenta */
-    #b5d8ff 45%,  /* light blue */
-    #baffc9 60%,  /* light green */
-    #fff6b7 75%,  /* light gold */
-    #ffd6e0 90%,  /* light rose */
-    #ffe29f 100%  /* repeat yellow */
-  );
-  background-attachment: fixed;
-  background-size: 200% 200%;
-  animation: rainbowMove 18s ease-in-out infinite;
-  z-index: -1;
-  pointer-events: none;
 }
 
 /* Payment1.html Modal & Form Refactor */
@@ -1227,6 +1224,99 @@ body.events-page::before {
   background-clip: unset !important;
   font-weight: 700;
 }
+/* --- MISSION CARD --- */
+/* --- Mission Card Section --- */
+.mission-text {
+  font-family: 'Nunito', Arial, sans-serif;
+  font-size: 1.0rem;
+  color: #ffffff;
+  text-align: center;
+  font-weight: 100;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+  line-height: 1.6;
+}
+.mission-card {
+  max-width: 1800px;
+  height: auto;
+  min-height: 600px;
+  margin: 2.5rem auto;
+  padding: 4rem 2rem;
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+}
+.mission-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('images/SalsaSunsets/qssjun14.png') center center/cover no-repeat;
+  opacity: 0.83;
+  mask: 
+    linear-gradient(to right, transparent 0%, black 8%, #6825e3 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 8%, #6825e3 92%, transparent 100%);
+  -webkit-mask: 
+    linear-gradient(to right, transparent 0%, black 8%, rgb(104, 37, 227) 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 8%, #6825e3 92%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+  pointer-events: none;
+  z-index: -2;
+}
+.mission-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(45, 25, 85, 0.4);
+  pointer-events: none;
+  z-index: -1;
+}
+.mission-card h1, .mission-card h2 {
+  font-family: 'PassionOne','Lilita One','Signika',Arial,sans-serif;
+  font-size: 4.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 3px 3px 8px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.8);
+  position: relative;
+  z-index: 1;
+  text-transform: uppercase;
+}
+.mission-logo {
+  max-width: 300px;
+  height: auto;
+  display: block;
+  margin: 0 auto 1.5rem auto;
+  position: relative;
+  z-index: 10;
+}
+.mission-card p {
+  font-size: 1.2rem;
+  color: #C4F9CA;
+  text-align: left;
+  margin: 0 auto 1.2rem auto;
+  font-family: 'Nunito', Arial, sans-serif;
+  text-shadow: 2px 2px 4px rgb(0, 0, 0), 1px 1px 2px rgba(0,0,0,0.7);
+  position: relative;
+  z-index: 10;
+  max-width: 800px;
+  line-height: 1.7;
+  font-weight: 100;
+}
+
 /* --- INFO CARDS --- */
 /* --- QUEER SALSA SUNSETS LOGO & CARD --- */
 .qss-logo {
@@ -2059,7 +2149,7 @@ nav {
   align-items: center;
 }
 nav a {
-  color: rgb(255, 255, 255);
+  color: rgb(167, 36, 255);
   font-size:1.1rem;
   margin: 0 0.3rem;
   text-decoration: none;
@@ -2068,7 +2158,7 @@ nav a {
   padding: 0;
 }
 nav a:hover {
-  color: #7f32a9;
+  color: #ffffff;
   transition: text-shadow 0.2s, color 0.2s;
 }
 
@@ -2414,7 +2504,6 @@ button {
   display: block;
   object-fit: contain;
   margin-top: -5rem;
-  margin-right: 35px;
 }
 .hero-content p {
   font-size: 1.3rem;
@@ -2507,7 +2596,12 @@ body.events-page::before {
   display: inline-block;
   font-size: 6rem;
   font-weight: 1200;
-  color: white;
+  background: linear-gradient(90deg, #ffbf8a, #b179ff, #fd96ff, #b57edc);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   padding-right: 4rem;
   animation: scroll 18s linear infinite;
   white-space: nowrap;
@@ -3025,7 +3119,7 @@ body.events-page::before {
 }
 .thumbs-wrapper {
   display: flex;
-  align-items: center;
+  align-items: center; 
   justify-content: center;
   margin-bottom: 1rem;
   width: 100%;
@@ -3411,256 +3505,6 @@ body.events-page::before {
   margin: 2rem auto;
   padding: 0 1rem;
 }
-.footer {
-  margin-left: 0;
-  margin-right: 0;
-  background: linear-gradient(120deg, #2e0233 0%, #4a1f94 100%);
-  color: #fff;
-  padding: 2.5rem 0 2.5rem 0;
-  text-align: left;
-  font-family: 'Signika', Arial, sans-serif;
-  width: 100vw;
-  box-sizing: border-box;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  transform: translateX(-50%);
-}
-.footer-bottom {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-end;
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-  padding: 2.5rem 2.5rem 2.5rem 2.5rem;
-  padding-right: 0;
-  margin-right: 0;
-  min-height: 220px;
-  gap: 0;
-  position: relative;
-  padding-right: 0;
-  margin-right: 1.5rem;
-}
-
-.footer-newsletter {
-  flex: 1 1 50%;
-  min-width: 320px;
-  max-width: 1000px;
-  padding: 0;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  height: 100%;
-}
-.footer-newsletter h2 {
-  font-family: 'Lilita One','PassionOne', Arial, sans-serif;
-  font-size: 2.7rem;
-  font-weight: 800;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  margin-left: 1.5rem;
-  letter-spacing: -1.0px;
-  color: #fff;
-  text-align: left;
-  line-height: 1.1;
-}
-.footer-newsletter form {
-  display: flex;
-  gap: 1rem;
-  margin-left: 1.2rem;
-  margin-bottom: 1.2rem;
-  width: 100%;
-  max-width: 500px;
-}
-.footer-newsletter input[type="email"] {
-  font-size: 1.4rem;
-  padding: 0.7rem 1.2rem;
-  border-radius: 0.7rem;
-  border: none;
-  outline: none;
-  width: 260px;
-  background: #fff;
-  color: #222;
-  font-family: 'Nunito', Arial, sans-serif;
-}
-.footer-newsletter button {
-  font-size: 1.2rem;
-  font-family: 'Nunito', Arial, sans-serif;
-  font-weight: 200;
-  background: #fff;
-  color: #000;
-  border: none;
-  border-radius: 1.2rem;
-  padding: 0.3rem 1.0rem;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-.footer-newsletter button:hover {
-  background: #ae7df4;
-  color: #000;
-}
-.footer-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  font-size: 1.3rem;
-  margin-top: 1.5rem;
-  margin-left: 1.5rem;
-  color: #fff;
-  font-family: 'Signika', Arial, sans-serif;
-  align-items: flex-start;
-}
-.footer-links a {
-  color: #ffffff;
-  text-decoration: none;
-  transition: color 0.2s, background 0.2s;
-  background: none;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: #fff;
-  background-clip: text;
-  position: relative;
-  z-index: 1;
-}
-.footer-links a:hover {
-  background: linear-gradient(90deg, #f8f8f8 0%, #b57edc 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-}
-.footer-social {
-  flex: 1 1 50%;
-  min-width: unset;
-  max-width: unset;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-end;
-  margin-top: 2.5rem;
-  margin-bottom: 0;
-  height: 100%;
-  padding-top: 0.1rem;
-  position: relative;
-  left: unset;
-  right: 0;
-  top: unset;
-  text-align: right;
-  padding-right: 2.5rem;
-}
-.footer-social h3 {
-  font-size: 2.5rem;
-  font-family: 'lilita One', Arial, sans-serif;
-  font-weight: 600;
-  margin-bottom: 1.2rem;
-  color: #fff;
-  text-align: right;
-  margin-top: 0.2rem;
-  line-height: 1.1;
-  margin-right: 0;
-  padding-right: 0;
-}
-.footer-social-icons {
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 0.5rem;
-  justify-content: flex-end;
-}
-.footer-social-icons img {
-  width: 35px;
-  height: 35px;
-  border-radius: 16px;
-  background: #fff;
-  padding: 0.3rem;
-  transition: box-shadow 0.2s, background 0.2s;
-  object-fit: contain;
-}
-.footer-social-icons img:hover {
-  background: #ffe066;
-  box-shadow: 0 0 0 4px #ffe066, 0 2px 16px #ffe06688;
-}
-.footer-copyright {
-  width: 100%;
-  text-align: right;
-  font-size: 1.3rem;
-  color: #fff;
-  font-family: 'Signika', Arial, sans-serif;
-  margin-top: 1.5rem;
-}
-
-@media (max-width: 1100px) {
-  .footer {
-    padding: 2rem 0;
-  }
-  .footer-bottom {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 2rem 1rem;
-    margin-right: 0;
-    min-height: auto;
-    gap: 2rem;
-  }
-  .footer-newsletter {
-    min-width: unset;
-    max-width: 100%;
-       width: 100%;
-    align-items: center;
-  }
-  .footer-social {
-    align-items: center;
-       text-align: center;
-    margin-top: 0;
-    padding-right: 0;
-    width: 100%;
-  }
-  .footer-social h3 {
-    text-align: center;
-    margin-right: 0;
-  }
-  .footer-social-icons {
-       justify-content: center;
-  }
-  .footer-social-icons img {
-    width: 40px;
-    height: 40px;
-  }
-  .footer-copyright {
-    text-align: center;
-  }
-}
-
-@media (max-width: 700px) {
-  .footer-social-icons img {
-    width: 32px;
-    height: 32px;
-  }
-  .footer-social h3 {
-    font-size: 1.8rem;
-  }
-  .footer-copyright {
-    font-size: 1rem;
-  }
-
-  /* === MOBILE FOOTER FIXES === */
-  .footer-newsletter form {
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-left: 0;
-    align-items: center;
-  }
-  .footer-newsletter input[type="email"] {
-    width: 280px;
-    max-width: 90vw;
-  }
-  .footer-newsletter button {
-    width: 120px;
-  }
-}
-
 /* ========================================
    ======================================== */
 * {
@@ -4158,9 +4002,9 @@ textarea {
 header {
   background: linear-gradient(
     90deg,
-    #f475ea2e 20%,
-    #9751f2c8 60%,
-    rgba(151, 54, 193, 0.651) 100%
+    #fb87f12e 20%,
+    #9751f264 60%,
+    rgba(220, 139, 255, 0.433) 100%
   );
   display: flex;
   align-items: center;
@@ -4205,22 +4049,21 @@ nav {
   flex: 1;
   text-align: right;
   display: flex;
-  gap: 0.4rem;
+  gap: 0.6rem;
   justify-content: flex-end;
   align-items: center;
-  margin-right: 35px;
-} 
+}
 nav a {
-  color: rgb(237, 232, 237);
+  color: rgb(255, 255, 255);
   font-size:1.1rem;
   margin: 0 0.3rem;
   text-decoration: none;
-  font-weight: 1500;
+  font-weight: 800;
   vertical-align: middle;
   padding: 0;
 }
 nav a:hover {
-  color: #8b4fae;
+  color: #8148a8;
   transition: text-shadow 0.2s, color 0.2s;
 }
 
@@ -4506,7 +4349,6 @@ button {
   display: block;
   object-fit: contain;
   margin-top: -5rem;
-  margin-right: 45px;
 }
 .hero-content p {
   font-size: 1.3rem;
@@ -4599,7 +4441,12 @@ body.events-page::before {
   display: inline-block;
   font-size: 6rem;
   font-weight: 1200;
-  color: white;
+  background: linear-gradient(90deg, #ffbf8a, #b179ff, #fd96ff, #b57edc);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   padding-right: 4rem;
   animation: scroll 18s linear infinite;
   white-space: nowrap;

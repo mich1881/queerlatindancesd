@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Us | Queer Latin Dance SD</title>
+  <link rel="stylesheet" href="styles/global.css">
+  <style>
+    /* Prevent animation glitches on page load */
+    .book-us-container,
+    .page-header,
+    .page-header h1,
+    .page-header p {
+      animation: none !important;
+    }
+    
+    /* Only animate the button grid smoothly */
+    .button-grid {
+      animation: softFadeIn 0.8s ease-out !important;
+    }
+    
+    @keyframes softFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f3e5f5 0%, #d1aaff 40%, #b388ff 70%, #a259c6 100%);
+      font-family: 'Nunito', Arial, sans-serif;
+    }
+    .book-us-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .page-header {
+      margin-bottom: 3rem;
+    }
+    .page-header h1 {
+      font-size: 3.5rem;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      font-family: 'Nunito', Arial, sans-serif;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .page-header p {
+      font-size: 1.3rem;
+      color: #ffffff;
+      margin: 0;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 3rem;
+      margin: 4rem 0;
+      padding: 0 2rem;
+    }
+    .circle-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .circle-button:hover {
+      transform: translateY(-10px);
+    }
+    .circle {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(123, 31, 162, 0.4);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .circle::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .circle-button:hover .circle::before {
+      opacity: 1;
+    }
+    .circle-button:hover .circle {
+      box-shadow: 0 12px 32px rgba(123, 31, 162, 0.6);
+      transform: scale(1.05);
+    }
+    .circle-icon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .circle::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent 0%, rgba(123, 31, 162, 0.7) 70%, rgba(123, 31, 162, 0.9) 100%);
+      border-radius: 50%;
+      z-index: 1;
+    }
+    .circle-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      z-index: 2;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    .circle-subtitle {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.95);
+      z-index: 2;
+      padding: 0 1rem;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    }
+    .button-description {
+      margin-top: 1.5rem;
+      max-width: 280px;
+    }
+    .button-description h3 {
+      font-size: 1.3rem;
+      color: #4a148c;
+      margin-bottom: 0.75rem;
+    }
+    .button-description p {
+      font-size: 1rem;
+      color: #4a148c;
+      line-height: 1.5;
+    }
+    .back-home {
+      margin-top: 3rem;
+    }
+    .back-home a {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: rgba(255, 255, 255, 0.3);
+      color: #4a148c;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: background 0.3s ease, transform 0.2s ease;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+    .back-home a:hover {
+      background: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 768px) {
+      .page-header h1 {
+        font-size: 2.5rem;
+      }
+      .page-header p {
+        font-size: 1.1rem;
+      }
+      .button-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 0 1rem;
+      }
+      .circle {
+        width: 220px;
+        height: 220px;
+      }
+      .circle-title {
+        font-size: 1.3rem;
+      }
+      .circle-subtitle {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="book-us-container">
+      <div class="page-header">
+        <h1>Book Us for Your Event</h1>
+        <p>Let's bring the joy of Latin dance to your celebration!</p>
+      </div>
+
+      <div class="button-grid">
+      <!-- Private Events Button -->
+      <a href="private-events.html" class="circle-button">
+        <div class="circle">
+          <img src="images/Queer Salsa Social/IMG_0400.jpg" alt="Private Events" class="circle-icon">
+          <div class="circle-title">Private Events</div>
+          <div class="circle-subtitle">Birthdays • Weddings • Parties</div>
+        </div>
+        <div class="button-description">
+          <h3>Celebrate in Style</h3>
+          <p>Make your special occasion unforgettable with DJ services, dance lessons, and Latin vibes!</p>
+        </div>
+      </a>
+
+      <!-- Corporate Events Button -->
+      <a href="private-events.html" class="circle-button">
+        <div class="circle">
+          <img src="images/IMG_7177.jpeg" alt="Corporate Events" class="circle-icon">
+          <div class="circle-title">Corporate Events</div>
+          <div class="circle-subtitle">Team Building • Conferences</div>
+        </div>
+        <div class="button-description">
+          <h3>Energize Your Team</h3>
+          <p>Bring your team together with interactive dance experiences and professional entertainment!</p>
+        </div>
+      </a>
+
+      <!-- Workshops Button -->
+      <a href="private-events.html" class="circle-button">
+        <div class="circle">
+          <img src="images/She Fest Salsa Workshop/IMG_9532.JPG" alt="Workshops" class="circle-icon">
+          <div class="circle-title">Workshops</div>
+          <div class="circle-subtitle">Salsa • Bachata • Group Lessons</div>
+        </div>
+        <div class="button-description">
+          <h3>Learn & Connect</h3>
+          <p>Book a workshop for your group, studio, or community event. All levels welcome!</p>
+        </div>
+      </a>
+    </div>
+    <div class="back-home">
+      <a href="index.html">← Back to Home</a>
+    </div>
+  </div>
+  </main>
+</body>
+</html>

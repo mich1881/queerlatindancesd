@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment | Queer Salsa Series</title>
+  <link rel="stylesheet" href="styles/global.css">
   <style>
     /* Reset and base styles */
     * {
@@ -720,7 +721,7 @@
     <div id="paymentOverlay" class="payment-overlay">
       <div class="payment-overlay-content">
         <button type="button" class="payment-overlay-x" onclick="closePaymentOverlay()">&times;</button>
-        <div class="payment-overlay-title">🎉 Payment Details</div>
+        <div class="payment-overlay-title">Payment Details</div>
         <div class="payment-overlay-message">
           Your registration form has been submitted! Here are your payment details:
         </div>
@@ -1312,7 +1313,7 @@
         }
         
         let seriesLabel = getSeriesLabel(series, pricingType);
-        let details = `<b>💳 PayPal Payment</b><br><br>` +
+        let details = `<b>PayPal Payment</b><br><br>` +
           `<b>Amount:</b> $${amount}<br>` +
           (seriesLabel ? `<b>Series:</b> ${seriesLabel}<br>` : '') +
           `<b>Recipient:</b> @queerlatindance<br>` +
@@ -1414,7 +1415,7 @@
           return; // Exit early on error
         }
         let seriesLabel = getSeriesLabel(series, pricingType);
-        let details = `<b>💰 Zelle Payment</b><br><br>` +
+        let details = `<b>Zelle Payment</b><br><br>` +
           `<b>Amount:</b> ${amount}<br>` +
           (seriesLabel ? `<b>Series:</b> ${seriesLabel}<br>` : '') +
           `<b>Recipient:</b> michf18@gmail.com or 760-529-1320<br>` +
@@ -1501,7 +1502,7 @@
           return; // Exit early on error
         }
         let seriesLabel = getSeriesLabel(series, pricingType);
-        let details = `<b>📱 Venmo Payment</b><br><br>` +
+        let details = `<b>Venmo Payment</b><br><br>` +
           `<b>Amount:</b> $${amount}<br>` +
           (seriesLabel ? `<b>Series:</b> ${seriesLabel}<br>` : '') +
           `<b>Recipient:</b> @michf18<br>` +

@@ -1,0 +1,275 @@
+/* ========================================
+   GLOBAL SOFT ANIMATIONS & TRANSITIONS
+   Add <link rel="stylesheet" href="styles/global.css"> to any page
+   ======================================== */
+
+/* === SMOOTH PAGE LOAD === */
+/* Body fade animation removed to prevent white flash on page transitions */
+/* body {
+  animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+} */
+
+/* === EXCLUDE NAVIGATION AND BACKGROUND FROM FADE === */
+header,
+nav,
+.mobile-nav-toggle,
+.mobile-nav-menu,
+.logo1,
+#sparkle-bg,
+body::before,
+body::after {
+  animation: none !important;
+}
+
+/* === SOFT FADE-IN FOR ALL MAIN SECTIONS === */
+main,
+section,
+.hero-flex,
+.gallery-section,
+.event-card,
+.lesson-card,
+.form-container,
+.inquiry-form,
+.directory-section {
+  animation: softFadeIn 0.8s ease-out;
+}
+
+@keyframes softFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === SMOOTH TRANSITIONS FOR INTERACTIVE ELEMENTS === */
+a,
+button,
+.cta-btn,
+.submit-btn,
+.circle-button,
+nav a,
+.mobile-nav-toggle {
+  transition: all 0.3s ease;
+}
+
+/* === SOFT HOVER EFFECTS === */
+a:hover,
+button:hover,
+nav a:hover {
+  transition: all 0.3s ease;
+}
+
+/* === IMAGE FADE-IN === */
+img {
+  animation: imageFadeIn 0.8s ease-out;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+@keyframes imageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* === CARD ELEMENTS SOFT ENTRANCE === */
+.card,
+.event-card,
+.lesson-card,
+.offer-card,
+.circle-button,
+.inquiry-form,
+.form-section {
+  animation: cardSlideIn 0.7s ease-out;
+}
+
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === STAGGERED ANIMATION FOR MULTIPLE ITEMS === */
+.event-card:nth-child(1),
+.lesson-card:nth-child(1),
+.circle-button:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.event-card:nth-child(2),
+.lesson-card:nth-child(2),
+.circle-button:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.event-card:nth-child(3),
+.lesson-card:nth-child(3),
+.circle-button:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.event-card:nth-child(4),
+.lesson-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.event-card:nth-child(5),
+.lesson-card:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+/* === SMOOTH FORM INPUT TRANSITIONS === */
+input,
+textarea,
+select {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* === NAVIGATION SMOOTH TRANSITIONS === */
+header {
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-menu {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* === GALLERY IMAGE SOFT TRANSITIONS === */
+.gallery-item,
+.photo-card,
+.gallery img {
+  transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item:hover,
+.photo-card:hover {
+  transition: transform 0.4s ease, box-shadow 0.3s ease;
+}
+
+/* === MODAL/POPUP SOFT ENTRANCE === */
+.modal,
+.popup,
+.overlay {
+  animation: modalFadeIn 0.4s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* === REDUCE MOTION FOR ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* === SMOOTH SCROLL BEHAVIOR === */
+html {
+  scroll-behavior: smooth;
+}
+
+/* === PAGE TRANSITION EFFECT (optional - for SPA-like feel) === */
+.page-transition {
+  animation: pageSlideIn 0.5s ease-out;
+}
+
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* === SOFT SHADOW TRANSITIONS === */
+.card,
+.event-card,
+.lesson-card,
+.circle,
+.inquiry-form {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* === TEXT FADE-IN === */
+h1,
+h2,
+h3,
+.hero-content,
+.page-header {
+  animation: textFadeIn 0.8s ease-out;
+}
+
+@keyframes textFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === BUTTON PRESS EFFECT === */
+button:active,
+.cta-btn:active,
+.submit-btn:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+/* === LOADING STATE TRANSITIONS === */
+.loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

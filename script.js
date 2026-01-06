@@ -117,12 +117,212 @@ document.addEventListener('DOMContentLoaded', function() {
 // Workshop Gallery Modal Navigation
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Use the generatedGalleries object from generated-galleries.js
-  if (typeof generatedGalleries === 'undefined') {
-    console.error('generatedGalleries is not defined! Make sure generated-galleries.js is loaded BEFORE script.js in your HTML.');
-    return;
-  }
-  const galleries = generatedGalleries;
+  // Use the auto-generated galleries from generated-galleries.js
+  const galleries = generatedGalleries || {
+    workshops: [
+      "images/SoberPrideRecap/SoberP1.png",
+      "images/SoberPrideRecap/SoberP2.png",
+      "images/SoberPrideRecap/SoberP3.png",
+      "images/SoberPrideRecap/SoberP4.png",
+      "images/SoberPrideRecap/SoberP5.png",
+      "images/SoberPrideRecap/SoberP6.png",
+      "images/SoberPrideRecap/SoberP7.png",
+      "images/SoberPrideRecap/SoberP8.png",
+      "images/SoberPrideRecap/SoberP9.png",
+      "images/SoberPrideRecap/SoberP10.png",
+      "images/SoberPrideRecap/SoberP11.png"
+    ],
+    sunsets: [
+      //July
+  "images/SalsaSunsets/IMG_7939.jpg",
+  "images/SalsaSunsets/IMG_7840.JPG",
+  "images/SalsaSunsets/IMG_7841.JPG",
+  "images/SalsaSunsets/IMG_7842.JPG",
+  "images/SalsaSunsets/IMG_7843.JPG",
+  "images/SalsaSunsets/IMG_7844.JPG",
+  "images/SalsaSunsets/IMG_7845.JPG",
+  "images/SalsaSunsets/IMG_7846.JPG",
+  "images/SalsaSunsets/IMG_7847.JPG",
+  "images/SalsaSunsets/IMG_7848.JPG",
+  "images/SalsaSunsets/IMG_7849.JPG",
+  "images/SalsaSunsets/IMG_7850.JPG",
+  "images/SalsaSunsets/IMG_7851.JPG",
+  "images/SalsaSunsets/IMG_7852.JPG",
+  "images/SalsaSunsets/IMG_7854.JPG",
+  "images/SalsaSunsets/IMG_7855.JPG",
+  "images/SalsaSunsets/IMG_7856.JPG",
+  "images/SalsaSunsets/IMG_7857.JPG",
+  "images/SalsaSunsets/IMG_7858.JPG",
+  // June
+  "images/SalsaSunsets/qssjun1.png",
+  "images/SalsaSunsets/qssjun4.png",
+  "images/SalsaSunsets/qssjun5.png",
+  "images/SalsaSunsets/qssjun6.png",
+  "images/SalsaSunsets/qssjun7.png",
+  "images/SalsaSunsets/qssjun8.png",
+  "images/SalsaSunsets/qssjun12.png",
+  "images/SalsaSunsets/qssjun13.png",
+  "images/SalsaSunsets/qssjun14.png",
+  "images/SalsaSunsets/qssjun16.png",
+  "images/SalsaSunsets/qssjun18.png",
+  "images/SalsaSunsets/qssjun22.png",
+  "images/SalsaSunsets/qssjun23.png",
+  "images/SalsaSunsets/qssjun24.png",
+  "images/SalsaSunsets/qssjun25.png",
+  "images/SalsaSunsets/qssjun26.png",
+  "images/SalsaSunsets/qssjun29.png",
+  // May
+  "images/SalsaSunsets/qssmay1.png",
+  "images/SalsaSunsets/qssmay2.png",
+  "images/SalsaSunsets/qssmay3.png",
+  "images/SalsaSunsets/qssmay4.png",
+  "images/SalsaSunsets/qssmay5.png",
+  "images/SalsaSunsets/qssmay6.png",
+  "images/SalsaSunsets/qssmay7.png",
+  "images/SalsaSunsets/qssmay8.png",
+  "images/SalsaSunsets/qssmay9.png",
+  "images/SalsaSunsets/qssmay10.png",
+  "images/SalsaSunsets/qssmay11.png",
+  "images/SalsaSunsets/qssmay12.png",
+  "images/SalsaSunsets/qssmay13.png",
+  "images/SalsaSunsets/qssmay15.png",
+  "images/SalsaSunsets/qssmay16.png",
+  "images/SalsaSunsets/qssmay18.png",
+  "images/SalsaSunsets/qssmay20.png",
+  "images/SalsaSunsets/qssmay22.png",
+  "images/SalsaSunsets/qssmay23.png",
+  "images/SalsaSunsets/qssmay24.png",
+  "images/SalsaSunsets/qssmay26.png",
+  "images/SalsaSunsets/qssmay27.png",
+  "images/SalsaSunsets/qssmay28.png",
+  "images/SalsaSunsets/qssmay29.png",
+  "images/SalsaSunsets/qssmay31.png"
+    ],
+  qldla:[
+    "images/QueerLatinDanceLA/IMG_7787.JPG",
+    "images/QueerLatinDanceLA/IMG_7788.JPG",
+    "images/QueerLatinDanceLA/IMG_7790.JPG",
+    "images/QueerLatinDanceLA/IMG_7791.JPG",
+    "images/QueerLatinDanceLA/IMG_7792.JPG",
+    "images/QueerLatinDanceLA/IMG_7793.JPG",
+    "images/QueerLatinDanceLA/IMG_7802.JPG",
+    "images/QueerLatinDanceLA/IMG_7803.JPG",
+    "images/QueerLatinDanceLA/IMG_7804.JPG",
+    "images/QueerLatinDanceLA/IMG_7805.JPG",
+    "images/QueerLatinDanceLA/IMG_7807.JPG",
+    "images/QueerLatinDanceLA/IMG_7809.JPG",
+    "images/QueerLatinDanceLA/IMG_7810.JPG",
+    "images/QueerLatinDanceLA/IMG_7811.JPG",
+    "images/QueerLatinDanceLA/IMG_7812.JPG",
+    "images/QueerLatinDanceLA/IMG_7813.JPG",
+    "images/QueerLatinDanceLA/IMG_7814.JPG",
+    "images/QueerLatinDanceLA/IMG_7823.JPG",
+    "images/QueerLatinDanceLA/IMG_7830.JPG",
+    "images/QueerLatinDanceLA/IMG_7831.JPG",
+    "images/QueerLatinDanceLA/IMG_7833.JPG",
+    "images/QueerLatinDanceLA/IMG_7931.jpg",
+    "images/QueerLatinDanceLA/IMG_7927.png",
+    "images/QueerLatinDanceLA/IMG_7928.jpg",
+    "images/QueerLatinDanceLA/IMG_7929 2.jpg",
+    "images/QueerLatinDanceLA/IMG_7932.jpg",
+    "images/QueerLatinDanceLA/IMG_7936.jpg",
+    "images/QueerLatinDanceLA/IMG_7937.jpg",
+    "images/QueerLatinDanceLA/IMG_7938.jpg",
+    "images/QueerLatinDanceLA/IMG_7939.jpg",
+    "images/QueerLatinDanceLA/IMG_7941.jpg",
+    "images/QueerLatinDanceLA/IMG_7942.jpg",
+    "images/QueerLatinDanceLA/IMG_7945.jpg",
+  ],
+  sundance:[
+    "images/SunDanceDayFest/IMG_7675.jpg",
+    "images/SunDanceDayFest/sddf1.png",
+    "images/SunDanceDayFest/sddf2.png",
+    "images/SunDanceDayFest/sddf3.png",
+    "images/SunDanceDayFest/sddf4.png",
+    "images/SunDanceDayFest/sddf5.png",
+    "images/SunDanceDayFest/sddf6.png",
+    "images/SunDanceDayFest/sddf7.png",
+    "images/SunDanceDayFest/sddf8.png",
+    "images/SunDanceDayFest/sddf9.png",
+    "images/SunDanceDayFest/sddf10.png",
+    "images/SunDanceDayFest/sddf11.png",
+    "images/SunDanceDayFest/sddf12.png",
+    "images/SunDanceDayFest/sddf13.png",
+    "images/SunDanceDayFest/sddf14.png",
+    "images/SunDanceDayFest/sddf15.png",
+    "images/SunDanceDayFest/sddf16.png",
+    "images/SunDanceDayFest/sddf17.png",
+    "images/SunDanceDayFest/sddf18.png",
+    "images/SunDanceDayFest/sddf19.jpg",
+    "images/SunDanceDayFest/sddf20.jpg",
+    "images/SunDanceDayFest/sddf21.jpg",
+    "images/SunDanceDayFest/sddf22.jpg",
+    "images/SunDanceDayFest/sddf23.jpg",
+    "images/SunDanceDayFest/sddf24.jpg",
+    "images/SunDanceDayFest/sddf25.jpg",
+    "images/SunDanceDayFest/sddf26.jpg",
+    "images/SunDanceDayFest/sddf27.jpg",
+    "images/SunDanceDayFest/sddf28.jpg",
+    "images/SunDanceDayFest/sddf29.jpg",
+    "images/SunDanceDayFest/sddf30.jpg",
+    "images/SunDanceDayFest/sddf31.jpg",
+    "images/SunDanceDayFest/sddf32.jpg",
+    "images/SunDanceDayFest/sddf33.jpg",
+    "images/SunDanceDayFest/sddf34.jpg",
+    "images/SunDanceDayFest/sddf35.jpg",
+    "images/SunDanceDayFest/sddf36.jpg",
+    "images/SunDanceDayFest/sddf37.jpg",
+    "images/SunDanceDayFest/sddf38.PNG",
+    "images/SunDanceDayFest/sddf39.jpg",
+    "images/SunDanceDayFest/sddf40.PNG",
+    "images/SunDanceDayFest/sddf41.jpg",
+    "images/SunDanceDayFest/sddf42.jpg",
+    "images/SunDanceDayFest/sddf43.jpg",
+    "images/SunDanceDayFest/sddf44.jpg",
+    "images/SunDanceDayFest/sddf45.jpeg",
+    "images/SunDanceDayFest/sddf46.jpg",
+    "images/SunDanceDayFest/sddf47.jpeg",
+    "images/SunDanceDayFest/sddf48.jpg",
+    "images/SunDanceDayFest/sddf49.jpeg",
+    "images/SunDanceDayFest/sddf50.jpg",
+  ],
+    '4weekseries1': [
+      "images/4weekseries1/IMG_8639.JPG",
+      "images/4weekseries1/IMG_8640.JPG",
+      "images/4weekseries1/IMG_8641.JPG",
+      "images/4weekseries1/IMG_8642.jpg",
+      "images/4weekseries1/IMG_8643.JPG",
+      "images/4weekseries1/IMG_8644.jpg",
+      "images/4weekseries1/IMG_8645.jpg",
+      "images/4weekseries1/IMG_8646.JPG",
+      "images/4weekseries1/IMG_8647.JPG",
+      "images/4weekseries1/IMG_8648.JPG",
+      "images/4weekseries1/IMG_8649.JPG",
+      "images/4weekseries1/IMG_8650.JPG",
+      "images/4weekseries1/IMG_8651.JPG",
+      "images/4weekseries1/IMG_8652.JPG",
+      "images/4weekseries1/IMG_8653.JPG",
+      "images/4weekseries1/IMG_8654.JPG",
+      "images/4weekseries1/IMG_8655.JPG",
+      "images/4weekseries1/IMG_8656.JPG",
+      "images/4weekseries1/IMG_8657.JPG",
+      "images/4weekseries1/IMG_8658.JPG",
+      "images/4weekseries1/IMG_8659.JPG",
+      "images/4weekseries1/IMG_8660.JPG",
+      "images/4weekseries1/IMG_8661.JPG",
+      "images/4weekseries1/IMG_8662.jpg",
+      "images/4weekseries1/IMG_8663.JPG",
+      "images/4weekseries1/IMG_8664.JPG",
+      "images/4weekseries1/IMG_8666.jpg",
+      "images/4weekseries1/IMG_8667.jpg",
+      "images/4weekseries1/IMG_8669.jpg",
+      "images/4weekseries1/IMG_8675.JPG",
+      
+    ],
+    all: [
+      // Add images for "All Events" if you want
+    ]
+  };
 
   document.querySelectorAll('.open-workshop-modal').forEach(img => {
     img.addEventListener('click', function(e) {
@@ -132,16 +332,15 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!images || images.length === 0) return;
 
       // Set modal title
-      document.getElementById('modalTitle').textContent =
-        galleryType === 'workshops' ? 'Special Workshops' :
-        galleryType === 'sunsets' ? 'Queer Salsa Sunsets' :
-        galleryType === 'sundance' ? 'Sun Dance Day Fest' :
-        galleryType === 'qldla' ? 'Queer Latin Dance LA' :
-        galleryType === '4weekseries1' ? '4 Week Series' :
-        galleryType === 'queersalsasocial' ? 'Queer Salsa Social' :
-        galleryType === 'shefest' ? '2025 She Fest Workshop' :
-        galleryType === 'allevents' ? 'All Events' :
-        'Gallery';
+    document.getElementById('modalTitle').textContent =
+      galleryType === 'workshops' ? 'Special Workshops' :
+      galleryType === 'sunsets' ? 'Queer Salsa Sunsets' :
+      galleryType === 'sundance' ? 'Sun Dance Day Fest' :
+      galleryType === 'qldla' ? 'Queer Latin Dance LA' :
+      galleryType === 'queersalsasocial' ? 'Queer Salsa Social' :
+      galleryType === '4weekseries1' ? '4 Week Series' :
+      galleryType === 'shefest' ? 'She Fest Salsa Workshop 2025' :
+      'Gallery';
       // Set main photo
       const mainPhoto = document.getElementById('mainWorkshopPhoto');
       mainPhoto.src = images[0];

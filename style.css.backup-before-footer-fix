@@ -278,9 +278,9 @@ textarea {
 header {
   background: linear-gradient(
     90deg,
-    #84087a8e 20%,
-    #632ea8d7 60%,
-    rgba(134, 72, 161, 0.79) 100%
+    #fb87f12e 20%,
+    #9751f264 60%,
+    rgba(220, 139, 255, 0.433) 100%
   );
   display: flex;
   align-items: center;
@@ -319,6 +319,29 @@ header h1 {
 }
 
 
+nav {
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  text-align: right;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+nav a {
+  color: rgb(167, 36, 255);
+  font-size:1.1rem;
+  margin: 0 0.3rem;
+  text-decoration: none;
+  font-weight: 800;
+  vertical-align: middle;
+  padding: 0;
+}
+nav a:hover {
+  color: #ffffff;
+  transition: text-shadow 0.2s, color 0.2s;
+}
 
 /* === MAIN CONTENT STYLES === */
 main {
@@ -1227,6 +1250,99 @@ body.events-page::before {
   background-clip: unset !important;
   font-weight: 700;
 }
+/* --- MISSION CARD --- */
+/* --- Mission Card Section --- */
+.mission-text {
+  font-family: 'Nunito', Arial, sans-serif;
+  font-size: 1.0rem;
+  color: #ffffff;
+  text-align: center;
+  font-weight: 100;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+  line-height: 1.6;
+}
+.mission-card {
+  max-width: 1800px;
+  height: auto;
+  min-height: 600px;
+  margin: 2.5rem auto;
+  padding: 4rem 2rem;
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+}
+.mission-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('images/SalsaSunsets/qssjun14.png') center center/cover no-repeat;
+  opacity: 0.83;
+  mask: 
+    linear-gradient(to right, transparent 0%, black 8%, #6825e3 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 8%, #6825e3 92%, transparent 100%);
+  -webkit-mask: 
+    linear-gradient(to right, transparent 0%, black 8%, rgb(104, 37, 227) 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 8%, #6825e3 92%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+  pointer-events: none;
+  z-index: -2;
+}
+.mission-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(45, 25, 85, 0.4);
+  pointer-events: none;
+  z-index: -1;
+}
+.mission-card h1, .mission-card h2 {
+  font-family: 'PassionOne','Lilita One','Signika',Arial,sans-serif;
+  font-size: 4.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 3px 3px 8px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.8);
+  position: relative;
+  z-index: 1;
+  text-transform: uppercase;
+}
+.mission-logo {
+  max-width: 300px;
+  height: auto;
+  display: block;
+  margin: 0 auto 1.5rem auto;
+  position: relative;
+  z-index: 10;
+}
+.mission-card p {
+  font-size: 1.2rem;
+  color: #C4F9CA;
+  text-align: left;
+  margin: 0 auto 1.2rem auto;
+  font-family: 'Nunito', Arial, sans-serif;
+  text-shadow: 2px 2px 4px rgb(0, 0, 0), 1px 1px 2px rgba(0,0,0,0.7);
+  position: relative;
+  z-index: 10;
+  max-width: 800px;
+  line-height: 1.7;
+  font-weight: 100;
+}
+
 /* --- INFO CARDS --- */
 /* --- QUEER SALSA SUNSETS LOGO & CARD --- */
 .qss-logo {
@@ -2059,7 +2175,7 @@ nav {
   align-items: center;
 }
 nav a {
-  color: rgb(255, 255, 255);
+  color: rgb(167, 36, 255);
   font-size:1.1rem;
   margin: 0 0.3rem;
   text-decoration: none;
@@ -2068,7 +2184,7 @@ nav a {
   padding: 0;
 }
 nav a:hover {
-  color: #7f32a9;
+  color: #ffffff;
   transition: text-shadow 0.2s, color 0.2s;
 }
 
@@ -2414,7 +2530,6 @@ button {
   display: block;
   object-fit: contain;
   margin-top: -5rem;
-  margin-right: 35px;
 }
 .hero-content p {
   font-size: 1.3rem;
@@ -2507,7 +2622,12 @@ body.events-page::before {
   display: inline-block;
   font-size: 6rem;
   font-weight: 1200;
-  color: white;
+  background: linear-gradient(90deg, #ffbf8a, #b179ff, #fd96ff, #b57edc);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   padding-right: 4rem;
   animation: scroll 18s linear infinite;
   white-space: nowrap;
@@ -4158,9 +4278,9 @@ textarea {
 header {
   background: linear-gradient(
     90deg,
-    #f475ea2e 20%,
-    #9751f2c8 60%,
-    rgba(151, 54, 193, 0.651) 100%
+    #fb87f12e 20%,
+    #9751f264 60%,
+    rgba(220, 139, 255, 0.433) 100%
   );
   display: flex;
   align-items: center;
@@ -4205,22 +4325,21 @@ nav {
   flex: 1;
   text-align: right;
   display: flex;
-  gap: 0.4rem;
+  gap: 0.6rem;
   justify-content: flex-end;
   align-items: center;
-  margin-right: 35px;
-} 
+}
 nav a {
-  color: rgb(237, 232, 237);
+  color: rgb(167, 36, 255);
   font-size:1.1rem;
   margin: 0 0.3rem;
   text-decoration: none;
-  font-weight: 1500;
+  font-weight: 800;
   vertical-align: middle;
   padding: 0;
 }
 nav a:hover {
-  color: #8b4fae;
+  color: #ffffff;
   transition: text-shadow 0.2s, color 0.2s;
 }
 
@@ -4506,7 +4625,6 @@ button {
   display: block;
   object-fit: contain;
   margin-top: -5rem;
-  margin-right: 45px;
 }
 .hero-content p {
   font-size: 1.3rem;
@@ -4599,7 +4717,12 @@ body.events-page::before {
   display: inline-block;
   font-size: 6rem;
   font-weight: 1200;
-  color: white;
+  background: linear-gradient(90deg, #ffbf8a, #b179ff, #fd96ff, #b57edc);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   padding-right: 4rem;
   animation: scroll 18s linear infinite;
   white-space: nowrap;
