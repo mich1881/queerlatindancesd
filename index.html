@@ -8,6 +8,54 @@
   <link rel="stylesheet" href="styles/global.css">
   <link rel="stylesheet" href="style.css" />
   <style>
+/* Skip to main content link for keyboard navigation */
+.skip-to-main {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 1rem;
+  background-color: #4B0082;
+  color: white;
+  text-decoration: none;
+  border-radius: 0 0 4px 0;
+}
+
+.skip-to-main:focus {
+  left: 0;
+  top: 0;
+}
+
+/* Visually hidden class for screen reader only content */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Enhanced focus indicators for keyboard navigation */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 3px solid #a826ff;
+  outline-offset: 2px;
+}
+
+/* Ensure interactive elements have visible focus */
+.cta-btn:focus,
+.faq-question:focus,
+nav a:focus {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
 .newsletter-preview-section {
   margin: 2rem 0;
   padding: 0 1rem;
@@ -613,6 +661,7 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-to-main">Skip to main content</a>
   <div id="sparkle-bg"></div>
 <header>
   <a href="index.html">
@@ -629,7 +678,7 @@
   </nav>
   
   <!-- Mobile Navigation Toggle -->
-  <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+  <button class="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav">
     <span></span>
     <span></span>
     <span></span>
@@ -637,7 +686,7 @@
 </header>
 
 <!-- Mobile Navigation Menu -->
-<div class="mobile-nav-menu">
+<div class="mobile-nav-menu" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
   <nav>
     <a href="team.html">Team</a>
     <a href="Events.html">Events</a>
@@ -647,55 +696,59 @@
     <a href="book-us.html">Book Us</a>
   </nav>
 </div>
-<main>
-  <section class="hero-flex">
+<main id="main-content">
+  <section class="hero-flex" aria-labelledby="hero-heading">
     <div class="hero-content">
       <img src="images/home/qldsdlogo3.png" alt="Queer Latin Dance SD - Celebrates Your Identity in Every Step" class="hero-logo" />
+      <h1 id="hero-heading" class="visually-hidden">Welcome to Queer Latin Dance SD</h1>
       <a href="Events.html" class="cta-btn">See Upcoming Events</a>
     </div>
-    <section id="photoGallery">
-      <div class="swipe-gallery">
-        <img src="images/home/photo1.png" alt="Sun Dance Day Fest 1" class="swipe-img faded-img active" />
-        <img src="images/home/photo2.png" alt="Sun Dance Day Fest 2" class="swipe-img faded-img" />
-        <img src="images/Michelle1.jpeg" alt="Group Hug" class="swipe-img faded-img" />
-        <img src="images/home/photo3.png" alt="Sun Dance Day Fest 3" class="swipe-img faded-img" />
-        <img src="images/home/photo4.png" alt="Sun Dance Day Fest 4" class="swipe-img faded-img" />
-        <img src="images/SalsaSunsets/IMG_7851.JPG" alt="Pat and Miguel" class="swipe-img faded-img"/>
-        <img src="images/home/photo6.png" alt="Sun Dance Day Fest 6" class="swipe-img faded-img" />
-        <img src="images/home/photo7.png" alt="Sun Dance Day Fest 7" class="swipe-img faded-img" />
+    <section id="photoGallery" aria-label="Photo slideshow">
+      <div class="swipe-gallery" role="region" aria-roledescription="carousel" aria-label="Community event photos">
+        <img src="images/home/photo1.png" alt="Community members dancing at Sun Dance Day Fest, celebrating together outdoors" class="swipe-img faded-img active" />
+        <img src="images/home/photo2.png" alt="Dancers enjoying salsa at Sun Dance Day Fest in a vibrant outdoor setting" class="swipe-img faded-img" />
+        <img src="images/Michelle1.jpeg" alt="Group of friends sharing a warm hug at a community dance event" class="swipe-img faded-img" />
+        <img src="images/home/photo3.png" alt="Participants learning salsa moves at Sun Dance Day Fest" class="swipe-img faded-img" />
+        <img src="images/home/photo4.png" alt="Colorful dance celebration at Sun Dance Day Fest with community members" class="swipe-img faded-img" />
+        <img src="images/SalsaSunsets/IMG_7851.JPG" alt="Pat and Miguel dancing together at Salsa Sunsets event" class="swipe-img faded-img"/>
+        <img src="images/home/photo6.png" alt="Joyful dancing scene from Sun Dance Day Fest" class="swipe-img faded-img" />
+        <img src="images/home/photo7.png" alt="Community gathering and dancing at Sun Dance Day Fest" class="swipe-img faded-img" />
         <!-- ...existing swipe gallery code... -->
       </div>
     </section>
   </section>
 </main>
-<section class="newsletter-preview-section">
+<section class="newsletter-preview-section" aria-labelledby="newsletter-section-heading">
+  <h2 id="newsletter-section-heading" class="visually-hidden">Newsletter Information</h2>
   <div class="newsletter-container">
     <div class="newsletter-preview">
       <h2>Newsletter Preview</h2>
-      <div class="newsletter-swipe-gallery">
-        <img src="images/home/News1.png" alt="Newsletter Preview 1" class="swipe-img faded-img active" />
-        <img src="images/home/News2.png" alt="Newsletter Preview 2" class="swipe-img faded-img" />
-        <img src="images/home/News3.png" alt="Newsletter Preview 3" class="swipe-img faded-img" />
-        <img src="images/home/News4.png" alt="Newsletter Preview 4" class="swipe-img faded-img" />
-        <img src="images/home/News5.png" alt="Newsletter Preview 5" class="swipe-img faded-img" />
+      <div class="newsletter-swipe-gallery" role="region" aria-roledescription="carousel" aria-label="Newsletter preview images">
+        <img src="images/home/News1.png" alt="Newsletter preview showing upcoming events and community highlights" class="swipe-img faded-img active" />
+        <img src="images/home/News2.png" alt="Newsletter preview featuring dance tips and event announcements" class="swipe-img faded-img" />
+        <img src="images/home/News3.png" alt="Newsletter preview with community stories and upcoming classes" class="swipe-img faded-img" />
+        <img src="images/home/News4.png" alt="Newsletter preview highlighting special events and workshops" class="swipe-img faded-img" />
+        <img src="images/home/News5.png" alt="Newsletter preview showcasing community achievements and celebrations" class="swipe-img faded-img" />
         <!-- Add more newsletter images as needed -->
       </div>
     </div>
     <div class="newsletter-subscribe">
       <h2>Subscribe to Our Newsletter</h2>
-      <form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec">
-        <input type="email" name="email" required placeholder="Enter your email ..." />
+      <form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec" aria-label="Newsletter subscription form">
+        <label for="newsletter-email" class="visually-hidden">Email address</label>
+        <input type="email" id="newsletter-email" name="email" required placeholder="Enter your email ..." aria-required="true" />
         <button type="submit">Subscribe</button>
       </form>
     </div>
   </div>
 </section>
-<section class="salsa-history-section">
+<section class="salsa-history-section" aria-labelledby="salsa-history-heading">
       <div class="history-header">
-        <img src="images/home/historylogo.png" alt="The Vibrant History of Salsa" class="history-logo" />
+        <img src="images/home/historylogo.png" alt="" role="presentation" class="history-logo" />
+        <h2 id="salsa-history-heading" class="visually-hidden">The Vibrant History of Salsa</h2>
       </div>
       <div class="newspaper-columns">
-        <div class="column">
+        <article class="column">
           <h2>Origins & Roots</h2>
           <p>
             Salsa is more than a dance: it's a living, breathing celebration of Afro-Latino culture, resilience, and joy. Its roots stretch across the Caribbean, blending rhythms and movements from Cuba, Puerto Rico, and the vibrant immigrant communities of New York City.
@@ -706,11 +759,11 @@
           <p>
             The heartbeat of salsa is Afro-Latino. African rhythms, percussion, and call-and-response vocals are at its core, reflecting the deep influence of the African diaspora in the Caribbean.
           </p>
-        </div>
-        <div class="column">
-          <h2>Celia Cruz: The Queen <a href="https://youtu.be/cu1tsaLp65M" target="_blank"><img src="images/icons/youtubeicon.png" alt="Video" class="video-icon"></a></h2>
+        </article>
+        <article class="column">
+          <h2>Celia Cruz: The Queen <a href="https://youtu.be/cu1tsaLp65M" target="_blank" rel="noopener noreferrer" aria-label="Watch Celia Cruz video on YouTube (opens in new tab)"><img src="images/icons/youtubeicon.png" alt="" role="presentation" class="video-icon"></a></h2>
           <div class="image-container">
-            <img src="images/celia-cruz.jpg" alt="Celia Cruz singing" />
+            <img src="images/celia-cruz.jpg" alt="Celia Cruz performing on stage, singing with passion and joy" />
           </div>
           <p>
             No salsa history is complete without <strong>Celia Cruz</strong>, the legendary Cuban singer known as the "Queen of Salsa." Her powerful voice, infectious energy, and iconic shout—<em>¡Azúcar!</em>—made her a global ambassador for salsa and Afro-Cuban music.
@@ -721,23 +774,27 @@
           <p>
             Cruz's legacy continues to inspire new generations of musicians and dancers, reminding us of the power of music to unite and uplift.
           </p>
-        </div>
+        </article>
         
-        <div class="column">
+        <article class="column">
           <h2>Sound & Movement</h2>
           <p>
             Salsa music is a rich tapestry of rhythms and instruments. The clave, a two-note pattern, is the backbone of salsa's rhythm, guiding dancers and musicians alike. Brass sections, piano montunos, and bass lines create a vibrant soundscape that invites movement.
           </p>
+          <div class="image-container">
+            <img src="images/conga-drums.jpg" alt="Traditional conga drums used in salsa music" />
+          </div>
           <p>
             The conga drum is essential to salsa's rhythm, driving the music with its deep, resonant tones. Alongside timbales, bongos, and cowbell, the conga brings the pulse of Africa to every salsa song.
           </p>
           <p>
-            Salsa is a dance of improvisation, where dancers express themselves through movement, rhythm, and connection. It's a dance that transcends language, culture, and identity, inviting everyone to join in the celebration.
+            Salsa is a dance of improvisation, where dancers express themselves through movement, rhythm, and connection. 
+            <!-- It's a dance that transcends language, culture, and identity, inviting everyone to join in the celebration.
           </p>
           <p>
             Today, salsa is a global phenomenon, connecting people of all backgrounds and identities. Its spirit of community, improvisation, and joy lives on in dance floors around the world!
-          </p>
-        </div>
+          </p> -->
+        </article>
       </div>
     </section>
     <div class="scrolling-message">
@@ -746,71 +803,71 @@
   </span>
 </div>
 <!-- FAQ Section -->
-<section class="faq-section">
+<section class="faq-section" aria-labelledby="faq-heading">
   <div class="faq-container">
     <div class="faq-title">
-      <h2><span>F</span><span>A</span><span>Q</span><span>s</span></h2>
+      <h2 id="faq-heading"><span>F</span><span>A</span><span>Q</span><span>s</span></h2>
     </div>
     
     <div class="faq-questions">
       <h3>Have a question that isn't covered below? Please send us an email!</h3>
-      <div class="faq-list">
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFAQ(this)">
+      <div class="faq-list" role="list">
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-1">
             What is Salsa?
-            <span class="faq-icon">+</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
           </button>
-          <div class="faq-answer">
+          <div class="faq-answer" id="faq-answer-1">
             <p>Salsa is both a music genre and a partner dance that developed in the mid-20th century. Its roots trace back to Cuba, where the son cubano blended Spanish guitar with African rhythms in the late 1800s. By the 1940s and 1950s, Cuban musicians brought these rhythms to New York City, where they mixed with jazz, mambo, and Puerto Rican musical traditions. The term “salsa” became popular in the 1970s, thanks to Fania Records, which marketed this vibrant mix as a new style. Today, salsa is danced and celebrated worldwide, known for its energetic footwork, partner connection, and rhythmic diversity.</p>
           </div>
         </div>
         
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFAQ(this)">
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-2">
             What is the difference between Salsa On1 and On2?
-            <span class="faq-icon">+</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
           </button>
-          <div class="faq-answer">
+          <div class="faq-answer" id="faq-answer-2">
             <p>The distinction comes from which beat of the 8-count musical phrase the dancer begins their basic step. Salsa On1 (popularized in Los Angeles in the 1990s) breaks forward on the first beat, making the style feel fast, sharp, and showy. Often matching the horn section of salsa music. Salsa On2 (developed in New York and associated with Eddie Torres in the 1980s) breaks forward on the second beat, aligning more closely with the clave rhythm, which has African and Afro-Cuban origins dating back centuries. On2 is often described as smoother, more rhythmically grounded, and deeply connected to traditional salsa music’s roots. Both styles share the same fundamentals. The timing simply shifts the feel of the dance.</p>
           </div>
         </div>
         
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFAQ(this)">
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-3">
             What is Bachata?
-            <span class="faq-icon">+</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
           </button>
-          <div class="faq-answer">
+          <div class="faq-answer" id="faq-answer-3">
             <p>Bachata originated in the Dominican Republic in the early 1960s, emerging as a fusion of bolero, son, and Afro-Caribbean rhythms. Initially marginalized as “lower-class” music, bachata was closely tied to themes of heartbreak, longing, and romance. In 1962, José Manuel Calderón recorded one of the first recognized bachata songs, “Borracho de Amor,” which helped establish the genre. Through the 1980s and 1990s, artists like Juan Luis Guerra and Aventura brought bachata to international audiences. The dance itself features a simple side-to-side basic step with a tap on the 4th beat, but over time it has expanded into multiple styles: traditional Dominican bachata, modern bachata (with more body movement and fusion elements), and sensual bachata (developed in Spain in the 2000s). Today, bachata is one of the most popular social dances worldwide.</p>
           </div>
         </div>
         
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFAQ(this)">
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-4">
             How long does it take to learn Salsa or Bachata?
-            <span class="faq-icon">+</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
           </button>
-          <div class="faq-answer">
+          <div class="faq-answer" id="faq-answer-4">
             <p>Learning times vary, but history shows both dances were created in social settings meant to be enjoyed by everyday people, not just professionals. Most students pick up the basics within 4–6 weeks of consistent classes. Salsa, which evolved through decades of cultural exchange has more complex rhythms and may take longer to master musically. Bachata, which began in the Dominican Republic in the 1960s, has a simpler basic step and is often easier for beginners to feel comfortable dancing within a few weeks. With steady practice, dancers can usually join social dance floors confidently in 3–6 months.</p>
           </div>
         </div>
         
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFAQ(this)">
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-5">
             What is Queer Salsa at the Park?
-            <span class="faq-icon">+</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
           </button>
-          <div class="faq-answer">
+          <div class="faq-answer" id="faq-answer-5">
             <p>Queer Salsa at the Park is an inclusive community event that honors the long history of salsa and bachata while creating a modern, welcoming space for everyone. In traditional salsa and bachata, roles were historically gendered. Men led and women followed which reflected the social norms of the mid-20th century. However, dance has always been a form of resistance and liberation. By the 1990s and 2000s, queer dancers worldwide began reclaiming salsa and bachata, showing that anyone can lead, follow, or switch roles regardless of gender identity. Queer Salsa at the Park is about celebrating joy, community, and freedom while connecting to the rich Afro-Caribbean and Latin roots of these dances in an open-air, affirming environment. It is a potluck style gathering with a free Salsa or Bachata lesson and group activities to allow folks to connect.</p>
           </div>
         </div>
         
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFAQ(this)">
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-6">
             What is your return policy?
-            <span class="faq-icon">+</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
           </button>
-          <div class="faq-answer">
+          <div class="faq-answer" id="faq-answer-6">
             <p>At this time, we are unable to offer refunds. Social dance events and classes require advance planning and costs, which means all purchases are final. If you are unable to attend, you may transfer your spot to a friend or community member. Please contact us if you’d like help arranging a transfer.</p>
           </div>
         </div>
@@ -818,15 +875,16 @@
     </div>
   </div>
 </section>
-   <footer class="footer">
+   <footer class="footer" role="contentinfo">
       <div class="footer-bottom">
         <div class="footer-newsletter">
           <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
-          <form>
-            <input type="email" placeholder="Enter your email ..." required>
+          <form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec" aria-label="Footer newsletter subscription form">
+            <label for="footer-email" class="visually-hidden">Email address</label>
+            <input type="email" id="footer-email" name="email" placeholder="Enter your email ..." required aria-required="true">
             <button type="submit">Subscribe</button>
           </form>
-          <div class="footer-links">
+          <nav class="footer-links" aria-label="Footer navigation">
             <a href="team.html">Team</a>
             <a href="Events.html">Events</a>
             <a href="gallery.html">Gallery</a>
@@ -834,16 +892,16 @@
             <a href="lessons.html">Lessons</a>
             <a href="book-us.html">Book Us</a>
             <a href="contact.html">Contact Us</a>
-          </div>
+          </nav>
         </div>
         <div class="footer-social">
           <h3>Follow Us</h3>
           <div class="footer-social-icons">
-            <a href="https://www.instagram.com/queerlatindancesd/"><img src="images/icons/instagramlogo.png" alt="Instagram"></a>
-            <a href="https://www.youtube.com/@QueerLatinDance"><img src="images/icons/youtubeicon.png" alt="YouTube"></a>
-            <a href="https://www.tiktok.com/@queerlatindance"><img src="images/icons/tiktokicon2.png" alt="TikTok"></a>
-            <a href="https://linktr.ee/queerlatindancesd"><img src="images/icons/linktreelogo.png" alt="Linktree"></a>
-            <a href="https://chat.whatsapp.com/Hn9iICBTIPm9mCIEGcDRSr?mode=r_c"><img src="images/icons/whatsappicon.jpg" alt="WhatsApp"></a>
+            <a href="https://www.instagram.com/queerlatindancesd/" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram (opens in new tab)"><img src="images/icons/instagramlogo.png" alt="" role="presentation"></a>
+            <a href="https://www.youtube.com/@QueerLatinDance" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to our YouTube channel (opens in new tab)"><img src="images/icons/youtubeicon.png" alt="" role="presentation"></a>
+            <a href="https://www.tiktok.com/@queerlatindance" target="_blank" rel="noopener noreferrer" aria-label="Follow us on TikTok (opens in new tab)"><img src="images/icons/tiktokicon2.png" alt="" role="presentation"></a>
+            <a href="https://linktr.ee/queerlatindancesd" target="_blank" rel="noopener noreferrer" aria-label="Visit our Linktree (opens in new tab)"><img src="images/icons/linktreelogo.png" alt="" role="presentation"></a>
+            <a href="https://chat.whatsapp.com/Hn9iICBTIPm9mCIEGcDRSr?mode=r_c" target="_blank" rel="noopener noreferrer" aria-label="Join our WhatsApp community (opens in new tab)"><img src="images/icons/whatsappicon.jpg" alt="" role="presentation"></a>
           </div>
           <div class="footer-copyright">
             © 2025 Queer Latin Dance. All Rights Reserved.
@@ -972,19 +1030,24 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-// FAQ Toggle functionality
+// FAQ Toggle functionality with accessibility improvements
 function toggleFAQ(button) {
   const faqItem = button.parentElement;
   const isActive = faqItem.classList.contains('active');
   
-  // Close all FAQ items
+  // Close all FAQ items and update aria-expanded
   document.querySelectorAll('.faq-item').forEach(item => {
     item.classList.remove('active');
+    const btn = item.querySelector('.faq-question');
+    if (btn) {
+      btn.setAttribute('aria-expanded', 'false');
+    }
   });
   
-  // If this item wasn't active, open it
+  // If this item wasn't active, open it and update aria-expanded
   if (!isActive) {
     faqItem.classList.add('active');
+    button.setAttribute('aria-expanded', 'true');
   }
 }
 
@@ -993,8 +1056,22 @@ document.addEventListener('click', function(e) {
   if (!e.target.closest('.faq-item')) {
     document.querySelectorAll('.faq-item').forEach(item => {
       item.classList.remove('active');
+      const btn = item.querySelector('.faq-question');
+      if (btn) {
+        btn.setAttribute('aria-expanded', 'false');
+      }
     });
   }
+});
+
+// Keyboard support for FAQ items
+document.querySelectorAll('.faq-question').forEach(button => {
+  button.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleFAQ(this);
+    }
+  });
 });
 </script>
 
