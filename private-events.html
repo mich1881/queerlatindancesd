@@ -12,8 +12,8 @@
       min-height: 100vh;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #f3e5f5 0%, #d1aaff 40%, #b388ff 70%, #a259c6 100%);
-      color: #4a148c;
+      background: linear-gradient(135deg, #e3d5f3 0%, #c9b0e8 50%, #b39ddb 100%);
+      color: #4a4a4a;
       font-family: 'Nunito', Arial, sans-serif;
     }
     .form-container {
@@ -24,20 +24,22 @@
     .form-header {
       text-align: center;
       margin-bottom: 2rem;
-      background: rgba(255,255,255,0.25);
+      background: rgba(110, 83, 160, 0.4);
       border-radius: 16px;
       padding: 2rem;
     }
     h1 {
       font-size: 2.5rem;
       margin-bottom: 0.5rem;
-      font-family: 'Nunito', Arial, sans-serif;
-      letter-spacing: 1px;
+      font-weight: 700;
+      font-family: 'PassionOne','Nunito', Arial, sans-serif;
+      letter-spacing: 0.5px;
       color: #ffffff;
     }
     .form-header p {
       font-size: 1.1rem;
-      color: #ffffff;
+      font-style: 'nunito', Arial, sans-serif;
+      color: #f4f2f7;
       margin: 0;
     }
     .inquiry-form {
@@ -51,10 +53,10 @@
     }
     .form-section h2 {
       font-size: 1.5rem;
-      color: #4a148c;
+      color: #6a3ea1;
       margin-bottom: 1.5rem;
       padding-bottom: 0.5rem;
-      border-bottom: 2px solid #b388ff;
+      border-bottom: 2px solid #9575cd;
     }
     .form-group {
       margin-bottom: 1.5rem;
@@ -63,15 +65,19 @@
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 600;
-      color: #4a148c;
+      color: #5a5349;
       font-size: 1rem;
     }
     .required {
-      color: #d32f2f;
+      color: #8e24aa;
+    }
+    .optional {
+      font-weight: 400;
+      color: #999999;
     }
     .checkbox-item label,
     .radio-item label {
-      color: #4a148c;
+      color: #5a5a5a;
     }
     .form-group input[type="text"],
     .form-group input[type="email"],
@@ -88,6 +94,8 @@
       font-size: 1rem;
       font-family: 'Nunito', Arial, sans-serif;
       transition: border-color 0.3s;
+      color: #5a5349;
+      background-color: #fefefe;
     }
     .form-group input:focus,
     .form-group select:focus,
@@ -143,7 +151,7 @@
     .submit-btn {
       width: 100%;
       padding: 1rem 2rem;
-      background: linear-gradient(90deg, #b388ff 0%, #7b1fa2 100%);
+      background: linear-gradient(90deg, #b39ddb 0%, #9575cd 100%);
       color: white;
       border: none;
       border-radius: 8px;
@@ -151,12 +159,12 @@
       font-weight: 600;
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 12px rgba(123,31,162,0.3);
+      box-shadow: 0 4px 12px rgba(149, 117, 205, 0.3);
       font-family: 'Nunito', Arial, sans-serif;
     }
     .submit-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(123,31,162,0.4);
+      box-shadow: 0 6px 16px rgba(149, 117, 205, 0.4);
     }
     .submit-btn:active {
       transform: translateY(0);
@@ -188,42 +196,19 @@
     }
     .back-home a {
       display: inline-block;
-      padding: 1rem 2.5rem;
-      background: rgba(255, 255, 255, 0.3);
+      padding: 1rem 2.2rem;
+      background: rgba(248, 245, 255, 0.621);
       color: #4a148c;
       text-decoration: none;
       border-radius: 50px;
       font-weight: 600;
       font-size: 1.1rem;
       transition: background 0.3s ease, transform 0.2s ease;
-      border: 2px solid rgba(255, 255, 255, 0.5);
+      border: 3px solid rgb(255, 255, 255);
     }
     .back-home a:hover {
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(179, 157, 219, 0.7);
       transform: translateY(-2px);
-    }
-    @media (max-width: 768px) {
-      .page-header h1 {
-        font-size: 2.5rem;
-      }
-      .page-header p {
-        font-size: 1.1rem;
-      }
-      .button-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-        padding: 0 1rem;
-      }
-      .circle {
-        width: 220px;
-        height: 220px;
-      }
-      .circle-title {
-        font-size: 1.3rem;
-      }
-      .circle-subtitle {
-        font-size: 0.85rem;
-      }
     }
   </style>
 </head>
@@ -264,15 +249,15 @@
           <label>Preferred Method of Contact <span class="required">*</span></label>
           <div class="radio-group">
             <div class="radio-item">
-              <input type="radio" id="contactEmail" name="contactMethod" value="Email" required>
+              <input type="radio" id="contactEmail" name="preferredContact" value="Email" required>
               <label for="contactEmail">Email</label>
             </div>
             <div class="radio-item">
-              <input type="radio" id="contactPhone" name="contactMethod" value="Phone">
+              <input type="radio" id="contactPhone" name="preferredContact" value="Phone">
               <label for="contactPhone">Phone</label>
             </div>
             <div class="radio-item">
-              <input type="radio" id="contactText" name="contactMethod" value="Text">
+              <input type="radio" id="contactText" name="preferredContact" value="Text">
               <label for="contactText">Text</label>
             </div>
           </div>
@@ -284,26 +269,23 @@
         <h2>Event Details</h2>
 
         <div class="form-group">
-          <label for="privateEventType">Type of Event <span class="required">*</span></label>
-          <select id="privateEventType" name="privateEventType" required>
+          <label for="eventName">Type of Event <span class="required">*</span></label>
+          <select id="eventName" name="eventName" required>
             <option value="">Select event type...</option>
-            <option value="Birthday">Birthday</option>
+            <option value="Birthday Party">Birthday Party</option>
             <option value="Wedding">Wedding</option>
-            <option value="Anniversary">Anniversary</option>
-            <option value="House Party">House Party</option>
+            <option value="Corporate Event">Corporate Event</option>
             <option value="Quinceañera">Quinceañera</option>
+            <option value="Anniversary">Anniversary</option>
+            <option value="Fundraiser">Fundraiser</option>
+            <option value="Community Event">Community Event</option>
             <option value="Other">Other</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="guestOfHonor">Guest of Honor Name (if applicable)</label>
-          <input type="text" id="guestOfHonor" name="guestOfHonor">
-        </div>
-
-        <div class="form-group">
           <label for="eventDate">Event Date <span class="required">*</span></label>
-          <input type="date" id="eventDate" name="eventDate" required>
+          <input type="date" id="eventDate" name="eventDate" placeholder="mm/dd/yyyy" required>
         </div>
 
         <div class="form-group">
@@ -317,87 +299,65 @@
         </div>
 
         <div class="form-group">
-          <label for="location">Event Location (City + Venue Name if known) <span class="required">*</span></label>
-          <input type="text" id="location" name="location" placeholder="e.g., San Diego, Private Residence" required>
+          <label for="venueLocation">Event Location (City + Venue Name if known) <span class="required">*</span></label>
+          <input type="text" id="venueLocation" name="venueLocation" placeholder="e.g., San Diego, Private Residence" required>
         </div>
 
         <div class="form-group">
-          <label for="guestCount">Estimated Number of Guests <span class="required">*</span></label>
-          <input type="number" id="guestCount" name="guestCount" min="1" required>
+          <label for="expectedGuests">Estimated Number of Guests <span class="required">*</span></label>
+          <input type="number" id="expectedGuests" name="expectedGuests" min="1" placeholder="Approximate headcount" required>
         </div>
 
         <div class="form-group">
-          <label for="ageRange">Age Range of Guests</label>
+          <label for="ageRange">Age Range of Guests <span class="optional">(optional)</span></label>
           <input type="text" id="ageRange" name="ageRange" placeholder="e.g., 20s-40s, All ages, Kids & adults">
         </div>
       </div>
 
-      <!-- Venue Details -->
+      <!-- Venue Information -->
       <div class="form-section">
-        <h2>Venue Details</h2>
+        <h2>Venue Information</h2>
 
         <div class="form-group">
-          <label>Indoor or Outdoor? <span class="required">*</span></label>
+          <label for="venueName">Venue Name <span class="optional">(optional)</span></label>
+          <input type="text" id="venueName" name="venueName" placeholder="e.g., The Grand Ballroom">
+        </div>
+
+        <div class="form-group">
+          <label for="venueAddress">Venue Address <span class="required">*</span></label>
+          <input type="text" id="venueAddress" name="venueAddress" placeholder="Full address including city and zip" required>
+        </div>
+
+        <div class="form-group">
+          <label>Venue Type <span class="required">*</span></label>
           <div class="radio-group">
             <div class="radio-item">
-              <input type="radio" id="indoor" name="venueType" value="Indoor" required>
-              <label for="indoor">Indoor</label>
+              <input type="radio" id="indoorVenue" name="venueType" value="Indoor" required>
+              <label for="indoorVenue">Indoor</label>
             </div>
             <div class="radio-item">
-              <input type="radio" id="outdoor" name="venueType" value="Outdoor">
-              <label for="outdoor">Outdoor</label>
+              <input type="radio" id="outdoorVenue" name="venueType" value="Outdoor">
+              <label for="outdoorVenue">Outdoor</label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" id="bothVenue" name="venueType" value="Both">
+              <label for="bothVenue">Both</label>
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="venueSize">Approximate Venue Size</label>
-          <select id="venueSize" name="venueSize">
-            <option value="">Select size...</option>
-            <option value="Small (under 500 sq ft)">Small (under 500 sq ft)</option>
-            <option value="Medium (500-1500 sq ft)">Medium (500-1500 sq ft)</option>
-            <option value="Large (over 1500 sq ft)">Large (over 1500 sq ft)</option>
-          </select>
+          <label for="expectedGuests">Expected Number of Guests <span class="required">*</span></label>
+          <input type="number" id="expectedGuests" name="expectedGuests" min="1" placeholder="Approximate headcount" required>
         </div>
 
         <div class="form-group">
-          <label>Power Outlets Near Performance Area?</label>
-          <div class="radio-group">
-            <div class="radio-item">
-              <input type="radio" id="powerYes" name="powerOutlets" value="Yes">
-              <label for="powerYes">Yes</label>
-            </div>
-            <div class="radio-item">
-              <input type="radio" id="powerNo" name="powerOutlets" value="No">
-              <label for="powerNo">No</label>
-            </div>
-            <div class="radio-item">
-              <input type="radio" id="powerUnsure" name="powerOutlets" value="Not sure">
-              <label for="powerUnsure">Not sure</label>
-            </div>
-          </div>
+          <label for="ageRange">Age Range of Guests <span class="optional">(optional)</span></label>
+          <input type="text" id="ageRange" name="ageRange" placeholder="e.g., 21+, All ages, 18-35">
         </div>
 
         <div class="form-group">
-          <label>Any Noise or Volume Restrictions?</label>
-          <div class="radio-group">
-            <div class="radio-item">
-              <input type="radio" id="noiseYes" name="noiseRestrictions" value="Yes">
-              <label for="noiseYes">Yes</label>
-            </div>
-            <div class="radio-item">
-              <input type="radio" id="noiseNo" name="noiseRestrictions" value="No">
-              <label for="noiseNo">No</label>
-            </div>
-            <div class="radio-item">
-              <input type="radio" id="noiseUnsure" name="noiseRestrictions" value="Not sure">
-              <label for="noiseUnsure">Not sure</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Will There Be a Dance Floor Area?</label>
+          <label>Will There Be a Dance Floor Area? <span class="optional">(optional)</span></label>
           <div class="radio-group">
             <div class="radio-item">
               <input type="radio" id="danceFloorYes" name="danceFloor" value="Yes">
@@ -442,17 +402,17 @@
         </div>
 
         <div class="form-group">
-          <label for="musicPreferences">Music Preferences (genres, artists, vibe)</label>
+          <label for="musicPreferences">Music Preferences (genres, artists, vibe) <span class="optional">(optional)</span></label>
           <textarea id="musicPreferences" name="musicPreferences" placeholder="Let us know what you'd like to hear..."></textarea>
         </div>
 
         <div class="form-group">
-          <label for="doNotPlay">Do-Not-Play Songs or Styles</label>
+          <label for="doNotPlay">Do-Not-Play Songs or Styles <span class="optional">(optional)</span></label>
           <textarea id="doNotPlay" name="doNotPlay" placeholder="Any songs or genres to avoid?"></textarea>
         </div>
 
         <div class="form-group">
-          <label>Interested in Salsa/Bachata Lesson During Event?</label>
+          <label>Interested in Salsa/Bachata Lesson During Event? <span class="optional">(optional)</span></label>
           <div class="radio-group">
             <div class="radio-item">
               <input type="radio" id="lessonYes" name="lessonInterest" value="Yes">
@@ -463,20 +423,20 @@
               <label for="lessonNo">No</label>
             </div>
             <div class="radio-item">
-              <input type="radio" id="lessonBoth" name="lessonInterest" value="Both">
-              <label for="lessonBoth">Both</label>
+              <input type="radio" id="lessonMaybe" name="lessonInterest" value="Maybe">
+              <label for="lessonMaybe">Maybe</label>
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="lessonDuration">Select preferred duration of the dance lesson below</label>
+          <label for="lessonDuration">Preferred lesson duration <span class="optional">(optional)</span></label>
           <select id="lessonDuration" name="lessonDuration">
             <option value="">Select duration...</option>
+            <option value="30 minutes">30 minutes</option>
             <option value="45 minutes">45 minutes</option>
             <option value="1 hour">1 hour</option>
             <option value="1.5 hours">1 hour 30 minutes</option>
-            <option value="2 hours">2 hours</option>
           </select>
         </div>
       </div>
@@ -486,7 +446,7 @@
         <h2>Additional Information</h2>
 
         <div class="form-group">
-          <label>Have You Booked the Venue Already?</label>
+          <label>Have You Booked the Venue Already? <span class="optional">(optional)</span></label>
           <div class="radio-group">
             <div class="radio-item">
               <input type="radio" id="venueYes" name="venueBooked" value="Yes">
@@ -504,12 +464,12 @@
         </div>
 
         <div class="form-group">
-          <label for="onsiteContact">On-Site Contact Person (name + phone)</label>
+          <label for="onsiteContact">On-Site Contact Person (name + phone) <span class="optional">(optional)</span></label>
           <input type="text" id="onsiteContact" name="onsiteContact" placeholder="Name and phone number for day-of contact">
         </div>
 
         <div class="form-group">
-          <label for="hearAboutUs">How Did You Hear About Us?</label>
+          <label for="hearAboutUs">How Did You Hear About Us? <span class="optional">(optional)</span></label>
           <select id="hearAboutUs" name="hearAboutUs">
             <option value="">Select...</option>
             <option value="Instagram">Instagram</option>
@@ -522,7 +482,7 @@
         </div>
 
         <div class="form-group">
-          <label for="additionalNotes">Additional Notes or Special Requests</label>
+          <label for="additionalNotes">Additional Notes or Special Requests <span class="optional">(optional)</span></label>
           <textarea id="additionalNotes" name="additionalNotes" placeholder="Anything else we should know?"></textarea>
         </div>
       </div>
@@ -568,6 +528,5 @@
       });
     });
   </script>
-  </div>
 </body>
 </html>

@@ -687,32 +687,6 @@ button {
   }
 }
 
-/* === VIDEO BACKGROUND CONTAINER === */
-/* Ensure the body background shows below the cropped video */
-body.events-page::before {
-  content: '';
-  position: fixed;
-  top: 60vh;  /* Start where video ends */
-  left: 0;
-  width: 100%;
-  height: 40vh;  /* Fill remaining height */
-  background: linear-gradient(120deg,
-    #ffe29f 0%,   /* light yellow */
-    #ffb6b9 15%,  /* light pink */
-    #ffb6ff 30%,  /* light magenta */
-    #b5d8ff 45%,  /* light blue */
-    #baffc9 60%,  /* light green */
-    #fff6b7 75%,  /* light gold */
-    #ffd6e0 90%,  /* light rose */
-    #ffe29f 100%  /* repeat yellow */
-  );
-  background-attachment: fixed;
-  background-size: 200% 200%;
-  animation: rainbowMove 18s ease-in-out infinite;
-  z-index: -1;
-  pointer-events: none;
-}
-
 /* Payment1.html Modal & Form Refactor */
 .modal-overlay {
   display: none;
@@ -2706,13 +2680,13 @@ body.events-page::before {
 }
 
 .michelle-journey h1 {
-  font-family: 'Lilita One','PassionOne', Arial, sans-serif;
+  font-family: 'PassionOne', Arial, sans-serif;
   font-size: 4rem;
   text-align: right;
   margin-top: 2rem;
   margin-bottom: 2rem;
   font-weight: 1000;
-  background: linear-gradient(90deg, #ffbf8a, #b179ff, #fd96ff, #b57edc);
+  background:#ffffff;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -2720,7 +2694,7 @@ body.events-page::before {
 }
 
 .michelle-journey h2 {
-  font-family: 'Lilita One','Nunito', Arial, sans-serif;
+  font-family: 'PassionOne','Nunito', Arial, sans-serif;
   font-size: 2rem;
   text-align: right;
   margin-top: -3rem;
@@ -2744,7 +2718,7 @@ body.events-page::before {
   margin-right: 0;
   font-size: 1.2rem;
   width: 600px;
-  color: #6d009f;
+  color: #5a5349;
   font-weight: 200;
   font-family: 'Nunito', sans-serif;
 }
