@@ -7,7 +7,15 @@
   <title>Directory - Queer Latin Dance SD</title>
   <link rel="stylesheet" href="styles/global.css">
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
+    .logo-marker {
+      border-radius: 50% !important;
+      border: 2px solid #fff !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+      overflow: hidden !important;
+    }
+    
     /* Mobile responsive styles for directory table */
     @media (max-width: 768px) {
       /* Directory title mobile styles */
@@ -115,6 +123,125 @@
 <main>
   <section class="directory-section">
     <h1>Queer & Queer-Friendly Dance Instructors & Studios</h1>
+<div class="map-container" style="margin: 2rem auto; max-width: 1000px; border-radius: 18px; overflow: hidden; box-shadow: 0 8px 32px rgba(199, 165, 241, 0.3); border: 4px solid #f2f0f4; background: linear-gradient(145deg, #ffffff, #ffffff); padding: 4px;">
+  <div id="directory-map" style="height: 500px; width: 100%; border-radius: 14px;"></div>
+</div>
+    <table class="directory-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Instructors</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+<tbody>
+  <tr data-studio="Animo Dance Company">
+    <td data-label="Name">
+      <img src="images/logos/animologo.jpg" alt="Animo Dance Company Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      <a href="https://www.instagram.com/animo.dancecompany/?hl=en" target="_blank">Animo Dance Company</a>
+    </td>
+    <td data-label="Instructors">Anthony</td>
+    <td data-label="Address">Drip Studios, 5111 Santa Fe St suite DEF, San Diego, CA 92109</td>
+  </tr>
+  <tr data-studio="Bachata like Becky">
+    <td data-label="Name">
+      <img src="images/logos/beckylogo.jpg" alt="Bachata like Becky Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      <a href="https://www.instagram.com/rebeccalifeofdance/?hl=en" target="_blank">Bachata like Becky</a>
+    </td>
+    <td data-label="Instructors">Becky</td>
+    <td data-label="Address">Studio K, 9340 Clairemont Mesa Blvd, San Diego, CA 92123</td>
+  </tr>
+  <tr data-studio="In Lak'ech">
+    <td data-label="Name">
+      <img src="images/logos/inlakechlogo.jpg" alt="In Lak'ech Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      <a href="https://www.instagram.com/inlakechdance/" target="_blank">In Lak'ech</a>
+    </td>
+    <td data-label="Instructors">Varies</td>
+    <td data-label="Address">2885 Ettie St., Oakland, CA</td>
+  </tr>
+  <tr data-studio="Movement Dance Project">
+    <td data-label="Name">
+      <img src="images/logos/movementdancelogo.jpg" alt="Movement Dance Project Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      <a href="https://www.instagram.com/movementdanceproject/?hl=en" target="_blank">Movement Dance Project</a>
+    </td>
+    <td data-label="Instructors">Milton Martinez</td>
+    <td data-label="Address">Untouchable Dance Studio, 1210-A W Beverly Blvd, Montebello, CA 90640</td>
+  </tr>
+  <tr data-studio="Michelle Ramos">
+    <td data-label="Name">
+      <img src="images/logos/michelleramoslogo.jpg" alt="Michelle Ramos Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      <a href="https://www.instagram.com/salsachica_/" target="_blank">Michelle Ramos</a>
+    </td>
+    <td data-label="Instructors">Michelle Ramos</td>
+    <td data-label="Address">Location may vary, Los Angeles</td>
+  </tr>
+  <tr data-studio="Movewise Wellness">
+    <td data-label="Name">
+      <img src="images/logos/mwlogo.jpg" alt="Movewise Wellness Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      <a href="https://www.movewisewellness.com/" target="_blank">Movewise Wellness</a>
+    </td>
+    <td data-label="Instructors">Natasha Tia</td>
+    <td data-label="Address">Encinitas Wellness Center, 613 Westlake St Suite 221, Encinitas, CA 92024</td>
+  </tr>
+  <tr data-studio="On2ourage">
+    <td data-label="Name">
+      <img src="images/logos/on2ouragelogo.jpg" alt="On2ourage Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      <a href="https://on2ourage.punchpass.com/classes" target="_blank">On2ourage</a>
+    </td>
+    <td data-label="Instructors">Eder Avila</td>
+    <td data-label="Address">Jazz it Up Studios, 1309 Sartori Ave, Torrance, CA 90501</td>
+  </tr>
+  <tr data-studio="Queerchata">
+    <td data-label="Name">
+      <img src="images/logos/queerchatalogo.jpg" alt="Queerchata Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      <a href="https://www.queerchata.com/" target="_blank">Queerchata</a>
+    </td>
+    <td data-label="Instructors">Zen</td>
+    <td data-label="Address">1450 University Ave, Unit 2A, San Diego, CA 92103</td>
+  </tr>
+  <tr data-studio="Queer Latin Dance LA">
+    <td data-label="Name">
+      <img src="images/logos/qldlalogo.jpg" alt="Queer Latin Dance LA Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      <a href="https://www.instagram.com/queerlatindancela/" target="_blank">Queer Latin Dance LA</a>
+    </td>
+    <td data-label="Instructors">Arlene Santos</td>
+    <td data-label="Address">Location may vary, Los Angeles</td>
+  </tr>
+  <tr data-studio="Queer Latin Dance OC">
+    <td data-label="Name">
+      <img src="images/logos/qldoclogo.jpg" alt="Queer Latin Dance OC Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      <a href="https://www.instagram.com/queerlatindanceoc/" target="_blank">Queer Latin Dance OC</a>
+    </td>
+    <td data-label="Instructors">Rorris</td>
+    <td data-label="Address">Passion Y Tumbao, 1830 W Lincoln Ave, Anaheim, CA</td>
+  </tr>
+  <tr data-studio="Queer Latin Dance SD">
+    <td data-label="Name">
+      <img src="images/logos/logo2.jpg" alt="Queer Latin Dance San Diego Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      <a href="https://www.queerlatindance.com/" target="_blank">Queer Latin Dance San Diego</a>
+    </td>
+    <td data-label="Instructors">Michelle Fernandez</td>
+    <td data-label="Address">Studio K, 9340 Clairemont Mesa Blvd, San Diego, CA 92123</td>
+  </tr>
+  <tr data-studio="The Salsa Beat">
+    <td data-label="Name">
+      <img src="images/logos/thesalsabeatlogo.jpg" alt="The Salsa Beat Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      <a href="https://www.thesalsabeat.com/" target="_blank">The Salsa Beat</a>
+    </td>
+    <td data-label="Instructors">Ericka & Juan-2-3</td>
+    <td data-label="Address">Studio K, 9340 Clairemont Mesa Blvd, San Diego, CA 92123</td>
+  </tr>
+  <tr data-studio="Queer Tango">
+    <td data-label="Name">
+      <img src="images/logos/queertangologo.jpg" alt="Queer Tango Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      <a href="https://www.instagram.com/queertangosd/" target="_blank">Queer Tango</a>
+    </td>
+    <td data-label="Instructors">Nicole & Brittany</td>
+    <td data-label="Address">YogaOne, 1920 Fort Stockton Dr, San Diego</td>
+  </tr>
+</tbody>
+    </table>
+    <h1>International - Queer & Queer-Friendly Dance Instructors & Studios</h1>
     <table class="directory-table">
       <thead>
         <tr>
@@ -124,61 +251,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td data-label="Name"><a href="https://www.instagram.com/animo.dancecompany/?hl=en" target="_blank">Animo Dance Company</a></td>
-          <td data-label="Instructors">Anthony</td>
-          <td data-label="Address">Drip Studios, 5111 Santa Fe St suite DEF, San Diego, CA 92109</td>
-        </tr>
-        <tr>
-          <td data-label="Name"><a href="https://www.instagram.com/rebeccalifeofdance/?hl=en" target="_blank">Bachata like Becky</a></td>
-          <td data-label="Instructors">Becky</td>
-          <td data-label="Address">Studio K, 9340 Clairemont Mesa Blvd, San Diego, CA 92123</td>
-        </tr>
-        <tr>
-          <td data-label="Name"><a href="https://www.instagram.com/movementdanceproject/?hl=en" target="_blank">Movement Dance Project</a></td>
-          <td data-label="Instructors">Milton Martinez</td>
-          <td data-label="Address">Untouchable Dance Studio, 1210-A W Beverly Blvd, Montebello, CA 90640</td>
-        </tr>
-        <tr>
-          <td data-label="Name"><a href="https://www.instagram.com/salsachica_/" target="_blank">Michelle Ramos</a></td>
-          <td data-label="Instructors">Michelle Ramos</td>
-          <td data-label="Address">Location may vary, Los Angeles</td>
-        </tr>
-        <tr>
-          <td data-label="Name"><a href="https://www.movewisewellness.com/" target="_blank">Movewise Wellness</a></td>
-          <td data-label="Instructors">Natasha Tia</td>
-          <td data-label="Address">Encinitas Wellness Center, 613 Westlake St Suite 221, Encinitas, CA 92024</td>
-        </tr>
-        <tr>
-          <td data-label="Name"><a href="https://on2ourage.punchpass.com/classes" target="_blank">On2ourage</a></td>
-          <td data-label="Instructors">Eder Avila</td>
-          <td data-label="Address">Jazz it Up Studios, 1309 Sartori Ave, Torrance, CA 90501</td>
-        </tr>
-        <tr>
-          <td data-label="Name"><a href="https://www.queerchata.com/" target="_blank">Queerchata</a></td>
-          <td data-label="Instructors">Zen</td>
-          <td data-label="Address">1450 University Ave, Unit 2A, San Diego, CA 92103</td>
-        </tr>
-        <tr>
-          <td data-label="Name"><a href="https://www.instagram.com/queerlatindancela/" target="_blank">Queer Latin Dance LA</a></td>
-          <td data-label="Instructors">Arlene Santos</td>
-          <td data-label="Address">Location may vary, Los Angeles</td>
-        </tr>
-        <tr>
-          <td data-label="Name"><a href="https://www.queerlatindance.com/" target="_blank">Queer Latin Dance San Diego</a></td>
-          <td data-label="Instructors">Michelle Fernandez</td>
-          <td data-label="Address">Location may vary, San Diego</td>
-        </tr>
-        <tr>
-          <td data-label="Name"><a href="https://www.thesalsabeat.com/" target="_blank">The Salsa Beat</a></td>
-          <td data-label="Instructors">Ericka & Juan-2-3</td>
-          <td data-label="Address">Studio K, 9340 Clairemont Mesa Blvd, San Diego, CA 92123</td>
-        </tr>
-          <tr>
-          <td data-label="Name"><a href="https://www.instagram.com/queertangosd/" target="_blank">Queer Tango</a></td>
-          <td data-label="Instructors">Nicole & Brittany</td>
-          <td data-label="Address">YogaOne, 1920 Fort Stockton Dr, San Diego</td>
-        </tr>
+<tr data-studio="Queer Afro Latin Dance Vancouver">
+  <td data-label="Name">
+    <img src="images/logos/qaldvlogo.jpg" alt="Queer Afro Latin Dance Vancouver Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+    <a href="https://www.instagram.com/qaldv.ca/" target="_blank">Queer Afro Latin Dance Vancouver</a>
+  </td>
+  <td data-label="Instructors">Varies</td>
+  <td data-label="Address">Dance Vancouver Studio, 1627 West Broadway, Vancouver, BC, V6J1W9</td>
+</tr>
       </tbody>
     </table>
   </section>
@@ -193,23 +273,40 @@
           <th>Address</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td data-label="Name">DJ Basico</td>
-          <td data-label="Type">DJ</td>
-          <td data-label="Address">Location may vary depending on events</td>
-        </tr>
-        <tr>
-          <td data-label="Name">Manny Cepeda</td>
-          <td data-label="Type">Latin Band</td>
-          <td data-label="Address">Location may vary depending on events</td>
-        </tr>
-        <tr>
-          <td data-label="Name">Sabrosas Latin Orchestra</td>
-          <td data-label="Type">Latin Band</td>
-          <td data-label="Address">Location may vary depending on events</td>
-        </tr>
-      </tbody>
+<tbody>
+  <tr>
+    <td data-label="Name">
+      <img src="images/logos/anemonelogo.jpg" alt="Anemone String Quartet Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      Anemone String Quartet
+    </td>
+    <td data-label="Type">Band</td>
+    <td data-label="Address">Location may vary depending on events</td>
+  </tr>
+  <tr>
+    <td data-label="Name">
+      <img src="images/logos/djbasicologo.jpg" alt="DJ Basico Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      DJ Basico
+    </td>
+    <td data-label="Type">DJ</td>
+    <td data-label="Address">Location may vary depending on events</td>
+  </tr>
+  <tr>
+    <td data-label="Name">
+      <img src="images/logos/mannycepedalogo.jpg" alt="Manny Cepeda Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      Manny Cepeda
+    </td>
+    <td data-label="Type">Latin Band</td>
+    <td data-label="Address">Location may vary depending on events</td>
+  </tr>
+  <tr>
+    <td data-label="Name">
+      <img src="images/logos/sabrosaslogo.jpg" alt="Sabrosas Latin Orchestra Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
+      Sabrosas Latin Orchestra
+    </td>
+    <td data-label="Type">Latin Band</td>
+    <td data-label="Address">Location may vary depending on events</td>
+  </tr>
+</tbody>
     </table>
   </section>
 </main>
@@ -246,6 +343,67 @@
   </div>
 </footer>
 <script src="script.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+const map = L.map('directory-map').setView([34.0522, -118.2437], 7);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+const locations = [
+  {name: "Animo Dance Company", lat: 32.7806, lng: -117.2340, instructor: "Anthony", link: "https://www.instagram.com/animo.dancecompany/", logo: "images/logos/animologo.jpg"},
+  {name: "Bachata like Becky", lat: 32.8155, lng: -117.1548, instructor: "Becky", link: "https://www.instagram.com/rebeccalifeofdance/", logo: "images/logos/beckylogo.jpg"},
+  {name: "In Lak'ech", lat: 37.8044, lng: -122.2712, instructor: "Varies", link: "https://www.instagram.com/inlakechdance/", logo: "images/logos/inlakechlogo.jpg"},
+  {name: "Movement Dance Project", lat: 34.0201, lng: -118.1137, instructor: "Milton Martinez", link: "https://www.instagram.com/movementdanceproject/", logo: "images/logos/movementdancelogo.jpg"},
+  {name: "Michelle Ramos", lat: 34.0522, lng: -118.2437, instructor: "Michelle Ramos", link: "https://www.instagram.com/salsachica_/", logo: "images/logos/michelleramoslogo.jpg"},
+  {name: "Movewise Wellness", lat: 33.0370, lng: -117.2920, instructor: "Natasha Tia", link: "https://www.movewisewellness.com/", logo: "images/logos/mwlogo.jpg"},
+  {name: "On2ourage", lat: 33.8358, lng: -118.3406, instructor: "Eder Avila", link: "https://on2ourage.punchpass.com/classes", logo: "images/logos/on2ouragelogo.jpg"},
+  {name: "Queerchata", lat: 32.7493, lng: -117.1680, instructor: "Zen", link: "https://www.queerchata.com/", logo: "images/logos/queerchatalogo.jpg"},
+  {name: "Queer Latin Dance LA", lat: 34.0522, lng: -118.2437, instructor: "Arlene Santos", link: "https://www.instagram.com/queerlatindancela/", logo: "images/logos/qldlalogo.jpg"},
+  {name: "Queer Latin Dance OC", lat: 33.8366, lng: -117.9143, instructor: "Rorris", link: "https://www.instagram.com/queerlatindanceoc/", logo: "images/logos/qldoclogo.jpg"},
+  {name: "Queer Latin Dance SD", lat: 32.7157, lng: -117.1611, instructor: "Michelle Fernandez", link: "https://www.queerlatindance.com/", logo: "images/logos/logo2.jpg"},
+  {name: "The Salsa Beat", lat: 32.8155, lng: -117.1548, instructor: "Ericka & Juan-2-3", link: "https://www.thesalsabeat.com/", logo: "images/logos/thesalsabeatlogo.jpg"},
+  {name: "Queer Tango", lat: 32.7280, lng: -117.1625, instructor: "Nicole & Brittany", link: "https://www.instagram.com/queertangosd/", logo: "images/logos/queertangologo.jpg"},
+//international
+{name: "Queer Afro Latin Dance Vancouver", lat: 49.2636, lng: -123.1387, instructor: "Varies", link: "https://www.instagram.com/qaldv.ca/", logo: "images/logos/qaldvlogo.jpg"}
+];
+
+locations.forEach((loc, index) => {
+  const customIcon = L.icon({
+    iconUrl: loc.logo,
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -40],
+    className: 'logo-marker'
+  });
+  
+  L.marker([loc.lat, loc.lng], {icon: customIcon})
+    .addTo(map)
+    .bindPopup(`
+      <div style="font-family:'Nunito',sans-serif; cursor: pointer;" onclick="scrollToTableRow('${loc.name}')">
+        <h3 style="margin:0 0 8px;color:#943dff;font-size:1rem;">
+          <a href="${loc.link}" target="_blank" style="color:#943dff;text-decoration:none;" onclick="event.stopPropagation();">${loc.name}</a>
+        </h3>
+        <p style="margin:4px 0;font-size:0.9rem;"><strong>Instructor:</strong> ${loc.instructor}</p>
+        <p style="margin:8px 0 0 0;font-size:0.8rem;color:#666;">📍 Click to view in table</p>
+      </div>
+    `);
+});
+</script>
+<script>
+function scrollToTableRow(studioName) {
+  const row = document.querySelector(`tr[data-studio="${studioName}"]`);
+  if (row) {
+    row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    row.style.backgroundColor = 'rgba(148, 61, 255, 0.2)';
+    setTimeout(() => {
+      row.style.backgroundColor = '';
+    }, 2000);
+  }
+}
+</script>
 <script>
 document.querySelector('.footer-newsletter form').addEventListener('submit', function(e) {
   e.preventDefault();

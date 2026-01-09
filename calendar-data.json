@@ -58,5 +58,45 @@
       "2025-01-25": { "salsa": false, "bachata": true },
       "2025-02-01": { "salsa": false, "bachata": true }
     }
+  },
+  "dropin": {
+  "title": "Drop-in Classes",
+  "dayOfWeek": ["Fridays", "Sundays"],
+  "dates": {
+    "fridays": ["1/9", "1/16", "1/23", "1/30"],
+    "sundays": ["1/11", "1/18", "1/25", "2/1"]
+  },
+  "year": 2025,
+  "rsvpDeadline": "Wednesday, 1/7",
+  "googleCalendarDates": {
+    "fridays": ["20250109", "20250116", "20250123", "20250130"],
+    "sundays": ["20250111", "20250118", "20250125", "20250201"]
+  },
+  "times": {
+    "fridays": {
+      "salsa": "6:00pm-6:50pm",
+      "bachata": "7:00pm-7:50pm"
+    },
+    "sundays": {
+      "salsa": "Cancelled",
+      "bachata": "5:00pm-6:50pm"
+    },
+    "calendarStart": "1700",
+    "calendarEnd": "1950"
+  },
+  "location": {
+    "name": "Studio K",
+    "address": "9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123"
+  },
+  "calendarEvents": {
+    "2025-01-09": { "salsa": true, "bachata": true },
+    "2025-01-16": { "salsa": true, "bachata": true },
+    "2025-01-23": { "salsa": true, "bachata": true },
+    "2025-01-30": { "salsa": true, "bachata": true },
+    "2025-01-11": { "salsa": false, "bachata": true },
+    "2025-01-18": { "salsa": false, "bachata": true },
+    "2025-01-25": { "salsa": false, "bachata": true },
+    "2025-02-01": { "salsa": false, "bachata": true }
   }
+}
 }
