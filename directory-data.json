@@ -1,0 +1,142 @@
+{
+  "studios": [
+    {
+      "name": "Animo Dance Company",
+      "address": "5111 Santa Fe St, San Diego, CA 92109",
+      "instructor": "Anthony",
+      "link": "https://www.instagram.com/animo.dancecompany/",
+      "logo": "images/logos/animologo.jpg",
+      "category": "studio"
+    },
+    {
+      "name": "Bachata like Becky",
+      "address": "9350 Clairemont Mesa Blvd, San Diego, CA 92123",
+      "instructor": "Becky",
+      "link": "https://www.instagram.com/rebeccalifeofdance/",
+      "logo": "images/logos/beckylogo.jpg",
+      "category": "studio"
+    },
+    {
+      "name": "In Lak'ech",
+      "address": "2885 Ettie St, Oakland, CA",
+      "instructor": "Varies",
+      "link": "https://www.instagram.com/inlakechdance/",
+      "logo": "images/logos/inlakechlogo.jpg",
+      "category": "studio"
+    },
+    {
+      "name": "Movement Dance Project",
+      "address": "1210-A W Beverly Blvd, Montebello, CA 90640",
+      "instructor": "Milton Martinez",
+      "link": "https://www.instagram.com/movementdanceproject/",
+      "logo": "images/logos/movementdancelogo.jpg",
+      "category": "studio"
+    },
+    {
+      "name": "Michelle Ramos",
+      "address": "Los Angeles, CA",
+      "instructor": "Michelle Ramos",
+      "link": "https://www.instagram.com/salsachica_/",
+      "logo": "images/logos/michelleramoslogo.jpg",
+      "category": "studio"
+    },
+    {
+      "name": "Movewise Wellness",
+      "address": "613 Westlake St, Encinitas, CA 92024",
+      "instructor": "Natasha Tia",
+      "link": "https://www.movewisewellness.com/",
+      "logo": "images/logos/mwlogo.jpg",
+      "category": "studio"
+    },
+    {
+      "name": "On2ourage",
+      "address": "1309 Sartori Ave, Torrance, CA 90501",
+      "instructor": "Eder Avila",
+      "link": "https://on2ourage.punchpass.com/classes",
+      "logo": "images/logos/on2ouragelogo.jpg",
+      "category": "studio"
+    },
+    {
+      "name": "Queerchata",
+      "address": "1450 University Ave, San Diego, CA 92103",
+      "instructor": "Zen",
+      "link": "https://www.queerchata.com/",
+      "logo": "images/logos/queerchatalogo.jpg",
+      "category": "studio"
+    },
+    {
+      "name": "Queer Latin Dance LA",
+      "address": "Los Angeles, CA",
+      "instructor": "Arlene Santos",
+      "link": "https://www.instagram.com/queerlatindancela/",
+      "logo": "images/logos/qldlalogo.jpg",
+      "category": "studio"
+    },
+    {
+      "name": "Queer Latin Dance OC",
+      "address": "1830 W Lincoln Ave, Anaheim, CA",
+      "instructor": "Rorris",
+      "link": "https://www.instagram.com/queerlatindanceoc/",
+      "logo": "images/logos/qldoclogo.jpg",
+      "category": "studio"
+    },
+    {
+      "name": "Queer Latin Dance SD",
+      "address": "9340 Clairemont Mesa Blvd, San Diego, CA 92123",
+      "instructor": "Michelle Fernandez",
+      "link": "https://www.queerlatindance.com/",
+      "logo": "images/logos/logo2.jpg",
+      "category": "studio"
+    },
+    {
+      "name": "The Salsa Beat",
+      "address": "9360 Clairemont Mesa Blvd, San Diego, CA 92123",
+      "instructor": "Ericka & Juan-2-3",
+      "link": "https://www.thesalsabeat.com/",
+      "logo": "images/logos/thesalsabeatlogo.jpg",
+      "category": "studio"
+    },
+    {
+      "name": "Queer Tango",
+      "address": "1920 Fort Stockton Dr, San Diego, CA",
+      "instructor": "Nicole & Brittany",
+      "link": "https://www.instagram.com/queertangosd/",
+      "logo": "images/logos/queertangologo.jpg",
+      "category": "studio"
+    },
+    {
+      "name": "Queer Afro Latin Dance Vancouver",
+      "address": "1627 West Broadway, Vancouver, BC, V6J1W9",
+      "instructor": "Varies",
+      "link": "https://www.instagram.com/qaldv.ca/",
+      "logo": "images/logos/qaldvlogo.jpg",
+      "category": "international"
+    }
+  ],
+  "performers": [
+    {
+      "name": "Anemone String Quartet",
+      "type": "Band",
+      "address": "Location may vary depending on events",
+      "logo": "images/logos/anemonelogo.jpg"
+    },
+    {
+      "name": "DJ Basico",
+      "type": "DJ",
+      "address": "Location may vary depending on events",
+      "logo": "images/logos/djbasicologo.jpg"
+    },
+    {
+      "name": "Manny Cepeda",
+      "type": "Latin Band",
+      "address": "Location may vary depending on events",
+      "logo": "images/logos/mannycepedalogo.jpg"
+    },
+    {
+      "name": "Sabrosas Latin Orchestra",
+      "type": "Latin Band",
+      "address": "Location may vary depending on events",
+      "logo": "images/logos/sabrosaslogo.jpg"
+    }
+  ]
+}

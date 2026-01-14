@@ -686,6 +686,8 @@ const generatedGalleries = {
       "images/SunDanceDayFest/sddf9.png"
     ]
 };
+// Make it globally available on window object
+window.generatedGalleries = generatedGalleries;
 
 // Export for use in script.js
 if (typeof module !== 'undefined' && module.exports) {
