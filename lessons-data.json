@@ -2,26 +2,26 @@
   "upcoming": [
         {
       "id": "new-class-1",
-      "date": "january-2025",
-      "month": "JAN",
-      "day": "2025",
+      "date": "February-2026",
+      "month": "FEB",
+      "day": "2026",
       "title": "4 Week Series 1",
-      "flyerUrl": "images/lessons/4weekseries1.png",
+      "flyerUrl": "images/lessons/4weekseries1-WINTER.png",
       "description": "Description for 4 Week Series 1",
       "type": "series",
-      "link": "4weekseries1.html",
+      "link": "4weekseries1p2.html",
       "banner": "NEW CLASS IN 3 WEEKS"
     },
     {
       "id": "new-class-2",
-      "date": "january-2025",
-      "month": "JAN",
-      "day": "2025",
+      "date": "February-2026",
+      "month": "FEB",
+      "day": "2026",
       "title": "4 Week Series 2",
-      "flyerUrl": "images/lessons/4weekseries2.png",
+      "flyerUrl": "images/lessons/4weekseries2-WINTER.png",
       "description": "Description for 4 Week Series 2",
       "type": "series",
-      "link": "4weekseries2.html",
+      "link": "4weekseries2p2.html",
       "banner": "NEW CLASS IN 3 WEEKS"
     },
         {
@@ -33,7 +33,7 @@
       "flyerUrl": "images/lessons/4weekseriesdropin.png",
       "description": "Description for new class 3",
       "type": "dropin",
-      "link": "dropin.html",
+      "link": "dropin2.html",
       "banner": "NEW CLASS IN 3 WEEKS"
     },
     {

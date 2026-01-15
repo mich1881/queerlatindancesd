@@ -1,4 +1,104 @@
 {
+"series1winter2": {
+    "title": "4 Week Series 1",
+    "dayOfWeek": "Fridays",
+    "dates": ["2/6", "2/20", "2/27", "3/6"],
+    "year": 2025,
+    "rsvpDeadline": "Wednesday, 2/4",
+    "googleCalendarDates": [
+      "20250206",
+      "20250220",
+      "20250227",
+      "20250306"
+    ],
+    "times": {
+      "salsa": "6:00pm-6:50pm",
+      "bachata": "7:00pm-7:50pm",
+      "both": "6:00pm-7:50pm",
+      "calendarStart": "1800",
+      "calendarEnd": "1950"
+    },
+    "location": {
+      "name": "Studio K",
+      "address": "9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123"
+    },
+    "calendarEvents": {
+      "2025-01-09": { "salsa": true, "bachata": true },
+      "2025-01-16": { "salsa": true, "bachata": true },
+      "2025-01-23": { "salsa": true, "bachata": true },
+      "2025-01-30": { "salsa": true, "bachata": true }
+    }
+  },
+  "series2winter2": {
+    "title": "4 Week Series 2",
+    "dayOfWeek": "Sundays",
+    "dates": ["2/8", "2/15", "2/22", "3/1"],
+    "year": 2025,
+    "rsvpDeadline": "Sunday, 2/8",
+    "googleCalendarDates": [
+      "20250208",
+      "20250215",
+      "20250222",
+      "20250301"
+    ],
+    "times": {
+      "salsa": "4:00pm-5:50pm",
+      "bachata": "5:00pm-6:50pm",
+      "both": "N/A",
+      "calendarStart": "1700",
+      "calendarEnd": "1850"
+    },
+    "location": {
+      "name": "Studio K",
+      "address": "9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123"
+    },
+    "calendarEvents": {
+      "2025-01-11": { "salsa": false, "bachata": true },
+      "2025-01-18": { "salsa": false, "bachata": true },
+      "2025-01-25": { "salsa": false, "bachata": true },
+      "2025-02-01": { "salsa": false, "bachata": true }
+    }
+  },
+  "dropinwinter2": {
+  "title": "Drop-in Classes",
+  "dayOfWeek": ["Fridays", "Sundays"],
+  "dates": {
+    "fridays": ["2/6", "2/20", "2/27", "3/6"],
+    "sundays": ["2/8", "2/15", "2/22", "3/1"]
+  },
+  "year": 2025,
+  "rsvpDeadline": "Wednesday, 1/7",
+  "googleCalendarDates": {
+    "fridays": ["20250206", "20250220", "20250227", "20250306"],
+    "sundays": ["20250208", "20250215", "20250222", "20250301"]
+  },
+  "times": {
+    "fridays": {
+      "salsa": "6:00pm-6:50pm",
+      "bachata": "7:00pm-7:50pm"
+    },
+    "sundays": {
+      "salsa": "4:00pm-5:50pm",
+      "bachata": "5:00pm-6:50pm"
+    },
+    "calendarStart": "1700",
+    "calendarEnd": "1950"
+  },
+  "location": {
+    "name": "Studio K",
+    "address": "9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123"
+  },
+  "calendarEvents": {
+    "2025-02-06": { "salsa": true, "bachata": true },
+    "2025-02-20": { "salsa": true, "bachata": true },
+    "2025-02-27": { "salsa": true, "bachata": true },
+    "2025-03-06": { "salsa": true, "bachata": true },
+    "2025-02-08": { "salsa": false, "bachata": true },
+    "2025-02-15": { "salsa": false, "bachata": true },
+    "2025-02-22": { "salsa": false, "bachata": true },
+    "2025-03-01": { "salsa": false, "bachata": true }
+  }
+},
   "series1": {
     "title": "4 Week Series 1",
     "dayOfWeek": "Fridays",

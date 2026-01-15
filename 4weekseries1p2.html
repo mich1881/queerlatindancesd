@@ -574,7 +574,7 @@
           <td class="event-table-right" style="padding-left: 56px;">
             <div class="event-section" style="padding:0; margin:0 0 18px 0; display:flex; justify-content:center; align-items:center;">
               <div style="position:relative; width:100%; max-width:520px; display:flex; align-items:center; justify-content:center;">
-                <img id="gallery-img" src="images/lessons/4weekseries1p2.png" alt="4 Week Series Promo" style="width:100%;max-width:520px;height:auto;display:block;margin:0 0 18px 0;border-radius:18px;box-shadow:0 2px 12px #716cff22;object-fit:contain;transition:opacity 0.2s;" />
+                <img id="gallery-img" src="images/lessons/4weekseries1-WINTER2.png" alt="4 Week Series Promo" style="width:100%;max-width:520px;height:auto;display:block;margin:0 0 18px 0;border-radius:18px;box-shadow:0 2px 12px #716cff22;object-fit:contain;transition:opacity 0.2s;" />
               </div>
             </div>
 
@@ -667,7 +667,7 @@ let calendarData = null;
 fetch('calendar-data.json')
   .then(response => response.json())
   .then(data => {
-    calendarData = data.series1;
+    calendarData = data.series1winter2;
     console.log('Calendar data loaded:', calendarData);
   })
   .catch(error => console.error('Error loading calendar data:', error));
@@ -693,15 +693,8 @@ function getGcalUrlFriday() {
     const title = `Queer Salsa & Bachata Series (${calendarData.dayOfWeek})`;
     const details = `Join us for ${calendarData.dayOfWeek} Salsa & Bachata lessons! ${calendarData.location.name}, ${calendarData.location.address}`;
     const location = `${calendarData.location.name}, ${calendarData.location.address}`;
-    const checkDataForDates = setInterval(() => {
-  if (calendarData) {
-    const seriesDatesSpan = document.getElementById('series-dates');
-    if (seriesDatesSpan) {
-      seriesDatesSpan.textContent = `${calendarData.dayOfWeek} – ${calendarData.dates.join(', ')}`;
-    }
-    clearInterval(checkDataForDates);
-  }
-}, 100);
+    
+    // Use googleCalendarDates from JSON
     const checkDataForRSVP = setInterval(() => {
   if (calendarData) {
     const rsvpSpan = document.getElementById('rsvp-deadline');
@@ -711,7 +704,15 @@ function getGcalUrlFriday() {
     clearInterval(checkDataForRSVP);
   }
 }, 100);
-    // Use googleCalendarDates from JSON
+const checkDataForDates = setInterval(() => {
+  if (calendarData) {
+    const seriesDatesSpan = document.getElementById('series-dates');
+    if (seriesDatesSpan) {
+      seriesDatesSpan.textContent = `${calendarData.dayOfWeek} – ${calendarData.dates.join(', ')}`;
+    }
+    clearInterval(checkDataForDates);
+  }
+}, 100);
     const dates = calendarData.googleCalendarDates.map(d => ({
       start: d,
       end: d
@@ -786,13 +787,13 @@ getTicketsBtn.addEventListener('click', function(e) {
   if (selected) {
     const text = selected.textContent.trim().toLowerCase();
     if (text.includes('salsa') && text.includes('bachata')) {
-      option = '4WK-S1 - Salsa & Bachata'; // Changed
+      option = '4WK-S1-p2 - Salsa & Bachata'; // Changed
       price = '144';
     } else if (text.includes('salsa')) {
-      option = '4WK-S1 - Salsa Only'; // Changed
+      option = '4WK-S1-p2 - Salsa Only'; // Changed
       price = '80';
     } else if (text.includes('bachata')) {
-      option = '4WK-S1 - Bachata Only'; // Changed
+      option = '4WK-S1-p2 - Bachata Only'; // Changed
       price = '80';
     }
   }

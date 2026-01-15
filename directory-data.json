@@ -10,7 +10,7 @@
     },
     {
       "name": "Bachata like Becky",
-      "address": "9350 Clairemont Mesa Blvd, San Diego, CA 92123",
+      "address": "9340 Clairemont Mesa Blvd, San Diego, CA 92123",
       "instructor": "Becky",
       "link": "https://www.instagram.com/rebeccalifeofdance/",
       "logo": "images/logos/beckylogo.jpg",
@@ -81,19 +81,19 @@
       "category": "studio"
     },
     {
-      "name": "Queer Latin Dance SD",
-      "address": "9340 Clairemont Mesa Blvd, San Diego, CA 92123",
-      "instructor": "Michelle Fernandez",
-      "link": "https://www.queerlatindance.com/",
-      "logo": "images/logos/logo2.jpg",
-      "category": "studio"
-    },
-    {
       "name": "The Salsa Beat",
       "address": "9360 Clairemont Mesa Blvd, San Diego, CA 92123",
       "instructor": "Ericka & Juan-2-3",
       "link": "https://www.thesalsabeat.com/",
       "logo": "images/logos/thesalsabeatlogo.jpg",
+      "category": "studio"
+    },
+        {
+      "name": "Queer Latin Dance SD",
+      "address": "9350 Clairemont Mesa Blvd, San Diego, CA 92123",
+      "instructor": "Michelle Fernandez",
+      "link": "https://www.queerlatindance.com/",
+      "logo": "images/logos/logo2.jpg",
       "category": "studio"
     },
     {

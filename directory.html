@@ -316,7 +316,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-const map = L.map('directory-map').setView([34.0522, -118.2437], 7);
+const map = L.map('directory-map').setView([32.7157, -117.1611], 10); // San Diego downtown, zoom 10
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap contributors'
@@ -378,8 +378,7 @@ async function geocodeAndAddMarkers(locations) {
             </div>
           `);
       }
-      
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 200)); // 0.2 seconds
     } catch (error) {
       console.error(`Error geocoding ${loc.name}:`, error);
     }

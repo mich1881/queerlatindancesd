@@ -310,7 +310,7 @@
     }
     
 @media (max-width: 768px) {
-    /* Pricing section mobile adjustments */
+  /* Pricing section mobile adjustments */
   .pricing-options {
     margin-left: 0 !important;
     gap: 0.25rem !important;
@@ -539,17 +539,21 @@
     <span style="font-size:1.25em;line-height:1;">&#8592;</span>Back
   </a>
   
+  <!-- Add mobile spacing to push content down and make back button visible on mobile -->
   <div class="mobile-spacing" style="height: 0;"></div>
   
   <div class="main-flex">
     <div class="left-col">
-      <h1 class="event-title">4 Week Series 1</h1>
+      <h1 class="event-title">4 Week Series 2</h1>
       <table class="event-table-2col" style="margin-left: 32px;">
         <tr>
           <td class="event-table-left">
             <!-- Salsa series description above pricing -->
-            <div style="margin-bottom:1.2rem;font-size:1.2rem;color:#000000;line-height:1.5;">
-              Thank you for your interest in our 4-Week Intro to Salsa & Bachata Series! Perfect for total beginners and those who want to build confidence and sharpen their basics. Whether you’re brand new or have taken a few classes, this series is designed to help you feel great on the dance floor.
+            <div style="margin-bottom:1.2rem;font: size 1.1rem;color:#000000;line-height:1.5;">
+Ready to dance?
+<p></p>Series 2 is designed for dancers who have completed QLDSD's Intro to Salsa & Bachata Series 1 and want to sharpen their Salsa & Bachata fundamentals. If you’ve mastered your basic footwork and are ready to implement contra-body movement, add styling, and learn longer partnerwork combinations, Series 2 is perfect for you!
+
+This series focuses on refining technique and expanding your repertoire of patterns and combinations. Each lesson challenges your memory recall, mind-body connection, and speed to challenge you and help you strengthen key skills and prepare you for the next series.
             </div>
             <div class="event-section" style="margin-top: 0; margin-bottom: 1.2rem;">
               <div>
@@ -574,21 +578,21 @@
           <td class="event-table-right" style="padding-left: 56px;">
             <div class="event-section" style="padding:0; margin:0 0 18px 0; display:flex; justify-content:center; align-items:center;">
               <div style="position:relative; width:100%; max-width:520px; display:flex; align-items:center; justify-content:center;">
-                <img id="gallery-img" src="images/lessons/4weekseries1p2.png" alt="4 Week Series Promo" style="width:100%;max-width:520px;height:auto;display:block;margin:0 0 18px 0;border-radius:18px;box-shadow:0 2px 12px #716cff22;object-fit:contain;transition:opacity 0.2s;" />
+                <img id="gallery-img" src="images/lessons/4weekseries2-WINTER2.png" alt="4 Week Series Promo" style="width:100%;max-width:520px;height:auto;display:block;margin:0 0 18px 0;border-radius:18px;box-shadow:0 2px 12px #716cff22;object-fit:contain;transition:opacity 0.2s;" />
               </div>
             </div>
 
             <div class="event-section">
-              <div class="event-label">ABOUT</div>
+              <div class="event-label">Course Details</div>
               <div class="event-value">
                   <b>Series Dates:</b> 
-                  <a id="gcal-link-friday" href="#" target="_blank" title="Add Series to Google Calendar" style="display:inline-block;margin-left:8px;vertical-align:middle;">
+                  <a id="gcal-link-sunday" href="#" target="_blank" title="Add Sunday Series to Google Calendar" style="display:inline-block;margin-left:8px;vertical-align:middle;">
                     <img src="images/eventpage/Schedulicon 1.png" alt="Google Calendar" style="height:20px;width:20px;vertical-align:middle;filter:drop-shadow(0 1px 2px #fff8);" />
                   </a>
                   <span id="series-dates" style="color:#943dff;font-weight:700;">Loading...</span><br>
                   <b>RSVP Deadline:</b> <span id="rsvp-deadline" style="color:#ff2d2d;font-weight:700;">Loading...</span>
-                   <br>Class Times: <span id="class-times" style="color:#943dff;font-weight:700;">Loading...</span><br>
-                  <br><b>What You Get:</b>
+                  <br>Class Times: <span id="class-times" style="color:#943dff;font-weight:700;">Loading...</span><br>
+                  <b>What You Get:</b>
                   <ul style="margin:0 0 0 1.2em;padding:0 0 0 1.2em;list-style:square;color:#0b0808;">
                     <li>Queer-led, safe & inclusive dance environment</li>
                     <li>Find your rhythm and feel good in your body</li>
@@ -597,6 +601,13 @@
                   <br>
                   You can sign up for <b>Salsa</b>, <b>Bachata</b>, or <b>both</b>! Drop-ins are available if you can’t make all the dates, but we highly recommend joining the full series to progress with us into the next 4-week Part 2 beginner lessons.
                   <br><br>
+                  <b>Pricing:</b>
+                  <ul style="margin:0 0 0 1.2em;padding:0 0 0 1.2em;list-style:square;color:#030202;">
+                    <li><b>Salsa Only</b> – $80 total for 4 hours of instruction <span style="color:#090606;">($20/hr)</span></li>
+                    <li><b>Bachata Only</b> – $80 total for 4 hours of instruction <span style="color:#070101;">($20/hr)</span></li>
+                    <li><b>Salsa & Bachata BOTH</b> – $144 total for 8 hours of instruction <span style="color:#040101;">($18/hr)</span></li>
+                    <li><b>Drop-In</b> – $52 for both classes, $26.00 for single class</li>
+                  </ul>
                   <br>
                   <b>Important Notes:</b>
                   <ul style="margin:0 0 0 1.2em;padding:0 0 0 1.2em;list-style:square;color:#090808;">
@@ -647,30 +658,18 @@
       </table>
     </div>
   </div>
-  <script>
+    <script>
     // Terms & Conditions modal logic
-    function openTermsModal() {
-      const modal = document.getElementById('termsModal');
-      modal.style.display = 'flex';
-      setTimeout(() => modal.classList.add('show'), 10);
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-      ['termsLink1','termsLink2','termsLink3'].forEach(function(id) {
-        const link = document.getElementById(id);
-        if (link) link.onclick = function(e) { e.preventDefault(); openTermsModal(); };
-      });
-    });
-    
-let calendarData = null;
+    let calendarData = null;
 
-// Load calendar data from JSON
-fetch('calendar-data.json')
-  .then(response => response.json())
-  .then(data => {
-    calendarData = data.series1;
-    console.log('Calendar data loaded:', calendarData);
-  })
-  .catch(error => console.error('Error loading calendar data:', error));
+    // Load calendar data from JSON
+    fetch('calendar-data.json')
+      .then(response => response.json())
+      .then(data => {
+        calendarData = data.series2winter2;
+        console.log('Calendar data loaded:', calendarData);
+      })
+      .catch(error => console.error('Error loading calendar data:', error));
 
     function getSelectedPricing() {
       const selected = document.querySelector('.pricing-option.selected');
@@ -681,28 +680,28 @@ fetch('calendar-data.json')
       if (text.includes('bachata')) return 'bachata';
       return 'both';
     }
+
     // Pricing option selection logic
     document.addEventListener('DOMContentLoaded', function() {
       const options = document.querySelectorAll('.pricing-option');
       const descBox = document.getElementById('pricing-desc');
-      const gcalLink = document.getElementById('gcal-link');
-      // Google Calendar link for Friday series
-function getGcalUrlFriday() {
-    if (!calendarData) return '#';
-    
-    const title = `Queer Salsa & Bachata Series (${calendarData.dayOfWeek})`;
-    const details = `Join us for ${calendarData.dayOfWeek} Salsa & Bachata lessons! ${calendarData.location.name}, ${calendarData.location.address}`;
-    const location = `${calendarData.location.name}, ${calendarData.location.address}`;
-    const checkDataForDates = setInterval(() => {
-  if (calendarData) {
-    const seriesDatesSpan = document.getElementById('series-dates');
-    if (seriesDatesSpan) {
-      seriesDatesSpan.textContent = `${calendarData.dayOfWeek} – ${calendarData.dates.join(', ')}`;
-    }
-    clearInterval(checkDataForDates);
-  }
-}, 100);
-    const checkDataForRSVP = setInterval(() => {
+
+      function getGcalUrlSunday() {
+        if (!calendarData) return '#';
+        
+        const title = `Queer Salsa & Bachata Series (${calendarData.dayOfWeek})`;
+        const details = `Join us for ${calendarData.dayOfWeek} Salsa & Bachata lessons! ${calendarData.location.name}, ${calendarData.location.address}`;
+        const location = `${calendarData.location.name}, ${calendarData.location.address}`;
+        const checkDataForDates = setInterval(() => {
+        if (calendarData) {
+        const seriesDatesSpan = document.getElementById('series-dates');
+        if (seriesDatesSpan) {
+        seriesDatesSpan.textContent = `${calendarData.dayOfWeek} – ${calendarData.dates.join(', ')}`;
+      }
+        clearInterval(checkDataForDates);
+      }
+      }, 100);
+        const checkDataForRSVP = setInterval(() => {
   if (calendarData) {
     const rsvpSpan = document.getElementById('rsvp-deadline');
     if (rsvpSpan && calendarData.rsvpDeadline) {
@@ -711,30 +710,35 @@ function getGcalUrlFriday() {
     clearInterval(checkDataForRSVP);
   }
 }, 100);
-    // Use googleCalendarDates from JSON
-    const dates = calendarData.googleCalendarDates.map(d => ({
-      start: d,
-      end: d
-    }));
-        const timeStart = '1800', timeEnd = '1950';
-        // Use first date for link, mention all in details
+        const dates = calendarData.googleCalendarDates.map(d => ({
+          start: d,
+          end: d
+        }));
+        
+        const timeStart = calendarData.times.calendarStart;
+        const timeEnd = calendarData.times.calendarEnd;
         let recur = 'RRULE:FREQ=WEEKLY;COUNT=4';
         let start = dates[0].start + 'T' + timeStart + '00';
         let end = dates[0].end + 'T' + timeEnd + '00';
+        
         let url = 'https://calendar.google.com/calendar/render?action=TEMPLATE';
         url += '&text=' + encodeURIComponent(title);
         url += '&dates=' + start + '/' + end;
         url += '&details=' + encodeURIComponent(details + `\n\nDates: ${calendarData.dates.join(', ')}, ${calendarData.year}`);
         url += '&location=' + encodeURIComponent(location);
         url += '&recur=' + encodeURIComponent(recur);
+        
         return url;
       }
+
       function setDesc(option) {
         const desc = option.getAttribute('data-desc') || '';
         descBox.textContent = desc;
       }
+
       const priceTag = document.getElementById('price-tag');
       const priceTotal = document.getElementById('price-total');
+
       function updatePriceTag() {
         const selected = document.querySelector('.pricing-option.selected');
         let price = '$20 per hr';
@@ -772,62 +776,61 @@ function getGcalUrlFriday() {
           }
         });
       });
-      // Optionally, show Salsa Only by default
+
       options[0].classList.add('selected');
       setDesc(options[0]);
       updatePriceTag();
-      // Get Tickets button logic
+
       const getTicketsBtn = document.getElementById('get-tickets-btn');
-getTicketsBtn.addEventListener('click', function(e) {
-  e.preventDefault();
-  const selected = document.querySelector('.pricing-option.selected');
-  let option = '4WK-S1 - Salsa & Bachata'; // Changed
-  let price = '144';
-  if (selected) {
-    const text = selected.textContent.trim().toLowerCase();
-    if (text.includes('salsa') && text.includes('bachata')) {
-      option = '4WK-S1 - Salsa & Bachata'; // Changed
-      price = '144';
-    } else if (text.includes('salsa')) {
-      option = '4WK-S1 - Salsa Only'; // Changed
-      price = '80';
-    } else if (text.includes('bachata')) {
-      option = '4WK-S1 - Bachata Only'; // Changed
-      price = '80';
-    }
-  }
-
-  window.location.href = `payment1.html?option=${encodeURIComponent(option)}&price=${encodeURIComponent(price)}`;
-});
-const gcalLinkFriday = document.getElementById('gcal-link-friday');
-if (gcalLinkFriday) {
-  const checkData = setInterval(() => {
-    if (calendarData) {
-      gcalLinkFriday.href = getGcalUrlFriday();
-      clearInterval(checkData);
-    }
-  }, 100);
-}
-      // Update class times from JSON
-      const checkDataForTimes = setInterval(() => {
-        if (calendarData) {
-          const classTimesSpan = document.getElementById('class-times');
-          if (classTimesSpan) {
-            let timesText = '';
-            if (calendarData.times.salsa && calendarData.times.salsa !== 'Cancelled') {
-              timesText += `Salsa: ${calendarData.times.salsa}`;
-            }
-            if (calendarData.times.bachata && calendarData.times.bachata !== 'N/A' && calendarData.times.bachata !== 'Cancelled') {
-              if (timesText) timesText += ' | ';
-              timesText += `Bachata: ${calendarData.times.bachata}`;
-            }
-            classTimesSpan.innerHTML = timesText;
+      getTicketsBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const selected = document.querySelector('.pricing-option.selected');
+        let option = '4WK-S2-p2 - Salsa & Bachata';
+        let price = '144';
+        if (selected) {
+          const text = selected.textContent.trim().toLowerCase();
+          if (text.includes('salsa') && text.includes('bachata')) {
+            option = '4WK-S2-p2 - Salsa & Bachata';
+            price = '144';
+          } else if (text.includes('salsa')) {
+            option = '4WK-S2-p2 - Salsa Only';
+            price = '80';
+          } else if (text.includes('bachata')) {
+            option = '4WK-S2-p2 - Bachata Only';
+            price = '80';
           }
-          clearInterval(checkDataForTimes);
         }
-      }, 100);
-    });
+        window.location.href = `payment1.html?option=${encodeURIComponent(option)}&price=${encodeURIComponent(price)}`;
+      });
 
+      const gcalLinkSunday = document.getElementById('gcal-link-sunday');
+      if (gcalLinkSunday) {
+        const checkData = setInterval(() => {
+          if (calendarData) {
+            gcalLinkSunday.href = getGcalUrlSunday();
+            clearInterval(checkData);
+          }
+        }, 100);
+      }
+            // Update class times from JSON
+const checkDataForTimes = setInterval(() => {
+  if (calendarData) {
+    const classTimesSpan = document.getElementById('class-times');
+    if (classTimesSpan) {
+      let timesText = '';
+      if (calendarData.times.salsa) {
+        timesText += `Salsa: ${calendarData.times.salsa}`;
+      }
+      if (calendarData.times.bachata && calendarData.times.bachata !== 'N/A') {
+        if (timesText) timesText += ' | ';
+        timesText += `Bachata: ${calendarData.times.bachata}`;
+      }
+      classTimesSpan.innerHTML = timesText;
+    }
+    clearInterval(checkDataForTimes);
+  }
+}, 100);
+    }); 
   </script>
 </body>
 </html>
