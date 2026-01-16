@@ -59,32 +59,6 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* === PAGE-SPECIFIC THEMES === */
-/* About page: Soft mint, lush green, lavender, and peach sunset */ 
-
-/* === VIDEO BACKGROUND STYLES === */
-#bg-video {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 56.25vw;   /* 100vw * (9/16) for 9:16 video, fills width */
-  height: 60vh;     /* Cropped to 60% of viewport height */
-  min-width: 100vw;
-  transform: translateX(-50%);
-  z-index: -2;      /* Lower z-index so content can appear above */
-  object-fit: cover;
-  opacity: 1;
-  pointer-events: none;
-}
-@media (max-aspect-ratio: 9/16) {
-  #bg-video {
-    width: 100vw;
-    height: 177.78vw; /* 100vw * (16/9) */
-    min-height: 100vh;
-    min-width: unset;
-  }
-}
-
 /* === VIDEO BACKGROUND CONTAINER === */
 /* Ensure the body background shows below the cropped video */
 
@@ -252,28 +226,6 @@ body.gallery-page::before {
     font-size: 1.3rem;
   }
 }
-/* === TYPOGRAPHY STYLES === */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Signika', 'Huninn', Arial, sans-serif;
-}
-p {
-  font-family: 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
-  font-size: 1.2rem;
-  line-height: 1.6;
-}
-nav a {
-  font-family: 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
-  font-size: 1.5rem;
-  line-height: 1.2;
-}
-button,
-input,
-textarea {
-  font-family: 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
-  font-size: 1.5rem;
-  line-height: 1.6;
-}
-
 /* === HEADER & NAVIGATION === */
 header {
   background: linear-gradient(

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Your Cart | Queer Latin Dance</title>
+<link rel="stylesheet" href="styles/global.css">
+<link rel="stylesheet" href="style.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+margin-top: -100px;
+}
+.cart-container {
+max-width: 700px;
+margin: 2.5rem auto 2rem auto;
+background: #fff9;
+border-radius: 18px;
+box-shadow: 0 2px 16px #716cff22;
+padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+}
+.cart-title {
+font-size: 2rem;
+font-weight: 800;
+color: #716cff;
+margin-bottom: 1.5rem;
+text-align: center;
+}
+.cart-list {
+display: flex;
+flex-direction: column;
+gap: 1.2rem;
+}
+.cart-item {
+display: flex;
+align-items: center;
+background: #fff;
+border-radius: 12px;
+box-shadow: 0 1px 6px #716cff11;
+padding: 1rem 1.2rem;
+gap: 1.2rem;
+position: relative;
+}
+.cart-item-img {
+width: 70px;
+height: 70px;
+object-fit: contain;
+border-radius: 8px;
+background: #f7f7ff;
+border: 1px solid #eee;
+}
+.cart-item-info {
+flex: 1 1 auto;
+display: flex;
+flex-direction: column;
+gap: 0.2rem;
+}
+.cart-item-title {
+font-weight: 700;
+font-size: 1.1rem;
+color: #222;
+}
+.cart-item-details {
+font-size: 0.98rem;
+color: #444;
+}
+.cart-item-price {
+font-weight: 700;
+color: #716cff;
+font-size: 1.08rem;
+}
+.cart-item-remove {
+background: none;
+border: none;
+color: #ff6b6b;
+font-size: 1.2rem;
+font-weight: 700;
+cursor: pointer;
+position: absolute;
+top: 10px;
+right: -150px;
+padding: 0;
+}
+.cart-total-row {
+display: flex;
+justify-content: flex-end;
+align-items: center;
+margin-top: 2rem;
+font-size: 1.2rem;
+font-weight: 700;
+color: #222;
+}
+.cart-empty {
+text-align: center;
+color: #888;
+margin: 2.5rem 0 2rem 0;
+font-size: 1.1rem;
+}
+.cart-actions {
+display: flex;
+justify-content: flex-end;
+gap: 1rem;
+margin-top: 2rem;
+}
+.btn {
+background: #716cff;
+color: #fff;
+padding: 0.7em 1.5em;
+border-radius: 8px;
+font-weight: 700;
+border: none;
+cursor: pointer;
+font-size: 1rem;
+transition: background 0.2s;
+}
+.btn.secondary {
+background: #fff;
+color: #716cff;
+border: 2px solid #716cff;
+}
+.back-home {
+margin-top: 1.2rem;  /* Add a small top margin */
+margin-bottom: 0.5rem;
+margin-left: 1.2rem;
+text-align: left;
+}
+.back-home a {
+display: inline-block;
+padding: 1rem 2.5rem;
+background: rgba(255, 255, 255, 0.3);
+color: #4a148c;
+text-decoration: none;
+border-radius: 50px;
+font-weight: 600;
+font-size: 1.1rem;
+transition: background 0.3s ease, transform 0.2s ease;
+border: 2px solid rgba(255, 255, 255, 0.5);
+}
+.back-home a:hover {
+background: rgba(255, 255, 255, 0.5);
+transform: translateY(-2px);
+}
+@media (max-width: 768px) {
+.cart-container { padding: 1rem 0.3rem; }
+.cart-item { flex-direction: column; align-items: flex-start; gap: 0.7rem; }
+.cart-item-img { width: 100%; max-width: 120px; height: auto; }
+.cart-actions { flex-direction: column; align-items: stretch; }
+.back-home {
+margin-top: 50px;  /* Add a small top margin */
+margin-bottom: 0.5rem;
+margin-left: 1.2rem;
+text-align: left;
+}
+}
+.cart-payment-methods {
+display: flex;
+flex-direction: column;
+gap: 0.7em;
+margin: 2em 0 1em 0;
+align-items: stretch;
+background: #fff;
+border-radius: 16px;
+box-shadow: 0 2px 16px #716cff22;
+padding: 1.5em 1.2em;
+transition: max-height 0.4s, opacity 0.4s;
+}
+.payment-methods-title {
+font-size: 1.3em;
+font-weight: 700;
+color: #716cff;
+margin-bottom: 1em;
+text-align: center;
+}
+.choose-btn {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 0.3em;
+font-size: 1.13rem;
+font-weight: 600;
+border-radius: 7px;
+border: none;
+cursor: pointer;
+padding: 0.32em 0.5em;
+margin-bottom: 0.12em;
+text-align: left;
+box-sizing: border-box;
+transition: all 0.2s ease;
+user-select: none;
+}
+.choose-btn img.cart-pay-icon {
+height: 1.2em;
+width: auto;
+vertical-align: middle;
+object-fit: contain;
+margin-right: 0.5em;
+}
+.choose-btn.zelle {
+background: linear-gradient(90deg,#6c1cd1 10%,#b57edc 90%);
+color: #fff;
+}
+.choose-btn.venmo {
+background: linear-gradient(90deg,#3d95ce 10%,#b57edc 90%);
+color: #fff;
+}
+.choose-btn.stripe {
+background: linear-gradient(90deg,#635bff 10%,#b57edc 90%);
+color: #fff;
+}
+.choose-btn.paypal {
+background: linear-gradient(90deg,#ffe066 10%,#b57edc 90%);
+color: #222;
+}
+.choose-btn:hover {
+transform: translateY(-1px);
+box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.no-fees-badge {
+background: #6fcf97;
+color: #fff;
+font-size: 0.75em;
+font-weight: 700;
+padding: 0.12em 0.5em;
+border-radius: 6px;
+margin-left: 1em;
+}
+.safe-checkout-box {
+width: 100%;
+background: #fff;
+border-radius: 12px;
+padding: 1em 1em 1em 1em;
+margin-bottom: 1.2em;
+box-shadow: 0 2px 8px #a259ff11;
+text-align: center;
+}
+.safe-checkout-title {
+font-size: 1.00rem;
+font-weight: 700;
+color: #444;
+margin-bottom: 0.7em;
+}
+.safe-checkout-icons {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 1em;
+flex-wrap: wrap;
+}
+.authentic-guarantee {
+display: flex;
+align-items: center;
+gap: 0.3em;
+background: #eaf6fa;
+padding: 0.3em 0.7em;
+border-radius: 8px;
+font-size: 0.85rem;
+color: #2d9cdb;
+font-weight: 700;
+}
+.safe-icon {
+height: 24px;
+max-width: 40px;
+object-fit: contain;
+}
+
+.payment-form {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s, padding 0.4s;
+  background: #fff;
+  border-radius: 12px;
+  margin-top: 0.2rem;
+  box-shadow: 0 2px 8px #a259ff11;
+  padding: 0 0; /* No padding when hidden */
+}
+.payment-form.active {
+  max-height: 800px;
+  opacity: 1;
+  padding: 1.5rem 0.5rem 1.2rem 0.5rem; /* Add padding when open */
+}
+</style>
+</head>
+<body>
+<div class="back-home">
+<a href="merch.html">← Back</a>
+</div>
+<div class="cart-container">
+<div class="cart-title">Your Cart</div>
+<div id="cart-list" class="cart-list"></div>
+<div class="cart-total-row" id="cart-total-row"></div>
+<div class="cart-actions">
+<button class="btn secondary" onclick="window.location.href='merch.html'">Continue Shopping</button>
+<button class="btn" onclick="checkout()">Checkout</button>
+</div>
+<div id="cart-payment-methods" class="cart-payment-methods" style="display:none;">
+<h2 class="payment-methods-title">Choose Your Payment Method</h2>
+<!--Payment Buttons Start Here-->
+<div class="payment-method-wrap">
+ <button id="zelleBtn" class="choose-btn zelle" type="button">
+    <span><img src="images/icons/zelleicon.png" alt="Zelle" class="cart-pay-icon"/>Zelle</span>
+    <span class="no-fees-badge">No Fees</span>
+    </button>
+    <!-- Zelle Form (slide-down) -->
+    <div id="zelleForm" class="payment-form">
+    <h3>Zelle Payment Instructions</h3>
+    <form id="zelleFormInner">
+    <div class="form-row">
+    <div class="form-col">
+    <label>First Name</label><br>
+    <input type="text" name="firstName" required class="form-input" />
+    </div>
+    <div class="form-col">
+    <label>Last Name</label><br>
+    <input type="text" name="lastName" required class="form-input" />
+    </div>
+    </div>
+    <label>Email</label><br><input type="email" name="email" required class="form-input form-input-full" /><br>
+    <label>Phone</label><br><input type="tel" name="phone" class="form-input form-input-full" /><br>
+    <div class="agreement-row">
+    <span>By purchasing our merchandise, you agree to our</span>
+    <a href="#" id="termsLink2" class="modal-link terms-link">Terms & Conditions</a>
+    </div>
+    <div class="modal-instructions zelle-instructions">
+    <b>Step 1:</b> Open your banking app and select Zelle.<br>
+    <b>Step 2:</b> Payment details will be provided after form submission.<br>
+    <b>Step 3:</b> Enter the correct amount and confirm your merchandise description in the memo.<br>
+    <b>Step 4:</b> Click below to confirm and see payment details.
+    </div>
+    <button type="submit" class="modal-submit zelle-submit">Show Zelle Details</button>
+    </form>
+    <div id="zelleConfirm" class="zelle-confirm" style="display:none;"></div>
+    </div>
+</div>
+<div class="payment-method-wrap">
+<button id="venmoBtn" class="choose-btn venmo" type="button">
+<span><img src="images/icons/venmoicon.png" alt="Venmo" class="cart-pay-icon"/>Venmo</span>
+<span class="no-fees-badge">No Fees</span>
+</button>
+</div>
+<div class="payment-method-wrap">
+    <button id="stripeBtn" class="choose-btn stripe" type="button">
+    <span><img src="images/icons/stripeicon.png" alt="Stripe" class="cart-pay-icon"/>Stripe (Card)</span>
+    </button>
+</div>
+<div class="payment-method-wrap">
+<button id="paypalBtn" class="choose-btn paypal" type="button">
+<span><img src="images/icons/paypalicon.png" alt="PayPal" class="cart-pay-icon"/>PayPal</span>
+</button>
+</div>
+<!-- Safe Checkout -->
+<div class="safe-checkout-box">
+<div class="safe-checkout-title">GUARANTEED SAFE CHECKOUT</div>
+<div class="safe-checkout-icons">
+<span class="authentic-guarantee">
+<svg width="20" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#6fcf97"/><path d="M17 8l-5.5 7L7 12" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+Authentic Guarantee
+</span>
+<img src="images/icons/visaicon.png" alt="Visa" class="safe-icon" />
+<img src="images/icons/mastercardlogo.png" alt="MasterCard" class="safe-icon" />
+<img src="images/icons/amexicon.png" alt="Amex" class="safe-icon" />
+<img src="images/icons/discovericon.png" alt="Discover" class="safe-icon" />
+</div>
+<div class="payment-note">After payment, you will receive a confirmation email and order details.</div>
+<div class="payment-fee-note">
+<span class="payment-fee-highlight">Note: PayPal and Stripe charge processing fees. Zelle and Venmo are recommended for no-fee payments.</span>
+</div>
+</div>
+</div>
+
+</div>
+<footer class="footer">
+<div class="footer-bottom">
+<div class="footer-newsletter">
+<h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
+<form>
+<input type="email" placeholder="Enter your email ..." required>
+<button type="submit">Subscribe</button>
+</form>
+<div class="footer-links">
+<a href="team.html">Team</a>
+<a href="Events.html">Events</a>
+<a href="gallery.html">Gallery</a>
+<a href="directory.html">Directory</a>
+<a href="lessons.html">Lessons</a>
+<a href="book-us.html">Book Us</a>
+<a href="contact.html">Contact Us</a>
+</div>
+</div>
+<div class="footer-social">
+<h3>Follow Us</h3>
+<div class="footer-social-icons">
+<a href="https://www.instagram.com/queerlatindancesd/"><img src="images/icons/instagramlogo.png" alt="Instagram"></a>
+<a href="https://www.youtube.com/@QueerLatinDance"><img src="images/icons/youtubeicon.png" alt="YouTube"></a>
+<a href="https://www.tiktok.com/@queerlatindance"><img src="images/icons/tiktokicon2.png" alt="TikTok"></a>
+<a href="https://linktr.ee/queerlatindancesd"><img src="images/icons/linktreelogo.png" alt="Linktree"></a>
+<a href="https://chat.whatsapp.com/Hn9iICBTIPm9mCIEGcDRSr?mode=r_c"><img src="images/icons/whatsappicon.jpg" alt="WhatsApp"></a>
+</div>
+<div class="footer-copyright">
+© 2026 Queer Latin Dance. All Rights Reserved.
+</div>
+</div>
+</div>
+</footer>
+<script>
+function renderCart() {
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartList = document.getElementById('cart-list');
+const cartTotalRow = document.getElementById('cart-total-row');
+if (cart.length === 0) {
+cartList.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+cartTotalRow.textContent = '';
+return;
+}
+let total = 0;
+cartList.innerHTML = cart.map((item, idx) => {
+// Extract numeric value from price string (e.g. "$30")
+const priceNum = parseFloat(item.price.replace(/[^0-9.]/g, '')) || 0;
+const itemTotal = priceNum * item.quantity;
+total += itemTotal;
+return `
+<div class="cart-item">
+<img class="cart-item-img" src="${item.image}" alt="${item.title}">
+<div class="cart-item-info">
+    <div class="cart-item-title">${item.title}</div>
+    <div class="cart-item-details">Size: ${item.size} | Qty: ${item.quantity}</div>
+    <div class="cart-item-price">${item.price} each</div>
+    <div class="cart-item-price" style="font-size:1.05em;color:#222;">Subtotal: $${itemTotal.toFixed(2)}</div>
+</div>
+<button class="cart-item-remove" title="Remove" onclick="removeFromCart(${idx})">&times;</button>
+</div>
+`;
+}).join('');
+cartTotalRow.innerHTML = `Total: $${total.toFixed(2)}`;
+}
+
+function removeFromCart(idx) {
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+cart.splice(idx, 1);
+localStorage.setItem('cart', JSON.stringify(cart));
+renderCart();
+// Optionally update nav cart count if function exists
+if (typeof updateCartCount === "function") updateCartCount();
+}
+
+function checkout() {
+alert('Checkout coming soon!');
+// You can redirect to a payment page or show a checkout form here
+}
+
+// Render cart on page load
+renderCart();
+
+// Optional: update cart count in nav if function exists
+if (typeof updateCartCount === "function") updateCartCount();
+
+// Optional: update cart if changed in another tab
+window.addEventListener('storage', function(e) {
+if (e.key === 'cart') renderCart();
+});
+function checkout() {
+document.getElementById('cart-payment-methods').style.display = 'block';
+// Optionally, scroll to the payment section
+document.getElementById('cart-payment-methods').scrollIntoView({ behavior: 'smooth' });
+}
+function closeAllForms() {
+['paypalForm','venmoForm','zelleForm','stripeForm'].forEach(function(formId) {
+const form = document.getElementById(formId);
+if (form) form.classList.remove('active');
+});
+}
+// Toggle form visibility
+function toggleForm(formId) {
+const form = document.getElementById(formId);
+if (form && form.classList.contains('active')) {
+form.classList.remove('active');
+} else {
+closeAllForms();
+if (form) form.classList.add('active');
+}
+}
+document.getElementById('paypalBtn').onclick = function() { toggleForm('paypalForm'); };
+document.getElementById('venmoBtn').onclick = function() { toggleForm('venmoForm'); };
+document.getElementById('zelleBtn').onclick = function() { toggleForm('zelleForm'); };
+document.getElementById('stripeBtn').onclick = function() { toggleForm('stripeForm'); };
+
+</script>
+</body>
+</html>

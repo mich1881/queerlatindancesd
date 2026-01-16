@@ -2,22 +2,6 @@
    GLOBAL SOFT ANIMATIONS & TRANSITIONS
    Add <link rel="stylesheet" href="styles/global.css"> to any page
    ======================================== */
-
-/* === SMOOTH PAGE LOAD === */
-/* Body fade animation removed to prevent white flash on page transitions */
-/* body {
-  animation: fadeIn 0.6s ease-in;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-} */
-
 /* === EXCLUDE NAVIGATION AND BACKGROUND FROM FADE === */
 header,
 nav,
@@ -272,4 +256,87 @@ button:active,
   50% {
     opacity: 0.5;
   }
+}
+/* cart modal styles */
+/* Cart Modal Styles */
+.cart-modal {
+  display: none;
+  position: fixed;
+  top: 60px;
+  right: 30px;
+  z-index: 999;
+  background: #4c3364;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px #716cff22;
+  padding: 1.2em 1.5em;
+  min-width: 320px;
+  max-width: 95vw;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.cart-modal-title {
+  font-weight: 700;
+  font-size: 1.15em;
+  margin-bottom: 0.7em;
+}
+.cart-modal-btn {
+  display: block;
+  width: 100%;
+  margin-top: 1em;
+  padding: 0.5em 1.2em;
+  font-weight: 700;
+  font-size: 1em;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.cart-modal-btn.view {
+  background: #fff;
+  color: #716cff;
+  border: 2px solid #716cff;
+  margin-bottom: 0.5em;
+}
+.cart-modal-btn.view:hover {
+  background: #f3f2ff;
+}
+.cart-modal-btn.close {
+  background: #716cff;
+  color: #fff;
+  border: none;
+}
+.cart-modal-btn.close:hover {
+  background: #574fd6;
+}
+/* Cart Icon Container */
+.cart-nav {
+  margin-left: 1em;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+}
+
+/* Cart Icon Image */
+.cart-icon-img {
+  height: 24px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+/* Cart Count Badge */
+.cart-count {
+  background: #ff6b6b;
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px 7px;
+  font-size: 0.9em;
+  position: absolute;
+  top: -10px;
+  right: -15px;
+  font-weight: 700;
+  min-width: 22px;
+  text-align: center;
+  line-height: 1.2;
+  box-shadow: 0 1px 4px #0002;
+  pointer-events: none;
 }
