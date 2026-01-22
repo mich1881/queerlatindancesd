@@ -10,7 +10,7 @@
       "description": "Description for 4 Week Series 1",
       "type": "series",
       "link": "4weekseries1p2.html",
-      "banner": "NEW CLASS IN 3 WEEKS"
+      "banner": "TBD"
     },
     {
       "id": "new-class-2",
@@ -22,19 +22,19 @@
       "description": "Description for 4 Week Series 2",
       "type": "series",
       "link": "4weekseries2p2.html",
-      "banner": "NEW CLASS IN 3 WEEKS"
+      "banner": "TBD"
     },
         {
       "id": "new-class-3",
       "date": "january-2025",
       "month": "DROP",
       "day": "IN",
-      "title": "New Class 3",
+      "title": "Drop-in Winter 2",
       "flyerUrl": "images/lessons/4weekseriesdropin.png",
-      "description": "Description for new class 3",
+      "description": "Description for Drop-in Winter Part 2",
       "type": "dropin",
       "link": "dropin2.html",
-      "banner": "NEW CLASS IN 3 WEEKS"
+      "banner": "TBD"
     },
     {
       "id": "progressive-series",

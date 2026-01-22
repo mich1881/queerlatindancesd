@@ -150,7 +150,18 @@ margin-bottom: 0.5rem;
 margin-left: 1.2rem;
 text-align: left;
 }
+.cart-count,
+#cart-count-mobile {
+  font-size: 1.2em;      /* Make the number bigger */
+  padding: 2px 8px;     /* Make the circle larger */
+  min-width: 28px;       /* Optional: ensure circle is round */
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
+}
+
 .cart-payment-methods {
 display: flex;
 flex-direction: column;
@@ -193,6 +204,7 @@ width: auto;
 vertical-align: middle;
 object-fit: contain;
 margin-right: 0.5em;
+margin-left: 0.5em;
 }
 .choose-btn.zelle {
 background: linear-gradient(90deg,#6c1cd1 10%,#b57edc 90%);
@@ -222,6 +234,7 @@ font-weight: 700;
 padding: 0.12em 0.5em;
 border-radius: 6px;
 margin-left: 1em;
+margin-right: 0.5em;
 }
 .safe-checkout-box {
 width: 100%;
@@ -276,10 +289,56 @@ object-fit: contain;
   box-shadow: 0 2px 8px #a259ff11;
   padding: 0 0; /* No padding when hidden */
 }
+
+.payment-form,
+.payment-form input,
+.payment-form label,
+.payment-form h3,
+.payment-form .agreement-row,
+.payment-form .modal-instructions {
+  color: #222; /* or #333, or any dark color you prefer */
+}
 .payment-form.active {
   max-height: 800px;
   opacity: 1;
   padding: 1.5rem 0.5rem 1.2rem 0.5rem; /* Add padding when open */
+}
+
+.payment-method-wrap {
+  width: 400px; /* Match your button's visual width */
+  max-width: 100%;
+  margin: 0 auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.choose-btn,
+.payment-form {
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.payment-form-inner {
+  padding: 0.32em 0.5em; /* Match the button's horizontal padding */
+}
+
+.delivery-options-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+.delivery-options-row label {
+  font-weight: 500;
+  font-size: 1.08em;
+  cursor: pointer;
+  margin: 0;
+}
+.delivery-options-row input[type="radio"] {
+  margin-right: 0.5em;
 }
 </style>
 </head>
@@ -303,10 +362,66 @@ object-fit: contain;
     <span><img src="images/icons/zelleicon.png" alt="Zelle" class="cart-pay-icon"/>Zelle</span>
     <span class="no-fees-badge">No Fees</span>
     </button>
-    <!-- Zelle Form (slide-down) -->
-    <div id="zelleForm" class="payment-form">
-    <h3>Zelle Payment Instructions</h3>
-    <form id="zelleFormInner">
+<!-- Zelle Form (slide-down) -->
+<div id="zelleForm" class="payment-form">
+  <h3>Zelle Payment Instructions</h3>
+  <form id="zelleFormInner">
+    <div class="form-row">
+      <div class="form-col">
+        <label>First Name</label><br>
+        <input type="text" name="firstName" required class="form-input" />
+      </div>
+      <div class="form-col">
+        <label>Last Name</label><br>
+        <input type="text" name="lastName" required class="form-input" />
+      </div>
+    </div>
+    <div class="form-row delivery-options-row" style="margin-bottom: 1em;">
+      <label>
+        <input type="radio" name="deliveryOption" value="Pick Up" checked>
+        Pick Up
+      </label>
+      <label style="margin-left: 1.5em;">
+        <input type="radio" name="deliveryOption" value="Delivery">
+        Delivery
+      </label>
+    </div>
+    <!-- Address fields, hidden by default -->
+    <div id="addressFields" style="display: none; margin-bottom: 1em;">
+      <label>Address</label><br>
+      <input type="text" name="address" class="form-input form-input-full" placeholder="Street Address" /><br>
+      <input type="text" name="city" class="form-input form-input-full" placeholder="City" /><br>
+      <input type="text" name="state" class="form-input" placeholder="State" style="width: 48%; display: inline-block;" />
+      <input type="text" name="zip" class="form-input" placeholder="ZIP" style="width: 48%; display: inline-block; float: right;" /><br>
+    </div>
+    <label>Email</label><br>
+    <input type="email" name="email" required class="form-input form-input-full" /><br>
+    <label>Phone</label><br>
+    <input type="tel" name="phone" class="form-input form-input-full" /><br>
+    <div class="agreement-row">
+      <span>By purchasing our merchandise, you agree to our</span>
+      <a href="#" id="termsLink2" class="modal-link terms-link">Terms & Conditions</a>
+    </div>
+    <div class="modal-instructions zelle-instructions">
+      <b>Step 1:</b> Open your banking app and select Zelle.<br>
+      <b>Step 2:</b> Payment details will be provided after form submission.<br>
+      <b>Step 3:</b> Enter the correct amount and confirm your merchandise description in the memo.<br>
+      <b>Step 4:</b> Click below to confirm and see payment details.
+    </div>
+    <button type="submit" class="modal-submit zelle-submit">Show Zelle Details</button>
+  </form>
+  <div id="zelleConfirm" class="zelle-confirm" style="display:none;"></div>
+</div>
+</div>
+<div class="payment-method-wrap">
+<button id="venmoBtn" class="choose-btn venmo" type="button">
+<span><img src="images/icons/venmoicon.png" alt="Venmo" class="cart-pay-icon"/>Venmo</span>
+<span class="no-fees-badge">No Fees</span>
+</button>
+<!-- Venmo Form (slide-down) -->
+    <div id="venmoForm" class="payment-form">
+    <h3>Venmo Payment Instructions</h3>
+    <form id="venmoFormInner">
     <div class="form-row">
     <div class="form-col">
     <label>First Name</label><br>
@@ -323,27 +438,51 @@ object-fit: contain;
     <span>By purchasing our merchandise, you agree to our</span>
     <a href="#" id="termsLink2" class="modal-link terms-link">Terms & Conditions</a>
     </div>
-    <div class="modal-instructions zelle-instructions">
-    <b>Step 1:</b> Open your banking app and select Zelle.<br>
-    <b>Step 2:</b> Payment details will be provided after form submission.<br>
-    <b>Step 3:</b> Enter the correct amount and confirm your merchandise description in the memo.<br>
-    <b>Step 4:</b> Click below to confirm and see payment details.
+    <div class="modal-instructions venmo-instructions">
+    <b>Step 1:</b> Open Venmo app.<br>
+    <b>Step 2:</b> Send payment to <b>@michf18</b>.<br>
+    <b>Step 3:</b> Enter the correct amount and include your name & type of merchandise in the note, i.e. "Orchid Classic QLDSD Logo T-shirt - Size M".<br>
+    <b>Step 4:</b> Click "Submit Order" to continue.
     </div>
-    <button type="submit" class="modal-submit zelle-submit">Show Zelle Details</button>
+    <button type="submit" class="modal-submit venmo-submit">Submit Order</button>
     </form>
-    <div id="zelleConfirm" class="zelle-confirm" style="display:none;"></div>
+    <div id="venmoConfirm" class="venmo-confirm" style="display:none;"></div>
     </div>
-</div>
-<div class="payment-method-wrap">
-<button id="venmoBtn" class="choose-btn venmo" type="button">
-<span><img src="images/icons/venmoicon.png" alt="Venmo" class="cart-pay-icon"/>Venmo</span>
-<span class="no-fees-badge">No Fees</span>
-</button>
 </div>
 <div class="payment-method-wrap">
     <button id="stripeBtn" class="choose-btn stripe" type="button">
     <span><img src="images/icons/stripeicon.png" alt="Stripe" class="cart-pay-icon"/>Stripe (Card)</span>
     </button>
+    <!--  Form (slide-down) -->
+    <div id="stripeForm" class="payment-form">
+    <h3>Stripe Payment Instructions</h3>
+    <form id="stripeFormInner">
+    <div class="form-row">
+    <div class="form-col">
+    <label>First Name</label><br>
+    <input type="text" name="firstName" required class="form-input" />
+    </div>
+    <div class="form-col">
+    <label>Last Name</label><br>
+    <input type="text" name="lastName" required class="form-input" />
+    </div>
+    </div>
+    <label>Email</label><br><input type="email" name="email" required class="form-input form-input-full" /><br>
+    <label>Phone</label><br><input type="tel" name="phone" class="form-input form-input-full" /><br>
+    <div class="agreement-row">
+    <span>By purchasing our merchandise, you agree to our</span>
+    <a href="#" id="termsLink2" class="modal-link terms-link">Terms & Conditions</a>
+    </div>
+    <div class="modal-instructions stripe-instructions">
+    <b>Step 1:</b> Open Stripe.<br>
+    <b>Step 2:</b> Send payment to <b>@michf18</b>.<br>
+    <b>Step 3:</b> Enter the correct amount and include your name & type of merchandise in the note, i.e. "Orchid Classic QLDSD Logo T-shirt - Size M".<br>
+    <b>Step 4:</b> Click "Submit Order" to continue.
+    </div>
+    <button type="submit" class="modal-submit stripe-submit">Submit Order</button>
+    </form>
+    <div id="stripeConfirm" class="stripe-confirm" style="display:none;"></div>
+    </div>
 </div>
 <div class="payment-method-wrap">
 <button id="paypalBtn" class="choose-btn paypal" type="button">
@@ -486,6 +625,80 @@ document.getElementById('venmoBtn').onclick = function() { toggleForm('venmoForm
 document.getElementById('zelleBtn').onclick = function() { toggleForm('zelleForm'); };
 document.getElementById('stripeBtn').onclick = function() { toggleForm('stripeForm'); };
 
+function sendToGoogleSheet(formData) {
+  const url = 'https://script.google.com/macros/s/AKfycbz2X0w2goHYwy97-iw9IU1GTxIK5R6NbVvAkjp_YSUFfh4CsN0x7f-Xxig3ZCcvFKzWmA/exec';
+
+  console.log('🔄 Sending backup to Google Sheets...', formData);
+
+  const data = new FormData();
+  for (const key in formData) {
+    data.append(key, formData[key]);
+  }
+
+  fetch(url, {
+    method: 'POST',
+    body: data,
+    mode: 'no-cors'
+  })
+  .then(() => console.log('✅ Backup sent to Google Sheets'))
+  .catch(error => console.error('❌ Google Sheet backup error:', error));
+}
+// Gather user info from your form
+document.getElementById('zelleFormInner').addEventListener('submit', function(e) {
+  e.preventDefault(); // Stop the form from reloading the page
+
+  // Gather user info from the form
+const userInfo = {
+  firstName: document.querySelector('[name="firstName"]').value,
+  lastName: document.querySelector('[name="lastName"]').value,
+  email: document.querySelector('[name="email"]').value,
+  phone: document.querySelector('[name="phone"]').value,
+  deliveryOption: document.querySelector('input[name="deliveryOption"]:checked').value,
+  address: document.querySelector('[name="address"]').value,
+  city: document.querySelector('[name="city"]').value,
+  state: document.querySelector('[name="state"]').value,
+  zip: document.querySelector('[name="zip"]').value
+};
+
+  // Get cart from localStorage
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  // Prepare data for Google Sheets
+  const formData = {
+    ...userInfo,
+    cart: JSON.stringify(cart)
+  };
+
+  // Send to Google Sheets
+  sendToGoogleSheet(formData);
+
+  // Show a popup/message
+  alert('✅ Order submitted! Thank you.');
+
+  // Optionally reset form and cart
+  this.reset();
+  localStorage.removeItem('cart');
+  renderCart();
+});
+// Toggle address fields based on delivery option for Zelle form
+(function() {
+  const zelleForm = document.getElementById('zelleFormInner');
+  if (!zelleForm) return;
+  const radios = zelleForm.querySelectorAll('input[name="deliveryOption"]');
+  const addressFields = zelleForm.querySelector('#addressFields');
+  function toggleAddress() {
+    if (zelleForm.querySelector('input[name="deliveryOption"]:checked').value === 'Delivery') {
+      addressFields.style.display = 'block';
+    } else {
+      addressFields.style.display = 'none';
+    }
+  }
+  radios.forEach(function(radio) {
+    radio.addEventListener('change', toggleAddress);
+  });
+  // Run once in case "Delivery" is pre-selected
+  toggleAddress();
+})();
 </script>
 </body>
 </html>

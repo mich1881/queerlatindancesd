@@ -261,7 +261,7 @@ header h1 {
   font-weight: 700;
   margin: 3rem 0;
 }
-.logo1 {
+.logo1, .logo2 {
   width: 110px;
   max-width: 150px;
   display: block;
@@ -484,7 +484,7 @@ button {
     padding: 0.5rem 0;
   }
   
-  .logo1 {
+  .logo2 {
     max-width: 100px;
     margin-left: 0.75rem;
   }
@@ -1962,7 +1962,7 @@ header h1 {
   font-weight: 700;
   margin: 3rem 0;
 }
-.logo1 {
+.logo2 {
   width: 110px;
   max-width: 150px;
   display: block;
@@ -2224,7 +2224,7 @@ button {
     padding: 0.5rem 0;
   }
   
-  .logo1 {
+  .logo2 {
     max-width: 100px;
     margin-left: 0.75rem;
   }
@@ -2724,8 +2724,8 @@ body.events-page::before {
     }
 /* === HERO BLOB SECTION === */
 .logo2 {
-  width: 300px;
-  max-width: 300px;
+  width: 120px;
+  max-width: 120px;
   display: block;
   margin: .3rem 0;
   height: auto;
@@ -4084,7 +4084,7 @@ header {
     90deg,
     #f475ea2e 20%,
     #9751f2c8 60%,
-    rgba(151, 54, 193, 0.651) 100%
+    #8784fc 100%
   );
   display: flex;
   align-items: center;
@@ -4113,9 +4113,9 @@ header h1 {
   font-weight: 700;
   margin: 3rem 0;
 }
-.logo1 {
+.logo2 {
   width: 110px;
-  max-width: 150px;
+  max-width: 110px;
   display: block;
   margin: .3rem 0;
   height: auto;
@@ -4685,10 +4685,10 @@ body.events-page::before {
 
 /* === HERO BLOB SECTION === */
 .logo2 {
-  width: 300px;
-  max-width: 300px;
+  width: 70px;
+  max-width: 70px;
   display: block;
-  margin: .3rem 0;
+  margin: 0rem 0;
   height: auto;
   padding: 0;
   opacity: 1 !important;
