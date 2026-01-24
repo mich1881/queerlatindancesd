@@ -121,6 +121,42 @@
       line-height: 1.5;
       color: #292626;
     }
+.cart-icon-bar {
+  position: fixed;
+  top: 24px;
+  right: 32px;
+  z-index: 1000;
+}
+.cart-icon-link {
+  position: relative;
+  display: inline-block;
+}
+.cart-icon-img {
+  width: 38px;
+  height: 38px;
+}
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff3b3b;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0;
+  min-width: 24px;
+  min-height: 24px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px #716cff33;
+  transition: background 0.2s;
+}
+
     /* Modal */
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
     .modal-content { background: #fff; padding: 1.5em; border-radius: 12px; max-width: 90vw; max-height: 90vh; overflow: auto; position: relative; }
@@ -140,6 +176,13 @@
   </style>
 </head>
 <body>
+  <!-- Cart Icon in upper right -->
+<div id="cart-icon-bar" class="cart-icon-bar">
+  <a href="merch-cart.html" id="cart-icon-link" class="cart-icon-link">
+    <img src="images/icons/cart-icon.png" alt="Cart" class="cart-icon-img">
+    <span id="cart-count" class="cart-count"></span>
+  </a>
+</div>
   <div class="back-home">
     <a href="merch.html">← Back to Merch</a>
   </div>
@@ -215,6 +258,13 @@
           </div>
         </div>
       </div>
+<!-- Cart Modal -->
+<div id="cart-modal" class="cart-modal">
+<div class="cart-modal-title">Your Cart</div>
+<div id="cart-items"></div>
+<button onclick="viewCart()" class="cart-modal-btn view">View Cart</button>
+<button onclick="closeCart()" class="cart-modal-btn close">Close</button>
+</div>
     </footer>
   <script>
     // Fetch product info from merch-data.json using ?id= param
@@ -305,6 +355,94 @@ document.getElementById('addToCartBtn').onclick = function() {
       alert(`Proceed to checkout:\n${window.currentProduct.title}\nSize: ${size}\nQty: ${qty}`);
       // Example: window.location.href = `checkout.html?id=${getQueryParam('id')}&size=${size}&qty=${qty}`;
     };
+
+
+// Render cart items in modal
+function renderCartModal() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartItemsDiv = document.getElementById('cart-items');
+  if (cart.length === 0) {
+    cartItemsDiv.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+    return;
+  }
+  let html = '';
+  let total = 0;
+  cart.forEach(item => {
+    const priceNum = parseFloat(item.price.replace(/[^0-9.]/g, '')) || 0;
+    const itemTotal = priceNum * item.quantity;
+    total += itemTotal;
+    html += `
+      <div class="cart-item" style="display:flex;align-items:center;gap:0.7em;margin-bottom:0.7em;">
+        <img src="${item.image}" alt="${item.title}" style="width:48px;height:48px;border-radius:8px;background:#f7f7ff;border:1px solid #eee;">
+        <div style="flex:1;">
+          <div style="font-weight:700;">${item.title}</div>
+          <div style="font-size:0.98em;color:#444;">Size: ${item.size || ''}</div>
+          <div style="font-size:0.98em;color:#444;">Qty: ${item.quantity}</div>
+        </div>
+        <div style="font-weight:700;color:#716cff;">$${itemTotal.toFixed(2)}</div>
+      </div>
+    `;
+  });
+  html += `<div style="text-align:right;font-weight:700;font-size:1.1em;margin-top:0.7em;">Total: $${total.toFixed(2)}</div>`;
+  cartItemsDiv.innerHTML = html;
+}
+
+// Close cart modal
+function closeCart() {
+  document.getElementById('cart-modal').style.display = 'none';
+}
+
+// Go to cart page
+function viewCart() {
+  window.location.href = 'merch-cart.html';
+}
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const cartCountEl = document.getElementById('cart-count');
+  if (cartCountEl) cartCountEl.textContent = count; // Always show number, even if 0
+}
+updateCartCount();
+
+document.getElementById('buyNowBtn').onclick = function() {
+  const size = document.getElementById('size').value;
+  const qty = parseInt(document.getElementById('quantity').value, 10);
+  if (!size) { alert('Please select a size.'); return; }
+  if (qty < 1) { alert('Please enter a valid quantity.'); return; }
+
+  // Build cart item
+  const cartItem = {
+    id: getQueryParam('id'),
+    title: window.currentProduct.title,
+    image: window.currentProduct.image,
+    price: window.currentProduct.price,
+    size: size,
+    quantity: qty
+  };
+
+  // Get existing cart or start new
+  let cart = [];
+  try {
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
+  } catch (e) {}
+
+  // Check if item with same id and size exists, if so, increase quantity
+  const existing = cart.find(item => item.id === cartItem.id && item.size === cartItem.size);
+  if (existing) {
+    existing.quantity += qty;
+  } else {
+    cart.push(cartItem);
+  }
+
+  // Save back to localStorage
+  localStorage.setItem('cart', JSON.stringify(cart));
+
+  // Update cart count on all pages where function exists
+  if (typeof updateCartCount === "function") updateCartCount();
+
+  // Redirect to cart page
+  window.location.href = 'merch-cart.html';
+};
   </script>
 </body>
 </html>

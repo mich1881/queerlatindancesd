@@ -521,6 +521,22 @@ overflow-x: hidden;
 -webkit-overflow-scrolling: touch;
 }
 }
+.modal-fade {
+  /* ...modal overlay styles... */
+}
+.modal-content {
+  background: #fff;
+  border-radius: 18px;
+  max-width: 540px;
+  width: 96vw;
+  padding: 1.5em 1.2em;
+  box-shadow: 0 4px 32px #a259ff33;
+  position: relative;
+  overflow-y: auto;
+  max-height: 92vh;
+  font-size: 0.97em;
+  text-align: left;
+}
 </style>
 </head>
 <body>
@@ -1524,16 +1540,7 @@ submitBtn.textContent = 'Continue to Venmo';
 }, 2000);
 }, 1500); // Give time for overlay to show and user to read
 };
-/*
-<div style="background:#e6ffe6;padding:1em;border-radius:8px;margin:1em 0 1em 0;color:#228B22;font-size:0.98em;">
-<strong>Old Stripe backend code (hidden):</strong><br>
-// Stripe Embedded Checkout<br>
-// You must set up a backend endpoint to create Stripe Checkout Sessions<br>
-// Replace YOUR_STRIPE_PUBLISHABLE_KEY and /create-checkout-session with your actual values<br>
-// ...existing backend code...
-</div>
-*/
-// Stripe Payment Link (no backend needed)
+// Stripe Checkout button handler
 const stripeBtn = document.getElementById('stripeCheckoutBtn');
 if (stripeBtn) {
 stripeBtn.onclick = function(e) {

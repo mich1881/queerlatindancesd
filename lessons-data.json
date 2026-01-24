@@ -10,7 +10,7 @@
       "description": "Description for 4 Week Series 1",
       "type": "series",
       "link": "4weekseries1p2.html",
-      "banner": "TBD"
+      "banner": "OPEN ENROLLMENT"
     },
     {
       "id": "new-class-2",
@@ -22,7 +22,7 @@
       "description": "Description for 4 Week Series 2",
       "type": "series",
       "link": "4weekseries2p2.html",
-      "banner": "TBD"
+      "banner": "OPEN ENROLLMENT"
     },
         {
       "id": "new-class-3",
@@ -34,7 +34,7 @@
       "description": "Description for Drop-in Winter Part 2",
       "type": "dropin",
       "link": "dropin2.html",
-      "banner": "TBD"
+      "banner": "AVAILABLE NOW"
     },
     {
       "id": "progressive-series",
