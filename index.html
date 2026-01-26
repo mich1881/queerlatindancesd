@@ -139,6 +139,285 @@ nav a:focus {
   z-index: 1;
 }
 
+/* === TESTIMONIAL SECTION STYLES === */
+.testimonial-flex {
+  margin: 3rem 0;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #f8f4ff 0%, #e8d8ff 100%);
+  border-radius: 20px;
+  max-width: 1200px;
+  margin: 3rem auto;
+}
+
+.testimonial-content {
+  text-align: center;
+}
+
+.testimonial-logo {
+  max-width: 600px;
+  width: 100%;
+  height: auto;
+  margin: 0 auto 2rem auto;
+  display: block;
+}
+
+.testimonial-cards-container {
+  display: flex;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 2rem auto 0 auto;
+  padding: 0 1rem;
+  align-items: stretch; /* Ensure all cards are same height */
+}
+
+.testimonial-card {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(113, 108, 255, 0.15);
+  border: 2px solid #e8d8ff;
+  transition: all 0.3s ease;
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 480px;
+  min-height: 320px; /* Ensures all cards have the same minimum height */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch; /* Ensures content stretches to fill card */
+}
+
+.testimonial-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(113, 108, 255, 0.25);
+  border-color: #b57edc;
+}
+
+.testimonial-card::before {
+  content: '"';
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  font-size: 3rem;
+  color: #716cff;
+  font-family: 'PassionOne', Arial, sans-serif;
+  line-height: 1;
+}
+
+.testimonial-text {
+  font-family: 'Nunito', Arial, sans-serif;
+  font-size: 1rem;
+  color: #4a4a4a;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding-top: 0.5rem;
+}
+
+.testimonial-author {
+  font-family: 'Nunito', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #716cff;
+  text-align: right;
+  font-style: italic;
+}
+
+/* Mobile responsive for testimonials */
+@media (max-width: 768px) {
+  .testimonial-cards-container {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 0.5rem;
+    max-width: 100%;
+    max-height: 660px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #716cff #e8d8ff;
+  }
+  .testimonial-card {
+    padding: 1.25rem;
+    max-width: 100%;
+    overflow: visible;
+    box-sizing: border-box;
+    height: auto !important;
+    min-height: unset !important;
+  }
+  .testimonial-arrow {
+    display: none !important;
+  }
+}
+
+/* === TESTIMONIAL FORM STYLES === */
+.submit-testimonial-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.submit-testimonial-btn {
+  background: linear-gradient(135deg, #716cff 0%, #a259ff 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(113, 108, 255, 0.3);
+}
+
+.submit-testimonial-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(113, 108, 255, 0.4);
+}
+
+.testimonial-form-container {
+  max-width: 600px;
+  margin: 2rem auto 0 auto;
+  padding: 0 1rem;
+  transition: all 0.3s ease;
+}
+
+.testimonial-form-container.hidden {
+  display: none;
+}
+
+.testimonial-form {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 30px rgba(113, 108, 255, 0.15);
+  border: 2px solid #e8d8ff;
+}
+
+.testimonial-form h3 {
+  color: #716cff;
+  margin-bottom: 0.5rem;
+  font-family: 'Nunito', Arial, sans-serif;
+  font-size: 1.5rem;
+}
+
+.form-description {
+  color: #666;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 600;
+  font-family: 'Nunito', Arial, sans-serif;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e8d8ff;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'Nunito', Arial, sans-serif;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #716cff;
+  box-shadow: 0 0 0 3px rgba(113, 108, 255, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.submit-btn {
+  background: #716cff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #5a4fff;
+  transform: translateY(-1px);
+}
+
+.cancel-btn {
+  background: #f8f9fa;
+  color: #666;
+  border: 2px solid #e8d8ff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+  background: #e8d8ff;
+  color: #333;
+}
+
+/* Mobile responsive for testimonial form */
+@media (max-width: 768px) {
+  .testimonial-form {
+    padding: 1.5rem;
+    margin: 0 0.5rem;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .submit-testimonial-btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
+  }
+}
+
+.testimonial-arrow {
+  background: #716cff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.1;
+  vertical-align: middle;
+  position: relative;
+  top: 2px; /* Slightly shifts arrow lower for better centering */
+}
+
 /* === FAQ SECTION STYLES === */
 .faq-section {
   background: linear-gradient(120deg, #2e0233f9 0%, #4a1f94 100%);
@@ -717,6 +996,7 @@ nav a:focus {
       </div>
     </section>
   </section>
+
 </main>
 <section class="newsletter-preview-section" aria-labelledby="newsletter-section-heading">
   <h2 id="newsletter-section-heading" class="visually-hidden">Newsletter Information</h2>
@@ -802,13 +1082,48 @@ nav a:focus {
     &nbsp;  &nbsp;Where words leave off, music begins...&nbsp;  &nbsp; ¡Vamos a Bailar! &nbsp;  &nbsp;Let's Dance!&nbsp;
   </span>
 </div>
+<!-- Testimonials Section -->
+<section class="testimonial-flex">
+  <div class="testimonial-content">
+    <img src="images/home/Testimonials1.png" alt="Queer Latin Dance SD - Celebrates Your Identity in Every Step" class="testimonial-logo" />
+    <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
+      <button id="testimonial-left" class="testimonial-arrow" aria-label="Previous testimonials">&lt;</button>
+      <div class="testimonial-cards-container" id="testimonialCards"></div>
+      <button id="testimonial-right" class="testimonial-arrow" aria-label="Next testimonials">&gt;</button>
+    </div>
+    <!-- Submit Testimonial Button -->
+    <div class="submit-testimonial-container">
+      <button class="submit-testimonial-btn" onclick="toggleTestimonialForm()">
+        Submit Your Testimonial
+      </button>
+    </div>
+    <!-- Testimonial Submission Form (Hidden by default) -->
+    <div class="testimonial-form-container hidden" id="testimonialForm">
+      <form class="testimonial-form" onsubmit="submitTestimonial(event)">
+        <h3>Share Your Experience!</h3>
+        <div class="form-group">
+          <input type="text" id="testimonialName" name="name" required placeholder="Your Name">
+        </div>
+        <div class="form-group">
+          <input type="email" id="testimonialEmail" name="email" placeholder="Email Address">
+        </div>
+        <div class="form-group">
+          <textarea id="testimonialText" name="testimonial" required placeholder="Tell us about your experience with our classes, events, or community..." rows="4"></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="submit-btn">Submit</button>
+          <button type="button" class="cancel-btn" onclick="toggleTestimonialForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
 <!-- FAQ Section -->
 <section class="faq-section" aria-labelledby="faq-heading">
   <div class="faq-container">
     <div class="faq-title">
       <h2 id="faq-heading"><span>F</span><span>A</span><span>Q</span><span>s</span></h2>
     </div>
-    
     <div class="faq-questions">
       <h3>Have a question that isn't covered below? Please send us an email!</h3>
       <div class="faq-list" role="list">
@@ -821,7 +1136,6 @@ nav a:focus {
             <p>Salsa is both a music genre and a partner dance that developed in the mid-20th century. Its roots trace back to Cuba, where the son cubano blended Spanish guitar with African rhythms in the late 1800s. By the 1940s and 1950s, Cuban musicians brought these rhythms to New York City, where they mixed with jazz, mambo, and Puerto Rican musical traditions. The term “salsa” became popular in the 1970s, thanks to Fania Records, which marketed this vibrant mix as a new style. Today, salsa is danced and celebrated worldwide, known for its energetic footwork, partner connection, and rhythmic diversity.</p>
           </div>
         </div>
-        
         <div class="faq-item" role="listitem">
           <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-2">
             What is the difference between Salsa On1 and On2?
@@ -1063,7 +1377,159 @@ document.addEventListener('click', function(e) {
     });
   }
 });
+fetch('testimonials.json')
+  .then(response => response.json())
+  .then(testimonials => {
+    const container = document.getElementById('testimonialCards');
+    if (!container) return;
+    let currentIndex = 0;
+    const cardsPerScroll = 2;
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+    function render() {
+      container.innerHTML = '';
+      if (isMobile()) {
+        // Show ALL testimonials on mobile
+        testimonials.forEach((t, i) => {
+          const words = t.text.split(' ');
+          const card = document.createElement('div');
+          card.className = 'testimonial-card';
+          if (words.length > 75) {
+            const shortText = words.slice(0, 75).join(' ') + '...';
+            card.innerHTML = `
+              <div class="testimonial-text" id="testimonial-text-${i}" 
+                   data-full="${encodeURIComponent(t.text)}"
+                   data-short="${encodeURIComponent(shortText)}">
+                "${shortText}"
+              </div>
+              <div class="testimonial-author">- ${t.author}</div>
+              <a href="#" class="read-more-link" data-idx="${i}">Read more</a>
+            `;
+          } else {
+            card.innerHTML = `
+              <div class="testimonial-text">
+                "${t.text}"
+              </div>
+              <div class="testimonial-author">- ${t.author}</div>
+            `;
+          }
+          container.appendChild(card);
+        });
+      } else {
+        // Desktop: show 2 at a time
+        let showCount = Math.min(cardsPerScroll, testimonials.length - currentIndex);
+        for (let i = currentIndex; i < currentIndex + showCount; i++) {
+          const t = testimonials[i];
+          const words = t.text.split(' ');
+          const card = document.createElement('div');
+          card.className = 'testimonial-card';
+          if (words.length > 75) {
+            const shortText = words.slice(0, 75).join(' ') + '...';
+            card.innerHTML = `
+              <div class="testimonial-text" id="testimonial-text-${i}" 
+                   data-full="${encodeURIComponent(t.text)}"
+                   data-short="${encodeURIComponent(shortText)}">
+                "${shortText}"
+              </div>
+              <div class="testimonial-author">- ${t.author}</div>
+              <a href="#" class="read-more-link" data-idx="${i}">Read more</a>
+            `;
+          } else {
+            card.innerHTML = `
+              <div class="testimonial-text">
+                "${t.text}"
+              </div>
+              <div class="testimonial-author">- ${t.author}</div>
+            `;
+          }
+          container.appendChild(card);
+        }
+      }
+      // Attach read more/less toggle
+      container.querySelectorAll('.read-more-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const idx = this.getAttribute('data-idx');
+          const textDiv = document.getElementById('testimonial-text-' + idx);
+          const fullText = decodeURIComponent(textDiv.getAttribute('data-full'));
+          const shortText = decodeURIComponent(textDiv.getAttribute('data-short'));
+          if (this.textContent === 'Read more') {
+            textDiv.textContent = '"' + fullText + '"';
+            this.textContent = 'Read less';
+          } else {
+            textDiv.textContent = '"' + shortText + '"';
+            this.textContent = 'Read more';
+          }
+        });
+      });
+      // Remove any leftover toggle button
+      const toggleBtn = document.getElementById('testimonial-toggle-btn');
+      if (toggleBtn) toggleBtn.remove();
+    }
+    render();
+    window.addEventListener('resize', render);
+    document.getElementById('testimonial-left').addEventListener('click', function() {
+      if (!isMobile()) {
+        currentIndex = Math.max(0, currentIndex - cardsPerScroll);
+        render();
+      }
+    });
+    document.getElementById('testimonial-right').addEventListener('click', function() {
+      if (!isMobile()) {
+        if (currentIndex + cardsPerScroll < testimonials.length) {
+          currentIndex += cardsPerScroll;
+          render();
+        }
+      }
+    });
+  });
+  // Testimonial form functionality
+function toggleTestimonialForm() {
+  const form = document.getElementById('testimonialForm');
+  form.classList.toggle('hidden');
+}
 
+function submitTestimonial(event) {
+  event.preventDefault();
+  
+  const form = event.target;
+  const formData = new FormData(form);
+  
+  // Show loading state
+  const submitBtn = form.querySelector('.submit-btn');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Submitting...';
+  submitBtn.disabled = true;
+  
+  // Debug: Log the form data being sent
+  console.log('Sending testimonial data:', {
+    name: formData.get('name'),
+    email: formData.get('email'), 
+    testimonial: formData.get('testimonial')
+  });
+  
+  // Submit testimonial to Google Apps Script
+  fetch('https://script.google.com/macros/s/AKfycbz_pf5qPgPFVBKPM0iecQ_MT55n6C3h6zyRmX6Xu9WAXX_ZYcHZ35jP9V0_oKhwr01zaA/exec', {
+    method: 'POST',
+    body: formData,
+    mode: 'no-cors'
+  })
+  .then(() => {
+    // With no-cors mode, we can't check response status, so assume success
+    alert('Thank you! Your testimonial has been submitted successfully. We appreciate your feedback!');
+    form.reset();
+    toggleTestimonialForm();
+  })
+  .catch((error) => {
+    console.error('Full error details:', error);
+    alert('There was an error submitting your testimonial: ' + error.message + '. Please try again or contact us directly.');
+  })
+  .finally(() => {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  });
+}
 // Keyboard support for FAQ items
 document.querySelectorAll('.faq-question').forEach(button => {
   button.addEventListener('keydown', function(e) {
