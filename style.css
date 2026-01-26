@@ -3338,7 +3338,8 @@ body.events-page::before {
 .footer {
   margin-left: 0;
   margin-right: 0;
-  background: linear-gradient(120deg, #2e0233 0%, #4a1f94 100%);
+  /* background: linear-gradient(120deg, #2e0233 0%, #4a1f94 100%); */
+  background: #4c38a6;
   color: #fff;
   padding: 2.5rem 0 2.5rem 0;
   text-align: left;
