@@ -1,44 +1,50 @@
 [
   {
-    "title": "Classic QLD Logo Crop",
+    "title": "Classic 'QLDSD' Crop Tee",
     "image": "images/merch/1.png",
     "price": "$30",
-    "color": "white",
-    "description": "100% cotton crop top with our classic QLD logo."
+    "color": "vintage white",
+    "description": "100% cotton crop top with our classic 'QLDSD' logo.",
+    "sizeChart": "images/merch/BCSizeChart.png"
   },
   {
-    "title": "QLD Double Line Logo Crop",
+    "title": "Bold 'QLDSD' Crop Tee",
     "image": "images/merch/2.png",
     "price": "$30",
-    "color": "white",
-    "description": "100% cotton crop top featuring the QLD double line logo."
+    "color": "vintage white",
+    "description": "100% cotton crop top featuring our bold 'QLDSD' logo.",
+    "sizeChart": "images/merch/BCSizeChart.png"
   },
   {
-    "title": "QLD Single Line Logo Crop",
+    "title": "Stripe 'QLDSD' Crop Tee",
     "image": "images/merch/3.png",
     "price": "$30",
-    "color": "white",
-    "description": "100% cotton crop top featuring the QLD single line logo."
+    "color": "vintage white",
+    "description": "100% cotton crop top featuring our stripe 'QLDSD' logo.",
+    "sizeChart": "images/merch/BCSizeChart.png"
   },
     {
-    "title": "Orchid Single Line QLD Logo Boxy Tee",
+    "title": "Orchid Stripe 'QLDSD' Boxy Tee",
     "image": "images/merch/purpboxy1.png",
     "price": "$32",
     "color": "light purple",
-    "description": "100% cotton boxy tee featuring the Orchid single line QLD logo."
+    "description": "100% cotton boxy tee featuring our stripe 'QLDSD' logo.",
+    "sizeChart": "images/merch/CCUnisexSizeChart.png"
   },
   {
-    "title": "Orchid Double Line QLD Logo Boxy Tee",
+    "title": "Orchid Bold 'QLDSD' Boxy Tee",
     "image": "images/merch/purpboxy2.png",
     "price": "$32",
     "color": "light purple",
-    "description": "100% cotton boxy tee featuring the Orchid double line QLD logo."
+    "description": "100% cotton boxy tee featuring our bold 'QLDSD' logo.",
+    "sizeChart": "images/merch/CCUnisexSizeChart.png"
   },
   {
-    "title": "Orchid Small 'QLDSD' Logo Boxy Tee",
+    "title": "Orchid Sunny 'QLDSD' Boxy Tee",
     "image": "images/merch/purpboxy3.png",
     "price": "$32",
     "color": "light purple",
-    "description": "100% cotton boxy tee featuring the Orchid small 'QLDSD' logo."
+    "description": "100% cotton boxy tee featuring our sunny 'QLDSD' logo.",
+    "sizeChart": "images/merch/CCUnisexSizeChart.png"
   }
 ]
