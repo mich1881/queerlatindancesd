@@ -612,6 +612,7 @@ Authentic Guarantee
 <a href="lessons.html">Lessons</a>
 <a href="book-us.html">Book Us</a>
 <a href="contact.html">Contact Us</a>
+<a href="merch.html">Merch</a>
 </div>
 </div>
 <div class="footer-social">
@@ -779,11 +780,36 @@ function setupOrderForm(formId, radioName, addressId, paymentMethod) {
       paymentMethod
     };
 
-    // Send to Google Sheets and trigger email
+// Prepare data for backend (cart as array)
+    const backendData = {
+      ...userInfo,
+      cart, // as array!
+      orderNumber,
+      orderDate,
+      paymentMethod
+    };
+
+    // --- SEND TO CLOUDFLARE WORKER BACKEND ---
+    const backendUrl = 'https://lingering-brook-3f5d.michf18.workers.dev/api/merch-order';
+    fetch(backendUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(backendData)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success) {
+        alert('Order failed: ' + (data.error || 'Unknown error'));
+      }
+    })
+    .catch(err => {
+      alert('Order failed: ' + err.message);
+    });
+
+    // --- SEND TO GOOGLE SHEETS ---
     sendToGoogleSheet(formData);
 
-    // Show a popup/message
-    alert('✅ Order submitted! You will receive a confirmation email shortly.');
+        alert('✅ Order submitted! You will receive a confirmation email shortly.');
 
     // Optionally reset form and cart
     form.reset();
@@ -797,7 +823,8 @@ setupOrderForm('zelleFormInner', 'deliveryOption', 'addressFields', 'Zelle');
 setupOrderForm('venmoFormInner', 'deliveryOptionVenmo', 'addressFieldsVenmo', 'Venmo');
 setupOrderForm('stripeFormInner', 'deliveryOptionStripe', 'addressFieldsStripe', 'Stripe');
 setupOrderForm('paypalFormInner', 'deliveryOptionPaypal', 'addressFieldsPaypal', 'PayPal');
-// Toggle address fields based on delivery option for Zelle form
+
+// Toggle address fields based on delivery option for each form
 function setupDeliveryOption(formId, radioName, addressId) {
   const form = document.getElementById(formId);
   if (!form) return;
@@ -815,6 +842,13 @@ function setupDeliveryOption(formId, radioName, addressId) {
   });
   toggleAddress();
 }
+
+// Render cart on page load
+renderCart();
+if (typeof updateCartCount === "function") updateCartCount();
+window.addEventListener('storage', function(e) {
+  if (e.key === 'cart') renderCart();
+});
 </script>
 </body>
 </html>

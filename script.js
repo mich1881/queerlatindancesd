@@ -378,3 +378,62 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+// Cart Modal Logic
+// Update cart count in nav
+function updateCartCount() {
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
+const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+const el1 = document.getElementById('cart-count');
+const el2 = document.getElementById('cart-count-mobile');
+if (el1) el1.textContent = count;
+if (el2) el2.textContent = count;
+}
+updateCartCount();
+// Show cart modal
+function showCartModal() {
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartItemsDiv = document.getElementById('cart-items');
+if (cart.length === 0) {
+cartItemsDiv.innerHTML = '<div style="color:#888;">Your cart is empty.</div>';
+} else {
+cartItemsDiv.innerHTML = cart.map(item => `
+<div style="margin-bottom:1em;border-bottom:1px solid #eee;padding-bottom:0.7em;">
+<img src="${item.image}" alt="${item.title}" style="height:40px;vertical-align:middle;margin-right:8px;">
+<span style="font-weight:700;">${item.title}</span><br>
+Size: ${item.size} | Qty: ${item.quantity}<br>
+<span style="color:#716cff;">${item.price}</span>
+</div>
+`).join('');
+}
+document.getElementById('cart-modal').style.display = 'block';
+}
+document.getElementById('cart-nav').onclick = showCartModal;
+const cartNavMobile = document.getElementById('cart-nav-mobile');
+if (cartNavMobile) cartNavMobile.onclick = showCartModal;
+// Close cart modal
+function closeCart() {
+document.getElementById('cart-modal').style.display = 'none';
+}
+// Update cart count after adding to cart (add this to your Add to Cart handler)
+function addToCartHandler() {
+// ...your existing add to cart code...
+updateCartCount();
+}
+// Fetch and display merch items
+fetch('merch-data.json')
+.then(response => response.json())
+.then(merchItems => {
+const merchRow = document.getElementById('merch-row');
+merchRow.innerHTML = merchItems.map((item, idx) => `
+<a href="merch-product.html?id=${idx}" class="merch-link" style="text-decoration:none;color:inherit;">
+<div class="merch-item">
+<div class="merch-title">${item.title}</div>
+<img class="merch-image" src="${item.image}" alt="${item.title}">
+<div class="merch-price">${item.price}</div>
+</div>
+</a>
+`).join('');
+});
+function viewCart() {
+window.location.href = 'merch-cart.html';
+}

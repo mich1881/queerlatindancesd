@@ -5220,7 +5220,33 @@ body.events-page::before {
   font-size: 3rem;
   text-decoration: none;
 }
-
+.cart-nav-mobile {
+  margin-left: 1em;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.cart-icon-img {
+  height: 24px;
+  vertical-align: middle;
+}
+.cart-count-mobile {
+  background: #ff6b6b;
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px 7px;
+  font-size: 0.9em;
+  position: absolute;
+  top: -10px;
+  right: -15px;
+  font-weight: 700;
+  min-width: 18px;
+  min-height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 /* Salsa History Section */
 .theme-toggle-btn {
   background: linear-gradient(120deg, #a259ff 0%, #fff 100%);

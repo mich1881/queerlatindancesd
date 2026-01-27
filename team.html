@@ -220,6 +220,13 @@
     <a href="index.html">
       <img src="images/logos/logo1.png" alt="Queer Latin Dance SD Logo" class="logo1" />
     </a>
+      <!-- Cart Modal -->
+  <div id="cart-modal" class="cart-modal">
+  <div class="cart-modal-title">Your Cart</div>
+  <div id="cart-items"></div>
+  <button onclick="viewCart()" class="cart-modal-btn view">View Cart</button>
+  <button onclick="closeCart()" class="cart-modal-btn close">Close</button>
+  </div>
     <!-- Desktop Navigation -->
     <nav>
       <a href="team.html">Team</a>
@@ -228,6 +235,11 @@
       <a href="directory.html">Directory</a>
       <a href="lessons.html">Lessons</a>
       <a href="book-us.html">Book Us</a>
+      <a href="merch.html">Merch</a>
+      <span id="cart-nav" class="cart-nav">
+      <img src="images/icons/cart-icon.png" alt="Cart" class="cart-icon-img">
+      <span id="cart-count" class="cart-count">0</span>
+      </span>
     </nav>
     <!-- Mobile Navigation Toggle -->
     <button class="mobile-nav-toggle" aria-label="Toggle navigation">
@@ -246,6 +258,11 @@
     <a href="directory.html">Directory</a>
     <a href="lessons.html">Lessons</a>
     <a href="book-us.html">Book Us</a>
+    <a href="merch.html">Merch</a>
+    <span id="cart-nav-mobile" class="cart-nav-mobile">
+  <img src="images/icons/cart-icon.png" alt="Cart" class="cart-icon-img">
+  <span id="cart-count-mobile" class="cart-count-mobile">0</span>
+</span>
   </nav>
 </div>
   <main>
