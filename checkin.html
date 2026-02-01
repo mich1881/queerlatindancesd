@@ -299,22 +299,16 @@ document.getElementById('checkinBtn').addEventListener('click', async function()
     document.getElementById('result').className = 'error';
     return;
   }
-//   const guest = await checkGuest(query);
-//   if (!guest.found) {
-//     document.getElementById('result').innerText = "Guest not found: " + query;
-//     document.getElementById('result').className = 'error';
-//     return;
-//   }
-lastCheckedInQuery = guest.id || guest.email || guest.row || query;
-    // --- If it's a guest, show preferred name popup ---
-  if (guest.name && guest.name.toLowerCase().includes("guest")) {
-// Always show preferred name popup for all entries
+  // Save guest info for later use
+  window._currentGuest = guest;
+  window._currentQuery = query;
+// --- If it's a guest, show preferred name popup ---
 document.getElementById('guestname-popup').classList.add('active');
 document.getElementById('result').innerText = "";
 document.getElementById('result').className = '';
 document.getElementById('email').value = '';
-return;
-  }
+return; 
+
   document.getElementById('ticketGuestName').textContent = guest.name || guest.email;
 
   if (guest.checkedIn) {
@@ -391,6 +385,16 @@ document.getElementById('preferredNameSubmitBtn').addEventListener('click', asyn
   }
   document.getElementById('ticketGuestName').textContent = preferredName;
 
+  // Now check in the guest and set up for printing
+  if (window._currentGuest) {
+    await markCheckIn(window._currentQuery);
+    lastCheckedInQuery = window._currentQuery;
+    document.getElementById('checkin-popup').classList.add('active');
+    document.getElementById('result').innerText = "";
+    document.getElementById('result').className = '';
+    document.getElementById('email').value = '';
+    // Optionally clear _currentGuest/_currentQuery here if you want
+  }
   // Now show the check-in success popup
   document.getElementById('checkin-popup').classList.add('active');
 });
