@@ -205,9 +205,6 @@ padding-top: 2em;
 }
   }
 
-
-
-
 </style>
 </head>
 <body>
@@ -228,11 +225,11 @@ padding-top: 2em;
 </a>
     <!-- Hidden ticket for printing -->
     <div id="ticketToPrint">
-      <div style="font-size:1em; text-align:center; color:#e75480;">
-        <span style="font-size:1.5em;">💌</span>
-        <strong>Valentine Ticket</strong><br>
-        <span id="ticketGuestName"></span><br>
-        <span id="ticketPronouns"></span>
+      <div style="font-size:1.5em; text-align:center; color:#e75480;">
+        <strong><span id="ticketGuestName" style="font-size:1.2em;"></span></strong>
+        <br>
+        <span style="font-size:1.2em;">💌</span>
+        <span id="ticketPronouns" style="font-size:1.2em;"></span>
       </div>
     </div>
   </div>
@@ -387,7 +384,7 @@ document.getElementById('popupPrintBtn').addEventListener('click', async functio
   }
   await markPrinted(lastCheckedInQuery);
   var ticket = document.getElementById('ticketToPrint').innerHTML;
-  var printWindow = window.open('', '', 'width=400,height=300');
+  var printWindow = window.open('', '', 'width=800,height=600');
   if (!printWindow) {
     document.getElementById('result').innerText = "Popup blocked! Please allow popups to print your ticket.";
     document.getElementById('result').className = 'error';
