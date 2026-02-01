@@ -335,7 +335,15 @@ return;
 });
 
 document.getElementById('popupPrintBtn').addEventListener('click', async function() {
-  // Prompt for pronouns
+    var ticket = document.getElementById('ticketToPrint').innerHTML;
+  var printWindow = window.open('', '', 'width=400,height=300');
+  if (!printWindow) {
+    document.getElementById('result').innerText = "Popup blocked! Please allow popups to print your ticket.";
+    document.getElementById('result').className = 'error';
+    closePopup();
+    return;
+  }
+    // Prompt for pronouns
   const pronouns = prompt("Enter your pronouns (optional):", "");
   document.getElementById('ticketPronouns').textContent = pronouns ? pronouns : "";
 
@@ -360,14 +368,6 @@ document.getElementById('popupPrintBtn').addEventListener('click', async functio
     return;
   }
   await markPrinted(lastCheckedInQuery);
-  var ticket = document.getElementById('ticketToPrint').innerHTML;
-  var printWindow = window.open('', '', 'width=400,height=300');
-  if (!printWindow) {
-    document.getElementById('result').innerText = "Popup blocked! Please allow popups to print your ticket.";
-    document.getElementById('result').className = 'error';
-    closePopup();
-    return;
-  }
   printWindow.document.write(ticket);
   printWindow.document.close();
   printWindow.focus();
