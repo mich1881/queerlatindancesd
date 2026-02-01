@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QLDSD Event Check-In</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #c1bff8;
+      font-family: 'PassionOne','Signika', Arial, sans-serif;
+      margin: 0;
+    }
+    .checkin-container {
+      background: #fff0f6;
+      border-radius: 22px;
+      box-shadow: 0 4px 32px rgba(255, 105, 180, 0.13);
+      padding: 2.5em 2em 2em 2em;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .checkin-footer {
+      font-size: 1em;
+      color: #d00000;
+      margin-bottom: 1.5em;
+    }
+    h2 {
+      color: #e75480;
+      margin-bottom: 1.0em;
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    h3 {
+      color: #8354c0;
+      margin-bottom: 0.0em;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    input[type="text"] {
+      width: 90%;
+      padding: 0.8em;
+      font-size: 1.1em;
+      border: .5px solid #ffb6c1;
+      border-radius: 10px;
+      margin-bottom: 1em;
+      outline: none;
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus {
+      border-color: #e75480;
+    }
+    button, .stripe-pay-btn {
+      padding: 0.7em 1.5em;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 10px;
+      background:#e75480;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      margin: 0.5em 0.3em;
+      transition: background 0.2s, transform 0.1s;
+      display: inline-block;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(12, 1, 7, 0.08);
+    }
+    button:active, .stripe-pay-btn:active {
+      transform: scale(0.97);
+    }
+    #result {
+      margin: 1.2em 0 0.5em 0;
+      font-size: 1.1em;
+      min-height: 2em;
+      color: #e75480;
+      font-weight: 700;
+    }
+    #result.success {
+      color: #c2185b;
+    }
+    #result.error {
+      color: #b8002e;
+    }
+    #ticketToPrint {
+      display: none;
+    }
+    .popup-bg {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(255,182,193,0.25);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .popup-bg.active {
+      display: flex;
+    }
+    .popup {
+      background: #fff0f6;
+      border-radius: 16px;
+      padding: 2em 2em 1.5em 2em;
+      box-shadow: 0 4px 24px rgba(255, 105, 180, 0.13);
+      text-align: center;
+      max-width: 320px;
+      margin: auto;
+      border: 2px solid #ffb6c1;
+    }
+    .popup h3 {
+      color: #e75480;
+      margin-bottom: 1em;
+      font-size: 1.4em;
+    }
+    .popup .close-btn {
+      margin-top: 1em;
+      background: none;
+      border: none;
+      color: #e75480;
+      font-size: 1em;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .heart {
+      color: #e75480;
+      font-size: 0.8em;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      display: block;
+      animation: pulse 1.2s infinite;
+    }
+
+    .main-flex {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2em;
+}
+
+.flyer-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-flyer {
+  max-width: 480px;
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(255, 105, 180, 0.13);
+}
+
+@media (max-width: 900px) {
+  .main-flex {
+    flex-direction: column;
+    align-items: center;
+  }
+  .flyer-container {
+    margin-top: 1.5em;
+  }
+}
+    @keyframes pulse {
+      0% { transform: scale(1);}
+      50% { transform: scale(1.15);}
+      100% { transform: scale(1);}
+    }
+    @media (max-width: 500px) {
+      .checkin-container {
+        padding: 1.2em 0.5em 1.5em 0.5em;
+      }
+      h2 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="main-flex">
+  <div class="checkin-container">
+    <h2>GUEST CHECK-IN<span class="heart">❤️Read Below❤️</span></h2>
+    <div class="checkin-footer">
+      Please enter the name or email used for payment. <br><br><h3>ARE YOU SOMEBODY'S PLUS ONE?</h3><br> 
+      <b>Enter: First Name's Guest #<br>Example: "Bella's Guest 1"</b><br>
+    </div>
+    <div id="result"></div>
+    <input type="text" id="email" placeholder="Enter your name or email">
+    <br>
+    <button id="checkinBtn">Check In</button>
+    <a href="https://buy.stripe.com/eVq9AU6SC1W07ibe7q0Ny0j" class="stripe-pay-btn" id="payBtn" target="_blank" rel="noopener noreferrer">
+  <img src="images/icons/stripeicon.jpg" alt="Stripe" style="height:1.2em; vertical-align:middle; margin-right:0.5em;">
+  Pay with Stripe
+</a>
+    <!-- Hidden ticket for printing -->
+    <div id="ticketToPrint">
+      <div style="font-size:1em; text-align:center; color:#e75480;">
+        <span style="font-size:1.5em;">💌</span>
+        <strong>Valentine Ticket</strong><br>
+        <span id="ticketGuestName"></span><br>
+        <span id="ticketPronouns"></span>
+      </div>
+    </div>
+  </div>
+  <!-- Preferred Name Popup for Guests -->
+<div id="guestname-popup" class="popup-bg">
+  <div class="popup">
+    <h3>Enter Your Preferred Name</h3>
+    <input type="text" id="preferredNameInput" placeholder="Your name" style="width:90%;padding:0.7em;">
+    <br><br>
+    <button id="preferredNameSubmitBtn">Continue</button>
+    <button class="close-btn" id="closePreferredNamePopupBtn">Cancel</button>
+  </div>
+</div>
+  <div class="flyer-container">
+    <img src="images/eventpage/qssfeb2026flyer.png" alt="Event Flyer" class="event-flyer">
+  </div>
+</div>
+<!-- Pronouns Popup -->
+<div id="pronouns-popup" class="popup-bg">
+  <div class="popup">
+    <h3>Enter Your Pronouns</h3>
+    <input type="text" id="pronounsInput" placeholder="e.g. she/her, he/him, they/them" style="width:90%;padding:0.7em;">
+    <br><br>
+    <button id="pronounsSubmitBtn">Continue</button>
+    <button class="close-btn" id="closePronounsPopupBtn">Cancel</button>
+  </div>
+</div>
+  <!-- Popup -->
+  <div id="checkin-popup" class="popup-bg">
+    <div class="popup">
+      <span class="heart">💖</span>
+      <h3>Checked-in Successfully!</h3>
+      <button id="popupPrintBtn">Print Ticket</button>
+      <br>
+      <button class="close-btn" id="closePopupBtn">Close</button>
+    </div>
+  </div>
+ <script>
+const API_URL = 'https://sparkling-art-bed4.michf18.workers.dev/api/checkin';
+const GUEST_URL = 'https://sparkling-art-bed4.michf18.workers.dev/api/guest';
+let lastCheckedInQuery = "";
+async function checkGuest(query) {
+  const res = await fetch(GUEST_URL, {
+    method: 'POST',
+    body: JSON.stringify({ query }),
+    headers: { 'Content-Type': 'application/json' }
+  });
+  return await res.json();
+}
+
+async function markCheckIn(query) {
+  await fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({query, action: 'checkin'}),
+    headers: {'Content-Type': 'application/json'}
+  });
+}
+
+async function markPrinted(query) {
+  await fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({query, action: 'print'}),
+    headers: {'Content-Type': 'application/json'}
+  });
+}
+
+document.getElementById('checkinBtn').addEventListener('click', async function() {
+  const query = document.getElementById('email').value.trim().toLowerCase();
+  document.getElementById('result').className = '';
+  if (!query) {
+    document.getElementById('result').innerText = "Please enter your name or email.";
+    document.getElementById('result').className = 'error';
+    return;
+  }
+    // Get all matching guests (array)
+  const guestList = await checkGuest(query);
+
+  // Find the first unchecked guest
+  let guest = Array.isArray(guestList)
+    ? guestList.find(g => !g.checkedIn)
+    : guestList;
+
+  if (!guest || !guest.found) {
+    document.getElementById('result').innerText = "No available guest entry found for: " + query;
+    document.getElementById('result').className = 'error';
+    return;
+  }
+//   const guest = await checkGuest(query);
+//   if (!guest.found) {
+//     document.getElementById('result').innerText = "Guest not found: " + query;
+//     document.getElementById('result').className = 'error';
+//     return;
+//   }
+lastCheckedInQuery = guest.id || guest.email || guest.row || query;
+    // --- If it's a guest, show preferred name popup ---
+  if (guest.name && guest.name.toLowerCase().includes("guest")) {
+    document.getElementById('guestname-popup').classList.add('active');
+    // Save the original guest name for later if needed
+    document.getElementById('result').innerText = "";
+    document.getElementById('result').className = '';
+    document.getElementById('email').value = '';
+    return;
+  }
+  document.getElementById('ticketGuestName').textContent = guest.name || guest.email;
+
+  if (guest.checkedIn) {
+    if (guest.printed) {
+      document.getElementById('result').innerText = "Guest has already checked in & printed their ticket.";
+      document.getElementById('result').className = 'error';
+      return;
+    } else {
+      // Already checked in, but not printed: allow printing
+      document.getElementById('checkin-popup').classList.add('active');
+      document.getElementById('result').innerText = "";
+      document.getElementById('result').className = '';
+      document.getElementById('email').value = '';
+      return;
+    }
+  }
+  await markCheckIn(query);
+  lastCheckedInQuery = query;
+  document.getElementById('ticketGuestName').textContent = guest.name || guest.email;
+  document.getElementById('checkin-popup').classList.add('active');
+  document.getElementById('result').innerText = "";
+  document.getElementById('result').className = '';
+  document.getElementById('email').value = '';
+});
+
+document.getElementById('popupPrintBtn').addEventListener('click', async function() {
+  // Prompt for pronouns
+  const pronouns = prompt("Enter your pronouns (optional):", "");
+  document.getElementById('ticketPronouns').textContent = pronouns ? pronouns : "";
+
+  if (!lastCheckedInQuery) {
+    document.getElementById('result').innerText = "No guest to print for.";
+    document.getElementById('result').className = 'error';
+    closePopup();
+    return;
+  }
+  // Get all matching guests (array)
+  const guestList = await checkGuest(lastCheckedInQuery);
+
+  // Find the first not printed guest
+  let guest = Array.isArray(guestList)
+    ? guestList.find(g => !g.printed)
+    : guestList;
+
+  if (!guest || guest.printed) {
+    document.getElementById('result').innerText = "Ticket Already Printed";
+    document.getElementById('result').className = 'error';
+    closePopup();
+    return;
+  }
+  await markPrinted(lastCheckedInQuery);
+  var ticket = document.getElementById('ticketToPrint').innerHTML;
+  var printWindow = window.open('', '', 'width=400,height=300');
+  if (!printWindow) {
+    document.getElementById('result').innerText = "Popup blocked! Please allow popups to print your ticket.";
+    document.getElementById('result').className = 'error';
+    closePopup();
+    return;
+  }
+  printWindow.document.write(ticket);
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
+  printWindow.close();
+  closePopup();
+});
+document.getElementById('preferredNameSubmitBtn').addEventListener('click', async function() {
+  const preferredName = document.getElementById('preferredNameInput').value.trim();
+  document.getElementById('guestname-popup').classList.remove('active');
+  if (!preferredName) {
+    document.getElementById('result').innerText = "Please enter your preferred name.";
+    document.getElementById('result').className = 'error';
+    return;
+  }
+  document.getElementById('ticketGuestName').textContent = preferredName;
+
+  // Now show the check-in success popup
+  document.getElementById('checkin-popup').classList.add('active');
+});
+
+document.getElementById('closePreferredNamePopupBtn').addEventListener('click', function() {
+  document.getElementById('guestname-popup').classList.remove('active');
+});
+function closePopup() {
+  document.getElementById('checkin-popup').classList.remove('active');
+}
+document.getElementById('closePopupBtn').addEventListener('click', closePopup);
+</script>
+</body>
+</html>

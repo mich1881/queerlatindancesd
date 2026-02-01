@@ -30,6 +30,8 @@ html_files=(
     "error-check.html"
     "email-test.html"
     "login-test.html"
+    "checkin.html"
+    "index.html"
 )
 
 # Protection script reference to add
