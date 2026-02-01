@@ -178,16 +178,37 @@
     }
     @media (max-width: 768px) {
   body {
-    padding-top: 2em;
-  }
-  .checkin-container {
-    padding: 1.2em 0.5em 1.5em 0.5em;
-  }
-    .flyer-container {
-        margin-top: 1.5em;
-    }
+padding-top: 2em;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
-  </style>
+
+.checkin-container {
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.main-flex {
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.flyer-container, .event-flyer {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+  }
+
+
+
+
+</style>
 </head>
 <body>
 <div class="main-flex">
@@ -216,7 +237,7 @@
     </div>
   </div>
   <!-- Preferred Name Popup for Guests -->
-<div id="guestname-popup" class="popup-bg">
+<!-- <div id="guestname-popup" class="popup-bg">
   <div class="popup">
     <h3>Enter Your Preferred Name</h3>
     <input type="text" id="preferredNameInput" placeholder="Your name" style="width:90%;padding:0.7em;">
@@ -224,12 +245,21 @@
     <button id="preferredNameSubmitBtn">Continue</button>
     <button class="close-btn" id="closePreferredNamePopupBtn">Cancel</button>
   </div>
+</div> -->
+<div id="namepronouns-popup" class="popup-bg">
+  <div class="popup">
+    <h3>Enter Your Preferred Name <br>& Pronouns</h3>
+    <input type="text" id="preferredNameInput" placeholder="Your name" style="width:90%;padding:0.7em;"><br>
+    <input type="text" id="pronounsInput" placeholder="e.g. she/her, he/him, they/them" style="width:90%;padding:0.7em;"><br><br>
+    <button id="namePronounsSubmitBtn">Continue</button>
+    <button class="close-btn" id="closeNamePronounsPopupBtn">Cancel</button>
+  </div>
 </div>
   <div class="flyer-container">
     <img src="images/eventpage/qssfeb2026flyer.png" alt="Event Flyer" class="event-flyer">
   </div>
 </div>
-<!-- Pronouns Popup -->
+<!-- Pronouns Popup
 <div id="pronouns-popup" class="popup-bg">
   <div class="popup">
     <h3>Enter Your Pronouns</h3>
@@ -238,7 +268,7 @@
     <button id="pronounsSubmitBtn">Continue</button>
     <button class="close-btn" id="closePronounsPopupBtn">Cancel</button>
   </div>
-</div>
+</div> -->
   <!-- Popup -->
   <div id="checkin-popup" class="popup-bg">
     <div class="popup">
@@ -277,7 +307,7 @@ async function markPrinted(query) {
     headers: {'Content-Type': 'application/json'}
   });
 }
-
+//CHECKIN HANDLER!!!!!!
 document.getElementById('checkinBtn').addEventListener('click', async function() {
   const query = document.getElementById('email').value.trim().toLowerCase();
   document.getElementById('result').className = '';
@@ -303,7 +333,7 @@ document.getElementById('checkinBtn').addEventListener('click', async function()
   window._currentGuest = guest;
   window._currentQuery = query;
 // --- If it's a guest, show preferred name popup ---
-document.getElementById('guestname-popup').classList.add('active');
+document.getElementById('namepronouns-popup').classList.add('active');
 document.getElementById('result').innerText = "";
 document.getElementById('result').className = '';
 document.getElementById('email').value = '';
@@ -335,18 +365,6 @@ return;
 });
 
 document.getElementById('popupPrintBtn').addEventListener('click', async function() {
-    var ticket = document.getElementById('ticketToPrint').innerHTML;
-  var printWindow = window.open('', '', 'width=400,height=300');
-  if (!printWindow) {
-    document.getElementById('result').innerText = "Popup blocked! Please allow popups to print your ticket.";
-    document.getElementById('result').className = 'error';
-    closePopup();
-    return;
-  }
-    // Prompt for pronouns
-  const pronouns = prompt("Enter your pronouns (optional):", "");
-  document.getElementById('ticketPronouns').textContent = pronouns ? pronouns : "";
-
   if (!lastCheckedInQuery) {
     document.getElementById('result').innerText = "No guest to print for.";
     document.getElementById('result').className = 'error';
@@ -362,12 +380,20 @@ document.getElementById('popupPrintBtn').addEventListener('click', async functio
     : guestList;
 
   if (!guest || guest.printed) {
-    document.getElementById('result').innerText = "Ticket Already Printed";
+    document.getElementById('result').innerText = "Guest has already signed in & printed their ticket.";
     document.getElementById('result').className = 'error';
     closePopup();
     return;
   }
   await markPrinted(lastCheckedInQuery);
+  var ticket = document.getElementById('ticketToPrint').innerHTML;
+  var printWindow = window.open('', '', 'width=400,height=300');
+  if (!printWindow) {
+    document.getElementById('result').innerText = "Popup blocked! Please allow popups to print your ticket.";
+    document.getElementById('result').className = 'error';
+    closePopup();
+    return;
+  }
   printWindow.document.write(ticket);
   printWindow.document.close();
   printWindow.focus();
@@ -375,15 +401,18 @@ document.getElementById('popupPrintBtn').addEventListener('click', async functio
   printWindow.close();
   closePopup();
 });
-document.getElementById('preferredNameSubmitBtn').addEventListener('click', async function() {
+// Handle combined popup submit
+document.getElementById('namePronounsSubmitBtn').addEventListener('click', async function() {
   const preferredName = document.getElementById('preferredNameInput').value.trim();
-  document.getElementById('guestname-popup').classList.remove('active');
+  const pronouns = document.getElementById('pronounsInput').value.trim();
+  document.getElementById('namepronouns-popup').classList.remove('active');
   if (!preferredName) {
     document.getElementById('result').innerText = "Please enter your preferred name.";
     document.getElementById('result').className = 'error';
     return;
   }
   document.getElementById('ticketGuestName').textContent = preferredName;
+  document.getElementById('ticketPronouns').textContent = pronouns ? pronouns : "";
 
   // Now check in the guest and set up for printing
   if (window._currentGuest) {
@@ -393,15 +422,29 @@ document.getElementById('preferredNameSubmitBtn').addEventListener('click', asyn
     document.getElementById('result').innerText = "";
     document.getElementById('result').className = '';
     document.getElementById('email').value = '';
-    // Optionally clear _currentGuest/_currentQuery here if you want
   }
-  // Now show the check-in success popup
-  document.getElementById('checkin-popup').classList.add('active');
 });
 
-document.getElementById('closePreferredNamePopupBtn').addEventListener('click', function() {
-  document.getElementById('guestname-popup').classList.remove('active');
+document.getElementById('closeNamePronounsPopupBtn').addEventListener('click', function() {
+  document.getElementById('namepronouns-popup').classList.remove('active');
 });
+// // document.getElementById('preferredNameSubmitBtn').addEventListener('click', async function() {
+// //   const preferredName = document.getElementById('preferredNameInput').value.trim();
+// //   document.getElementById('guestname-popup').classList.remove('active');
+// //   if (!preferredName) {
+// //     document.getElementById('result').innerText = "Please enter your preferred name.";
+// //     document.getElementById('result').className = 'error';
+// //     return;
+// //   }
+//   document.getElementById('ticketGuestName').textContent = preferredName;
+
+//   // Now show the check-in success popup
+//   document.getElementById('checkin-popup').classList.add('active');
+// });
+
+// // document.getElementById('closePreferredNamePopupBtn').addEventListener('click', function() {
+// //   document.getElementById('guestname-popup').classList.remove('active');
+// // });
 function closePopup() {
   document.getElementById('checkin-popup').classList.remove('active');
 }
