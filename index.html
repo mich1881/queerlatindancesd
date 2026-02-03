@@ -944,7 +944,12 @@ font-family: 'Nunito', Arial, sans-serif;
 position: relative;
 }
 }
-
+.testimonial-stars {
+  color: gold;
+  font-size: 1.2em;
+  margin-bottom: 0.5em;
+  letter-spacing: 2px;
+}
 </style>
 </head>
 <body>
@@ -1430,6 +1435,7 @@ if (words.length > 75) {
           data-short="${encodeURIComponent(shortText)}">
       "${shortText}"
     </div>
+    <div class="testimonial-stars">${renderStars(t.stars)}</div>
     <div class="testimonial-author">- ${t.author}</div>
     <a href="#" class="read-more-link" data-idx="${i}">Read more</a>
   `;
@@ -1438,6 +1444,7 @@ if (words.length > 75) {
     <div class="testimonial-text">
       "${t.text}"
     </div>
+     <div class="testimonial-stars">${renderStars(t.stars)}</div>
     <div class="testimonial-author">- ${t.author}</div>
   `;
 }
@@ -1459,6 +1466,7 @@ if (words.length > 75) {
           data-short="${encodeURIComponent(shortText)}">
       "${shortText}"
     </div>
+    <div class="testimonial-stars">${renderStars(t.stars)}</div>
     <div class="testimonial-author">- ${t.author}</div>
     <a href="#" class="read-more-link" data-idx="${i}">Read more</a>
   `;
@@ -1467,6 +1475,7 @@ if (words.length > 75) {
     <div class="testimonial-text">
       "${t.text}"
     </div>
+     <div class="testimonial-stars">${renderStars(t.stars)}</div>
     <div class="testimonial-author">- ${t.author}</div>
   `;
 }
@@ -1566,6 +1575,9 @@ toggleFAQ(this);
 }
 });
 });
+function renderStars(starCount) {
+  return '★'.repeat(starCount) + '☆'.repeat(5 - starCount);
+}
 </script>
 
 </body>
