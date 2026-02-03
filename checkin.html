@@ -227,11 +227,10 @@ padding-top: 2em;
 </a>
     <!-- Hidden ticket for printing -->
     <div id="ticketToPrint">
-      <div style="font: size 1.8em; margin-top: 1em; text-align:center; color:#e75480;">
-        <strong><span id="ticketGuestName" style="font-size:1.8em; font-family: 'Nunito', sans-serif;"></span></strong>
+      <div style="font-size: 1.8em; margin-top: 1em; text-align:center; color:#e75480;">
+        <strong><span id="ticketGuestName" style="font-family: Calibri, 'Trebuchet MS', sans-serif; font-size: 1.3em;"></span></strong>
         <br>
-        <span style="font-family: 'Nunito', sans-serif; font-size:1.44em;">💌</span>
-        <span id="ticketPronouns" style="font-size:1.0em;"></span>
+        <span id="ticketPronouns" style="font-family: sans-serif; font-size: 1.0em;"></span>
       </div>
     </div>
   </div>
@@ -331,8 +330,6 @@ document.getElementById('checkinBtn').addEventListener('click', async function()
   // Save guest info for later use
   window._currentGuest = guest;
   window._currentQuery = query;
- 
-// --- If it's a guest, show preferred name popup ---
 // --- If it's a guest, show preferred name popup ---
 document.getElementById('preferredNameInput').value = '';
 document.getElementById('pronounsInput').value = '';
@@ -415,7 +412,7 @@ document.getElementById('namePronounsSubmitBtn').addEventListener('click', async
     return;
   }
   document.getElementById('ticketGuestName').textContent = preferredName;
-  document.getElementById('ticketPronouns').textContent = pronouns ? pronouns : "";
+  document.getElementById('ticketPronouns').textContent = pronouns ? '💌' + pronouns : "";
 
   // Now check in the guest and set up for printing
   if (window._currentGuest) {
