@@ -24,9 +24,9 @@
       text-align: center;
     }
     .checkin-footer {
-      font-size: 1em;
-      color: #d00000;
-      margin-bottom: 1.5em;
+      font-size: 1.5em;
+      color: #8354c0;
+      font-weight: 1000;
     }
     h2 {
       color: #e75480;
@@ -38,8 +38,9 @@
     h3 {
       color: #8354c0;
       margin-bottom: 0.0em;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       font-weight: 700;
+      margin-top: 0.2em;
     }
     input[type="text"] {
       width: 90%;
@@ -101,6 +102,7 @@
     .popup-bg.active {
       display: flex;
     }
+
     .popup {
       background: #fff0f6;
       border-radius: 16px;
@@ -212,7 +214,7 @@ padding-top: 2em;
   <div class="checkin-container">
     <h2>GUEST CHECK-IN<span class="heart">❤️Read Below❤️</span></h2>
     <div class="checkin-footer">
-      Please enter the name or email used for payment. <br><br><h3>ARE YOU SOMEBODY'S PLUS ONE?</h3><br> 
+      ENTER FIRST NAME OR FULL NAME USED FOR PAYMENT. <br><br><h3>ARE YOU SOMEBODY'S PLUS ONE?</h3><br> 
       <b>Enter: First Name's Guest #<br>Example: "Bella's Guest 1"</b><br>
     </div>
     <div id="result"></div>
@@ -225,7 +227,7 @@ padding-top: 2em;
 </a>
     <!-- Hidden ticket for printing -->
     <div id="ticketToPrint">
-      <div style="font-size:1.5em; text-align:center; color:#e75480;">
+      <div style="font-size:1.5em; margin-top: 1em; text-align:center; color:#e75480;">
         <strong><span id="ticketGuestName" style="font-size:1.2em;"></span></strong>
         <br>
         <span style="font-size:1.2em;">💌</span>
@@ -322,14 +324,18 @@ document.getElementById('checkinBtn').addEventListener('click', async function()
     : guestList;
 
   if (!guest || !guest.found) {
-    document.getElementById('result').innerText = "No available guest entry found for: " + query;
+    document.getElementById('result').innerText = "No available guest entry found for: " + query + ". Please proceed to payment.";
     document.getElementById('result').className = 'error';
     return;
   }
   // Save guest info for later use
   window._currentGuest = guest;
   window._currentQuery = query;
+ 
 // --- If it's a guest, show preferred name popup ---
+// --- If it's a guest, show preferred name popup ---
+document.getElementById('preferredNameInput').value = '';
+document.getElementById('pronounsInput').value = '';
 document.getElementById('namepronouns-popup').classList.add('active');
 document.getElementById('result').innerText = "";
 document.getElementById('result').className = '';
