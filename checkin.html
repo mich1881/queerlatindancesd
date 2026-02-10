@@ -378,7 +378,7 @@ document.getElementById('popupPrintBtn').addEventListener('click', async functio
   }
   await markPrinted(lastCheckedInQuery);
   var ticket = document.getElementById('ticketToPrint').innerHTML;
-  var printWindow = window.open('', '', 'width=800,height=600');
+  var printWindow = window.open('', '', 'width=400,height=200');
   if (!printWindow) {
     document.getElementById('result').innerText = "Popup blocked! Please allow popups to print your ticket.";
     document.getElementById('result').className = 'error';
