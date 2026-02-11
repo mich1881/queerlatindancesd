@@ -336,7 +336,42 @@ transition: all 0.3s ease;
 background: #e8d8ff;
 color: #333;
 }
-
+.cta-btn {
+  background: #dbdd7d;
+  color: #402e51;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 2rem;
+  margin-top: 0.1rem;
+  display: inline-block;
+}
+.cta-btn:hover {
+  background: #b57edc;
+  color: #181010;
+}
+.cta-btn1 {
+  background: #f87ebd;
+  color: #370241;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 2rem;
+  margin-top: 0.1rem;
+  display: inline-block;
+}
+.cta-btn1:hover {
+  background: #b57edc;
+  color: #181010;
+}
 /* Mobile responsive for testimonial form */
 @media (max-width: 768px) {
 .testimonial-form {
@@ -779,7 +814,7 @@ gap: 1rem;
 }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
 .hero {
 padding: 40px 5px 30px 5px;
 border-radius: 20px;
@@ -795,11 +830,11 @@ font-size: 1rem;
 margin-bottom: 1.5rem;
 margin-top: 0.7rem;
 }
-.cta-btn {
-font-size: 1rem;
-padding: 0.5rem 1.2rem;
-margin-bottom: 1rem;
-margin-top: 0.7rem;
+.cta-btn, .cta-btn1 {
+  font-size: 1.1rem;
+  padding: 0.5rem 1.2rem;
+  margin-bottom: 1rem;
+  margin-top: -1rem;
 }
 .about-hero-img {
 width: 100px;
@@ -961,6 +996,7 @@ position: relative;
 <section class="hero-flex" aria-labelledby="hero-heading">
 <div class="hero-content">
 <img src="images/home/qldsdlogo3.png" alt="Queer Latin Dance SD - Celebrates Your Identity in Every Step" class="hero-logo" />
+<a href="lessons.html" class="cta-btn1">Register for Classes!</a>
 <a href="Events.html" class="cta-btn">See Upcoming Events</a>
 </div>
 <section id="photoGallery" aria-label="Photo slideshow">

@@ -1,39 +1,58 @@
 {
-  "series": {
-    "both": {
-      "price": 144,
-      "calculation": "8 hours of lessons x $18 per hour = $144",
-      "label": "Salsa & Bachata Series",
-      "perHour": "$18 per hour"
-    },
-    "salsa": {
-      "price": 80,
-      "calculation": "Salsa Only: 4 hours of lessons x $20 per hour = $80",
-      "label": "Salsa Only Series",
-      "perHour": "$20 per hour"
-    },
-    "bachata": {
-      "price": 80,
-      "calculation": "Bachata Only: 4 hours of lessons x $20 per hour = $80",
-      "label": "Bachata Only Series",
-      "perHour": "$20 per hour"
+   "coupons": {
+    "ILOVESALSA": {
+      "discount": 10,
+      "expirationDate": "2026-02-15",
+      "description": "$10 off any class"
     }
+  },
+"series": {
+  "both": {
+    "price": 144,
+    "paypalUrl": "https://www.paypal.com/paypalme/queerlatindance/144",
+    "venmoUrl": "https://venmo.com/?txn=pay&recipients=michf18&amount=144",
+    "calculation": "8 hours of lessons x $18 per hour = $144",
+    "label": "Salsa & Bachata Series",
+    "perHour": "$18 per hour"
+  },
+  "salsa": {
+    "price": 80,
+    "paypalUrl": "https://www.paypal.com/paypalme/queerlatindance/80",
+    "venmoUrl": "https://venmo.com/?txn=pay&recipients=michf18&amount=80",
+    "calculation": "Salsa Only: 4 hours of lessons x $20 per hour = $80",
+    "label": "Salsa Only Series",
+    "perHour": "$20 per hour"
+  },
+  "bachata": {
+    "price": 80,
+    "paypalUrl": "https://www.paypal.com/paypalme/queerlatindance/80",
+    "venmoUrl": "https://venmo.com/?txn=pay&recipients=michf18&amount=80",
+    "calculation": "Bachata Only: 4 hours of lessons x $20 per hour = $80",
+    "label": "Bachata Only Series",
+    "perHour": "$20 per hour"
+  }
   },
   "dropin": {
     "both": {
       "price": 52,
+      "paypalUrl": "https://www.paypal.com/paypalme/queerlatindance/52",
+      "venmoUrl": "https://venmo.com/?txn=pay&recipients=michf18&amount=52",
       "calculation": "Salsa & Bachata: 2 classes x $26 per class = $52",
       "label": "Salsa & Bachata Drop-in",
       "perHour": "$26 per class"
     },
     "salsa": {
       "price": 26,
+      "paypalUrl": "https://www.paypal.com/paypalme/queerlatindance/26",
+      "venmoUrl": "https://venmo.com/?txn=pay&recipients=michf18&amount=26",
       "calculation": "Salsa Only: 1 class x $26 per class = $26",
       "label": "Salsa Only Drop-in",
       "perHour": "$26 per class"
     },
     "bachata": {
       "price": 26,
+      "paypalUrl": "https://www.paypal.com/paypalme/queerlatindance/26",
+      "venmoUrl": "https://venmo.com/?txn=pay&recipients=michf18&amount=26",
       "calculation": "Bachata Only: 1 class x $26 per class = $26",
       "label": "Bachata Only Drop-in",
       "perHour": "$26 per class"

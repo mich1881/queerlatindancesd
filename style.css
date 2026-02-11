@@ -406,12 +406,7 @@ button {
     margin-bottom: 1.5rem;
     margin-top: 0.7rem;
   }
-  .cta-btn {
-    font-size: 1rem;
-    padding: 0.5rem 1.2rem;
-    margin-bottom: 1rem;
-    margin-top: 0.7rem;
-  }
+
   .about-hero-img {
     width: 100px;
     height: 100px;
@@ -518,10 +513,6 @@ button {
     font-size: 0.9rem !important;
   }
   
-  .cta-btn {
-    font-size: 1rem !important;
-    padding: 0.6rem 1.2rem;
-  }
 }
 
 /* === SPARKLE BACKGROUND EFFECTS === */
@@ -593,48 +584,6 @@ button {
   font-size: 1.3rem;
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
-}
-
-.cta-btn {
-  background: #dbdd7d;
-  color: #402e51;
-  padding: 0.8rem 2rem;
-  border-radius: 30px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: background 0.2s, color 0.2s;
-  margin-bottom: 2rem;
-  margin-top: 0.1rem;
-  display: inline-block;
-}
-.cta-btn:hover {
-  background: #b57edc;
-  color: #181010;
-}
-
-/* === VIDEO BACKGROUND STYLES === */
-#bg-video {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 56.25vw;   /* 100vw * (9/16) for 9:16 video, fills width */
-  height: 60vh;     /* Cropped to 60% of viewport height */
-  min-width: 100vw;
-  transform: translateX(-50%);
-  z-index: -2;      /* Lower z-index so content can appear above */
-  object-fit: cover;
-  opacity: 1;
-  pointer-events: none;
-}
-@media (max-aspect-ratio: 9/16) {
-  #bg-video {
-    width: 100vw;
-    height: 177.78vw; /* 100vw * (16/9) */
-    min-height: 100vh;
-    min-width: unset;
-  }
 }
 
 /* Payment1.html Modal & Form Refactor */
@@ -2146,12 +2095,7 @@ button {
     margin-bottom: 1.5rem;
     margin-top: 0.7rem;
   }
-  .cta-btn {
-    font-size: 1rem;
-    padding: 0.5rem 1.2rem;
-    margin-bottom: 1rem;
-    margin-top: 0.7rem;
-  }
+
   .about-hero-img {
     width: 100px;
     height: 100px;
@@ -2268,10 +2212,6 @@ button {
     font-size: 0.9rem !important;
   }
   
-  .cta-btn {
-    font-size: 1rem !important;
-    padding: 0.6rem 1.2rem;
-  }
 }
 
 /* === SPARKLE BACKGROUND EFFECTS === */
@@ -2346,49 +2286,6 @@ button {
   margin-top: 0.5rem;
 }
 
-.cta-btn {
-  background: #dbdd7d;
-  color: #402e51;
-  padding: 0.8rem 2rem;
-  border-radius: 30px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: background 0.2s, color 0.2s;
-  margin-bottom: 2rem;
-  margin-top: 0.1rem;
-  display: inline-block;
-}
-.cta-btn:hover {
-  background: #b57edc;
-  color: #181010;
-}
-
-/* === VIDEO BACKGROUND STYLES === */
-#bg-video {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 56.25vw;   /* 100vw * (9/16) for 9:16 video, fills width */
-  height: 60vh;     /* Cropped to 60% of viewport height */
-  min-width: 100vw;
-  transform: translateX(-50%);
-  z-index: -2;      /* Lower z-index so content can appear above */
-  object-fit: cover;
-  opacity: 1;
-  pointer-events: none;
-}
-@media (max-aspect-ratio: 9/16) {
-  #bg-video {
-    width: 100vw;
-    height: 177.78vw; /*  100vw * (16/9) */
-    min-height: 100vh;
-    min-width: unset;
-  }
-}
-
-/* === VIDEO BACKGROUND CONTAINER === */
 /* Ensure the body background shows below the cropped video */
 body.events-page::before {
   content: '';
@@ -4133,12 +4030,7 @@ button {
     margin-bottom: 1.5rem;
     margin-top: 0.7rem;
   }
-  .cta-btn {
-    font-size: 1rem;
-    padding: 0.5rem 1.2rem;
-    margin-bottom: 1rem;
-    margin-top: 0.7rem;
-  }
+
   .about-hero-img {
     width: 100px;
     height: 100px;
@@ -4273,49 +4165,7 @@ button {
   margin-top: 0.5rem;
 }
 
-.cta-btn {
-  background: #dbdd7d;
-  color: #402e51;
-  padding: 0.8rem 2rem;
-  border-radius: 30px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: background 0.2s, color 0.2s;
-  margin-bottom: 2rem;
-  margin-top: 0.1rem;
-  display: inline-block;
-}
-.cta-btn:hover {
-  background: #b57edc;
-  color: #181010;
-}
 
-/* === VIDEO BACKGROUND STYLES === */
-#bg-video {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 56.25vw;   /* 100vw * (9/16) for 9:16 video, fills width */
-  height: 60vh;     /* Cropped to 60% of viewport height */
-  min-width: 100vw;
-  transform: translateX(-50%);
-  z-index: -2;      /* Lower z-index so content can appear above */
-  object-fit: cover;
-  opacity: 1;
-  pointer-events: none;
-}
-@media (max-aspect-ratio: 9/16) {
-  #bg-video {
-    width: 100vw;
-    height: 177.78vw; /* 100vw * (16/9) */
-    min-height: 100vh;
-    min-width: unset;
-  }
-}
-
-/* === VIDEO BACKGROUND CONTAINER === */
 /* Ensure the body background shows below the cropped video */
 body.events-page::before {
   content: '';
