@@ -599,6 +599,51 @@ padding: 1rem;
 }
 }
 
+/* === HERO SECTION STYLES === */
+.hero-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  max-width: 1500px;
+  margin: 0 auto 1rem auto;
+  padding: 1rem 1rem;
+}
+.hero-content {
+  flex: 1 1 45%;
+  text-align: left;
+}
+#photoGallery {
+  flex: 1 1 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1rem;
+}
+.hero {
+  background: linear-gradient(120deg, #e4d2f2 0%, #8986fe 100%);
+  color: #2e0233;
+  padding: 80px 20px 60px 20px;
+  text-align: center;
+  border-radius: 40px;
+  margin-bottom: 2rem;
+}
+.hero-content .qldsdlogo3 {
+  width: 650px;
+  max-width: 90vw;
+  height: auto;
+  margin: 1rem -10rem 0.5rem 0;
+  position: relative;
+  display: block;
+  object-fit: contain;
+  margin-top: -5rem;
+  margin-right: 35px;
+}
+.hero-content p {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
 /* === MISSION & ABOUT STYLES === */
 .mission, .about-hero-text .mission, .hero-content p.mission, .hero-content .mission {
 color: #a826ff !important;
@@ -786,9 +831,9 @@ border: 2px solid #9d09ff;
 
 /* === RESPONSIVE STYLES === */
 @media (max-width: 900px) {
-.hero-content .hero-logo {
+.hero-content .qldsdlogo3 {
 width: 350px;
-max-width: 85vw;
+max-width: 100vw;
 margin: 2rem 0;
 top: 1.2rem;
 }
@@ -831,7 +876,8 @@ gap: 1rem;
 padding: 40px 5px 30px 5px;
 border-radius: 20px;
 }
-.hero-content .hero-logo {
+
+.hero-content .qldsdlogo3 {
 width: 280px;
 max-width: 90vw;
 margin: 1.5rem 0;
@@ -877,6 +923,18 @@ padding: 0.5rem 0;
 .logo, .logo1, .logo2 {
 width: 120px;
 max-width: 60vw;
+}
+
+.qldsdlogo3 {
+  width: 500px;      /* or whatever size you want */
+  max-width: 100%;   /* responsive on small screens */
+  height: auto;
+  display: block;
+  justify-content: left;
+  align-items: left;
+  position: relative;
+  display: block;
+  object-fit: contain;
 }
 }
 /* ====================
@@ -1007,7 +1065,7 @@ position: relative;
 <main id="main-content">
 <section class="hero-flex" aria-labelledby="hero-heading">
 <div class="hero-content">
-<img src="images/home/qldsdlogo3.png" alt="Queer Latin Dance SD - Celebrates Your Identity in Every Step" class="hero-logo" />
+<img src="images/home/qldsdlogo3.png" alt="Queer Latin Dance SD - Celebrates Your Identity in Every Step" class="qldsdlogo3" />
 <a href="lessons.html" class="cta-btn1">Register for Classes!</a>
 <a href="Events.html" class="cta-btn">See Upcoming Events</a>
 </div>

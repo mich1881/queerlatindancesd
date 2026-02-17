@@ -469,123 +469,6 @@ button {
   }
 }
 
-/* === VERY SMALL SCREENS (UNDER 480px) === */
-@media (max-width: 480px) {
-  body {
-    padding-top: 70px;
-  }
-  
-  header {
-    padding: 0.5rem 0;
-  }
-  
-  .logo2 {
-    max-width: 100px;
-    margin-left: 0.75rem;
-  }
-  
-  .mobile-nav-toggle {
-    font-size: 1.3rem;
-    padding: 0.3rem;
-    margin-right: 0.001rem;
-  }
-  
-  .mobile-nav-menu {
-    padding-top: 70px;
-    width: 200px;
-  }
-  
-  .hero-content {
-    padding: 1rem;
-    top: 0.5rem;
-    left: 0.75rem;
-    right: 0.75rem;
-    max-width: calc(100% - 1.5rem);
-  }
-  
-  .hero-content .hero-logo {
-    width: 220px !important;
-    max-width: 90vw !important;
-    margin: 0.8rem 0 !important;
-  }
-  
-  .hero-content p {
-    font-size: 0.9rem !important;
-  }
-  
-}
-
-/* === SPARKLE BACKGROUND EFFECTS === */
-#sparkle-bg {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 0;
-}
-.sparkle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: #fdfcff;
-  border-radius: 50%;
-  opacity: 0.8;
-  box-shadow: 0 0 8px 2px rgb(255, 255, 255), 0 0 20px 8px #b57edc55;
-  animation: sparkle-fade 2s linear infinite;
-}
-@keyframes sparkle-fade {
-  0% { opacity: 0; transform: scale(0.5);}
-  10% { opacity: 1; transform: scale(1);}
-  90% { opacity: 1; transform: scale(1);}
-  100% { opacity: 0; transform: scale(0.5);}
-}
-
-/* === HERO SECTION STYLES === */
-.hero-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2rem;
-  max-width: 1500px;
-  margin: 0 auto 1rem auto;
-  padding: 1rem 1rem;
-}
-.hero-content {
-  flex: 1 1 45%;
-  text-align: left;
-}
-#photoGallery {
-  flex: 1 1 50%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 1rem;
-}
-.hero {
-  background: linear-gradient(120deg, #e4d2f2 0%, #8986fe 100%);
-  color: #2e0233;
-  padding: 80px 20px 60px 20px;
-  text-align: center;
-  border-radius: 40px;
-  margin-bottom: 2rem;
-}
-.hero-content .hero-logo {
-  width: 650px;
-  max-width: 90vw;
-  height: auto;
-  margin: 1rem 0 0.5rem 0;
-  position: relative;
-  display: block;
-  object-fit: contain;
-  margin-top: -5rem;
-}
-.hero-content p {
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
-}
-
 /* Payment1.html Modal & Form Refactor */
 .modal-overlay {
   display: none;
@@ -2269,7 +2152,7 @@ button {
   border-radius: 40px;
   margin-bottom: 2rem;
 }
-.hero-content .hero-logo {
+.hero-content .qldsdlogo3 {
   width: 650px;
   max-width: 90vw;
   height: auto;
@@ -4013,14 +3896,14 @@ button {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   
   .hero {
     padding: 40px 5px 30px 5px;
     border-radius: 20px;
   }
   .hero-content .hero-logo {
-    width: 280px;
+    width: 1500px;
     max-width: 90vw;
     margin: 1.5rem 0;
     top: 0.2rem;
@@ -4118,53 +4001,6 @@ button {
   90% { opacity: 1; transform: scale(1);}
   100% { opacity: 0; transform: scale(0.5);}
 }
-
-/* === HERO SECTION STYLES === */
-.hero-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2rem;
-  max-width: 1500px;
-  margin: 0 auto 1rem auto;
-  padding: 1rem 1rem;
-}
-.hero-content {
-  flex: 1 1 45%;
-  text-align: left;
-}
-#photoGallery {
-  flex: 1 1 50%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 1rem;
-}
-.hero {
-  background: linear-gradient(120deg, #e4d2f2 0%, #8986fe 100%);
-  color: #2e0233;
-  padding: 80px 20px 60px 20px;
-  text-align: center;
-  border-radius: 40px;
-  margin-bottom: 2rem;
-}
-.hero-content .hero-logo {
-  width: 650px;
-  max-width: 90vw;
-  height: auto;
-  margin: 1rem 0 0.5rem 0;
-  position: relative;
-  display: block;
-  object-fit: contain;
-  margin-top: -5rem;
-  margin-right: 45px;
-}
-.hero-content p {
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
-}
-
 
 /* Ensure the body background shows below the cropped video */
 body.events-page::before {

@@ -1,5 +1,15 @@
 {
   "upcoming": [
+             {
+      "id": "mar2026-salsa",
+      "date": "2026-03-20",
+      "month": "MAR",
+      "day": "20",
+      "title": "QSS",
+      "flyerUrl": "images/eventpage/qssmarch2026flyer.png",
+      "inviteUrl": "https://partiful.com/e/HMbNZi3PMprGdkNAHOUB?",
+      "description": "Join us for an exciting QSS!"
+    },
          {
       "id": "sep2025-banda",
       "date": "2026-02-13",
