@@ -1,428 +1,888 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>QLDSD Event Check-In</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <style>
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #c1bff8;
-      font-family: 'PassionOne','Signika', Arial, sans-serif;
-      margin: 0;
-    }
-    .checkin-container {
-      background: #fff0f6;
-      border-radius: 22px;
-      box-shadow: 0 4px 32px rgba(255, 105, 180, 0.13);
-      padding: 2.5em 2em 2em 2em;
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-    }
-    .checkin-footer {
-      font-size: 1.5em;
-      color: #8354c0;
-      font-weight: 1000;
-    }
-    h2 {
-      color: #e75480;
-      margin-bottom: 1.0em;
-      font-size: 2.1rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-    h3 {
-      color: #8354c0;
-      margin-bottom: 0.0em;
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-top: 0.2em;
-    }
-    input[type="text"] {
-      width: 90%;
-      padding: 0.8em;
-      font-size: 1.1em;
-      border: .5px solid #ffb6c1;
-      border-radius: 10px;
-      margin-bottom: 1em;
-      outline: none;
-      background: #fff;
-      transition: border-color 0.2s;
-    }
-    input[type="text"]:focus {
-      border-color: #e75480;
-    }
-    button, .stripe-pay-btn {
-      padding: 0.7em 1.5em;
-      font-size: 1.1em;
-      border: none;
-      border-radius: 10px;
-      background:#e75480;
-      color: #fff;
-      font-weight: 700;
-      cursor: pointer;
-      margin: 0.5em 0.3em;
-      transition: background 0.2s, transform 0.1s;
-      display: inline-block;
-      text-decoration: none;
-      box-shadow: 0 2px 8px rgba(12, 1, 7, 0.08);
-    }
-    button:active, .stripe-pay-btn:active {
-      transform: scale(0.97);
-    }
-    #result {
-      margin: 1.2em 0 0.5em 0;
-      font-size: 1.1em;
-      min-height: 2em;
-      color: #e75480;
-      font-weight: 700;
-    }
-    #result.success {
-      color: #c2185b;
-    }
-    #result.error {
-      color: #b8002e;
-    }
-    #ticketToPrint {
-      display: none;
-    }
-    .popup-bg {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(255,182,193,0.25);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-    }
-    .popup-bg.active {
-      display: flex;
-    }
+<meta charset="UTF-8">
+<title>Check In - Queer Latin Dance SD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<style>
 
-    .popup {
-      background: #fff0f6;
-      border-radius: 16px;
-      padding: 2em 2em 1.5em 2em;
-      box-shadow: 0 4px 24px rgba(255, 105, 180, 0.13);
-      text-align: center;
-      max-width: 320px;
-      margin: auto;
-      border: 2px solid #ffb6c1;
-    }
-    .popup h3 {
-      color: #e75480;
-      margin-bottom: 1em;
-      font-size: 1.4em;
-    }
-    .popup .close-btn {
-      margin-top: 1em;
-      background: none;
-      border: none;
-      color: #e75480;
-      font-size: 1em;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-    .heart {
-      color: #e75480;
-      font-size: 0.8em;
-      margin-top: 0.5em;
-      margin-bottom: 0.5em;
-      display: block;
-      animation: pulse 1.2s infinite;
-    }
-
-    .main-flex {
+body {
+  background: linear-gradient(135deg, #afe2b1 0%, #d1f8d3 100%);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', 'Nunito', Arial, sans-serif;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
+}
+
+.main-flex {
+  display: flex;
+  align-items: center; /* vertical centering */
+  justify-content: center; /* horizontal centering */
   gap: 2em;
+  width: 100vw;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.checkin-container {
+  background: #f4fff0;
+  border-radius: 22px;
+  box-shadow: 0 4px 32px rgba(255, 105, 180, 0.13);
+  max-width: 500px; /* Match .event-flyer max-width */
+  width: 100%;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  height: 630px;
+  min-width: 300px;
+  box-sizing: border-box;
+  text-align: center;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .flyer-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
 }
 
 .event-flyer {
-  max-width: 500px; 
+  max-width: 500px;
   width: 100%;
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(255, 105, 180, 0.13);
 }
 
+/* Responsive: stack on mobile, keep centered */
 @media (max-width: 900px) {
   .main-flex {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 1.5em;
   }
   .flyer-container {
-    margin-top: 1.5em;
+    margin-top: 0;
   }
 }
-    @keyframes pulse {
-      0% { transform: scale(1);}
-      50% { transform: scale(1.15);}
-      100% { transform: scale(1);}
-    }
-    @media (max-width: 500px) {
-      .checkin-container {
-        padding: 1.2em 0.5em 1.5em 0.5em;
-      }
-      h2 {
-        font-size: 1.3rem;
-      }
-    }
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
   body {
-padding-top: 2em;
-  max-width: 100vw;
-  overflow-x: hidden;
+    padding: 0;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  .main-flex {
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    min-height: 100vh;
+    gap: 1em;
+  }
+  .checkin-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 1.2em 0.5em 1.5em 0.5em;
+  }
+  .flyer-container, .event-flyer {
+    max-width: 100%;
+    width: 100%;
+  }
 }
+@media (max-width: 600px) {
+  .checkin-container, .event-flyer {
+    max-width: 100vw;
+    min-width: 0;
+  }
+  #manualSection input,
+  input[type="text"] {
+    max-width: 100vw;
+    min-width: 0;
+  }
+}
+@media (max-width: 500px) {
+  .checkin-container {
+    padding: 1em 0.2em 1em 0.2em;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+}
+/* --- END LAYOUT/CENTERING --- */
 
 .checkin-container {
-  width: 100%;
-  max-width: 400px;
-  box-sizing: border-box;
-  margin: 0 auto;
-  padding-left: 1em;
-  padding-right: 1em;
+background: #fafaea;
+border-radius: 30px;
+box-shadow: 0 4px 32px rgba(16, 89, 3, 0.442);
+padding: 2.5em 2em 2em 2em;
+max-width: 500px; /* Match .event-flyer max-width */
+width: 100%;
+min-width: 300px;
+box-sizing: border-box;
+text-align: center;
+}
+.checkin-footer {
+font-size: 1.2em;
+color: #005003;
+font-weight: 1000;
+margin-bottom: 1.0em;
+align-items: left;
+justify-content: left;
+}
+h2 {
+color: #047304;
+margin-bottom: 1.0em;
+margin-top: 2em;
+font-size: 2.1rem;
+font-weight: 700;
+letter-spacing: 0.5px;
+}
+h3 {
+color: #9e8703;
+margin-bottom: 1em;
+font-size: 1.1rem;
+font-weight: 400;
+margin-top: -1em;
 }
 
-.main-flex {
-  flex-wrap: wrap;
-  width: 100%;
-  box-sizing: border-box;
+input[type="text"] {
+width: 100%;
+max-width: 400px;
+min-width: 200px;
+padding: 0.8em;
+font-size: 1.1em;
+border: 2px solid #ffb6c1;
+border-radius: 10px;
+margin: 0 auto 1em auto;
+display: block;
+box-sizing: border-box;
+outline: none;
+background: #fff;
+transition: border-color 0.2s;
+}
+input[type="text"]:focus {
+border-color: #ff950b;
 }
 
-.flyer-container, .event-flyer {
-  max-width: 100%;
-  width: 100%;
-  box-sizing: border-box;
+.heart {
+color: #ee8402;
+font-size: 0.8em;
+margin-top: 0.5em;
+margin-bottom: 0;
+display: block;
+animation: pulse 1.2s infinite;
 }
+
+@keyframes pulse {
+0% { transform: scale(1);}
+50% { transform: scale(1.15);}
+100% { transform: scale(1);}
+}
+
+/* Method Tabs */
+.method-tab {
+padding: 1em 2.5em;
+background: #f59920;
+border: 2px solid transparent;
+border-radius: 12px;
+cursor: pointer;
+width: 400px;
+font-weight: 600;
+font-size: 1em;
+transition: all 0.2s;
+color: #fff !important;
+}
+
+.method-tab.active {
+background: #e48100;
+color: white;
+}
+#scanTab {
+  font-size: 2em;
+  padding: 0.5em 1.5em;
+  background: #4dc24b;
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.method-tabs {
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7em;
+  margin-bottom: 1.5em;
+}
+/* Manual Entry */
+#manualSection input {
+width: 100%;
+max-width: 1000px;
+padding: 0.9em 1em;
+border-radius: 8px;
+border: 2px solid #d29206;
+font-size: 1.1em;
+margin-bottom: 1em;
+outline: none;
+transition: border-color 0.2s;
+}
+#manualSection input:focus {
+border-color: #ff950b;
+}
+
+/* Scanner Section */
+#scannerSection {
+display: none;
+margin-top: 1em;
+padding: 1em;
+background: #fff;
+border-radius: 12px;
+border: 2px dashed #8354c0;
+}
+#scannerSection.active {
+display: block;
+}
+#qr-reader {
+width: 100%;
+max-width: 300px;
+margin: 0 auto 1em;
+border-radius: 12px;
+overflow: hidden;
+}
+#qr-reader video {
+border-radius: 12px;
+}
+.scanner-hint {
+color: #8354c0;
+font-size: 0.9em;
+margin-bottom: 1em;
+}
+/* Buttons */
+button {
+padding: 0.8em 2em;
+border-radius: 8px;
+border: none;
+font-size: 1.1em;
+font-weight: 600;
+cursor: pointer;
+transition: background 0.2s, transform 0.1s;
+}
+button:hover {
+transform: translateY(-1px);
+background: #b1a900; /* slightly darker than #c2bb01 */
+}
+button:active {
+transform: translateY(0);
+}
+#checkinBtn {
+background: #c2bb01;
+color: #ffffff;
+width: 100%;
+}
+#checkinBtn:hover {
+background: #b1a900;
+}
+.btn-stop {
+background: #06a20e;
+color: white;
+margin-top: 0.5em;
+}
+.btn-stop:hover {
+background: #05810b;
+}
+.btn-cancel {
+background: #f0f0f0;
+color: #cf76ff;
+}
+.btn-cancel:hover {
+background: #d1d1d1;
+}
+.btn-confirm {
+background: #06a20e;
+color: white;
+}
+.btn-confirm:hover {
+background: #05810b;
+}
+.btn-print {
+background: #047304;
+color: white;
+}
+.btn-print:hover {
+background: #035a03;
+}
+
+/* --- BUTTONS SIDE BY SIDE --- */
+.manual-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+}
+#checkinBtn {
+  width: auto;
+  flex: 1 1 0;
+  min-width: 120px;
+  margin: 0;
+}
+.stripe-pay-btn {
+  flex: 1 1 0;
+  min-width: 120px;
+  margin: 0;
+}
+@media (max-width: 600px) {
+  .manual-buttons {
+    flex-direction: column;
+    gap: 0.5em;
   }
+}
+/* --- END BUTTONS SIDE BY SIDE --- */
 
+/* Result Messages */
+#result {
+margin-top: 1.2em;
+font-size: 1.1em;
+min-height: 1.5em;
+padding: 0.8em;
+border-radius: 8px;
+}
+#result.success {
+background: #d4edda;
+color: #155724;
+}
+#result.error {
+background: #ffe5c2;
+color: #c46a1a;
+}
+#result.info {
+background: var(--main-orange-light);
+color: var(--main-orange-dark);
+}
+
+/* Stripe Button */
+.stripe-pay-btn {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+background: #635bff;
+color: #fff;
+padding: 0.8em 1.5em;
+border-radius: 8px;
+width: 200px;
+font-size: 1em;
+font-weight: 600;
+text-decoration: none;
+transition: background 0.2s;
+}
+.stripe-pay-btn:hover {
+background: #4b44d4;
+}
+.stripe-pay-btn img {
+height: 1.2em;
+margin-right: 0.5em;
+}
+
+/* Popups */
+.popup-overlay {
+display: none;
+position: fixed;
+top: 0; left: 0; right: 0; bottom: 0;
+background: rgba(0,0,0,0.5);
+z-index: 1000;
+align-items: center;
+justify-content: center;
+}
+.popup-overlay.active {
+display: flex;
+}
+.popup-content {
+background: #fff;
+border-radius: 16px;
+padding: 2em;
+max-width: 360px;
+width: 90%;
+text-align: center;
+box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+}
+.popup-content h2 {
+color: var(--main-orange);
+margin-top: 0;
+}
+.popup-content input {
+width: 100%;
+padding: 0.8em;
+margin: 0.5em 0;
+border: 2px solid #ffb6c1;
+border-radius: 8px;
+font-size: 1em;
+}
+.popup-content input:focus {
+border-color: var(--main-orange);
+outline: none;
+}
+.popup-buttons {
+display: flex;
+gap: 0.5em;
+margin-top: 1em;
+justify-content: center;
+color: #666;
+}
+.popup-buttons button {
+flex: 1;
+}
+.btn-cancel {
+background: #f0f0f0;
+color: #cf76ff;
+}
+.btn-cancel:hover {
+background: #08000055;
+}
+.btn-confirm {
+background: #06a20e;
+color: white;
+}
+.btn-confirm:hover {
+background: #08000055;
+}
+.btn-print {
+background: #047304;
+color: white;
+}
+.btn-print:hover {
+background: #08000055;
+}
+
+/* Ticket Preview */
+#ticketToPrint {
+display: none;
+}
+.ticket-preview {
+background: linear-gradient(135deg, #fff0f6, #e8d8ff);
+border: 2px dashed #fb8d33;
+border-radius: 12px;
+padding: 1.5em;
+margin: 1em 0;
+text-align: center;
+}
+.ticket-preview h3 {
+color: var(--main-orange);
+margin: 0 0 0.5em;
+}
+.ticket-preview .guest-name {
+font-size: 1.4em;
+font-weight: bold;
+color: #8354c0;
+}
+.ticket-preview .pronouns {
+color: #666;
+font-style: italic;
+}
+
+/* Hidden Ticket for Printing */
+div#ticketToPrint {
+display: none;
+}
+div#ticketToPrint div {
+font-family: Arial, sans-serif;
+text-align: center;
+padding: 20px;
+border: 2px dashed var(--main-orange);
+border-radius: 12px;
+max-width: 300px;
+margin: 0 auto;
+}
+div#ticketToPrint h2 {
+color: var(--main-orange);
+margin: 0 0 10px;
+}
+div#ticketToPrint .guest-name {
+font-size: 24px;
+font-weight: bold;
+color: #8354c0;
+}
+div#ticketToPrint .pronouns {
+color: #0c4802;
+font-style: italic;
+}
 </style>
 </head>
 <body>
 <div class="main-flex">
-  <div class="checkin-container">
-    <h2>GUEST CHECK-IN<span class="heart">❤️Read Below❤️</span></h2>
-    <div class="checkin-footer">
-      ENTER FIRST NAME OR FULL NAME USED FOR PAYMENT. <br><br><h3>ARE YOU SOMEBODY'S PLUS ONE?</h3><br> 
-      <b>Enter: First Name's Guest #<br>Example: "Bella's Guest 1"</b><br>
-    </div>
-    <div id="result"></div>
-    <input type="text" id="email" placeholder="Enter your name or email">
-    <br>
+<div class="checkin-container">
+    <h2>GUEST CHECK-IN<span class="heart">🍀Welcome!🍀</span></h2>
+    <h3><i>Queer Salsa Social: Luck Be A Lady <br>Brought to you by QLDSD</i></h3>
+    <!-- <div class="checkin-footer">
+  Scan QR code using the camera. <br>
+  Purchase ticket through Stripe then check in using name or email address used for payment.<i>(processing fee applies)</i>.
+    </div> -->
+
+<div class="method-tabs">
+  <button class="method-tab active" id="scanTab" onclick="showScanner()">📷 SCAN QR</button>
+  <button class="method-tab" id="purchaseTab" onclick="showManualEntry()">🎟️ PURCHASE TICKET</button>
+</div>
+
+<!-- Manual Entry Section (hidden by default) -->
+<div id="manualSection" style="display:none;">
+  <input type="text" id="email" placeholder="Enter name or email">
+  <div class="manual-buttons">
     <button id="checkinBtn">Check In</button>
-    <a href="https://buy.stripe.com/eVq9AU6SC1W07ibe7q0Ny0j" class="stripe-pay-btn" id="payBtn" target="_blank" rel="noopener noreferrer">
-  <img src="images/icons/stripeicon.jpg" alt="Stripe" style="height:1.2em; vertical-align:middle; margin-right:0.5em;">
-  Pay with Stripe
-</a>
-    <!-- Hidden ticket for printing -->
-    <div id="ticketToPrint">
-      <div style="font-size: 1.8em; margin-top: 0em;text-align:center; color:#e75480;">
-        <strong><span id="ticketGuestName" style="font-family: Calibri, 'Trebuchet MS', sans-serif; font-size: 1.3em;"></span></strong>
-        <br>
-        <span id="ticketPronouns" style="font-family: sans-serif; font-size: 1.0em;"></span>
-      </div>
-    </div>
-  </div>
-  <!-- Name & Pronouns Popup -->
-<div id="namepronouns-popup" class="popup-bg">
-  <div class="popup">
-    <h3>Enter Your Preferred Name <br>& Pronouns</h3>
-    <input type="text" id="preferredNameInput" placeholder="Your name" style="width:90%;padding:0.7em;"><br>
-    <input type="text" id="pronounsInput" placeholder="e.g. she/her, he/him, they/them" style="width:90%;padding:0.7em;"><br><br>
-    <button id="namePronounsSubmitBtn">Continue</button>
-    <button class="close-btn" id="closeNamePronounsPopupBtn">Cancel</button>
   </div>
 </div>
-  <div class="flyer-container">
-    <img src="images/eventpage/qssfeb2026flyer.png" alt="Event Flyer" class="event-flyer">
-  </div>
+
+<!-- QR Scanner Section -->
+<div id="scannerSection">
+<div id="qr-reader"></div>
+<p class="scanner-hint">Show QR CODE in front of the camera.</p>
+<button class="btn-stop" onclick="stopScanner()">Stop Scanner</button>
 </div>
-<!-- Pronouns Popup
-<div id="pronouns-popup" class="popup-bg">
-  <div class="popup">
-    <h3>Enter Your Pronouns</h3>
-    <input type="text" id="pronounsInput" placeholder="e.g. she/her, he/him, they/them" style="width:90%;padding:0.7em;">
-    <br><br>
-    <button id="pronounsSubmitBtn">Continue</button>
-    <button class="close-btn" id="closePronounsPopupBtn">Cancel</button>
-  </div>
-</div> -->
-  <!-- Popup -->
-  <div id="checkin-popup" class="popup-bg">
-    <div class="popup">
-      <span class="heart">💖</span>
-      <h3>Checked-in Successfully!</h3>
-      <button id="popupPrintBtn">Print Ticket</button>
-      <br>
-      <button class="close-btn" id="closePopupBtn">Close</button>
+<div class="popup-overlay" id="stripe-popup">
+  <div class="popup-content">
+    <h2>Purchase Ticket</h2>
+       <p>After payment, close pop-up to return to check in using your name or email.</p>
+    <img src="images/eventpage/stripe-qr.png" alt="Stripe QR Code" style="width:300px; margin:1em auto; display:block;">
+    <div style="margin-top:1em;">
+      <button class="btn-cancel" onclick="closePopup('stripe-popup')">Close</button>
     </div>
   </div>
- <script>
-const API_URL = 'https://sparkling-art-bed4.michf18.workers.dev/api/checkin';
-const GUEST_URL = 'https://sparkling-art-bed4.michf18.workers.dev/api/guest';
-let lastCheckedInQuery = "";
-async function checkGuest(query) {
-  const res = await fetch(GUEST_URL, {
-    method: 'POST',
-    body: JSON.stringify({ query }),
-    headers: { 'Content-Type': 'application/json' }
-  });
-  return await res.json();
+</div>
+<!-- Result Message -->
+<div id="result"></div>
+
+</div>
+<div class="flyer-container">
+<img src="images/eventpage/qssmarch2026flyer.png" alt="Event Flyer" class="event-flyer">
+</div>
+</div>
+<!-- Name/Pronouns Popup -->
+<div class="popup-overlay" id="namepronouns-popup">
+<div class="popup-content">
+<h2>Success!</h2>
+<p>Please confirm your details for your name tag:</p>
+<input type="text" id="preferredNameInput" placeholder="Preferred name for name tag">
+<input type="text" id="pronounsInput" placeholder="Pronouns">
+<div class="popup-buttons">
+<button class="btn-cancel" onclick="closePopup('namepronouns-popup')">Cancel</button>
+<button class="btn-confirm" id="namePronounsSubmitBtn">Continue</button>
+</div>
+</div>
+</div>
+
+<!-- Print Ticket Popup -->
+<div class="popup-overlay" id="checkin-popup">
+<div class="popup-content">
+<h2>Nametag Preview</h2>
+<div class="ticket-preview">
+<div class="guest-name" id="ticketGuestName"></div>
+<div class="pronouns" id="ticketPronouns"></div>
+</div>
+<div class="popup-buttons">
+<button class="btn-cancel" onclick="closePopup('checkin-popup')">Done</button>
+<button class="btn-print" id="popupPrintBtn">Confirm</button>
+</div>
+</div>
+</div>
+
+<!-- Hidden Ticket for Printing -->
+<div id="ticketToPrint">
+<div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; border: 2px dashed var(--main-orange); border-radius: 12px; max-width: 300px; margin: 0 auto;">
+<div style="font-size: 24px; font-weight: bold; color: #8354c0;" id="printGuestName"></div>
+<div style="color: #666; font-style: italic;" id="printPronouns"></div>
+</div>
+</div>
+
+<script>
+// Configuration
+const API_BASE_URL = 'https://sparkling-art-bed4.michf18.workers.dev';
+
+// State
+let html5QrCode = null;
+let lastCheckedInQuery = '';
+let currentGuest = null;
+let isQRCheckin = false;
+
+// ============ Tab Switching ============
+function showManualEntry() {
+  // Show the payment popup instead of opening Stripe directly
+  document.getElementById('stripe-popup').classList.add('active');
+  // Show manual entry fields
+  document.getElementById('manualSection').style.display = 'block';
+  document.getElementById('scannerSection').classList.remove('active');
+  document.getElementById('purchaseTab').classList.add('active');
+  document.getElementById('scanTab').classList.remove('active');
+  stopScanner();
 }
 
-async function markCheckIn(query) {
-  await fetch(API_URL, {
-    method: 'POST',
-    body: JSON.stringify({query, action: 'checkin'}),
-    headers: {'Content-Type': 'application/json'}
-  });
+function showScanner() {
+  document.getElementById('manualSection').style.display = 'none';
+  document.getElementById('scannerSection').classList.add('active');
+  document.getElementById('purchaseTab').classList.remove('active');
+  document.getElementById('scanTab').classList.add('active');
+  startScanner();
+}
+// ============ QR Scanner ============
+function startScanner() {
+if (html5QrCode && html5QrCode.isScanning) {
+return;
 }
 
-async function markPrinted(query) {
-  await fetch(API_URL, {
-    method: 'POST',
-    body: JSON.stringify({query, action: 'print'}),
-    headers: {'Content-Type': 'application/json'}
-  });
+html5QrCode = new Html5Qrcode("qr-reader");
+
+html5QrCode.start(
+{ facingMode: "environment" },
+{
+fps: 10,
+qrbox: { width: 250, height: 250 }
+},
+onQRCodeScanned,
+(errorMessage) => {
+// Ignore - no QR found yet
 }
-//CHECKIN HANDLER!!!!!!
-document.getElementById('checkinBtn').addEventListener('click', async function() {
-  const query = document.getElementById('email').value.trim().toLowerCase();
-  document.getElementById('result').className = '';
-  if (!query) {
-    document.getElementById('result').innerText = "Please enter your name or email.";
-    document.getElementById('result').className = 'error';
-    return;
-  }
-    // Get all matching guests (array)
-  const guestList = await checkGuest(query);
+).catch((err) => {
+console.error("Camera error:", err);
+showResult("Camera access denied. Please allow camera or use manual entry.", "error");
+showManualEntry();
+});
+}
 
-  // Find the first unchecked guest
-  let guest = Array.isArray(guestList)
-    ? guestList.find(g => !g.checkedIn)
-    : guestList;
+function stopScanner() {
+if (html5QrCode && html5QrCode.isScanning) {
+html5QrCode.stop().catch(err => console.log("Stop error:", err));
+}
+}
 
-  if (!guest || !guest.found) {
-    document.getElementById('result').innerText = "No available guest entry found for: " + query + ". Please proceed to payment.";
-    document.getElementById('result').className = 'error';
-    return;
-  }
-  // Save guest info for later use
-  window._currentGuest = guest;
-  window._currentQuery = query;
-// --- If it's a guest, show preferred name popup ---
-document.getElementById('preferredNameInput').value = '';
-document.getElementById('pronounsInput').value = '';
+async function onQRCodeScanned(qrCode) {
+stopScanner();
+
+console.log('🎟️ QR Code scanned:', qrCode);
+showResult("Checking QR code...", "info");
+
+// Check if it's a valid QLDSD code
+if (!qrCode.startsWith('QLDSD-')) {
+showResult("Invalid QR code format. Please try again.", "error");
+setTimeout(startScanner, 2000);
+return;
+}
+
+try {
+const response = await fetch(`${API_BASE_URL}/api/qr-checkin`, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ qrCode: qrCode })
+});
+
+const guest = await response.json();
+
+if (!guest.found) {
+showResult("QR code not found. Please try manual entry.", "error");
+setTimeout(startScanner, 2000);
+return;
+}
+
+currentGuest = guest;
+lastCheckedInQuery = qrCode;
+isQRCheckin = true;
+
+if (guest.checkedIn && guest.printed) {
+showResult(`${guest.name} has already checked in & printed.`, "error");
+return;
+}
+
+if (guest.checkedIn && !guest.printed) {
+// Already checked in, offer reprint
+document.getElementById('ticketGuestName').textContent = guest.name;
+document.getElementById('ticketPronouns').textContent = guest.pronouns || '';
+printTicket();
+return;
+}
+
+// New check-in - show name/pronouns popup
+document.getElementById('preferredNameInput').value = guest.name || '';
+document.getElementById('pronounsInput').value = guest.pronouns || '';
 document.getElementById('namepronouns-popup').classList.add('active');
-document.getElementById('result').innerText = "";
-document.getElementById('result').className = '';
-document.getElementById('email').value = '';
-return; 
 
-  document.getElementById('ticketGuestName').textContent = guest.name || guest.email;
-
-  if (guest.checkedIn) {
-    if (guest.printed) {
-      document.getElementById('result').innerText = "Guest has already checked in & printed their ticket.";
-      document.getElementById('result').className = 'error';
-      return;
-    } else {
-      // Already checked in, but not printed: allow printing
-      document.getElementById('checkin-popup').classList.add('active');
-      document.getElementById('result').innerText = "";
-      document.getElementById('result').className = '';
-      document.getElementById('email').value = '';
-      return;
-    }
-  }
-  await markCheckIn(query);
-  lastCheckedInQuery = query;
-  document.getElementById('ticketGuestName').textContent = guest.name || guest.email;
-  document.getElementById('checkin-popup').classList.add('active');
-  document.getElementById('result').innerText = "";
-  document.getElementById('result').className = '';
-  document.getElementById('email').value = '';
-});
-
-document.getElementById('popupPrintBtn').addEventListener('click', async function() {
-  if (!lastCheckedInQuery) {
-    document.getElementById('result').innerText = "Guest not found. Please try again or proceed to";
-    document.getElementById('result').className = 'error';
-    closePopup();
-    return;
-  }
-  // Get all matching guests (array)
-  const guestList = await checkGuest(lastCheckedInQuery);
-
-  // Find the first not printed guest
-  let guest = Array.isArray(guestList)
-    ? guestList.find(g => !g.printed)
-    : guestList;
-
-  if (!guest || guest.printed) {
-    document.getElementById('result').innerText = "Guest has already signed in & printed their ticket.";
-    document.getElementById('result').className = 'error';
-    closePopup();
-    return;
-  }
-  await markPrinted(lastCheckedInQuery);
-  var ticket = document.getElementById('ticketToPrint').innerHTML;
-  var printWindow = window.open('', '', 'width=400,height=200');
-  if (!printWindow) {
-    document.getElementById('result').innerText = "Popup blocked! Please allow popups to print your ticket.";
-    document.getElementById('result').className = 'error';
-    closePopup();
-    return;
-  }
-  printWindow.document.write(ticket);
-  printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
-  printWindow.close();
-  closePopup();
-});
-// Handle combined popup submit
-document.getElementById('namePronounsSubmitBtn').addEventListener('click', async function() {
-  const preferredName = document.getElementById('preferredNameInput').value.trim();
-  const pronouns = document.getElementById('pronounsInput').value.trim();
-  document.getElementById('namepronouns-popup').classList.remove('active');
-  if (!preferredName) {
-    document.getElementById('result').innerText = "Please enter your preferred name.";
-    document.getElementById('result').className = 'error';
-    return;
-  }
-  document.getElementById('ticketGuestName').textContent = preferredName;
-  document.getElementById('ticketPronouns').textContent = pronouns ? '💌' + pronouns : "";
-
-  // Now check in the guest and set up for printing
-  if (window._currentGuest) {
-    await markCheckIn(window._currentQuery);
-    lastCheckedInQuery = window._currentQuery;
-    document.getElementById('checkin-popup').classList.add('active');
-    document.getElementById('result').innerText = "";
-    document.getElementById('result').className = '';
-    document.getElementById('email').value = '';
-  }
-});
-
-document.getElementById('closeNamePronounsPopupBtn').addEventListener('click', function() {
-  document.getElementById('namepronouns-popup').classList.remove('active');
-});
-function closePopup() {
-  document.getElementById('checkin-popup').classList.remove('active');
+} catch (error) {
+console.error('QR check-in error:', error);
+showResult("Error checking QR code. Please try again.", "error");
+setTimeout(startScanner, 2000);
 }
-document.getElementById('closePopupBtn').addEventListener('click', closePopup);
+}
+
+// ============ Manual Check-in ============
+document.getElementById('checkinBtn').addEventListener('click', async function() {
+const query = document.getElementById('email').value.trim();
+
+if (!query) {
+showResult("Please enter your name or email.", "error");
+return;
+}
+
+showResult("Checking...", "info");
+isQRCheckin = false;
+
+try {
+const response = await fetch(`${API_BASE_URL}/api/checkin`, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ query: query })
+});
+
+const result = await response.json();
+
+if (result.error) {
+showResult(result.error, "error");
+return;
+}
+
+if (!result.found) {
+showResult("Guest not found. Please check your name/email or pay through Stripe.", "error");
+return;
+}
+
+currentGuest = result;
+lastCheckedInQuery = query;
+
+if (result.checkedIn && result.printed) {
+showResult(`${result.name} has already checked in & printed.`, "error");
+return;
+}
+
+if (result.checkedIn && !result.printed) {
+document.getElementById('ticketGuestName').textContent = result.name;
+document.getElementById('ticketPronouns').textContent = result.pronouns || '';
+document.getElementById('checkin-popup').classList.add('active');
+return;
+}
+
+// New check-in
+document.getElementById('preferredNameInput').value = result.name || '';
+document.getElementById('pronounsInput').value = result.pronouns || '';
+document.getElementById('namepronouns-popup').classList.add('active');
+
+} catch (error) {
+console.error('Check-in error:', error);
+showResult("Connection error. Please try again.", "error");
+}
+});
+
+// ============ Name/Pronouns Submit ============
+document.getElementById('namePronounsSubmitBtn').addEventListener('click', async function() {
+const preferredName = document.getElementById('preferredNameInput').value.trim();
+const pronouns = document.getElementById('pronounsInput').value.trim();
+
+closePopup('namepronouns-popup');
+
+if (!preferredName) {
+showResult("Please enter your preferred name.", "error");
+return;
+}
+
+showResult("Checking in...", "info");
+
+try {
+const endpoint = isQRCheckin ? '/api/qr-checkin-complete' : '/api/checkin-complete';
+const body = isQRCheckin 
+? { qrCode: lastCheckedInQuery, preferredName, pronouns }
+: { query: lastCheckedInQuery, preferredName, pronouns };
+
+const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(body)
+});
+
+const result = await response.json();
+
+if (result.success) {
+showResult(`✅ Welcome, ${preferredName}!`, "success");
+
+// Update ticket preview
+document.getElementById('ticketGuestName').textContent = preferredName ? '🍀' + preferredName : "";
+document.getElementById('ticketPronouns').textContent = pronouns;
+document.getElementById('printGuestName').textContent = preferredName ? '🍀' + preferredName : "";
+document.getElementById('printPronouns').textContent = pronouns
+
+// Show print popup
+document.getElementById('checkin-popup').classList.add('active');
+} else {
+showResult(result.error || "Check-in failed. Please try again.", "error");
+}
+
+} catch (error) {
+console.error('Check-in complete error:', error);
+showResult("Connection error. Please try again.", "error");
+}
+});
+
+// ============ Print Ticket ============
+document.getElementById('popupPrintBtn').addEventListener('click', async function() {
+try {
+// Mark as printed
+const endpoint = isQRCheckin ? '/api/qr-mark-printed' : '/api/mark-printed';
+const body = isQRCheckin 
+? { qrCode: lastCheckedInQuery }
+: { query: lastCheckedInQuery };
+
+await fetch(`${API_BASE_URL}${endpoint}`, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(body)
+});
+
+} catch (error) {
+console.log('Mark printed error (non-critical):', error);
+}
+
+// Print ticket
+const ticket = document.getElementById('ticketToPrint').innerHTML;
+const printWindow = window.open('', '', 'width=800,height=600');
+
+if (!printWindow) {
+showResult("Popup blocked! Please allow popups to print.", "error");
+closePopup('checkin-popup');
+return;
+}
+
+printWindow.document.write(`${ticket}
+`);
+printWindow.document.close();
+printWindow.focus();
+printWindow.print();
+printWindow.close();
+
+closePopup('checkin-popup');
+showResult("✅ Ticket printed!", "success");
+});
+
+// ============ Helpers ============
+function showResult(message, type) {
+const result = document.getElementById('result');
+result.textContent = message;
+result.className = type || '';
+}
+
+function closePopup(popupId) {
+document.getElementById(popupId).classList.remove('active');
+}
+
+// Allow Enter key for manual entry
+document.getElementById('email').addEventListener('keypress', function(e) {
+if (e.key === 'Enter') {
+document.getElementById('checkinBtn').click();
+}
+});
 </script>
 </body>
 </html>

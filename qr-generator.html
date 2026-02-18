@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QR Code Generator - QLDSD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Use a more reliable QR code library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Signika', Arial, sans-serif;
+      background: linear-gradient(135deg, #c1bff8 0%, #ffb6c1 100%);
+      padding: 2em;
+      text-align: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff0f6;
+      border-radius: 16px;
+      padding: 2em;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    h1 { 
+      color: #e75480; 
+      margin-bottom: 0.5em;
+    }
+    .subtitle {
+      color: #8354c0;
+      margin-bottom: 2em;
+    }
+    .input-group {
+      margin: 1em 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+      justify-content: center;
+      align-items: center;
+    }
+    input {
+      padding: 0.8em 1.2em;
+      font-size: 1em;
+      border-radius: 8px;
+      border: 2px solid #ffb6c1;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus {
+      border-color: #e75480;
+    }
+    button {
+      padding: 0.8em 1.5em;
+      font-size: 1em;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+    }
+    button:hover {
+      transform: translateY(-1px);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    .btn-primary {
+      background: #e75480;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #c44569;
+    }
+    .btn-secondary {
+      background: #8354c0;
+      color: white;
+    }
+    .btn-secondary:hover {
+      background: #6a3fa0;
+    }
+    .btn-small {
+      padding: 0.5em 1em;
+      font-size: 0.9em;
+    }
+    .btn-download-all {
+      background: #4CAF50;
+      color: white;
+      margin-top: 1em;
+    }
+    .btn-download-all:hover {
+      background: #3d8b40;
+    }
+    hr {
+      border: none;
+      border-top: 2px dashed #ffb6c1;
+      margin: 2em 0;
+    }
+    .qr-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5em;
+      justify-content: center;
+      margin-top: 1.5em;
+    }
+    .qr-item {
+      background: white;
+      padding: 1em;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      border: 2px solid #f0f0f0;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .qr-item:hover {
+      border-color: #e75480;
+      box-shadow: 0 4px 15px rgba(231,84,128,0.2);
+    }
+    .qr-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0.5em;
+    }
+    .qr-code-text {
+      margin-top: 0.5em;
+      font-weight: bold;
+      color: #8354c0;
+      font-size: 0.9em;
+    }
+    .qr-guest-name {
+      color: #e75480;
+      font-size: 0.85em;
+      margin-top: 0.3em;
+    }
+    #codeList {
+      margin-top: 2em;
+      text-align: left;
+      background: white;
+      padding: 1.5em;
+      border-radius: 12px;
+    }
+    #codeList h3 {
+      color: #8354c0;
+      margin-top: 0;
+    }
+    #codeListText {
+      width: 100%;
+      font-family: monospace;
+      font-size: 0.9em;
+      padding: 1em;
+      border: 2px solid #e8d8ff;
+      border-radius: 8px;
+      resize: vertical;
+    }
+    .copy-btn {
+      background: #716cff;
+      color: white;
+      margin-top: 0.5em;
+    }
+    .copy-btn:hover {
+      background: #5a55e0;
+    }
+    .instructions {
+      background: #fff;
+      padding: 1.5em;
+      border-radius: 12px;
+      text-align: left;
+      margin-bottom: 2em;
+      border-left: 4px solid #e75480;
+    }
+    .instructions h3 {
+      color: #e75480;
+      margin-top: 0;
+    }
+    .instructions ol {
+      color: #555;
+      padding-left: 1.5em;
+    }
+    .instructions li {
+      margin-bottom: 0.5em;
+    }
+    .success-msg {
+      color: #4CAF50;
+      font-weight: 600;
+      margin-top: 0.5em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎟️ QR Code Generator</h1>
+    <p class="subtitle">Generate unique QR codes for guest check-in</p>
+    <!-- Single QR Generation -->
+    <div class="input-group">
+      <input type="text" id="guestName" placeholder="Guest name (e.g., Marisol)">
+      <input type="email" id="guestEmail" placeholder="Guest email (optional)">
+      <button class="btn-primary" onclick="generateSingle()">Generate Single QR</button>
+    </div>
+    
+    <hr>
+    
+    <!-- Batch QR Generation -->
+    <div class="input-group">
+      <label style="color: #555;">Number of codes:</label>
+      <input type="number" id="numCodes" value="10" min="1" max="100" style="width: 80px;">
+      <button class="btn-secondary" onclick="generateBatch()">Generate Batch</button>
+    </div>
+    
+    <div id="qrOutput" class="qr-grid"></div>
+    
+    <button id="downloadAllBtn" class="btn-download-all" style="display: none;" onclick="downloadAll()">
+      ⬇️ Download All QR Codes
+    </button>
+    
+    <div id="codeList" style="display: none;">
+      <h3>📋 Copy these codes to your Google Sheet:</h3>
+      <p style="color: #888; font-size: 0.9em;">Paste this directly into your spreadsheet. It's tab-separated so it will fill multiple columns.</p>
+      <textarea id="codeListText" rows="10" readonly></textarea>
+      <button class="copy-btn btn-small" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+      <span id="copySuccess" class="success-msg" style="display: none;">✓ Copied!</span>
+    </div>
+  </div>
+
+  <script>
+    let generatedCodes = [];
+
+    function generateUniqueId() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let id = 'QLDSD-';
+      for (let i = 0; i < 6; i++) {
+        id += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return id;
+    }
+
+    function generateSingle() {
+      const guestName = document.getElementById('guestName').value.trim() || 'Guest';
+      const guestEmail = document.getElementById('guestEmail').value.trim() || '';
+      const uniqueId = generateUniqueId();
+      
+      const output = document.getElementById('qrOutput');
+      output.innerHTML = '';
+      generatedCodes = [];
+      
+      const item = createQRItem(guestName, guestEmail, uniqueId, 200);
+      output.appendChild(item);
+      
+      generatedCodes.push({ name: guestName, email: guestEmail, code: uniqueId });
+      
+      updateCodeList();
+      
+      document.getElementById('guestName').value = '';
+      document.getElementById('guestEmail').value = '';
+      document.getElementById('downloadAllBtn').style.display = 'none';
+    }
+
+    function generateBatch() {
+      const num = parseInt(document.getElementById('numCodes').value) || 10;
+      const output = document.getElementById('qrOutput');
+      output.innerHTML = '';
+      generatedCodes = [];
+      
+      for (let i = 1; i <= num; i++) {
+        const uniqueId = generateUniqueId();
+        const guestName = `Guest ${i}`;
+        
+        const item = createQRItem(guestName, '', uniqueId, 150);
+        output.appendChild(item);
+        
+        generatedCodes.push({ name: guestName, email: '', code: uniqueId });
+      }
+      
+      updateCodeList();
+      document.getElementById('downloadAllBtn').style.display = 'inline-block';
+    }
+
+    function createQRItem(guestName, guestEmail, uniqueId, size) {
+      const item = document.createElement('div');
+      item.className = 'qr-item';
+      item.dataset.code = uniqueId;
+      item.dataset.name = guestName;
+      
+      // Create a container div for the QR code
+      const qrContainer = document.createElement('div');
+      qrContainer.className = 'qr-container';
+      qrContainer.id = `qr-${uniqueId}`;
+      item.appendChild(qrContainer);
+      
+      const codeText = document.createElement('div');
+      codeText.className = 'qr-code-text';
+      codeText.textContent = uniqueId;
+      item.appendChild(codeText);
+      
+      const nameText = document.createElement('div');
+      nameText.className = 'qr-guest-name';
+      nameText.textContent = guestName;
+      item.appendChild(nameText);
+      
+      const downloadBtn = document.createElement('button');
+      downloadBtn.className = 'btn-primary btn-small';
+      downloadBtn.textContent = '⬇️ Download';
+      downloadBtn.style.marginTop = '0.5em';
+      downloadBtn.onclick = () => downloadQR(qrContainer, `${guestName.replace(/\s+/g, '-')}-${uniqueId}.png`);
+      item.appendChild(downloadBtn);
+      
+      // Generate QR code using qrcodejs library
+      setTimeout(() => {
+        new QRCode(qrContainer, {
+          text: uniqueId,
+          width: size,
+          height: size,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      }, 10);
+      
+      return item;
+    }
+
+    function updateCodeList() {
+      document.getElementById('codeList').style.display = 'block';
+      
+      const header = 'Guest Name\tEmail\tQR Code\tChecked In\tPrinted';
+      const rows = generatedCodes.map(g => `${g.name}\t${g.email}\t${g.code}\tFALSE\tFALSE`);
+      
+      document.getElementById('codeListText').value = header + '\n' + rows.join('\n');
+    }
+
+    function downloadQR(qrContainer, filename) {
+      // Find the canvas or img inside the QR container
+      const canvas = qrContainer.querySelector('canvas');
+      const img = qrContainer.querySelector('img');
+      
+      const link = document.createElement('a');
+      link.download = filename;
+      
+      if (canvas) {
+        link.href = canvas.toDataURL('image/png');
+      } else if (img) {
+        // Create a canvas from the image
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = img.width;
+        tempCanvas.height = img.height;
+        const ctx = tempCanvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        link.href = tempCanvas.toDataURL('image/png');
+      } else {
+        alert('QR code not ready yet. Please try again.');
+        return;
+      }
+      
+      link.click();
+    }
+
+    function downloadAll() {
+      const items = document.querySelectorAll('.qr-item');
+      items.forEach((item, index) => {
+        setTimeout(() => {
+          const qrContainer = item.querySelector('.qr-container');
+          const code = item.dataset.code;
+          const name = item.dataset.name.replace(/\s+/g, '-');
+          downloadQR(qrContainer, `${name}-${code}.png`);
+        }, index * 300);
+      });
+    }
+
+    function copyToClipboard() {
+      const textarea = document.getElementById('codeListText');
+      textarea.select();
+      document.execCommand('copy');
+      
+      const successMsg = document.getElementById('copySuccess');
+      successMsg.style.display = 'inline';
+      setTimeout(() => {
+        successMsg.style.display = 'none';
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
