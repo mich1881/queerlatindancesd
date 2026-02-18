@@ -201,7 +201,7 @@
   background: linear-gradient(135deg, #bdbdf5 0%, #eee2ff 100%);
   border-radius: 20px;
   padding: 2rem;
-  max-width: 600px;
+  max-width: 700px;
   width: 100%;
   position: relative;
   box-shadow: 0 8px 32px rgba(113, 108, 255, 0.4);
@@ -826,16 +826,16 @@ async function loadSchedulesFromCalendarData() {
       // Update calendar modal - Fridays (times on top)
       document.getElementById('calendar-fridays-winter-p2').innerHTML = 
         `<li class="calendar-times">
-          <strong>Salsa:</strong> ${fridaysP2.times.salsa}<br>
-          <strong>Bachata:</strong> ${fridaysP2.times.bachata}
+          <strong>Salsa (LEVEL 1):</strong> ${fridaysP2.times.salsa}<br>
+          <strong>Bachata (LEVEL 1):</strong> ${fridaysP2.times.bachata}
         </li>` +
         fridaysP2.dates.map(d => `<li class="${isDatePast(d, fridaysP2.year) ? 'past-date' : ''}">${d}</li>`).join('');
       
       // Update calendar modal - Sundays (times on top)
       document.getElementById('calendar-sundays-winter-p2').innerHTML = 
         `<li class="calendar-times">
-          <strong>Salsa:</strong> ${sundaysP2.times.salsa}<br>
-          <strong>Bachata:</strong> ${sundaysP2.times.bachata}
+          <strong>Salsa (LEVEL 1):</strong> ${sundaysP2.times.salsa}<br>
+          <strong>Bachata (LEVEL 2):</strong> ${sundaysP2.times.bachata}
         </li>` +
         sundaysP2.dates.map(d => `<li class="${isDatePast(d, sundaysP2.year) ? 'past-date' : ''}">${d}</li>`).join('');
     }
