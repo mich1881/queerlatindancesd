@@ -370,8 +370,8 @@ function updateCodeList() {
   const canvas = qrContainer.querySelector('canvas');
   const img = qrContainer.querySelector('img');
   const qrSize = 200; // or 150 for batch, adjust as needed
-  const border = 16;
-  const textHeight = 48;
+  const border = Math.round(qrSize * 0.08);
+  const textHeight = Math.round(qrSize * 0.32);
   const width = qrSize + border * 2;
   const height = qrSize + border * 2 + textHeight;
 
@@ -409,15 +409,18 @@ function updateCodeList() {
     return;
   }
 
-  // Draw order number and name below QR code
-  ctx.font = "bold 20px Arial";
+  // Scale font size based on QR code size for sharpness
+  const mainFontSize = Math.round(qrSize * 0.13); // e.g. 26px for 200, 78px for 600
+  const subFontSize = Math.round(qrSize * 0.09);
+
+  ctx.font = `bold ${mainFontSize}px Arial`;
   ctx.fillStyle = "#e75480";
   ctx.textAlign = "center";
-  ctx.fillText(orderNum, width / 2, qrSize + border + 28);
+  ctx.fillText(orderNum, width / 2, qrSize + border + mainFontSize);
 
-  ctx.font = "16px Arial";
+  ctx.font = `${subFontSize}px Arial`;
   ctx.fillStyle = "#333";
-  ctx.fillText(guestName, width / 2, qrSize + border + 46);
+  ctx.fillText(guestName, width / 2, qrSize + border + mainFontSize + subFontSize + 8);
 
   // Download the canvas as PNG
   const link = document.createElement('a');
