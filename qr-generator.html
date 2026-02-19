@@ -22,7 +22,7 @@
       background: #fff0f6;
       border-radius: 16px;
       padding: 2em;
-      max-width: 800px;
+      max-width: 1000px;
       margin: 0 auto;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
@@ -199,9 +199,9 @@
       <input type="email" id="guestEmail" placeholder="Guest email (optional)">
       <button class="btn-primary" onclick="generateSingle()">Generate Single QR</button>
     </div>
-    
+    <div id="codeListTablePreview" style="overflow-x:auto; margin-top:1em;"></div>
     <hr>
-    
+    <button class="btn-secondary btn-small" onclick="clearAllCodes()" style="margin-top:1em;">🗑️ Clear All Codes</button>
     <!-- Batch QR Generation -->
     <div class="input-group">
       <label style="color: #555;">Number of codes:</label>
@@ -227,14 +227,18 @@
   <script>
     let generatedCodes = [];
 
-    function generateUniqueId() {
-      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-      let id = 'QLDSD-';
-      for (let i = 0; i < 6; i++) {
-        id += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return id;
+function generateUniqueId() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let id;
+  do {
+    id = 'QLDSD-';
+    for (let i = 0; i < 6; i++) {
+      id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
+    // Keep generating if this code already exists
+  } while (generatedCodes.some(codeObj => codeObj.code === id));
+  return id;
+}
 
     function generateSingle() {
       const guestName = document.getElementById('guestName').value.trim() || 'Guest';
@@ -255,6 +259,8 @@
       document.getElementById('guestName').value = '';
       document.getElementById('guestEmail').value = '';
       document.getElementById('downloadAllBtn').style.display = 'none';
+
+      localStorage.setItem('qldsdGeneratedCodes', JSON.stringify(generatedCodes));
     }
 
     function generateBatch() {
@@ -275,6 +281,7 @@
       
       updateCodeList();
       document.getElementById('downloadAllBtn').style.display = 'inline-block';
+      localStorage.setItem('qldsdGeneratedCodes', JSON.stringify(generatedCodes));
     }
 
     function createQRItem(guestName, guestEmail, uniqueId, size) {
@@ -321,64 +328,113 @@
       return item;
     }
 
-    function updateCodeList() {
-      document.getElementById('codeList').style.display = 'block';
-      
-      const header = 'Guest Name\tEmail\tQR Code\tChecked In\tPrinted';
-      const rows = generatedCodes.map(g => `${g.name}\t${g.email}\t${g.code}\tFALSE\tFALSE`);
-      
-      document.getElementById('codeListText').value = header + '\n' + rows.join('\n');
-    }
+function updateCodeList() {
+  document.getElementById('codeList').style.display = 'block';
+
+  // Header: Actual Name, Preferred Name, Email, Checked In, Printed, Pronouns, QR Code, CheckIn Time
+  const headerArr = [
+    'Actual Name', 'Preferred Name', 'Email', 'Checked In', 'Printed', 'Pronouns', 'QR Code', 'CheckIn Time'
+  ];
+  const header = headerArr.join('\t');
+
+  // Each row must have 8 columns, matching the header
+  const rows = generatedCodes.map(g =>
+    [
+      g.name,         // Actual Name
+      '',             // Preferred Name (blank)
+      g.email,        // Email
+      '',        // Checked In
+      '',        // Printed
+      '',             // Pronouns (blank)
+      g.code,         // QR Code
+      ''              // CheckIn Time (blank)
+    ]
+  );
+
+  // Update textarea
+  const textRows = rows.map(r => r.join('\t'));
+  document.getElementById('codeListText').value = header + '\n' + textRows.join('\n');
+
+  // Render HTML table preview
+  let html = '<table style="border-collapse:collapse;width:100%;font-size:0.95em;">';
+  html += '<tr>' + headerArr.map(h => `<th style="border:1px solid #ccc;padding:4px 8px;background:#f8f4ff;">${h}</th>`).join('') + '</tr>';
+  rows.forEach(r => {
+    html += '<tr>' + r.map(cell => `<td style="border:1px solid #eee;padding:4px 8px;">${cell}</td>`).join('') + '</tr>';
+  });
+  html += '</table>';
+  document.getElementById('codeListTablePreview').innerHTML = html;
+}
 
     function downloadQR(qrContainer, filename) {
-      // Find the canvas or img inside the QR container
-      const canvas = qrContainer.querySelector('canvas');
-      const img = qrContainer.querySelector('img');
-      
-      const link = document.createElement('a');
-      link.download = filename;
-      
-      if (canvas) {
-        link.href = canvas.toDataURL('image/png');
-      } else if (img) {
-        // Create a canvas from the image
-        const tempCanvas = document.createElement('canvas');
-        tempCanvas.width = img.width;
-        tempCanvas.height = img.height;
-        const ctx = tempCanvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-        link.href = tempCanvas.toDataURL('image/png');
-      } else {
-        alert('QR code not ready yet. Please try again.');
-        return;
-      }
-      
-      link.click();
-    }
+  // Find the canvas or img inside the QR container
+  const canvas = qrContainer.querySelector('canvas');
+  const img = qrContainer.querySelector('img');
+  const qrSize = 200; // or 150 for batch, adjust as needed
+  const border = 16;
+  const textHeight = 48;
+  const width = qrSize + border * 2;
+  const height = qrSize + border * 2 + textHeight;
 
-    function downloadAll() {
-      const items = document.querySelectorAll('.qr-item');
-      items.forEach((item, index) => {
-        setTimeout(() => {
-          const qrContainer = item.querySelector('.qr-container');
-          const code = item.dataset.code;
-          const name = item.dataset.name.replace(/\s+/g, '-');
-          downloadQR(qrContainer, `${name}-${code}.png`);
-        }, index * 300);
-      });
-    }
+  // Get order number and name from parent .qr-item
+  const qrItem = qrContainer.closest('.qr-item');
+  let orderNum = '';
+  let guestName = '';
+  if (qrItem) {
+    guestName = qrItem.dataset.name || '';
+    orderNum = qrItem.dataset.code || ''; // Use the QR code as the order number
+  }
 
-    function copyToClipboard() {
-      const textarea = document.getElementById('codeListText');
-      textarea.select();
-      document.execCommand('copy');
-      
-      const successMsg = document.getElementById('copySuccess');
-      successMsg.style.display = 'inline';
-      setTimeout(() => {
-        successMsg.style.display = 'none';
-      }, 2000);
-    }
+  // Create a new canvas for the final image
+  const finalCanvas = document.createElement('canvas');
+  finalCanvas.width = width;
+  finalCanvas.height = height;
+  const ctx = finalCanvas.getContext('2d');
+
+  // Draw white background
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0, 0, width, height);
+
+  // Draw border
+  ctx.strokeStyle = "#e75480";
+  ctx.lineWidth = 6;
+  ctx.strokeRect(3, 3, width - 6, height - 6);
+
+  // Draw QR code
+  if (canvas) {
+    ctx.drawImage(canvas, border, border, qrSize, qrSize);
+  } else if (img) {
+    ctx.drawImage(img, border, border, qrSize, qrSize);
+  } else {
+    alert('QR code not ready yet. Please try again.');
+    return;
+  }
+
+  // Draw order number and name below QR code
+  ctx.font = "bold 20px Arial";
+  ctx.fillStyle = "#e75480";
+  ctx.textAlign = "center";
+  ctx.fillText(orderNum, width / 2, qrSize + border + 28);
+
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#333";
+  ctx.fillText(guestName, width / 2, qrSize + border + 46);
+
+  // Download the canvas as PNG
+  const link = document.createElement('a');
+  link.download = filename;
+  link.href = finalCanvas.toDataURL('image/png');
+  link.click();
+  
+  function clearAllCodes() {
+  if (confirm('Are you sure you want to clear all generated codes?')) {
+    generatedCodes = [];
+    localStorage.removeItem('qldsdGeneratedCodes');
+    updateCodeList();
+    document.getElementById('qrOutput').innerHTML = '';
+    document.getElementById('downloadAllBtn').style.display = 'none';
+  }
+}
+}
   </script>
 </body>
 </html>
