@@ -301,7 +301,22 @@ color: #222;
 text-decoration: underline;
 }
 /* END ORGANIZER SECTION CSS */
-
+.pricing-card > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  align-items: center; /* Center the pricing options horizontally */
+}
+.pricing-card .pricing-option {
+  min-width: 160px;
+  max-width: 160px;
+  width: 160px;
+  text-align: center;
+}
+.pricing-option {
+  margin: 0 auto; /* Center each button inside its flex container */
+}
 .pricing-options {
 display: flex;
 flex-direction: column;
@@ -549,7 +564,7 @@ padding: 4px 10px 4px 6px !important;
   }
   .pricing-option {
     font-size: 0.7rem !important;
-    padding: 0.2rem 2rem !important;
+    padding: 0.2rem 0.5rem !important;
     margin: 0.15em auto !important;
   }
 }
@@ -891,7 +906,7 @@ fetch('pricing-config.json')
       e.preventDefault();
       const selected = document.querySelector('.pricing-option.selected');
       let option = '4WK-S1-p1 Salsa & Bachata';
-      
+
       if (selected) {
         const text = selected.textContent.trim().toLowerCase();
         if (text.includes('8wk')) {
