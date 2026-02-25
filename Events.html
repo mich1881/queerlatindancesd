@@ -115,6 +115,13 @@ height: auto;
 object-fit: contain;
 }
 
+.flyer-image:hover, .flyer-link:hover .flyer-image {
+filter: none !important;
+outline: none !important;
+border: 1px solid #8611f4 !important;
+box-shadow:#8611f4 0px 0px 8px 2px !important;
+}
+
 .events-title {
 font-size: 3.5rem;
 }
@@ -240,6 +247,12 @@ font-style: italic;
 color: #ffffff;
 font-size: 1.3em;
 }
+
+.flyer-link {
+  position: relative;
+  display: inline-block;
+}
+
 </style>
 </head>
 <header>
@@ -457,7 +470,7 @@ pastEvents.innerHTML = '';
 function createEventHTML(event) {
 const flyerImg = `<img src="${event.flyerUrl}" alt="${event.title} Flyer" class="flyer-image" />`;
 const flyerContent = event.inviteUrl
-? `<a href="${event.inviteUrl}" target="_blank" rel="noopener noreferrer">${flyerImg}</a>`
+? `<a href="${event.inviteUrl}" target="_blank" rel="noopener noreferrer" class="flyer-link">${flyerImg}</a>`
 : flyerImg;
 return `
 <div class="event-item" data-date="${event.date}">

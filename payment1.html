@@ -616,7 +616,7 @@ overflow-x: hidden;
 <div class="payment-container">
 <div class="payment-title">Complete Your Payment</div>
 <div class="payment-desc">
-Select a payment method below to finish registration for the Queer Salsa Series.<br>
+Select a payment method below to finish registration.<br>
 <span id="selectedSeries" style="display:block;margin-top:0.7em;font-size:1.08rem;color:#716cff;font-weight:700;"></span>
 <span id="selectedPrice" style="display:block;margin-top:0.2em;font-size:1.08rem;color:#222;font-weight:700;"></span>
 <div id="lessonDateTime" style="display:block;margin-top:0.5em;padding:0.5em;background:#f0f4ff;border-radius:6px;border-left:3px solid #716cff;">
@@ -764,9 +764,9 @@ Select a payment method below to finish registration for the Queer Salsa Series.
 </div>
 </div>
 </div>
-<div class="payment-note">After payment, you will receive a confirmation email along with the Course Overview.</div>
-<div class="payment-fee-note">
-<span class="payment-fee-highlight">Note: PayPal and Stripe charge processing fees. Zelle and Venmo are recommended for no-fee payments.</span>
+<div class="payment-note">After payment, you will receive a confirmation email along with the Course Overview. Note: PayPal and Stripe processing fees apply. Zelle and Venmo are recommended to avoid paying fees.</div>
+<div class="payment-fee-note"><br>
+<span class="payment-fee-highlight"></span>
 </div>
 </div>
 <!-- Safe Checkout -->
@@ -1020,7 +1020,10 @@ pricingConfig = {
 "series": {
 "both": { "price": 144, "calculation": "Salsa & Bachata: 8 hours of lessons x $18 per hour = $144", "label": "Salsa & Bachata Series", "perHour": "$18 per hour" },
 "salsa": { "price": 80, "calculation": "Salsa Only: 4 hours of lessons x $20 per hour = $80", "label": "Salsa Only Series", "perHour": "$20 per hour" },
-"bachata": { "price": 80, "calculation": "Bachata Only: 4 hours of lessons x $20 per hour = $80", "label": "Bachata Only Series", "perHour": "$20 per hour" }
+"bachata": { "price": 80, "calculation": "Bachata Only: 4 hours of lessons x $20 per hour = $80", "label": "Bachata Only Series", "perHour": "$20 per hour" },
+"both8wk": { "price": 240, "calculation": "Salsa & Bachata: 8 weeks x $15/hr = $120", "label": "Salsa & Bachata 8 Week Series", "perHour": "$15 per hour" },
+"salsa8wk": { "price": 136, "calculation": "Salsa Only: 8 weeks x $17/hr = $136", "label": "Salsa Only 8 Week Series", "perHour": "$17 per hour" },
+"bachata8wk": { "price": 136, "calculation": "Bachata Only: 8 weeks x $17/hr = $136", "label": "Bachata Only 8 Week Series", "perHour": "$17 per hour" }
 },
 "dropin": {
 "both": { "price": 52, "calculation": "Salsa & Bachata: 2 classes x $26 per class = $52", "label": "Salsa & Bachata Drop-in", "perHour": "$26 per class" },
@@ -1107,18 +1110,26 @@ console.log('🔧 Initializing pricing with:', { pricing, price, pricingType, pr
 console.log('🔧 Raw URL params:', { pricing, price, pricingType });
 
 let priceData = null;
-
-// Get pricing data from configuration
-// Support both old and new option values
 let normalizedPricing = pricing;
 if (pricing) {
-if (pricing.toLowerCase().includes('salsa') && pricing.toLowerCase().includes('bachata')) {
-normalizedPricing = 'both';
-} else if (pricing.toLowerCase().includes('salsa')) {
-normalizedPricing = 'salsa';
-} else if (pricing.toLowerCase().includes('bachata')) {
-normalizedPricing = 'bachata';
-}
+  const lower = pricing.toLowerCase();
+  if (lower.startsWith('8wk')) {
+    if (lower.includes('salsa') && lower.includes('bachata')) {
+      normalizedPricing = 'both8wk';
+    } else if (lower.includes('salsa')) {
+      normalizedPricing = 'salsa8wk';
+    } else if (lower.includes('bachata')) {
+      normalizedPricing = 'bachata8wk';
+    }
+  } else {
+    if (lower.includes('salsa') && lower.includes('bachata')) {
+      normalizedPricing = 'both';
+    } else if (lower.includes('salsa')) {
+      normalizedPricing = 'salsa';
+    } else if (lower.includes('bachata')) {
+      normalizedPricing = 'bachata';
+    }
+  }
 }
 console.log('🔧 After normalization:', { originalPricing: pricing, normalizedPricing, pricingType });
 if (pricingConfig && pricingConfig[pricingType] && pricingConfig[pricingType][normalizedPricing]) {
@@ -1412,15 +1423,25 @@ document.getElementById('paypalFormInner').onsubmit = async function(ev) {
   const pricingType = getParam('pricing_type') || 'series';
 
   // Normalize series for JSON lookup
-  let normalizedSeries = 'both';
-  if (series) {
-    if (series.toLowerCase().includes('salsa') && series.toLowerCase().includes('bachata')) {
+if (series) {
+  const lower = series.toLowerCase();
+  if (lower.includes('8wk')) {
+    if (lower.includes('salsa') && lower.includes('bachata')) {
+      normalizedSeries = 'both8wk';
+    } else if (lower.includes('salsa')) {
+      normalizedSeries = 'salsa8wk';
+    } else if (lower.includes('bachata')) {
+      normalizedSeries = 'bachata8wk';
+    }
+  } else {
+    if (lower.includes('salsa') && lower.includes('bachata')) {
       normalizedSeries = 'both';
-    } else if (series.toLowerCase().includes('salsa')) {
+    } else if (lower.includes('salsa')) {
       normalizedSeries = 'salsa';
-    } else if (series.toLowerCase().includes('bachata')) {
+    } else if (lower.includes('bachata')) {
       normalizedSeries = 'bachata';
     }
+  }
   }
 
   // Get base price from JSON and apply discount
@@ -1555,14 +1576,25 @@ document.getElementById('zelleFormInner').onsubmit = async function(ev) {
 
   // Normalize series for JSON lookup
   let normalizedSeries = 'both';
-  if (series) {
-    if (series.toLowerCase().includes('salsa') && series.toLowerCase().includes('bachata')) {
+if (series) {
+  const lower = series.toLowerCase();
+  if (lower.startsWith('8wk')) {
+    if (lower.includes('salsa') && lower.includes('bachata')) {
+      normalizedSeries = 'both8wk';
+    } else if (lower.includes('salsa')) {
+      normalizedSeries = 'salsa8wk';
+    } else if (lower.includes('bachata')) {
+      normalizedSeries = 'bachata8wk';
+    }
+  } else {
+    if (lower.includes('salsa') && lower.includes('bachata')) {
       normalizedSeries = 'both';
-    } else if (series.toLowerCase().includes('salsa')) {
+    } else if (lower.includes('salsa')) {
       normalizedSeries = 'salsa';
-    } else if (series.toLowerCase().includes('bachata')) {
+    } else if (lower.includes('bachata')) {
       normalizedSeries = 'bachata';
     }
+  }
   }
 
   // Get base price from JSON and apply discount
@@ -1677,25 +1709,36 @@ document.getElementById('venmoFormInner').onsubmit = async function(ev) {
 
   // Normalize series for JSON lookup
   let normalizedSeries = 'both';
-  if (series) {
-    if (series.toLowerCase().includes('salsa') && series.toLowerCase().includes('bachata')) {
+if (series) {
+  const lower = series.toLowerCase();
+  if (lower.startsWith('8wk')) {
+    if (lower.includes('salsa') && lower.includes('bachata')) {
+      normalizedSeries = 'both8wk';
+    } else if (lower.includes('salsa')) {
+      normalizedSeries = 'salsa8wk';
+    } else if (lower.includes('bachata')) {
+      normalizedSeries = 'bachata8wk';
+    }
+  } else {
+    if (lower.includes('salsa') && lower.includes('bachata')) {
       normalizedSeries = 'both';
-    } else if (series.toLowerCase().includes('salsa')) {
+    } else if (lower.includes('salsa')) {
       normalizedSeries = 'salsa';
-    } else if (series.toLowerCase().includes('bachata')) {
+    } else if (lower.includes('bachata')) {
       normalizedSeries = 'bachata';
     }
   }
+}
 
-  // Get base price from JSON and apply discount
-  let basePrice = 0;
-  if (pricingConfig && pricingConfig[pricingType] && pricingConfig[pricingType][normalizedSeries]) {
-    basePrice = pricingConfig[pricingType][normalizedSeries].price;
-  } else {
-    basePrice = parseFloat(calculateAmount(series, pricingType));
-  }
-  let amount = basePrice;
-  if (appliedDiscount) amount = Math.max(0, basePrice - appliedDiscount);
+// Get base price from JSON and apply discount
+let basePrice = 0;
+if (pricingConfig && pricingConfig[pricingType] && pricingConfig[pricingType][normalizedSeries]) {
+  basePrice = pricingConfig[pricingType][normalizedSeries].price;
+} else {
+  basePrice = parseFloat(calculateAmount(series, pricingType));
+}
+let amount = basePrice;
+if (appliedDiscount) amount = Math.max(0, basePrice - appliedDiscount);
 
   let formData = {
     firstName,
@@ -1793,21 +1836,30 @@ if (stripeBtn) {
     const pricing = getParam('option');
     const pricingType = getParam('pricing_type') || 'series';
 
-    console.log('🏛️ Stripe button clicked with:', { pricing, pricingType });
-
     if (!pricing) {
       alert('Please select a valid series before paying.');
       return;
     }
 
-    // Normalize the pricing option
+    // Normalize for 8 week and 4 week options
     let normalizedPricing = 'both';
-    if (pricing.toLowerCase().includes('salsa') && pricing.toLowerCase().includes('bachata')) {
-      normalizedPricing = 'both';
-    } else if (pricing.toLowerCase().includes('salsa')) {
-      normalizedPricing = 'salsa';
-    } else if (pricing.toLowerCase().includes('bachata')) {
-      normalizedPricing = 'bachata';
+    const lower = pricing.toLowerCase().trim();
+    if (lower.startsWith('8wk')) {
+      if (lower.includes('salsa') && lower.includes('bachata')) {
+        normalizedPricing = 'both8wk';
+      } else if (lower.includes('salsa')) {
+        normalizedPricing = 'salsa8wk';
+      } else if (lower.includes('bachata')) {
+        normalizedPricing = 'bachata8wk';
+      }
+    } else {
+      if (lower.includes('salsa') && lower.includes('bachata')) {
+        normalizedPricing = 'both';
+      } else if (lower.includes('salsa')) {
+        normalizedPricing = 'salsa';
+      } else if (lower.includes('bachata')) {
+        normalizedPricing = 'bachata';
+      }
     }
 
     // Check if coupon is applied
@@ -1817,36 +1869,20 @@ if (stripeBtn) {
     }
 
     let stripeLink = '';
-
-    // Get Stripe link from JSON config
-    if (pricingConfig && pricingConfig.stripeLinks && 
-        pricingConfig.stripeLinks[pricingType] && 
-        pricingConfig.stripeLinks[pricingType][normalizedPricing]) {
+    // Use .json Stripe links
+    if (
+      pricingConfig &&
+      pricingConfig.stripeLinks &&
+      pricingConfig.stripeLinks[pricingType] &&
+      pricingConfig.stripeLinks[pricingType][normalizedPricing]
+    ) {
       stripeLink = pricingConfig.stripeLinks[pricingType][normalizedPricing];
     } else {
-      // Fallback to hardcoded Stripe links
-      if (pricingType === 'dropin') {
-        stripeLink = normalizedPricing === 'both' 
-          ? 'https://buy.stripe.com/bJe28s2Cm9osfOHgfy0Ny0e'
-          : 'https://buy.stripe.com/4gM14o3Gq1W0gSL1kE0Ny0d';
-      } else if (pricingType === 'private') {
-        stripeLink = normalizedPricing === 'both'
-          ? 'https://buy.stripe.com/4gM4gA4Kuasw31V8N60Ny0b'
-          : 'https://buy.stripe.com/fZu00k4KugQU1XR2oI0Ny0c';
-      } else {
-        stripeLink = normalizedPricing === 'both'
-          ? 'https://buy.stripe.com/6oUfZia4O9osgSL7J20Ny0f'
-          : 'https://buy.stripe.com/cNibJ25OyeIM6e78N60Ny0g';
-      }
-    }
-    
-    if (stripeLink) {
-      console.log('🏛️ Redirecting to Stripe:', stripeLink);
-      window.location.href = stripeLink;
-    } else {
-      console.error('🏛️ No Stripe link found for:', { pricingType, normalizedPricing });
       alert('Stripe payment link not configured for this option.');
+      return;
     }
+
+    window.location.href = stripeLink;
   };
 }
 

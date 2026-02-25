@@ -1,5 +1,121 @@
 {
-"series1winter2": {
+    "series1part1": {
+    "year": 2026,
+    "dates": ["4/3", "4/10", "4/24", "5/1"],
+    "times": {
+      "salsa": "7:00pm - 8:00pm",
+      "bachata": "8:00pm - 9:00pm"
+    }
+  },
+  "series2part1": {
+    "year": 2026,
+    "dates": ["4/12", "4/19", "5/3", "5/10"],
+    "times": {
+      "salsa": "4:00pm - 5:00pm",
+      "bachata": "5:00pm - 6:00pm"
+    }
+  },
+   "series1": {
+    "title": "4 Week Series 1",
+    "dayOfWeek": "Fridays",
+    "dates": ["4/3", "4/10", "4/24", "5/1"],
+    "year": 2026,
+    "rsvpDeadline": "Wednesday, 4/1",
+    "googleCalendarDates": [
+      "20260403",
+      "20260410",
+      "20260424",
+      "20260501"
+    ],
+    "times": {
+      "salsa": "6:00pm-7:00pm",
+      "bachata": "7:00pm-8:00pm",
+      "both": "6:00pm-8:00pm",
+      "calendarStart": "1800",
+      "calendarEnd": "2000"
+    },
+    "location": {
+      "name": "Studio K",
+      "address": "9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123"
+    },
+    "calendarEvents": {
+      "2026-04-03": { "salsa": true, "bachata": true },
+      "2026-04-10": { "salsa": true, "bachata": true },
+      "2026-04-24": { "salsa": true, "bachata": true },
+      "2026-05-01": { "salsa": true, "bachata": true }
+    }
+  },
+  "series2": {
+    "title": "4 Week Series 2",
+    "dayOfWeek": "Sundays",
+    "dates": ["4/12", "4/19", "5/3", "5/10"],
+    "year": 2026,
+    "rsvpDeadline": "Wednesday, 4/7",
+    "googleCalendarDates": [
+      "20260412",
+      "20260419",
+      "20260503",
+      "20260510"
+    ],
+    "times": {
+      "salsa": "4:00pm - 5:00pm",
+      "bachata": "5:00pm - 6:00pm",
+      "both": "N/A",
+      "calendarStart": "1600",
+      "calendarEnd": "1800"
+    },
+    "location": {
+      "name": "Studio K",
+      "address": "9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123"
+    },
+    "calendarEvents": {
+      "2026-04-12": { "salsa": false, "bachata": true },
+      "2026-04-19": { "salsa": false, "bachata": true },
+      "2026-05-03": { "salsa": false, "bachata": true },
+      "2026-05-10": { "salsa": false, "bachata": true }
+    }
+  },
+  "dropin": {
+  "title": "Drop-in Classes",
+  "dayOfWeek": ["Fridays", "Sundays"],
+  "dates": {
+    "fridays": ["4/3", "4/10", "4/24", "5/1"],
+    "sundays": ["4/12", "4/19", "5/3", "5/10"]
+  },
+  "year": 2026,
+  "rsvpDeadline": "Wednesday, 4/7",
+  "googleCalendarDates": {
+    "fridays": ["20260403", "20260410", "20260424", "20260501"],
+    "sundays": ["20260412", "20260419", "20260503", "20260510"]
+  },
+  "times": {
+    "fridays": {
+      "salsa": "6:00pm-7:00pm",
+      "bachata": "7:00pm-8:00pm"
+    },
+    "sundays": {
+      "salsa": "4:00pm-5:00pm",
+      "bachata": "5:00pm-6:00pm"
+    },
+    "calendarStart": "1600",
+    "calendarEnd": "1800"
+  },
+  "location": {
+    "name": "Studio K",
+    "address": "9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123"
+  },
+  "calendarEvents": {
+    "2026-04-12": { "salsa": true, "bachata": true },
+    "2026-04-19": { "salsa": true, "bachata": true },
+    "2026-05-03": { "salsa": true, "bachata": true },
+    "2026-05-10": { "salsa": true, "bachata": true },
+    "2026-01-11": { "salsa": false, "bachata": true },
+    "2026-01-18": { "salsa": false, "bachata": true },
+    "2026-01-25": { "salsa": false, "bachata": true },
+    "2026-02-01": { "salsa": false, "bachata": true }
+  }
+},
+"series1part2": {
     "title": "4 Week Series 1",
     "dayOfWeek": "Fridays",
     "dates": ["2/20", "2/27", "3/6", "3/13"],
@@ -12,11 +128,11 @@
       "20260313"
     ],
     "times": {
-      "salsa": "6:00pm-6:50pm",
-      "bachata": "7:00pm-7:50pm",
-      "both": "6:00pm-7:50pm",
+      "salsa": "6:00pm-7:00pm",
+      "bachata": "7:00pm-8:00pm",
+      "both": "6:00pm-8:00pm",
       "calendarStart": "1800",
-      "calendarEnd": "1950"
+      "calendarEnd": "2000"
     },
     "location": {
       "name": "Studio K",
@@ -29,7 +145,7 @@
       "2026-03-13": { "salsa": true, "bachata": true }
     }
   },
-  "series2winter2": {
+  "series2part2": {
     "title": "4 Week Series 2",
     "dayOfWeek": "Sundays",
     "dates": ["2/15", "3/1", "3/8", "3/15"],
@@ -42,11 +158,11 @@
       "20260315"
     ],
     "times": {
-      "salsa": "4:00pm-4:50pm",
-      "bachata": "5:00pm-5:50pm",
-      "both": "4:00pm-5:50pm",
+      "salsa": "4:00pm-5:00pm",
+      "bachata": "5:00pm-6:00pm",
+      "both": "4:00pm-5:00pm",
       "calendarStart": "1700",
-      "calendarEnd": "1850"
+      "calendarEnd": "1900"
     },
     "location": {
       "name": "Studio K",
@@ -59,7 +175,7 @@
       "2026-03-15": { "salsa": false, "bachata": true }
     }
   },
-  "dropinwinter2": {
+  "dropinpart2": {
   "title": "Drop-in Classes",
   "dayOfWeek": ["Fridays", "Sundays"],
   "dates": {
@@ -74,15 +190,15 @@
   },
   "times": {
     "fridays": {
-      "salsa": "6:00pm-6:50pm",
-      "bachata": "7:00pm-7:50pm"
+      "salsa": "6:00pm-7:00pm",
+      "bachata": "7:00pm-8:00pm"
     },
     "sundays": {
-      "salsa": "4:00pm-4:50pm",
-      "bachata": "5:00pm-5:50pm"
+      "salsa": "4:00pm-5:00pm",
+      "bachata": "5:00pm-6:00pm"
     },
     "calendarStart": "1600",
-    "calendarEnd": "1750"
+    "calendarEnd": "2000"
   },
   "location": {
     "name": "Studio K",
@@ -97,106 +213,6 @@
     "2026-03-01": { "salsa": true, "bachata": true },
     "2026-03-08": { "salsa": true, "bachata": true },
     "2026-03-15": { "salsa": true, "bachata": true }
-  }
-},
-  "series1": {
-    "title": "4 Week Series 1",
-    "dayOfWeek": "Fridays",
-    "dates": ["1/9", "1/16", "1/23", "1/30"],
-    "year": 2025,
-    "rsvpDeadline": "Wednesday, 1/7",
-    "googleCalendarDates": [
-      "20250109",
-      "20250116",
-      "20250123",
-      "20250130"
-    ],
-    "times": {
-      "salsa": "6:00pm-6:50pm",
-      "bachata": "7:00pm-7:50pm",
-      "both": "6:00pm-7:50pm",
-      "calendarStart": "1800",
-      "calendarEnd": "1950"
-    },
-    "location": {
-      "name": "Studio K",
-      "address": "9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123"
-    },
-    "calendarEvents": {
-      "2025-01-09": { "salsa": true, "bachata": true },
-      "2025-01-16": { "salsa": true, "bachata": true },
-      "2025-01-23": { "salsa": true, "bachata": true },
-      "2025-01-30": { "salsa": true, "bachata": true }
-    }
-  },
-  "series2": {
-    "title": "4 Week Series 2",
-    "dayOfWeek": "Sundays",
-    "dates": ["1/11", "1/18", "1/25", "2/1"],
-    "year": 2025,
-    "rsvpDeadline": "Wednesday, 1/7",
-    "googleCalendarDates": [
-      "20250111",
-      "20250118",
-      "20250125",
-      "20250201"
-    ],
-    "times": {
-      "salsa": "Cancelled",
-      "bachata": "5:00pm-6:50pm",
-      "both": "N/A",
-      "calendarStart": "1700",
-      "calendarEnd": "1850"
-    },
-    "location": {
-      "name": "Studio K",
-      "address": "9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123"
-    },
-    "calendarEvents": {
-      "2025-01-11": { "salsa": false, "bachata": true },
-      "2025-01-18": { "salsa": false, "bachata": true },
-      "2025-01-25": { "salsa": false, "bachata": true },
-      "2025-02-01": { "salsa": false, "bachata": true }
-    }
-  },
-  "dropin": {
-  "title": "Drop-in Classes",
-  "dayOfWeek": ["Fridays", "Sundays"],
-  "dates": {
-    "fridays": ["1/9", "1/16", "1/23", "1/30"],
-    "sundays": ["1/11", "1/18", "1/25", "2/1"]
-  },
-  "year": 2025,
-  "rsvpDeadline": "Wednesday, 1/7",
-  "googleCalendarDates": {
-    "fridays": ["20250109", "20250116", "20250123", "20250130"],
-    "sundays": ["20250111", "20250118", "20250125", "20250201"]
-  },
-  "times": {
-    "fridays": {
-      "salsa": "6:00pm-6:50pm",
-      "bachata": "7:00pm-7:50pm"
-    },
-    "sundays": {
-      "salsa": "Cancelled",
-      "bachata": "5:00pm-6:50pm"
-    },
-    "calendarStart": "1700",
-    "calendarEnd": "1950"
-  },
-  "location": {
-    "name": "Studio K",
-    "address": "9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123"
-  },
-  "calendarEvents": {
-    "2025-01-09": { "salsa": true, "bachata": true },
-    "2025-01-16": { "salsa": true, "bachata": true },
-    "2025-01-23": { "salsa": true, "bachata": true },
-    "2025-01-30": { "salsa": true, "bachata": true },
-    "2025-01-11": { "salsa": false, "bachata": true },
-    "2025-01-18": { "salsa": false, "bachata": true },
-    "2025-01-25": { "salsa": false, "bachata": true },
-    "2025-02-01": { "salsa": false, "bachata": true }
   }
 }
 }

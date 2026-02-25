@@ -728,7 +728,7 @@
   fetch('calendar-data.json')
     .then(response => response.json())
     .then(data => {
-      calendarData = data.dropinwinter2; // Changed from series2 to dropin!
+      calendarData = data.dropinpart2; // Changed from series2 to dropin!
       console.log('Drop-in data loaded:', calendarData);
     })
     .catch(error => console.error('Error loading calendar data:', error));

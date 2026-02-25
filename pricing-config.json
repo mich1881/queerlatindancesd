@@ -30,8 +30,32 @@
     "calculation": "Bachata Only: 4 hours of lessons x $20 per hour = $80",
     "label": "Bachata Only Series",
     "perHour": "$20 per hour"
-  }
   },
+  "both8wk": {
+  "price": 240,
+  "paypalUrl": "https://www.paypal.com/paypalme/queerlatindance/240",
+  "venmoUrl": "https://venmo.com/?txn=pay&recipients=michf18&amount=240",
+  "calculation": "Salsa & Bachata: 16 hours of lessons x $15/hr = $240",
+  "label": "Salsa & Bachata 8 Week Series",
+  "perHour": "$15 per hour"
+},
+"salsa8wk": {
+  "price": 136,
+  "paypalUrl": "https://www.paypal.com/paypalme/queerlatindance/136",
+  "venmoUrl": "https://venmo.com/?txn=pay&recipients=michf18&amount=136",
+  "calculation": "Salsa Only: 8 hours x $17/hr = $136",
+  "label": "Salsa Only 8 Week Series",
+  "perHour": "$17 per hour"
+},
+"bachata8wk": {
+  "price": 136,
+  "paypalUrl": "https://www.paypal.com/paypalme/queerlatindance/136",
+  "venmoUrl": "https://venmo.com/?txn=pay&recipients=michf18&amount=136",
+  "calculation": "Bachata Only: 8 hours x $17/hr = $136",
+  "label": "Bachata Only 8 Week Series",
+  "perHour": "$17 per hour"
+}
+},
   "dropin": {
     "both": {
       "price": 52,
@@ -82,7 +106,10 @@
     "series": {
       "both": "https://buy.stripe.com/6oUfZia4O9osgSL7J20Ny0f",
       "salsa": "https://buy.stripe.com/cNibJ25OyeIM6e78N60Ny0g",
-      "bachata": "https://buy.stripe.com/cNibJ25OyeIM6e78N60Ny0g"
+      "bachata": "https://buy.stripe.com/cNibJ25OyeIM6e78N60Ny0g",
+      "both8wk": "https://buy.stripe.com/8x25kE1yibwA5a34wQ0Ny0l",
+      "salsa8wk": "https://buy.stripe.com/cNicN690Kasw1XR7J20Ny0m",
+      "bachata8wk": "https://buy.stripe.com/cNicN690Kasw1XR7J20Ny0m"
     },
     "dropin": {
       "both": "https://buy.stripe.com/14A28s7WG7gk45Z5AU0Ny0i",
