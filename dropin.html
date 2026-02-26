@@ -617,9 +617,9 @@
         <tr>
           <td class="event-table-left">
             <!-- Salsa series description above pricing -->
-            <div style="margin-bottom:1.2rem;font-size:1.08rem;color:#444;line-height:1.5;">
+            <!-- <div style="margin-bottom:1.2rem;font-size:1.08rem;color:#444;line-height:1.5;">
               Thank you for your interest in our 4-Week Intro to Salsa & Bachata Series! Perfect for total beginners and those who want to build confidence and sharpen their basics. Whether you’re brand new or have taken a few classes, this series is designed to help you feel great on the dance floor.
-            </div>
+            </div> -->
             <div class="event-section" style="margin-top: 0; margin-bottom: 1.2rem;">
               <div>
                 <span class="event-label">Pricing</span>
@@ -655,7 +655,6 @@
             <div class="event-section">
   <div class="event-label">Drop-In Details</div>
   <div class="event-value">
-    <b>Drop-In Dates:</b><br>
     <span id="friday-dates" style="color:#943dff;font-weight:700;">Loading...</span><br>
     <span id="sunday-dates" style="color:#943dff;font-weight:700;">Loading...</span><br>
     
@@ -849,13 +848,13 @@
         if (selected) {
           const text = selected.textContent.trim().toLowerCase();
           if (text.includes('salsa') && text.includes('bachata')) {
-            option = 'both';
+            option = '4WK-p1-dropin Salsa & Bachata';
             price = '52';
           } else if (text.includes('salsa')) {
-            option = 'salsa';
+            option = '4WK-p1-dropin Salsa';
             price = '26';
           } else if (text.includes('bachata')) {
-            option = 'bachata';
+            option = '4WK-p1-dropin Bachata';
             price = '26';
           }
         }
