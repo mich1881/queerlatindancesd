@@ -732,20 +732,20 @@ lastCheckedInQuery = qrCode;
 isQRCheckin = true;
 
 if (guest.checkedIn && guest.printed) {
-showResult(`${guest.name} has already checked in & printed.`, "error");
+showResult(`${guest.preferredName} has already checked in & printed.`, "error");
 return;
 }
 
 if (guest.checkedIn && !guest.printed) {
 // Already checked in, offer reprint
-document.getElementById('ticketGuestName').textContent = guest.name;
+document.getElementById('ticketGuestName').textContent = guest.preferredName;
 document.getElementById('ticketPronouns').textContent = guest.pronouns || '';
 printTicket();
 return;
 }
 
 // New check-in - show name/pronouns popup
-document.getElementById('preferredNameInput').value = guest.name || '';
+document.getElementById('preferredNameInput').value = guest.preferredName || '';
 document.getElementById('pronounsInput').value = guest.pronouns || '';
 document.getElementById('namepronouns-popup').classList.add('active');
 

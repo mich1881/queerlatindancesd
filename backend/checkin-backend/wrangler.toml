@@ -1,0 +1,3 @@
+name = "sparkling-art-bed4"
+main = "checkin-worker.js"
+compatibility_date = "2023-12-01"
