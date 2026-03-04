@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="robots" content="noindex, nofollow">
   <meta charset="UTF-8">
   <title>QR Code Generator - QLDSD</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -187,6 +188,54 @@
       font-weight: 600;
       margin-top: 0.5em;
     }
+    .input-group,
+.guest-entry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .input-group,
+  .guest-entry {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 98vw;
+  }
+  input, button {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+    .container {
+      padding: 0.5em;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    h1 {
+      font-size: 1.3em;
+    }
+    .subtitle {
+      font-size: 1em;
+    }
+    .qr-item {
+      min-width: 180px;
+      font-size: 0.95em;
+    }
+    .guest-entry {
+      max-width: 98vw;
+    }
+    input, textarea, select, button {
+      font-size: 1em;
+      padding: 0.7em 0.5em;
+    }
+    #codeListText {
+      font-size: 0.85em;
+    }
+  }
   </style>
 </head>
 <body>
@@ -194,18 +243,26 @@
     <h1>🎟️ QR Code Generator</h1>
     <p class="subtitle">Generate unique QR codes for guest check-in</p>
     <!-- Single QR Generation -->
-    <div class="input-group">
-      <input type="text" id="guestName" placeholder="Guest name (e.g., Marisol)">
-      <input type="email" id="guestEmail" placeholder="Guest email (optional)">
-      <button class="btn-primary" onclick="generateSingle()">Generate Single QR</button>
-    </div>
+     <label for="eventDate" style="margin-right:0.5em;">Event Date:</label>
+<input type="text" id="eventDate" value="March 20th" style="padding:0.5em 1em; border-radius:8px; border:2px solid #ffb6c1; margin-bottom:1em;">
+<div id="guestList" class="input-group">
+  <div class="guest-entry">
+    <input type="text" class="guestNameBox" placeholder="Guest name (e.g., Marisol)">
+    <input type="text" class="preferredNameBox" placeholder="Preferred name (optional)">
+    <input type="text" class="pronounsBox" placeholder="Pronouns (e.g., she/they)">
+    <input type="email" class="guestEmailBox" placeholder="Guest email">
+    <button class="btn-secondary btn-small" onclick="removeGuestEntry(this)">Remove</button>
+  </div>
+</div>
+<button class="btn-secondary btn-small" onclick="addGuestEntry()">+ Add Another Guest</button>
+<button class="btn-primary" onclick="generateMultiple()">Generate QR Codes</button>
     <div id="codeListTablePreview" style="overflow-x:auto; margin-top:1em;"></div>
     <hr>
     <button class="btn-secondary btn-small" onclick="clearAllCodes()" style="margin-top:1em;">🗑️ Clear All Codes</button>
     <!-- Batch QR Generation -->
     <div class="input-group">
-      <label style="color: #555;">Number of codes:</label>
-      <input type="number" id="numCodes" value="10" min="1" max="100" style="width: 80px;">
+    <label for="numCodes" style="color: #555;">Number of codes:</label>
+    <input type="number" id="numCodes" value="10" min="1" max="100" style="width: 80px;">
       <button class="btn-secondary" onclick="generateBatch()">Generate Batch</button>
     </div>
     
@@ -239,29 +296,100 @@ function generateUniqueId() {
   } while (generatedCodes.some(codeObj => codeObj.code === id));
   return id;
 }
+function sendQrEmailToWorker(guestName, guestEmail, uniqueId, preferredName, pronouns) {
+  const eventDate = document.getElementById('eventDate').value || '';
+  const subject = `Queer Latin Dance Social: Luck be a Lady - Confirmation Ticket`;
+  const html = buildEmailHtml({
+    guestName,
+    qrCode: uniqueId,
+    preferredName,
+    pronouns,
+    eventDate
+  });
 
-    function generateSingle() {
-      const guestName = document.getElementById('guestName').value.trim() || 'Guest';
-      const guestEmail = document.getElementById('guestEmail').value.trim() || '';
-      const uniqueId = generateUniqueId();
-      
-      const output = document.getElementById('qrOutput');
-      output.innerHTML = '';
-      generatedCodes = [];
-      
-      const item = createQRItem(guestName, guestEmail, uniqueId, 200);
-      output.appendChild(item);
-      
-      generatedCodes.push({ name: guestName, email: guestEmail, code: uniqueId });
-      
-      updateCodeList();
-      
-      document.getElementById('guestName').value = '';
-      document.getElementById('guestEmail').value = '';
-      document.getElementById('downloadAllBtn').style.display = 'none';
-
-      localStorage.setItem('qldsdGeneratedCodes', JSON.stringify(generatedCodes));
+  fetch('https://sparkling-art-bed4.michf18.workers.dev/api/send-qr-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      guestName,
+      guestEmail,
+      qrCode: uniqueId,
+      preferredName,
+      pronouns,
+      eventDate,
+      subject,
+      html 
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      // Now add to spreadsheet
+      fetch('https://sparkling-art-bed4.michf18.workers.dev/api/add-guest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          guestName,
+          guestEmail,
+          qrCode: uniqueId,
+          preferredName,
+          pronouns,
+          eventDate
+        })
+      })
+      .then(res => res.json())
+      .then(sheetData => {
+        if (sheetData.success) {
+          alert('Email sent and guest added to spreadsheet!');
+        } else {
+          alert('Email sent, but spreadsheet update failed: ' + sheetData.error);
+        }
+      });
+    } else {
+      alert('Error sending email: ' + data.error);
     }
+  });
+  updateCodeList();
+  document.getElementById('downloadAllBtn').style.display = 'none';
+  localStorage.setItem('qldsdGeneratedCodes', JSON.stringify(generatedCodes));
+}
+function generateSingle() {
+  const guestName = document.getElementById('guestName').value.trim() || 'Guest';
+  const guestEmailRaw = document.getElementById('guestEmail').value.trim() || '';
+  const preferredName = document.querySelector('.preferredNameBox').value.trim();
+  const pronouns = document.querySelector('.pronounsBox').value.trim();
+  const uniqueId = generateUniqueId();
+
+  // Split emails by comma and trim spaces
+  const guestEmails = guestEmailRaw.split(',').map(e => e.trim()).filter(e => e);
+
+  const output = document.getElementById('qrOutput');
+  output.innerHTML = '';
+  generatedCodes = [];
+
+  const item = createQRItem(guestName, guestEmails.join(', '), uniqueId, 200);
+  output.appendChild(item);
+
+  // Add "Send Email" button for each email
+  guestEmails.forEach(email => {
+    const emailBtn = document.createElement('button');
+    emailBtn.className = 'btn-secondary btn-small';
+    emailBtn.textContent = `✉️ Send Email to ${email}`;
+    emailBtn.style.marginTop = '0.5em';
+    emailBtn.onclick = () => sendQrEmailToWorker(guestName, email, uniqueId, preferredName, pronouns);
+    item.appendChild(emailBtn);
+  });
+
+  generatedCodes.push({ name: guestName, preferredName, pronouns, email: guestEmails.join(', '), code: uniqueId });
+
+  updateCodeList();
+
+  document.getElementById('guestName').value = '';
+  document.getElementById('guestEmail').value = '';
+  document.getElementById('downloadAllBtn').style.display = 'none';
+
+  localStorage.setItem('qldsdGeneratedCodes', JSON.stringify(generatedCodes));
+}
 
     function generateBatch() {
       const num = parseInt(document.getElementById('numCodes').value) || 10;
@@ -336,18 +464,16 @@ function updateCodeList() {
     'Actual Name', 'Preferred Name', 'Email', 'Checked In', 'Printed', 'Pronouns', 'QR Code', 'CheckIn Time'
   ];
   const header = headerArr.join('\t');
-
-  // Each row must have 8 columns, matching the header
   const rows = generatedCodes.map(g =>
     [
       g.name,         // Actual Name
-      '',             // Preferred Name (blank)
+      g.preferredName || '', // Preferred Name
       g.email,        // Email
       '',        // Checked In
       '',        // Printed
-      '',             // Pronouns (blank)
+      g.pronouns || '', // Pronouns
       g.code,         // QR Code
-      ''              // CheckIn Time (blank)
+      ''              // CheckIn Time
     ]
   );
 
@@ -437,6 +563,128 @@ function updateCodeList() {
     document.getElementById('downloadAllBtn').style.display = 'none';
   }
 }
+}
+function draftEmail(guestName, guestEmail, uniqueId, qrContainer) {
+  // Try to get QR image data URL
+  const canvas = qrContainer.querySelector('canvas');
+  let imgDataUrl = '';
+  if (canvas) {
+    imgDataUrl = canvas.toDataURL('image/png');
+  }
+
+  // Compose email body (plain text + image link)
+  let body = `Hi ${guestName}, %0A%0A This is a payment confirmation email for your Queer Salsa Social event ticket(s). Your QR code for check-in is below:%0A%0A`;
+  body += `Code: ${uniqueId}%0A%0A`;
+
+  // Add image as a link (cannot embed image in mailto)
+  if (imgDataUrl) {
+    body += `View QR code image: ${imgDataUrl}%0A%0A`;
+  } else {
+    body += `QR code image not available.%0A%0A`;
+  }
+
+  body += `See you at the event!`;
+
+  // Compose mailto link
+  const mailto = `mailto:${guestEmail}?subject=Your%20Check-in%20QR%20Code&body=${body}`;
+
+  // Open default mail client
+  window.open(mailto, '_blank');
+}
+function addGuestEntry() {
+  const guestList = document.getElementById('guestList');
+  const entry = document.createElement('div');
+  entry.className = 'guest-entry';
+  entry.innerHTML = `
+    <input type="text" class="guestNameBox" placeholder="Guest name (e.g., Marisol)">
+    <input type="text" class="preferredNameBox" placeholder="Preferred name (optional)">
+    <input type="text" class="pronounsBox" placeholder="Pronouns (e.g., she/they)">
+    <input type="email" class="guestEmailBox" placeholder="Guest email">
+    <button class="btn-secondary btn-small" onclick="removeGuestEntry(this)">Remove</button>
+  `;
+  guestList.appendChild(entry);
+}
+
+function removeGuestEntry(btn) {
+  btn.parentElement.remove();
+}
+
+//email body template 
+function buildEmailHtml({ guestName, qrCode, preferredName, pronouns, eventDate }) {
+  const qrImage = `https://quickchart.io/qr?text=${encodeURIComponent(qrCode)}&size=400`;
+  return `
+    <div style="background:#fff0f6;padding:0;margin:0;font-family:Arial,sans-serif;">
+      <div style="background:#e75480;padding:0.5em 0;">
+        <img src="https://queerlatindance.com/images/logos/logo1.png" alt="Event Banner" style="max-width:100%;height:auto;border-radius:12px;display:block;margin:0 auto;">
+      </div>
+      <div style="padding:2em;">
+        <h2 style="color:#e75480;margin-bottom:0.5em;">You're in ${preferredName}, here is your order confirmation for:</h2>
+        <h1 style="color:#8354c0;margin-bottom:1em;">Queer Salsa Social: Luck be a Lady</h1>
+        <div style="background:#fff;padding:1.5em;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.08);margin-bottom:2em;">
+          <div style="text-align:center;">
+          <h3 style="color:#333;margin-bottom:0.5em;font-size:1.5em;">Your ticket</h3>
+          <div style="text-align:center;">
+          <img src="${qrImage}" alt="QR Code" style="margin:1em 0;max-width:220px;">
+          </div>
+          <div style="text-align:center;font-size:1.2em;color:#e75480;font-weight:bold;margin-bottom:0.5em;">Order number: ${qrCode}</div>
+          <div style="text-align:center;">
+          <div style="color:#555;">Present this QR code at the event entrance to be scanned.</div>
+        </div>
+        </div>
+        <div style="background:#f8f4ff;padding:1.5em;border-radius:12px;">
+          <h3 style="color:#8354c0;margin-bottom:0.5em;">Event details</h3>
+          <div style="margin-bottom:0.5em;">
+            <span style="font-size:1.1em;">📅</span>
+            <span>${eventDate || 'March 20th, 2026, 7pm–11pm'}</span>
+          </div>
+          <div style="margin-bottom:0.5em;">
+            <span style="font-size:1.1em;">📍</span>
+            <span>Location: Studio K, 9340 Clairemont Mesa Blvd Studio 2, San Diego, CA 92123</span>
+          </div>
+        </div>
+        <div style="margin-top:2em;color:#555;">
+          <p>Thank you for your purchase! If you have any questions, reply to this email.</p>
+          <p>See you at the event!</p>
+          <p style="color:#e75480;font-weight:bold;">Queer Latin Dance SD Team</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function generateMultiple() {
+  const guestNames = Array.from(document.querySelectorAll('.guestNameBox')).map(e => e.value.trim());
+  const preferredNames = Array.from(document.querySelectorAll('.preferredNameBox')).map(e => e.value.trim());
+  const pronounsList = Array.from(document.querySelectorAll('.pronounsBox')).map(e => e.value.trim());
+  const guestEmails = Array.from(document.querySelectorAll('.guestEmailBox')).map(e => e.value.trim());
+  const output = document.getElementById('qrOutput');
+  output.innerHTML = '';
+  generatedCodes = [];
+
+  guestNames.forEach((name, idx) => {
+    const email = guestEmails[idx];
+    const preferredName = preferredNames[idx];
+    const pronouns = pronounsList[idx];
+    if (name && email) {
+      const uniqueId = generateUniqueId();
+      const item = createQRItem(name, email, uniqueId, 200);
+      output.appendChild(item);
+
+      // Add "Send Email" button
+      const emailBtn = document.createElement('button');
+      emailBtn.className = 'btn-secondary btn-small';
+      emailBtn.textContent = `✉️ Send Email to ${email}`;
+      emailBtn.style.marginTop = '0.5em';
+      emailBtn.onclick = () => sendQrEmailToWorker(name, email, uniqueId, preferredName, pronouns);
+      item.appendChild(emailBtn);
+
+      generatedCodes.push({ name, preferredName, pronouns, email, code: uniqueId });
+    }
+  });
+
+  updateCodeList();
+  document.getElementById('downloadAllBtn').style.display = 'none';
+  localStorage.setItem('qldsdGeneratedCodes', JSON.stringify(generatedCodes));
 }
   </script>
 </body>
