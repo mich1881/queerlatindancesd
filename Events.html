@@ -535,11 +535,11 @@ if (e.key === 'Escape') document.getElementById('codeOfConductOverlay').style.di
 </script>
 <script>
 function eventToSchema(event) {
-  // You can customize these fields as needed
   return {
     "@type": "Event",
     "name": event.title,
     "startDate": event.date + "T19:00:00-07:00", // Adjust time/offset as needed
+    "endDate": event.date + "T22:00:00-07:00",   // Example: event ends at 10 PM
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
     "eventStatus": "https://schema.org/EventScheduled",
     "location": {
@@ -562,6 +562,17 @@ function eventToSchema(event) {
       "@type": "Organization",
       "name": "Queer Latin Dance SD",
       "url": "https://queerlatindance.com"
+    },
+    "offers": event.inviteUrl ? {
+      "@type": "Offer",
+      "url": event.inviteUrl,
+      "price": "$20",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    } : undefined,
+    "performer": {
+      "@type": "Michelle F.",
+      "name": "Queer Latin Dance SD"
     }
   };
 }
