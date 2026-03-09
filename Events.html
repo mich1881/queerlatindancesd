@@ -535,6 +535,9 @@ if (e.key === 'Escape') document.getElementById('codeOfConductOverlay').style.di
 </script>
 <script>
 function eventToSchema(event) {
+   const eventDate = new Date(event.date);
+  eventDate.setMonth(eventDate.getMonth() - 1);
+  const validFrom = eventDate.toISOString().split('T')[0] + "T00:00:00-07:00";
   return {
     "@type": "Event",
     "name": event.title,
@@ -566,9 +569,10 @@ function eventToSchema(event) {
     "offers": event.inviteUrl ? {
       "@type": "Offer",
       "url": event.inviteUrl,
-      "price": "$20",
+      "price": 20,
       "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock"
+      "availability": "https://schema.org/InStock",
+      "validFrom": validFrom
     } : undefined,
     "performer": {
       "@type": "Michelle F.",
