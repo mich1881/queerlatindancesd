@@ -533,5 +533,57 @@ if (e.key === 'Escape') document.getElementById('codeOfConductOverlay').style.di
 });
 });
 </script>
+<script>
+function eventToSchema(event) {
+  // You can customize these fields as needed
+  return {
+    "@type": "Event",
+    "name": event.title,
+    "startDate": event.date + "T19:00:00-07:00", // Adjust time/offset as needed
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "location": {
+      "@type": "Place",
+      "name": "Studio K Dance & Fitness",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "9340 Clairemont Mesa Blvd Ste E",
+        "addressLocality": "San Diego",
+        "addressRegion": "CA",
+        "postalCode": "92123",
+        "addressCountry": "US"
+      }
+    },
+    "image": [
+      window.location.origin + "/" + event.flyerUrl
+    ],
+    "description": event.description,
+    "organizer": {
+      "@type": "Organization",
+      "name": "Queer Latin Dance SD",
+      "url": "https://queerlatindance.com"
+    }
+  };
+}
+
+async function injectEventSchema() {
+  try {
+    const response = await fetch('events-data.json');
+    const eventsData = await response.json();
+    const allEvents = [...(eventsData.upcoming || []), ...(eventsData.past || [])];
+    const schema = {
+      "@context": "https://schema.org",
+      "@graph": allEvents.map(eventToSchema)
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(schema, null, 2);
+    document.head.appendChild(script);
+  } catch (e) {
+    console.warn('Could not inject event schema:', e);
+  }
+}
+document.addEventListener('DOMContentLoaded', injectEventSchema);
+</script>
 </body>
 </html>
