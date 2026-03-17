@@ -499,10 +499,9 @@ div#ticketToPrint div {
 font-family: Arial, sans-serif;
 text-align: center;
 padding: 20px;
-border: 2px dashed var(--main-orange);
 border-radius: 12px;
 max-width: 300px;
-margin: 0 auto;
+margin: -10px auto;
 }
 div#ticketToPrint h2 {
 color: var(--main-orange);
@@ -514,10 +513,10 @@ font-weight: bold;
 color: #8354c0;
 }
 div#ticketToPrint .pronouns {
-color: #0c4802;
+color: #000000;
+font-weight: bold;
 font-style: italic;
 }
-
 </style>
 </head>
 <body>
@@ -598,9 +597,9 @@ font-style: italic;
 
 <!-- Hidden Ticket for Printing -->
 <div id="ticketToPrint">
-<div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; border: 2px dashed var(--main-orange); border-radius: 12px; max-width: 300px; margin: 0 auto;">
+<div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; border: 2px dashed var(--main-orange); border-radius: 12px; max-width: 300px; margin: -10px 0 auto;">
 <div style="font-size: 24px; font-weight: bold; color: #8354c0;" id="printGuestName"></div>
-<div style="color: #666; font-style: italic;" id="printPronouns"></div>
+<div style="color: #000000; font-size: 20px; font-weight: bold;font-style: italic;" id="printPronouns"></div>
 </div>
 </div>
 
