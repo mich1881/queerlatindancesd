@@ -629,6 +629,7 @@ Select a payment method below to finish registration.<br>
 <div style="width:100%;background:#f9f9f9;border-radius:12px;padding:1.2em 1em 1em 1em;margin-bottom:1.2em;box-shadow:0 2px 8px #a259ff11;text-align:left;">
   <div style="font-size:1.18rem;font-weight:700;color:#444;margin-bottom:0.7em;">Order Summary</div>
   <div id="orderSummaryDetails" style="margin-bottom:0.5em;font-size:1.08rem;color:#222;font-weight:700;"></div>
+  <div id="orderSummaryCalc" style="font-size:0.98rem;color:#888;"></div>
   <div style="background:#fff;border-radius:8px;padding:0.7em 1em;margin-bottom:0.5em;">
     <div id="couponRow">
       <input id="couponInput" type="text" placeholder="Coupon code" />
@@ -639,7 +640,6 @@ Select a payment method below to finish registration.<br>
       <span id="orderSummaryTotal" style="font-weight:900;font-size:1.3rem;color:#222;"></span>
     </div>
   </div>
-  <div id="orderSummaryCalc" style="font-size:0.98rem;color:#888;"></div>
 </div>
 </div>
 
@@ -1144,6 +1144,7 @@ document.getElementById('selectedSeries').textContent = priceData.label;
 document.getElementById('orderSummaryDetails').textContent = priceData.perHour;
 document.getElementById('orderSummaryTotal').textContent = `$${priceData.price} USD`;
 document.getElementById('orderSummaryCalc').textContent = priceData.calculation;
+
 } else {
 // Fallback if no matching pricing found
 console.log('🔄 Using fallback pricing');

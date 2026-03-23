@@ -27,7 +27,7 @@
       - About Page (about.html)
       - Events Page (Events.html)
       - Gallery Page (gallery.html)
-      - Lessons Page (lessons.html)
+      - Lessons Page (courses.html)
       - Michelle Page (michelle.html)
       - Contact Page (contact.html)
       - Directory Page (directory.html)
@@ -1079,7 +1079,7 @@ body.gallery-page::before {
   pointer-events: none;
 }
 
-/* === LESSONS PAGE (lessons.html) === */
+/* === LESSONS PAGE (courses.html) === */
 .lessons-title {
   font-size: 5rem;
   font-family: 'Lilita One', sans-serif;

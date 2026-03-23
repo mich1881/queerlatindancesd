@@ -58,7 +58,7 @@
       "description": "Description for 4 Week Series 1",
       "type": "series",
       "link": "4weekseries1p2.html",
-      "banner": "OPEN ENROLLMENT"
+      "banner": "ENDED"
     },
     {
       "id": "new-class-2",
@@ -70,7 +70,7 @@
       "description": "Description for 4 Week Series 2",
       "type": "series",
       "link": "4weekseries2p2.html",
-      "banner": "ATTN: SALSA SERIES 2 IS NOW SALSA SERIES 1"
+      "banner": "ENDED"
     },
     {
       "id": "dropin-intro",
@@ -90,13 +90,13 @@
       "date": "tba",
       "month": "TBA",
       "day": "",
-      "title": "Online Lessons",
+      "title": "Online Courses",
       "flyerUrl": "images/lessons/onlinelessonscover.png",
       "description": "Virtual dance lessons coming soon",
       "type": "online",
-      "link": "lessons.html"
+      "link": "courses.html"
     }
   ],
-  "previous": [
+  "previous": [ 
   ]
 }

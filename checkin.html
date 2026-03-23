@@ -9,7 +9,7 @@
 <style>
 
 body {
-  background: linear-gradient(135deg, #afe2b1 0%, #d1f8d3 100%);
+  background: linear-gradient(135deg, #f7c7e5 0%, #fb94de 100%);
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -121,7 +121,7 @@ body {
 .checkin-container {
 background: #fafaea;
 border-radius: 30px;
-box-shadow: 0 4px 32px rgba(16, 89, 3, 0.442);
+box-shadow: 0 4px 32px rgba(160, 43, 255, 0.759);
 padding: 2.5em 2em 2em 2em;
 max-width: 500px; /* Match .event-flyer max-width */
 width: 100%;
@@ -131,14 +131,14 @@ text-align: center;
 }
 .checkin-footer {
 font-size: 1.2em;
-color: #005003;
+color: rgba(160, 43, 255, 0.759);
 font-weight: 1000;
 margin-bottom: 1.0em;
 align-items: left;
 justify-content: left;
 }
 h2 {
-color: #047304;
+color: rgba(160, 43, 255, 0.759);
 margin-bottom: 1.0em;
 margin-top: 2em;
 font-size: 2.1rem;
@@ -146,7 +146,7 @@ font-weight: 700;
 letter-spacing: 0.5px;
 }
 h3 {
-color: #9e8703;
+color: #9e5603;
 margin-bottom: 1em;
 font-size: 1.1rem;
 font-weight: 400;
@@ -169,11 +169,11 @@ background: #fff;
 transition: border-color 0.2s;
 }
 input[type="text"]:focus {
-border-color: #ff950b;
+border-color: #ff0bb6;
 }
 
 .heart {
-color: #ee8402;
+color: #ee0202;
 font-size: 0.8em;
 margin-top: 0.5em;
 margin-bottom: 0;
@@ -190,7 +190,7 @@ animation: pulse 1.2s infinite;
 /* Method Tabs */
 .method-tab {
 padding: 1em 2.5em;
-background: #f59920;
+background: #f520d5;
 border: 2px solid transparent;
 border-radius: 12px;
 cursor: pointer;
@@ -202,13 +202,13 @@ color: #fff !important;
 }
 
 .method-tab.active {
-background: #e48100;
+background: #f520d5;
 color: white;
 }
 #scanTab {
   font-size: 2em;
   padding: 0.5em 1.5em;
-  background: #4dc24b;
+  background: #d37cff;
   color: #fff;
   font-weight: bold;
   margin-bottom: 0.5em;
@@ -231,24 +231,24 @@ width: 100%;
 max-width: 1000px;
 padding: 0.9em 1em;
 border-radius: 8px;
-border: 2px solid #d29206;
+border: 2px solid #f520d5;
 font-size: 1.1em;
 margin-bottom: 1em;
 outline: none;
 transition: border-color 0.2s;
 }
 #manualSection input:focus {
-border-color: #ff950b;
+border-color: #f520d5;
 }
 
 /* Scanner Section */
 #scannerSection {
 display: none;
-margin-top: 1em;
-padding: 1em;
+margin-top: 0.3em;
+padding: 0.5em;
 background: #fff;
 border-radius: 12px;
-border: 2px dashed #8354c0;
+border: 1px #8354c0;
 }
 #scannerSection.active {
 display: block;
@@ -256,7 +256,7 @@ display: block;
 #qr-reader {
 width: 100%;
 max-width: 300px;
-margin: 0 auto 1em;
+margin: 0 auto 0;
 border-radius: 12px;
 overflow: hidden;
 }
@@ -264,9 +264,9 @@ overflow: hidden;
 border-radius: 12px;
 }
 .scanner-hint {
-color: #8354c0;
+color: #e75480;
 font-size: 0.9em;
-margin-bottom: 1em;
+margin-bottom: 0.5em;
 }
 /* Buttons */
 button {
@@ -280,26 +280,26 @@ transition: background 0.2s, transform 0.1s;
 }
 button:hover {
 transform: translateY(-1px);
-background: #b1a900; /* slightly darker than #c2bb01 */
+background: #b10000; /* slightly darker than #c2bb01 */
 }
 button:active {
 transform: translateY(0);
 }
 #checkinBtn {
-background: #c2bb01;
+background: #d37cff;
 color: #ffffff;
 width: 100%;
 }
 #checkinBtn:hover {
-background: #b1a900;
+background: #d37cff;
 }
 .btn-stop {
-background: #06a20e;
+background: #ff5959;
 color: white;
 margin-top: 0.5em;
 }
 .btn-stop:hover {
-background: #05810b;
+background: #a4284e;
 }
 .btn-cancel {
 background: #f0f0f0;
@@ -309,18 +309,18 @@ color: #cf76ff;
 background: #d1d1d1;
 }
 .btn-confirm {
-background: #06a20e;
+background: #cf76ff;
 color: white;
 }
 .btn-confirm:hover {
-background: #05810b;
+background: #a4284e;
 }
 .btn-print {
-background: #047304;
+background: #cf76ff;
 color: white;
 }
 .btn-print:hover {
-background: #035a03;
+background: #a016ea;
 }
 
 /* --- BUTTONS SIDE BY SIDE --- */
@@ -517,21 +517,54 @@ color: #000000;
 font-weight: bold;
 font-style: italic;
 }
+
+.vip-btn {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffe066, #ffed47, #ff8c69);
+  color: #fff;
+  font-size: 1.3em;
+  font-weight: 900;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 24px rgba(255, 180, 0, 0.4);
+  cursor: pointer;
+  margin-top: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.2em;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 1.5em;
+  margin-left: auto;
+  margin-right: auto;
+}
+.vip-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 32px rgba(255, 180, 0, 0.6);
+  background: linear-gradient(135deg, #868118, #543e02, #ffe066);
+}
+.vip-btn.active {
+  box-shadow: 0 0 0 4px #ffb269, 0 6px 32px rgba(255, 180, 0, 0.6);
+}
+
 </style>
 </head>
 <body>
 <div class="main-flex">
 <div class="checkin-container">
-    <h2>GUEST CHECK-IN<span class="heart">🍀Welcome!🍀</span></h2>
-    <h3><i>Queer Salsa Social: Luck Be A Lady <br>Brought to you by QLDSD</i></h3>
+    <h2>GUEST CHECK-IN<span class="heart">🌷Welcome!🌷</span></h2>
+    <h3><i>Queer Salsa Social: ¡Que Dulce Ritmo! <br>Brought to you by QLDSD</i></h3>
     <!-- <div class="checkin-footer">
   Scan QR code using the camera. <br>
   Purchase ticket through Stripe then check in using name or email address used for payment.<i>(processing fee applies)</i>.
     </div> -->
 
 <div class="method-tabs">
-  <button class="method-tab active" id="scanTab" onclick="showScanner()">📷 SCAN QR</button>
-  <button class="method-tab" id="purchaseTab" onclick="showManualEntry()">🎟️ PURCHASE TICKET</button>
+<button class="method-tab active" id="scanTab" onclick="showScanner()">📷 SCAN QR</button>
+<button class="method-tab" id="purchaseTab" onclick="showManualEntry()">🎟️ PURCHASE TICKET</button>
+<button class="vip-btn" id="vipTab" onclick="showVipEntry()">⭐ VIP</button>
 </div>
 
 <!-- Manual Entry Section (hidden by default) -->
@@ -546,7 +579,7 @@ font-style: italic;
 <div id="scannerSection">
 <div id="qr-reader"></div>
 <p class="scanner-hint">Show QR CODE in front of the camera.</p>
-<button class="btn-stop" onclick="stopScanner()">Stop Scanner</button>
+<button class="btn-stop" onclick="resetCheckinUI()">Stop Scanner</button>
 </div>
 <div class="popup-overlay" id="stripe-popup">
   <div class="popup-content">
@@ -563,7 +596,7 @@ font-style: italic;
 
 </div>
 <div class="flyer-container">
-<img src="images/eventpage/qssmarch2026flyer.png" alt="Event Flyer" class="event-flyer">
+<img src="images/eventpage/qssapr2026flyer.png" alt="Event Flyer" class="event-flyer">
 </div>
 </div>
 <!-- Name/Pronouns Popup -->
@@ -646,17 +679,58 @@ function showManualEntry() {
 
 function showScanner() {
   if (currentMode === "scanner") {
-    // Already in scanner mode, so reset to default
     resetCheckinUI();
     return;
   }
   currentMode = "scanner";
   document.getElementById('manualSection').style.display = 'none';
   document.getElementById('scannerSection').classList.add('active');
-  document.getElementById('purchaseTab').classList.remove('active');
   document.getElementById('scanTab').classList.add('active');
+
+  // Hide BOTH purchase and VIP buttons
+  document.getElementById('purchaseTab').style.display = 'none';
+  document.getElementById('vipTab').style.display = 'none';
+
   startScanner();
-  document.getElementById('stripe-popup').classList.remove('active'); // <-- HIDE POPUP
+  document.getElementById('stripe-popup').classList.remove('active');
+}
+
+function showManualEntry() {
+  if (currentMode === "manual") {
+    resetCheckinUI();
+    return;
+  }
+  currentMode = "manual";
+  document.getElementById('manualSection').style.display = 'block';
+  document.getElementById('scannerSection').classList.remove('active');
+  document.getElementById('purchaseTab').classList.add('active');
+  document.getElementById('scanTab').classList.remove('active');
+
+  // Hide BOTH scan and VIP buttons
+  document.getElementById('scanTab').style.display = 'none';
+  document.getElementById('vipTab').style.display = 'none';
+
+  stopScanner();
+  document.getElementById('stripe-popup').classList.add('active');
+}
+
+function showVipEntry() {
+  if (currentMode === "vip") {
+    resetCheckinUI();
+    return;
+  }
+  currentMode = "vip";
+  document.getElementById('scannerSection').classList.remove('active');
+  document.getElementById('manualSection').style.display = 'block';
+  document.getElementById('vipTab').classList.add('active');
+
+  // Hide BOTH scan and purchase buttons
+  document.getElementById('scanTab').style.display = 'none';
+  document.getElementById('purchaseTab').style.display = 'none';
+
+  stopScanner();
+  document.getElementById('stripe-popup').classList.remove('active');
+  document.getElementById('email').focus();
 }
 
 function resetCheckinUI() {
@@ -665,8 +739,16 @@ function resetCheckinUI() {
   document.getElementById('scannerSection').classList.remove('active');
   document.getElementById('purchaseTab').classList.remove('active');
   document.getElementById('scanTab').classList.remove('active');
+  document.getElementById('vipTab').classList.remove('active');
+
+  // SHOW all 3 buttons again
+  document.getElementById('scanTab').style.display = 'block';
+  document.getElementById('purchaseTab').style.display = 'block';
+  document.getElementById('vipTab').style.display = 'flex';
+
   stopScanner();
 }
+
 // ============ QR Scanner ============
 function startScanner() {
 if (html5QrCode && html5QrCode.isScanning) {
@@ -804,9 +886,9 @@ if (guest.checkedIn && guest.printed) {
 
 if (guest.checkedIn && !guest.printed) {
   const displayName = guest.preferredName || guest.actualName || '';
-  document.getElementById('ticketGuestName').textContent = displayName ? '🍀' + displayName : '';
+  document.getElementById('ticketGuestName').textContent = displayName ? '🌷' + displayName : '';
   document.getElementById('ticketPronouns').textContent = guest.pronouns || '';
-  document.getElementById('printGuestName').textContent = displayName ? '🍀' + displayName : '';
+  document.getElementById('printGuestName').textContent = displayName ? '🌷' + displayName : '';
   document.getElementById('printPronouns').textContent = guest.pronouns || '';
   document.getElementById('checkin-popup').classList.add('active');
   return;
@@ -860,9 +942,9 @@ if (result.success) {
 showResult(`✅ Welcome, ${preferredName}!`, "success");
 
 // Update ticket preview
-document.getElementById('ticketGuestName').textContent = preferredName ? '🍀' + preferredName : "";
+document.getElementById('ticketGuestName').textContent = preferredName ? '🌷' + preferredName : "";
 document.getElementById('ticketPronouns').textContent = pronouns;
-document.getElementById('printGuestName').textContent = preferredName ? '🍀' + preferredName : "";
+document.getElementById('printGuestName').textContent = preferredName ? '🌷' + preferredName : "";
 document.getElementById('printPronouns').textContent = pronouns
 
 // Show print popup
@@ -931,9 +1013,9 @@ function handleSelectedGuest(guest) {
 
   if (guest.checkedIn && !guest.printed) {
     const displayName = guest.preferredName || guest.actualName || '';
-    document.getElementById('ticketGuestName').textContent = displayName ? '🍀' + displayName : '';
+    document.getElementById('ticketGuestName').textContent = displayName ? '🌷' + displayName : '';
     document.getElementById('ticketPronouns').textContent = guest.pronouns || '';
-    document.getElementById('printGuestName').textContent = displayName ? '🍀' + displayName : '';
+    document.getElementById('printGuestName').textContent = displayName ? '🌷' + displayName : '';
     document.getElementById('printPronouns').textContent = guest.pronouns || '';
     document.getElementById('checkin-popup').classList.add('active');
     return;
@@ -1004,6 +1086,45 @@ if (e.key === 'Enter') {
 document.getElementById('checkinBtn').click();
 }
 });
+// ...existing code...
+function showVipEntry() {
+  if (currentMode === "vip") {
+    resetCheckinUI();
+    return;
+  }
+  currentMode = "vip";
+  document.getElementById('scannerSection').classList.remove('active');
+  document.getElementById('manualSection').style.display = 'block';
+  document.getElementById('vipTab').classList.add('active');
+  document.getElementById('scanTab').classList.remove('active');
+  document.getElementById('purchaseTab').classList.remove('active');
+
+  // Hide scan and purchase buttons
+  document.getElementById('scanTab').style.display = 'none';
+  document.getElementById('purchaseTab').style.display = 'none';
+
+  stopScanner();
+  document.getElementById('stripe-popup').classList.remove('active');
+  document.getElementById('email').focus();
+}
+// ...existing code...
+
+function resetCheckinUI() {
+  currentMode = null;
+  document.getElementById('manualSection').style.display = 'none';
+  document.getElementById('scannerSection').classList.remove('active');
+  document.getElementById('purchaseTab').classList.remove('active');
+  document.getElementById('scanTab').classList.remove('active');
+  document.getElementById('vipTab').classList.remove('active');
+
+  // SHOW all buttons again
+  document.getElementById('purchaseTab').style.display = 'block';
+  document.getElementById('scanTab').style.display = 'block';
+  document.getElementById('vipTab').style.display = 'flex';
+
+  stopScanner();
+}
+// ...existing code...
 </script>
 </body>
 </html>

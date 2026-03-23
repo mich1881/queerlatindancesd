@@ -24,7 +24,7 @@ html_files=(
     "test-course-app.html"
     "test-course-cards.html"
     "test-payment.html"
-    "debug-courses.html"
+    "debug-courses-login.html"
     "courses-simple.html"
     "offline-course-template.html"
     "error-check.html"

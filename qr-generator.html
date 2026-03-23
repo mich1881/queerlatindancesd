@@ -298,7 +298,7 @@ function generateUniqueId() {
 }
 function sendQrEmailToWorker(guestName, guestEmail, uniqueId, preferredName, pronouns) {
   const eventDate = document.getElementById('eventDate').value || '';
-  const subject = `Queer Latin Dance Social: Luck be a Lady - Confirmation Ticket`;
+  const subject = `Queer Latin Dance Social: ¡Que Dulce Ritmo! - Confirmation Ticket`;
   const html = buildEmailHtml({
     guestName,
     qrCode: uniqueId,
@@ -619,7 +619,7 @@ function buildEmailHtml({ guestName, qrCode, preferredName, pronouns, eventDate 
       </div>
       <div style="padding:2em;">
         <h2 style="color:#e75480;margin-bottom:0.5em;">You're in ${preferredName}, here is your order confirmation for:</h2>
-        <h1 style="color:#8354c0;margin-bottom:1em;">Queer Salsa Social: Luck be a Lady</h1>
+        <h1 style="color:#8354c0;margin-bottom:1em;">Queer Salsa Social: ¡Que Dulce Ritmo!</h1>
         <div style="background:#fff;padding:1.5em;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.08);margin-bottom:2em;">
           <div style="text-align:center;">
           <h3 style="color:#333;margin-bottom:0.5em;font-size:1.5em;">Your ticket</h3>
@@ -635,7 +635,7 @@ function buildEmailHtml({ guestName, qrCode, preferredName, pronouns, eventDate 
           <h3 style="color:#8354c0;margin-bottom:0.5em;">Event details</h3>
           <div style="margin-bottom:0.5em;">
             <span style="font-size:1.1em;">📅</span>
-            <span>${eventDate || 'March 20th, 2026, 7pm–11pm'}</span>
+            <span>${eventDate || 'March 17th, 2026, 7pm–10pm'}</span>
           </div>
           <div style="margin-bottom:0.5em;">
             <span style="font-size:1.1em;">📍</span>

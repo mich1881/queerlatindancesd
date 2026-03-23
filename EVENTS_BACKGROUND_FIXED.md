@@ -134,7 +134,7 @@ All main pages now use the same animated rainbow background + sparkle effect:
 | gallery.html | ✅ Global CSS | ✅ `#sparkle-bg` | ✅ Already had it |
 | team.html | ✅ Global CSS | Need to check | ⚠️ To verify |
 | directory.html | ✅ Global CSS | Need to check | ⚠️ To verify |
-| lessons.html | ✅ Global CSS | Need to check | ⚠️ To verify |
+| courses.html | ✅ Global CSS | Need to check | ⚠️ To verify |
 
 ---
 
@@ -194,6 +194,6 @@ Test in browser:
 Consider adding `#sparkle-bg` to other pages if they don't have it:
 - team.html
 - directory.html
-- lessons.html
+- courses.html
 
 This will ensure **all pages** have the same beautiful animated background with sparkles.

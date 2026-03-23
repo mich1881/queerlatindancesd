@@ -3,454 +3,1188 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Queer Latin Dance - Online Courses</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="course-styles.css">
+<title>Class Offerings | Queer Latin Dance SD</title>
 <link rel="stylesheet" href="styles/global.css">
+<link rel="stylesheet" href="style.css" />
 <link rel="icon" type="image/png" href="images/icons/favicon.png">
-<!-- 🛡️ COMPREHENSIVE SOURCE CODE PROTECTION -->
-<script src="protection.js"></script>
+<!-- Navigation and footer styles are now global. Unique lessons page styles are moved to style.css. -->
+<style>
+/* === LESSONS PAGE STYLES === */
+.lessons-title {
+  font-size: 5rem;
+  font-family: 'Lilita One', sans-serif;
+  font-weight: 300;
+  color: #ffffff;
+  margin-top: -40px;
+  margin-bottom: -50px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.offers-row {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+  flex-wrap: nowrap;
+}
+.offer-card {
+  background: #8986fe;
+  border-radius: 2.2rem;
+  min-width: 220px;
+  max-width: 320px;
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 24px #b57edc33;
+  transition: transform 0.18s cubic-bezier(.4,1.3,.6,1), box-shadow 0.18s;
+  cursor: pointer;
+  margin: 0 0.5rem;
+  padding: 1.2rem 0.5rem;
+  text-decoration: none;
+  color: inherit;
+}
+.offer-card:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 32px #716cffb2;
+}
+.offer-title {
+  font-size: 2rem;
+  font-family: 'Nunito', sans-serif;
+  color: #ece6ef;
+  margin-bottom: 0.7rem;
+  font-weight: 1000;
+  text-align: center;
+}
+.offer-main {
+  font-size: 1.5rem;
+  font-family: 'Nunito','Times New Roman', Times, serif;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 0.2rem;
+  text-align: center;
+}
+.offer-sub {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #ffffff;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .lessons-title {
+    font-size: 2.1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+  }
+  .offers-row {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  .offer-card {
+    min-width: 0;
+    max-width: 98vw;
+    width: 100%;
+    min-height: 380px;
+    padding: 1.2rem 0.5rem;
+  }
+  .offer-title {
+    font-size: 5rem;
+  }
+  .offer-main {
+    font-size: 5rem;
+  }
+}
+@media (max-width: 768px) {
+  .gallery-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem;
+    overflow-y: auto;
+    max-height: 90vh;
+    padding: 1rem 0.5rem;
+    width: 100%;
+    align-items: center;
+  }
+  .gallery-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .gallery-photo {
+    width: 87vw !important;
+    max-width: 360px !important;
+    height: auto !important;
+    border-radius: 20px !important;
+    margin-top: 0.5rem !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10) !important;
+    object-fit: cover !important;
+  }
+  .filter-btn {
+    width: 87vw !important;
+    max-width: 360px !important;
+    margin: 0 auto 1rem auto !important;
+    font-size: 1.2rem !important;
+    border-radius: 1.5rem !important;
+    padding: 0.8rem 1.2rem !important;
+    min-height: 3rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+/* Mobile layout for lessonone-series.html - using 900px to match the internal CSS */
+@media (max-width: 768px) {
+  /* Gallery styling for mobile */
+  #swipe-gallery {
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+  
+  #gallery-img {
+    max-width: 95% !important;
+    margin: 0 auto 1rem auto !important;
+  }
+  
+  /* Gallery navigation buttons for mobile */
+  #gallery-prev, #gallery-next {
+    position: absolute !important;
+    top: 50% !important;
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 1.2em !important;
+  }
+  
+  #gallery-prev {
+    left: 5px !important;
+  }
+  
+  #gallery-next {
+    right: 5px !important;
+  }
+}
+/* Calendar Toggle Button */
+.calendar-toggle-btn {
+  padding: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  vertical-align: middle;
+  transition: transform 0.2s ease;
+}
+.calendar-toggle-btn:hover { transform: scale(1.15); }
+
+/* Calendar Overlay */
+.calendar-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.calendar-overlay.active { display: flex; }
+.calendar-modal {
+  background: linear-gradient(135deg, #bdbdf5 0%, #eee2ff 100%);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 700px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(113, 108, 255, 0.4);
+  animation: slideIn 0.3s ease;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.calendar-close-btn {
+  position: absolute;
+  top: -10px;
+  right: -150px;
+  color: #070707;
+  font-size: 1.8rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  z-index: 1001;
+}
+.calendar-close-btn:hover { color: #716cff; }
+.calendar-title {
+  color: #fff;
+  font-family: 'Nunito', Arial, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #716cff, #b57edc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.calendar-content { display: flex; gap: 2rem; justify-content: center; }
+.calendar-column { flex: 1; text-align: center; }
+.calendar-column h4 {
+  color: #933bff;
+  font-family: 'Nunito', Arial, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+.calendar-column ul { list-style: none; padding: 0; margin: 0; }
+.calendar-column li {
+  color: #000000;
+  font-family: 'Nunito', Arial, sans-serif;
+  font-size: 1.05rem;
+  padding: 0.5rem 0.8rem;
+  margin: 0.3rem 0;
+  background: rgba(255, 255, 255, 0.701);
+  border-radius: 8px;
+}
+.calendar-column li.past-date { opacity: 0.4; text-decoration: line-through; }
+
+@media (max-width: 768px) {
+  .calendar-modal { 
+  padding: 1.5rem; 
+  margin-top: 5rem;  
+  max-width: 450px;
+  width: 100%; }
+  .calendar-content { flex-direction: column; gap: 1rem; }
+  .calendar-icon { height: 26px; width: 26px; }
+}
+</style>
 </head>
 <body>
-<div id="course-app">
-<!-- Loading Screen -->
-<div id="loading-screen" class="screen active">
-<div class="loading-content">
-<div class="spinner"></div>
-<h2>Loading your dance journey...</h2>
+<header>
+<a href="index.html">
+<img src="images/logos/logo1.png" alt="Queer Latin Dance SD Logo" class="logo1" />
+</a>
+<!-- Cart Modal -->
+<div id="cart-modal" class="cart-modal">
+<div class="cart-modal-title">Your Cart</div>
+<div id="cart-items"></div>
+<button onclick="viewCart()" class="cart-modal-btn view">View Cart</button>
+<button onclick="closeCart()" class="cart-modal-btn close">Close</button>
 </div>
-</div>
-
-<!-- Authentication Screen -->
-<div id="auth-screen" class="screen hidden">
-<div class="auth-container">
-<div class="logo-section">
-<h1>🕺💃 Queer Latin Dance</h1>
-<h2>Online Course Portal</h2>
-<p>Learn to dance with pride and passion</p>
-</div>
-
-<div class="auth-tabs">
-<button class="tab-btn active" onclick="switchAuthTab('login')">Sign In</button>
-<button class="tab-btn" onclick="switchAuthTab('register')">Sign Up</button>
-</div>
-
-<!-- Login Form -->
-<form id="login-form" class="auth-form">
-<h3>Welcome Back!</h3>
-<div class="input-group">
-<input type="email" id="login-email" placeholder="Email address" required>
-<span class="input-icon">📧</span>
-</div>
-<div class="input-group">
-<input type="password" id="login-password" placeholder="Password" required>
-<span class="input-icon">🔒</span>
-</div>
-<button type="submit" class="auth-btn">Sign In</button>
-<button type="button" class="demo-btn" onclick="window.demoLogin()">🎭 Quick Demo Login</button>
-<button type="button" class="admin-demo-btn" onclick="window.adminDemoLogin()">⭐ Admin Demo Login</button>
-<button type="button" class="forgot-password-btn" onclick="window.forgotPassword()">🔑 Forgot Password?</button>
-<p class="auth-note">Demo: Use any email and password to try it out!</p>
-</form>
-
-<!-- Register Form -->
-<form id="register-form" class="auth-form hidden">
-<h3>Join Our Dance Community!</h3>
-<div class="input-group">
-<input type="text" id="register-name" placeholder="Your full name" required>
-<span class="input-icon">👤</span>
-</div>
-<div class="input-group">
-<input type="email" id="register-email" placeholder="Email address" required>
-<span class="input-icon">📧</span>
-</div>
-<div class="input-group">
-<input type="password" id="register-password" placeholder="Create password (min 6 chars)" minlength="6" required>
-<span class="input-icon">🔒</span>
-</div>
-<button type="submit" class="auth-btn">Create Account</button>
-<p class="auth-terms">By signing up, you agree to learn amazing dance moves! 💫</p>
-</form>
-</div>
-</div>
-
-<!-- Dashboard Screen -->
-<div id="dashboard-screen" class="screen hidden">
-<nav class="course-nav">
-<div class="nav-left">
-<h2>Online Dance Lessons</h2>
-<a href="lessons.html" class="back-link">← Back to Lessons</a>
-</div>
-<div class="nav-right">
-<span id="user-welcome">Welcome!</span>
-<button id="admin-btn" onclick="showAdminPanel()" class="admin-btn" style="display:none;">Admin</button>
-<button onclick="logout()" class="logout-btn">Sign Out</button>
-</div>
+<!-- Desktop Navigation -->
+<nav>
+<a href="courses.html">Courses</a>
+<a href="Events.html">Events</a>
+<a href="gallery.html">Gallery</a> 
+<a href="directory.html">Directory</a>
+<a href="team.html">Team</a>
+<a href="book-us.html">Book Us</a>
+<a href="merch.html">Merch</a>
+<span id="cart-nav" class="cart-nav">
+<img src="images/icons/cart-icon.png" alt="Cart" class="cart-icon-img">
+<span id="cart-count" class="cart-count">0</span>
+</span>
 </nav>
+<!-- Mobile Navigation Toggle -->
+<button class="mobile-nav-toggle" aria-label="Toggle navigation">
+<span></span>
+<span></span>
+<span></span>
+</button>
+</header>
 
-<div class="dashboard-content">
-<div class="welcome-hero">
-<h1>Welcome to Your Dance Journey</h1>
-<p>Continue learning or explore new courses below</p>
-</div>
-
-<!-- My Courses Section -->
-<section class="course-section">
-<h2 class="section-title">My Courses</h2>
-<div id="my-courses-grid" class="courses-grid">
-<div class="no-courses-message">
-<div class="no-courses-icon">📚</div>
-<h3>No courses yet!</h3>
-<p>Purchase your first course below to get started</p>
-</div>
-</div>
-</section>
-
-<!-- Available Courses Section -->
-<section class="course-section">
-<h2 class="section-title">Available Courses</h2>
-<div id="available-courses-grid" class="courses-grid">
-<!-- Courses will be populated here -->
-</div>
-</section>
-</div>
-</div>
-
-<!-- Course Player Screen -->
-<div id="player-screen" class="screen hidden">
-<nav class="player-nav">
-<button onclick="showDashboard()" class="back-btn">← Back to My Courses</button>
-<h2 id="current-course-title">Course Title</h2>
+<!-- Mobile Navigation Menu -->
+<div class="mobile-nav-menu">
+<nav>
+<a href="courses.html">Courses</a>
+<a href="Events.html">Events</a>
+<a href="gallery.html">Gallery</a> 
+<a href="directory.html">Directory</a>
+<a href="team.html">Team</a>
+<a href="book-us.html">Book Us</a>
+<a href="merch.html">Merch</a>
+<span id="cart-nav-mobile" class="cart-nav-mobile">
+<img src="images/icons/cart-icon.png" alt="Cart" class="cart-icon-img">
+<span id="cart-count-mobile" class="cart-count-mobile">0</span>
+</span>
 </nav>
+</div>
+<!-- ...existing code... -->
 
-<div class="player-container">
-<div class="video-section">
-<div class="video-wrapper">
-<video id="course-video" controls controlslist="nodownload noremoteplayback">
-<source src="" type="video/mp4">
-Your browser doesn't support video playback.
-</video>
-<div class="video-overlay">
-<div class="watermark" id="video-watermark">Student Portal</div>
+<div class="lessons-title">Class Offerings</div>
+<div class="schedule-header">
+    <h2 class="section-subtitle">
+    <img src="images/eventpage/Schedulicon 1.png" alt="Calendar" class="calendar-icon" onclick="toggleCalendar('winter-p1')" title="View Calendar" style="height: 55px;width: 55px;cursor:pointer;">
+    Spring Part 1:
+  </h2>
+  <h3 class="section-subtitle2" id="winter-p1-dates">Loading dates...</h3>
 </div>
-</div>
-
-<div class="lesson-controls">
-<h3 id="current-lesson-title">Select a lesson to begin</h3>
-<div class="progress-container">
-<div class="progress-bar">
-<div class="progress-fill" id="lesson-progress"></div>
-</div>
-<span id="progress-text">0% Complete</span>
-</div>
-</div>
-</div>
-
-<div class="course-sidebar">
-<div class="sidebar-header">
-<h3>Course Content</h3>
-<span id="course-progress-summary">0 of 0 lessons</span>
-</div>
-<div id="lessons-list" class="lessons-list">
-<!-- Lessons will be populated here -->
-</div>
-</div>
-</div>
+<!-- Calendar Overlay for Winter P1 -->
+<div class="calendar-overlay" id="calendar-overlay-winter-p1">
+  <div class="calendar-modal">
+    <button class="calendar-close-btn" onclick="toggleCalendar('winter-p1')">×</button>
+    <h3 class="calendar-title">Spring Part 1 Schedule</h3>
+    <div class="calendar-content">
+      <div class="calendar-column">
+        <h4>Fridays</h4>
+        <ul id="calendar-fridays-winter-p1"></ul>
+      </div>
+      <div class="calendar-column">
+        <h4>Sundays</h4>
+        <ul id="calendar-sundays-winter-p1"></ul>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- Payment Instructions Screen -->
-<div id="payment-screen" class="screen hidden">
-<div class="payment-container">
-<div class="payment-header">
-<h1>💰 Complete Your Purchase</h1>
-<p>You're almost ready to start dancing!</p>
+<!-- Row 1: First 3 cards -->
+<div class="offers-row-top" id="upcoming-lessons-top">
 </div>
 
-<div class="course-summary">
-<h3 id="payment-course-title">Course Title</h3>
-<p id="payment-course-description">Course description</p>
-<div class="price-display">
-<span class="price" id="payment-course-price">$49</span>
-<span class="price-note">One-time payment • Lifetime access</span>
+<!-- Winter Part 1 Header -->
+<div class="schedule-header">
+  <h2 class="section-subtitle">
+          <img src="images/eventpage/Schedulicon 1.png" alt="Calendar" class="calendar-icon" onclick="toggleCalendar('winter-p2')" title="View Calendar" style="height: 55px;width: 55px;cursor:pointer;">
+    Winter Part 2:
+  </h2>
+  <h3 class="section-subtitle2" id="winter-p2-dates">Loading dates...</h3>
 </div>
-</div>
-
-<div class="payment-instructions">
-<h3>📱 Send Payment Via:</h3>
-
-<div class="payment-option">
-<h4>💳 PayPal</h4>
-<p><strong>Send to:</strong> <code>michelle@queerlatindance.com</code></p>
-<p><strong>Include in note:</strong> Your email + course name</p>
-</div>
-
-<div class="payment-option">
-<h4>💰 Venmo</h4>
-<p><strong>Send to:</strong> <code>@QueerLatinDance</code></p>
-<p><strong>Include in note:</strong> Your email + course name</p>
-</div>
-
-<div class="payment-option">
-<h4>🏦 Zelle</h4>
-<p><strong>Send to:</strong> <code>michelle@queerlatindance.com</code></p>
-<p><strong>Include in memo:</strong> Your email + course name</p>
-</div>
+<!-- Calendar Overlay for Winter P2 -->
+<div class="calendar-overlay" id="calendar-overlay-winter-p2">
+  <div class="calendar-modal">
+    <button class="calendar-close-btn" onclick="toggleCalendar('winter-p2')">×</button>
+    <h3 class="calendar-title">Winter Part 2 Schedule</h3>
+    <div class="calendar-content">
+      <div class="calendar-column">
+        <h4>Fridays</h4>
+        <ul id="calendar-fridays-winter-p2"></ul>
+      </div>
+      <div class="calendar-column">
+        <h4>Sundays</h4>
+        <ul id="calendar-sundays-winter-p2"></ul>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="payment-example">
-<h4>📝 Example Payment Note:</h4>
-<div class="example-note">
-<code id="payment-example-text">carlos@email.com - Salsa Fundamentals</code>
-</div>
+<!-- Row 2: Next 4 cards -->
+<div class="offers-row-bottom" id="upcoming-lessons-bottom">
 </div>
 
-<div class="payment-timeline">
-<h4>⏱️ What Happens Next:</h4>
-<ol>
-<li>Send payment with your email + course name</li>
-<li>We'll verify your payment (usually within 24 hours)</li>
-<li>You'll receive email confirmation</li>
-<li>Log back in to access your course!</li>
-</ol>
+<div class="offers-row" id="coming-soon-lessons">
+<!-- Coming soon lessons will be loaded here -->
 </div>
 
-<div class="payment-actions">
-<button onclick="showDashboard()" class="back-btn">← Back to Courses</button>
-<button onclick="markPaymentSent()" class="payment-sent-btn">✅ I've Sent Payment</button>
-</div>
-</div>
-</div>
-
-<!-- Admin Panel Screen -->
-<div id="admin-panel" class="screen hidden">
-<nav class="course-nav">
-<div class="nav-left">
-<h2>👑 Admin Panel</h2>
-<button onclick="showDashboard()" class="back-link">← Back to Dashboard</button>
-</div>
-<div class="nav-right">
-<button onclick="logout()" class="logout-btn">Sign Out</button>
-</div>
-</nav>
-
-<div class="admin-content">
-<div class="admin-section">
-<h2>📋 Pending Course Payments</h2>
-<p>Review and approve course access for students</p>
-
-<div class="admin-actions">
-<button onclick="courseApp.loadPendingPayments()" class="btn-refresh">
-🔄 Refresh Payments
-</button>
-</div>
-
-<div id="pendingPaymentsList" class="payments-list">
-<p class="loading">Loading pending payments...</p>
-</div>
-</div>
-
-<div class="admin-section">
-<h2>📊 Course Statistics</h2>
-<div class="stats-grid">
-<div class="stat-card">
-<div class="stat-number">0</div>
-<div class="stat-label">Active Students</div>
-</div>
-<div class="stat-card">
-<div class="stat-number">0</div>
-<div class="stat-label">Pending Payments</div>
-</div>
-<div class="stat-card">
-<div class="stat-number">0</div>
-<div class="stat-label">Total Revenue</div>
-</div>
-</div>
-</div>
-
-<div class="admin-section">
-<h2>➕ Quick Access Grant</h2>
-<p>Grant course access manually (demo mode)</p>
-<div class="admin-form">
-<input type="email" id="admin-student-email" placeholder="Student email address" />
-<select id="admin-course-select">
-<option value="">Select Course</option>
-<option value="salsa-fundamentals">Salsa Fundamentals</option>
-<option value="bachata-fundamentals">Bachata Fundamentals</option>
-<option value="advanced-salsa">Advanced Salsa</option>
-</select>
-<button onclick="grantCourseAccess()" class="btn-grant">Grant Access</button>
-</div>
-</div>
-
-<div class="admin-section">
-<h2>👥 User Management</h2>
-<p>Manage active subscriptions and monthly access</p>
-
-<div class="admin-actions">
-<button onclick="courseApp.loadAllUsers()" class="btn-refresh">
-🔄 Refresh Users
-</button>
-<button onclick="courseApp.checkExpiredSubscriptions()" class="btn-check">
-⏰ Check Expired Access
-</button>
-</div>
-
-<div class="user-management-filters">
-<select id="userFilterStatus" onchange="courseApp.filterUsers()">
-<option value="all">All Users</option>
-<option value="active">Active Subscriptions</option>
-<option value="expired">Expired Access</option>
-<option value="never-purchased">Never Purchased</option>
-</select>
-<select id="userFilterCourse" onchange="courseApp.filterUsers()">
-<option value="all">All Courses</option>
-<option value="salsa-fundamentals">Salsa Fundamentals</option>
-<option value="bachata-fundamentals">Bachata Fundamentals</option>
-<option value="advanced-salsa">Advanced Salsa</option>
-</select>
-</div>
-
-<div id="userManagementList" class="users-list">
-<p class="loading">Loading users...</p>
-</div>
-</div>
-
-<div class="admin-section">
-<h2>🧪 Testing Tools</h2>
-<p>Create test payments to see how grant access works</p>
-<div class="admin-form">
-<button onclick="courseApp.createSamplePayments()" class="btn-test">
-🧪 Create Clean Sample Payments
-</button>
-<button onclick="courseApp.removeDuplicatePayments(); courseApp.loadPendingPayments()" class="btn-test">
-🧹 Remove Duplicate Payments
-</button>
-<button onclick="courseApp.clearAllTestPayments()" class="btn-clear">
-🗑️ Clear All Test Payments
-</button>
-<button onclick="courseApp.clearAllUsers()" class="btn-clear" style="background-color: #d32f2f;">
-🗑️ Clear All Users
-</button>
-</div>
-<div class="testing-info">
-<p><strong>How to test:</strong></p>
-<ol>
-<li>Click "Create Test Payment" to add a fake payment request</li>
-<li>The payment will appear in the pending payments list above</li>
-<li>Click "Grant Access" on the payment card</li>
-<li>Watch the card fade out and disappear</li>
-<li>The user now has access to that course</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<!-- Notification Container -->
-<div id="notification-container"></div>
-
-<script src="course-app.js"></script>
-
-<!-- Fallback for JavaScript issues -->
-<script>
-// Simple fallback to ensure something shows up
-window.addEventListener('load', function() {
-setTimeout(function() {
-// If no screen is active after 2 seconds, show auth screen
-const activeScreen = document.querySelector('.screen.active');
-if (!activeScreen) {
-console.log('🔧 Fallback: Making auth screen visible');
-document.getElementById('auth-screen').classList.add('active');
+<!-- ...existing code... -->
+<style>
+@font-face {
+font-family: 'Cherry Bomb One';
+src: url('fonts/Cherry_Bomb_One/CherryBombOne-Regular.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
 }
-}, 2000);
+/* Section subtitle styling */
+.section-subtitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: 'PassionOne', 'Nunito', Arial, sans-serif;
+  font-size: 3rem;
+  font-weight: 500;
+  color: #716cff;
+  margin: 2rem auto 1rem auto;
+  padding: 0 1rem;
+  width: auto;
+}
+
+.schedule-header {
+  text-align: center;
+  width: 100%;
+}
+.section-subtitle2 {
+text-align: center;
+font-family: 'PassionOne', 'Nunito', Arial, sans-serif;
+font-size: 2.3rem;
+font-weight: 600;
+color: #716cff;
+margin: -1rem auto 1rem auto;
+padding: 0 1rem;
+letter-spacing: 0.5px;
+}
+@media (max-width: 768px) {
+.section-subtitle2 {
+font-size: 1.3rem;
+margin: 0.5rem auto 0.5rem auto;
+}
+}
+@media (max-width: 768px) {
+.section-subtitle {
+font-size: 2rem;
+margin: -1.5rem auto -1.0rem auto;
+}
+}
+.offer-card-bg {
+background: url('images/lessons/4weekseries2.png') center center/cover no-repeat !important;
+color: #fff;
+position: relative;
+box-shadow: 0 4px 24px #716cff22;
+border: none;
+}
+.offer-card-bg .offer-title,
+.offer-card-bg .offer-main {
+background: rgba(152, 101, 255, 0.702);
+border-radius: 10px;
+padding: 0.3em 0.7em;
+color: #fff;
+}
+.offer-card-bg3 {
+background: url('images/eventpage/privateflyer.png') center center/cover no-repeat !important;
+color: #fff;
+position: relative;
+box-shadow: 0 4px 24px #716cff22;
+border: none;
+}
+.offer-card-bg4 {
+background: url('images/lessons/onlinelessonscover.png') center center/cover no-repeat !important;
+position: relative;
+border: none;
+width: 90%;
+max-width: 1000px;
+margin: 0 auto;
+box-shadow: 0 4px 24px #716cff22;
+}
+
+.closed-banner {
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+width: 100%;
+background: linear-gradient(135deg, #db58b8 0%, #d91f47 100%);
+color: #fff;
+font-family: 'Nunito', Arial, sans-serif;
+font-size: 1.2rem;
+font-weight: 1000;
+padding: 10px 28px;
+text-align: center;
+}
+
+@media (max-width: 768px) {
+.closed-banner {
+font-size: 0.95rem;
+padding: 10px 16px;
+border-radius: 0;
+letter-spacing: 0.3px;
+font-weight: 800;
+}
+}
+
+@media (max-width: 768px) {
+.offer-card-bg4 {
+width: 100vw;
+max-width: 100vw;
+margin-left: calc(-1 * ((100vw - 100%) / 2));
+margin-right: calc(-1 * ((100vw - 100%) / 2));
+border-radius: 0;
+box-shadow: none;
+background: url('images/lessons/onlinelessonscover.png') center center/contain no-repeat !important;
+}
+
+/* Footer mobile styles */
+.footer-newsletter h2 {
+font-size: 1.5rem;
+}
+.footer-social h3 {
+font-size: 1.3rem;
+}
+}
+.offer-card-bg3 .offer-title,
+.offer-card-bg3 .offer-main {
+background: rgba(152, 101, 255, 0.702);
+border-radius: 10px;
+padding: 0.3em 0.7em;
+color: #fff;
+}
+.coming-soon-badge {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%) rotate(-360deg);
+font-family: 'Cherry Bomb One', 'Nunito', 'Passion One', sans-serif;
+font-size: 7vw;
+font-weight: 900;
+color: #ffffff;
+pointer-events: none;
+user-select: none;
+white-space: nowrap;
+z-index: 2;
+}
+
+.lesson-button-label {
+position: absolute;
+top: 20px;
+left: 50%;
+transform: translateX(-50%);
+background: linear-gradient(135deg, #716cff 0%, #b57edc 100%);
+color: #ffffff;
+padding: 0.8rem 2rem;
+border-radius: 25px;
+font-family: 'Nunito', Arial, sans-serif;
+font-weight: 700;
+font-size: 1.1rem;
+text-align: center;
+box-shadow: 0 4px 15px rgba(113, 108, 255, 0.4);
+border: 2px solid rgba(255, 255, 255, 0.2);
+backdrop-filter: blur(10px);
+z-index: 2;
+transition: all 0.3s ease;
+white-space: nowrap;
+}
+
+.offer-card:hover .lesson-button-label {
+transform: translateX(-50%) scale(1.05);
+box-shadow: 0 6px 20px rgba(113, 108, 255, 0.6);
+background: linear-gradient(135deg, #5a4fff 0%, #a259ff 100%);
+}
+
+@media (max-width: 768px) {
+.mobile-flyer-list {
+display: flex !important;
+flex-direction: column;
+gap: 1.2rem;
+margin: 1.5rem 0;
+align-items: center;
+width: 100%;
+}
+.mobile-flyer-list a {
+display: block;
+width: 92vw;
+max-width: 420px;
+border-radius: 18px;
+overflow: hidden;
+box-shadow: 0 4px 24px #716cff22;
+background: #fff;
+margin: 0 auto;
+}
+.mobile-flyer-list img {
+width: 100%;
+height: auto;
+display: block;
+border-radius: 18px;
+}
+.mobile-flyer-label {
+display: block;
+text-align: center;
+font-family: 'Nunito', Arial, sans-serif;
+font-weight: 800;
+font-size: 1.1rem;
+color: #fff;
+background: linear-gradient(135deg, #716cff 0%, #b57edc 100%);
+padding: 0.7rem 0;
+border-radius: 0 0 18px 18px;
+margin-top: -8px;
+box-shadow: 0 2px 8px #716cff33;
+letter-spacing: 0.5px;
+transition: background 0.2s, color 0.2s;
+}
+.mobile-flyer-list a:active .mobile-flyer-label,
+.mobile-flyer-list a:focus .mobile-flyer-label,
+.mobile-flyer-list a:hover .mobile-flyer-label {
+background: linear-gradient(135deg, #5a4fff 0%, #a259ff 100%);
+color: #fff;
+}
+.mobile-flyer-list a,
+.mobile-flyer-label {
+text-decoration: none !important;
+}
+.offer-card-bg4 {
+background: url('images/lessons/onlinelessonscover.png') center center/cover no-repeat !important;
+position: relative;
+border: none;
+width: 100%;
+max-width: 1000px;
+height: auto;
+margin: 0 auto;
+box-shadow: 0 4px 24px #716cff22;
+}
+}
+
+/* Row 1: 3 cards centered */
+.offers-row-top {
+display: flex;
+justify-content: center;
+gap: 1.1rem;
+max-width: 1400px;
+margin: 0 auto 1.1rem auto;
+padding: 0 1rem;
+}
+
+/* Row 2: 4 cards centered */
+.offers-row-bottom {
+display: flex;
+justify-content: center;
+gap: 1.1rem;
+max-width: 1400px;
+margin: 0 auto;
+padding: 0 1rem;
+}
+#coming-soon-lessons {
+margin-top: 3rem;
+}
+@media (max-width: 768px) {
+.offers-row-top,
+.offers-row-bottom {
+flex-direction: column;
+align-items: center;
+gap: 1rem;
+}
+}
+
+.offer-card-bg-dropin {
+background: url('images/lessons/4weekseriesdropin.png') center center/cover no-repeat !important;
+color: #fff;
+position: relative;
+box-shadow: 0 4px 24px #716cff22;
+border: none;
+}
+
+@media (max-width: 768px) {
+.offer-card {
+width: 100vw !important;
+max-width: 100vw !important;
+aspect-ratio: 4/5;
+border-radius: 0 !important;
+overflow: hidden;
+background-size: cover !important;
+background-position: center center !important;
+background-repeat: no-repeat !important;
+margin: 0 !important;
+margin-bottom: 1.2rem !important;
+display: block;
+background-color: transparent !important;
+box-shadow: none;
+margin-left: calc(-50vw + 50%) !important;
+margin-right: calc(-50vw + 50%) !important;
+}
+
+.offers-row-top,
+.offers-row-bottom {
+flex-direction: column;
+align-items: center;
+gap: 0;
+padding: 0 !important;
+overflow: hidden;
+}
+}
+/* === FAQ SECTION STYLES === */
+.faq-section {
+/* background: linear-gradient(120deg, #2e0233f9 0%, #4a1f94 100%); */
+padding: 2.5rem 1rem;
+color: #ffffff;
+}
+
+.faq-container {
+max-width: 800px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: 1fr 2fr;
+gap: 3rem;
+align-items: start;
+padding-left: -50rem;
+}
+
+.faq-questions h3 {
+font-family: 'Nunito', Arial, sans-serif;
+font-size: 1.2rem;
+color: #4c38a6;
+margin-bottom: 1.5rem;
+font-weight: 1000px;
+line-height: 1.5;
+}
+
+.faq-list {
+display: flex;
+flex-direction: column;
+gap: 1rem;
+}
+
+.faq-item {
+border-radius: 8px;
+overflow: hidden;
+position:relative;
+z-index: 2;
+background: rgb(255, 255, 255);
+transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+border-color: #7c3aed;
+background: rgb(255, 255, 255);
+}
+
+.faq-question {
+width: 100%;
+max-width: 450px;
+height: auto;
+min-height: 35px;
+background: none;
+border: none;
+color: #4c38a6;
+padding: 1rem;
+text-align: left;
+font-size: 1rem;
+font-family: 'Nunito', Arial, sans-serif;
+font-weight: 700;
+cursor: pointer;
+display: flex;
+justify-content: space-between;
+align-items: center;
+transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+background: rgba(255, 255, 255, 0.1);
+}
+
+.faq-icon {
+font-size: 1.3rem;
+font-weight: bold;
+transition: transform 0.3s ease;
+margin-right: 1rem;
+}
+
+.faq-item.active .faq-icon {
+transform: rotate(45deg);
+}
+
+.faq-answer {
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.3s ease;
+background: #4c38a6;
+}
+
+.faq-item.active .faq-answer {
+max-height: 300px;
+overflow-y: auto;
+}
+
+.faq-answer p {
+padding: 1rem;
+margin: 0;
+color: #ffffff;
+line-height: 1.5;
+font-family: 'Nunito', Arial, sans-serif;
+}
+
+/* Custom scrollbar styling for FAQ answers */
+.faq-answer::-webkit-scrollbar {
+width: 8px;
+}
+
+.faq-answer::-webkit-scrollbar-track {
+background: rgba(0, 0, 0, 0.1);
+border-radius: 4px;
+}
+
+.faq-answer::-webkit-scrollbar-thumb {
+background: rgba(167, 36, 255, 0.6);
+border-radius: 4px;
+}
+
+.faq-answer::-webkit-scrollbar-thumb:hover {
+background: rgba(167, 36, 255, 0.8);
+}
+
+.faq-title {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100%;
+}
+
+.faq-title h2 {
+font-family: 'PassionOne', 'Lilita One', Arial, sans-serif;
+font-size: 10rem;
+color: #ffffff;
+text-align: center;
+margin-left: -400px;
+margin-right: 50px;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 0.1rem;
+line-height: 0.8;
+}
+
+.faq-title h2 span {
+display: block;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+.faq-container {
+grid-template-columns: 1fr;
+gap: 2rem;
+}
+
+.faq-title {
+order: -1;
+}
+
+.faq-title h2 {
+font-size: 4rem;
+flex-direction: row;
+gap: 0.2rem;
+margin-left: 0;
+margin-right: 0;
+}
+
+.faq-questions h3 {
+font-size: 1.2rem;
+text-align: center;
+}
+
+.faq-question {
+font-size: 1rem;
+padding: 1rem;
+}
+
+.faq-answer p {
+padding: 1rem;
+}
+}
+
+</style>
+<!-- FAQ Section -->
+<section class="faq-section" id="faqs" aria-labelledby="faq-heading">
+<div class="faq-container">
+<div class="faq-title">
+<h2 id="faq-heading"><span>F</span><span>A</span><span>Q</span><span>s</span></h2>
+</div>
+<div class="faq-questions">
+<h3></h3>
+<div class="faq-list" role="list">
+<div class="faq-item" role="listitem">
+<button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-1">
+  I will be missing one or more classes, how can I transfer my credit(s) over to another series?
+  <span class="faq-icon" aria-hidden="true">+</span>
+</button>
+<div class="faq-answer" id="faq-answer-1">
+  <p>You may transfer your credit(s) to another series by contacting us directly via email or in person. Please provide your details and the series you wish to transfer to, and we will assist you with the process.</p>
+</div>
+</div>
+<div class="faq-item" role="listitem">
+<button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-2">
+  How many credits do I have and when do they expire?
+  <span class="faq-icon" aria-hidden="true">+</span>
+</button>
+<div class="faq-answer" id="faq-answer-2">
+  <p>4 weeks Salsa or Bachata ONLY Series = 4 credits. 
+     4 weeks Salsa & Bachata Series = 8 credits. 
+    Your credits expire 60 days after purchase OR are valid for another consecutive season.</p>
+</div>
+</div>
+<div class="faq-item" role="listitem">
+<button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-3">
+  Can I attend 2 classes for Winter and 2 classes for Spring if I purchase the 4-week series credit?
+  <span class="faq-icon" aria-hidden="true">+</span>
+</button>
+<div class="faq-answer" id="faq-answer-3">
+  <p>Yes, you can split your classes between seasons. Just let us know your schedule preferences, and we’ll do our best to accommodate you.</p>
+</div>
+</div>
+<div class="faq-item" role="listitem">
+<button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-4">
+  What is the pricing details for the reduced-pricing option? 
+  <span class="faq-icon" aria-hidden="true">+</span>
+</button>
+<div class="faq-answer" id="faq-answer-4">
+  <p>Our reduced-pricing option is designed to make our classes more accessible. Please contact us directly for detailed information on pricing and eligibility.</p>
+</div>
+</div>
+<div class="faq-item" role="listitem">
+<button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-4">
+  What is the difference between a workshop and a series? 
+  <span class="faq-icon" aria-hidden="true">+</span>
+</button>
+<div class="faq-answer" id="faq-answer-5">
+  <p>A workshop is typically a one-time event focused on a specific topic or skill, while a series consists of multiple classes over a set period, allowing for more in-depth learning and progression. Our classes focus on
+    discussing the details of body movement, dance technique, and musicality, while our workshops focus on engaging and fun learning experiences to get a feel of what you can learn in our series while connecting with others.
+  </p>
+</div>
+</div>
+<div class="faq-item" role="listitem">
+<button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-6">
+  What is your return policy?
+  <span class="faq-icon" aria-hidden="true">+</span>
+</button>
+<div class="faq-answer" id="faq-answer-6">
+  <p>At this time, we are unable to offer refunds. Social dance events and classes require advance planning and costs, which means all purchases are final. If you are unable to attend, you may transfer your spot to a friend or community member. Please contact us if you’d like help arranging a transfer.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<footer class="footer">
+<div class="footer-bottom">
+<div class="footer-newsletter">
+<h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
+<form>
+<input type="email" placeholder="Enter your email ..." required>
+<button type="submit">Subscribe</button>
+</form>
+<div class="footer-links">
+<a href="courses.html">Courses</a>
+<a href="Events.html">Events</a>
+<a href="gallery.html">Gallery</a> 
+<a href="directory.html">Directory</a>
+<a href="team.html">Team</a>
+<a href="book-us.html">Book Us</a>
+<a href="merch.html">Merch</a>
+<a href="contact.html">Contact Us</a>
+</div>
+
+</div>
+<div class="footer-social">
+<h3>Follow Us</h3>
+<div class="footer-social-icons">
+<a href="https://www.instagram.com/queerlatindancesd/"><img src="images/icons/instagramlogo.png" alt="Instagram"></a>
+<a href="https://www.youtube.com/@QueerLatinDance"><img src="images/icons/youtubeicon.png" alt="YouTube"></a>
+<a href="https://www.tiktok.com/@queerlatindance"><img src="images/icons/tiktokicon2.png" alt="TikTok"></a>
+<a href="https://linktr.ee/queerlatindancesd"><img src="images/icons/linktreelogo.png" alt="Linktree"></a>
+</div>
+<div class="footer-copyright">
+© 2026 Queer Latin Dance. All Rights Reserved.
+</div>
+</div>
+</div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+// Function to load lessons from JSON and display them
+async function loadLessons() {
+try {
+const response = await fetch('courses-data.json');
+const lessonsData = await response.json();
+
+// Get containers
+const upcomingLessonsTop = document.getElementById('upcoming-lessons-top');
+const upcomingLessonsBottom = document.getElementById('upcoming-lessons-bottom');
+const comingSoonLessons = document.getElementById('coming-soon-lessons');
+
+// Function to create lesson HTML
+function createLessonHTML(lesson) {
+const isComingSoon = lesson.date === 'tba' || lesson.date === 'coming-soon';
+const comingSoonBadge = isComingSoon ? '<span class="coming-soon-badge">Coming Soon!</span>' : '';
+const banner = lesson.banner ? `<div class="closed-banner">${lesson.banner}</div>` : '';
+const cardClass = getCardClass(lesson.type);
+
+return `
+<a class="offer-card ${cardClass}" href="${lesson.link}" style="position:relative;overflow:hidden;background: url('${lesson.flyerUrl}') center center/cover no-repeat !important;">
+${banner}
+<div class="lesson-button-label">${lesson.title}</div>
+${comingSoonBadge}
+</a>
+`;
+}
+
+// Function to get appropriate CSS class
+function getCardClass(type) {
+switch(type) {
+case 'dropin':
+return 'offer-card-bg-dropin';
+case 'series':
+return 'offer-card-bg';
+case 'private':
+return 'offer-card-bg3';
+case 'online':
+return 'offer-card-bg4';
+default:
+return 'offer-card-bg';
+}
+}
+
+// Load upcoming lessons - split into two rows
+lessonsData.upcoming.forEach((lesson, index) => {
+if (index < 4) {
+upcomingLessonsTop.innerHTML += createLessonHTML(lesson);
+} else {
+upcomingLessonsBottom.innerHTML += createLessonHTML(lesson);
+}
 });
 
-// Debug info
-console.log('📄 HTML loaded, JavaScript should initialize soon...');
+// Load coming soon lessons
+lessonsData.coming_soon.forEach(lesson => {
+comingSoonLessons.innerHTML += createLessonHTML(lesson);
+});
 
-// Quick admin function for testing
-window.grantAccessQuick = function(email, courseId) {
-if (typeof courseApp !== 'undefined') {
-// Grant access directly for testing
-const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-if (currentUser.email === email) {
-if (!currentUser.ownedCourses) {
-currentUser.ownedCourses = [];
-}
-if (!currentUser.ownedCourses.includes(courseId)) {
-currentUser.ownedCourses.push(courseId);
-localStorage.setItem('currentUser', JSON.stringify(currentUser));
-courseApp.currentUser = currentUser;
-courseApp.showSuccess(`✅ Quick access granted for ${courseId}!`);
-courseApp.updateCourseAccessUI();
-return true;
+} catch (error) {
+console.error('Error loading lessons:', error);
 }
 }
-}
-return false;
-};
 
-// Create test payment for admin testing (deprecated - use createSamplePayments instead)
-window.createTestPayment = function(email, courseId, courseName, amount = 49) {
-console.log('⚠️ createTestPayment is deprecated. Use courseApp.createSamplePayments() instead');
-
-// Remove any existing payments for this user/course first to prevent duplicates
-const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
-const cleanedPayments = pendingPayments.filter(payment => 
-!((payment.email === email || payment.userEmail === email) && payment.courseId === courseId)
-);
-
-const testPayment = {
-id: Date.now() + Math.random(), // Unique ID
-email: email,
-userEmail: email,
-firstName: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
-lastName: 'Student',
-name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1) + ' Student',
-courseName: courseName,
-series: courseName,
-courseId: courseId,
-paymentMethod: 'Zelle',
-method: 'Zelle',
-timestamp: new Date().toISOString(),
-status: 'pending',
-amount: amount,
-price: amount
-};
-
-cleanedPayments.push(testPayment);
-localStorage.setItem('pendingPayments', JSON.stringify(cleanedPayments));
-
-console.log('✅ Test payment created:', testPayment);
-
-if (typeof courseApp !== 'undefined' && courseApp.loadPendingPayments) {
-setTimeout(() => courseApp.loadPendingPayments(), 100);
-}
-
-return testPayment;
-};
-
-// Clear all test payments
-window.clearTestPayments = function() {
-localStorage.removeItem('pendingPayments');
-console.log('🧹 All test payments cleared');
-
-if (typeof courseApp !== 'undefined' && courseApp.loadPendingPayments) {
-setTimeout(() => courseApp.loadPendingPayments(), 100);
-}
-};
+// Run the function when page loads
+document.addEventListener('DOMContentLoaded', loadLessons);
 </script>
 
-<!-- Payment Overlay Modal -->
-<div id="paymentOverlay" class="payment-overlay">
-<div class="payment-container">
-<div class="payment-title">Complete Your Payment</div>
-<div class="payment-desc">
-Select a payment method below to finish registration for your course.<br>
-<span id="selectedSeries" style="display:block;margin-top:0.7em;font-size:1.08rem;color:#716cff;font-weight:700;"></span>
-<span id="selectedPrice" style="display:block;margin-top:0.2em;font-size:1.08rem;color:#222;font-weight:700;"></span>
-</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+if (window.innerWidth <= 768) {
+setTimeout(function() {
+document.querySelectorAll('.offer-card-bg4').forEach(function(card) {
+card.removeAttribute('style');
+card.style.background = "url('images/lessons/onlinelessonscover.png') center center/contain no-repeat";
+card.style.width = "100vw";
+card.style.maxWidth = "100vw";
+card.style.marginLeft = "calc(-1 * ((100vw - 100%) / 2))";
+card.style.marginRight = "calc(-1 * ((100vw - 100%) / 2))";
+card.style.borderRadius = "0";
+});
+}, 300);
+}
+});
 
-<div class="payment-methods">
-<!-- Order Summary -->
+</script>
+
+<script>
+// Toggle calendar overlay
+function toggleCalendar(id) {
+  const overlay = document.getElementById(`calendar-overlay-${id}`);
+  if (overlay) overlay.classList.toggle('active');
+}
+
+// Close on outside click or Escape
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('calendar-overlay')) e.target.classList.remove('active');
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.calendar-overlay.active').forEach(o => o.classList.remove('active'));
+  }
+});
+
+// Check if date passed
+function isDatePast(dateStr, year) {
+  if (!dateStr) return false;
+  const [month, day] = dateStr.split('/').map(Number);
+  return new Date(year, month - 1, day) < new Date();
+}
+
+// Load schedules from calendar-data.json
+async function loadSchedulesFromCalendarData() {
+  try {
+    const response = await fetch('calendar-data.json');
+    const data = await response.json();
+    // Winter Part 1: series1winter1 (Fridays) + series2winter1 (Sundays)
+const fridaysP1 = data.series1part1;
+const sundaysP1 = data.series2part1;
+
+if (fridaysP1 && sundaysP1) {
+  // Update inline dates (no times here)
+  document.getElementById('winter-p1-dates').innerHTML = 
+    `FRIDAYS: ${fridaysP1.dates.join(', ')}<br>SUNDAYS: ${sundaysP1.dates.join(', ')}`;
+
+  // Update calendar modal - Fridays (times on top)
+  document.getElementById('calendar-fridays-winter-p1').innerHTML = 
+    `<li class="calendar-times">
+      <strong>Salsa (LEVEL 1):</strong> ${fridaysP1.times.salsa}<br>
+      <strong>Bachata (LEVEL 1):</strong> ${fridaysP1.times.bachata}
+    </li>` +
+    fridaysP1.dates.map(d => `<li class="${isDatePast(d, fridaysP1.year) ? 'past-date' : ''}">${d}</li>`).join('');
+
+  // Update calendar modal - Sundays (times on top)
+  document.getElementById('calendar-sundays-winter-p1').innerHTML = 
+    `<li class="calendar-times">
+      <strong>Salsa (LEVEL 1):</strong> ${sundaysP1.times.salsa}<br>
+      <strong>Bachata (LEVEL 2):</strong> ${sundaysP1.times.bachata}
+    </li>` +
+    sundaysP1.dates.map(d => `<li class="${isDatePast(d, sundaysP1.year) ? 'past-date' : ''}">${d}</li>`).join('');
+}
+
+// Winter Part 2: series1winter2 (Fridays) + series2winter2 (Sundays)
+const fridaysP2 = data.series1part2;
+const sundaysP2 = data.series2part2;
+
+if (fridaysP2 && sundaysP2) {
+  // Update inline dates (no times here)
+  document.getElementById('winter-p2-dates').innerHTML = 
+    `FRIDAYS: ${fridaysP2.dates.join(', ')}<br>SUNDAYS: ${sundaysP2.dates.join(', ')}`;
+
+  // Update calendar modal - Fridays (times on top)
+      document.getElementById('calendar-fridays-winter-p2').innerHTML = 
+        `<li class="calendar-times">
+          <strong>Salsa (LEVEL 1):</strong> ${fridaysP2.times.salsa}<br>
+          <strong>Bachata (LEVEL 1):</strong> ${fridaysP2.times.bachata}
+        </li>` +
+        fridaysP2.dates.map(d => `<li class="${isDatePast(d, fridaysP2.year) ? 'past-date' : ''}">${d}</li>`).join('');
+      
+      // Update calendar modal - Sundays (times on top)
+      document.getElementById('calendar-sundays-winter-p2').innerHTML = 
+        `<li class="calendar-times">
+          <strong>Salsa (LEVEL 1):</strong> ${sundaysP2.times.salsa}<br>
+          <strong>Bachata (LEVEL 2):</strong> ${sundaysP2.times.bachata}
+        </li>` +
+        sundaysP2.dates.map(d => `<li class="${isDatePast(d, sundaysP2.year) ? 'past-date' : ''}">${d}</li>`).join('');
+    }
+    
+  } catch (error) {
+    console.error('Error loading calendar data:', error);
+  }
+}
+document.addEventListener('DOMContentLoaded', loadSchedulesFromCalendarData);
+// FAQ Toggle functionality with accessibility improvements
+function toggleFAQ(button) {
+const faqItem = button.parentElement;
+const isActive = faqItem.classList.contains('active');
+
+// Close all FAQ items and update aria-expanded
+document.querySelectorAll('.faq-item').forEach(item => {
+item.classList.remove('active');
+const btn = item.querySelector('.faq-question');
+if (btn) {
+btn.setAttribute('aria-expanded', 'false');
+}
+});
+
+// If this item wasn't active, open it and update aria-expanded
+if (!isActive) {
+faqItem.classList.add('active');
+button.setAttribute('aria-expanded', 'true');
+}
+}
+// Keyboard support for FAQ items
+document.querySelectorAll('.faq-question').forEach(button => {
+button.addEventListener('keydown', function(e) {
+if (e.key === 'Enter' || e.key === ' ') {
+e.preventDefault();
+toggleFAQ(this);
+}
+});
+});
+// Smooth scroll to FAQ section with offset
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.location.hash === '#faqs') {
+    setTimeout(function() {
+      const faqSection = document.getElementById('faqs');
+      if (faqSection) {
+        const offset = 80; // Adjust this value based on your header height
+        const top = faqSection.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    }, 500); // Wait for dynamic content to load
+  }
+});
+</script>
+</body>
+</html>
