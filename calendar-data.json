@@ -1,7 +1,7 @@
 {
     "series1part1": {
     "year": 2026,
-    "dates": ["4/3", "4/10", "4/24", "5/1"],
+    "dates": ["4/10", "4/24", "5/1", "5/8"],
     "times": {
       "salsa": "7:00pm - 8:00pm",
       "bachata": "8:00pm - 9:00pm"
@@ -18,14 +18,14 @@
    "series1": {
     "title": "4 Week Series 1",
     "dayOfWeek": "Fridays",
-    "dates": ["4/3", "4/10", "4/24", "5/1"],
+    "dates": ["4/10", "4/24", "5/1", "5/8"],
     "year": 2026,
     "rsvpDeadline": "Wednesday, 4/1",
     "googleCalendarDates": [
-      "20260403",
       "20260410",
       "20260424",
-      "20260501"
+      "20260501",
+      "20260508"
     ],
     "times": {
       "salsa": "6:00pm-7:00pm",
@@ -79,13 +79,13 @@
   "title": "Drop-in Classes",
   "dayOfWeek": ["Fridays", "Sundays"],
   "dates": {
-    "fridays": ["4/3", "4/10", "4/24", "5/1"],
+    "fridays": ["4/10", "4/24", "5/1", "5/8"],
     "sundays": ["4/12", "4/19", "5/3", "5/10"]
   },
   "year": 2026,
   "rsvpDeadline": "Wednesday, 4/7",
   "googleCalendarDates": {
-    "fridays": ["20260403", "20260410", "20260424", "20260501"],
+    "fridays": ["20260410", "20260424", "20260501", "20260508"],
     "sundays": ["20260412", "20260419", "20260503", "20260510"]
   },
   "times": {
