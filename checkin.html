@@ -9,7 +9,11 @@
 <style>
 
 body {
-  background: linear-gradient(135deg, #f7c7e5 0%, #fb94de 100%);
+  background-image: url('images/eventpage/aprqssbg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -121,7 +125,7 @@ body {
 .checkin-container {
 background: #fafaea;
 border-radius: 30px;
-box-shadow: 0 4px 32px rgba(160, 43, 255, 0.759);
+box-shadow: 0 4px 32px rgba(179, 89, 252, 0.759);
 padding: 2.5em 2em 2em 2em;
 max-width: 500px; /* Match .event-flyer max-width */
 width: 100%;
@@ -585,7 +589,7 @@ font-style: italic;
   <div class="popup-content">
     <h2>Purchase Ticket</h2>
        <p>Scan QR Code to pay through Stripe (processing fee applies). After payment, close pop-up to return to check in using your name or email.</p>
-    <img src="images/eventpage/stripe-qr.png" alt="Stripe QR Code" style="width:300px; margin:1em auto; display:block;">
+    <img src="images/eventpage/stripe-qr1.png" alt="Stripe QR Code" style="width:300px; margin:1em auto; display:block;">
     <div style="margin-top:1em;">
       <button class="btn-cancel" onclick="closePopup('stripe-popup')">Close</button>
     </div>
@@ -660,11 +664,10 @@ let currentGuestRow = null;
 let isQRCheckin = false;
 
 // ============ Tab Switching ============
-let currentMode = null; // "manual", "scanner", or null
+let currentMode = null;
 
 function showManualEntry() {
   if (currentMode === "manual") {
-    // Already in manual mode, so reset to default
     resetCheckinUI();
     return;
   }
@@ -672,7 +675,9 @@ function showManualEntry() {
   document.getElementById('manualSection').style.display = 'block';
   document.getElementById('scannerSection').classList.remove('active');
   document.getElementById('purchaseTab').classList.add('active');
-  document.getElementById('scanTab').classList.remove('active');
+  // Hide scan + VIP
+  document.getElementById('scanTab').style.display = 'none';
+  document.getElementById('vipTab').style.display = 'none';
   stopScanner();
   document.getElementById('stripe-popup').classList.add('active');
 }
@@ -686,32 +691,11 @@ function showScanner() {
   document.getElementById('manualSection').style.display = 'none';
   document.getElementById('scannerSection').classList.add('active');
   document.getElementById('scanTab').classList.add('active');
-
-  // Hide BOTH purchase and VIP buttons
+  // Hide purchase + VIP
   document.getElementById('purchaseTab').style.display = 'none';
   document.getElementById('vipTab').style.display = 'none';
-
   startScanner();
   document.getElementById('stripe-popup').classList.remove('active');
-}
-
-function showManualEntry() {
-  if (currentMode === "manual") {
-    resetCheckinUI();
-    return;
-  }
-  currentMode = "manual";
-  document.getElementById('manualSection').style.display = 'block';
-  document.getElementById('scannerSection').classList.remove('active');
-  document.getElementById('purchaseTab').classList.add('active');
-  document.getElementById('scanTab').classList.remove('active');
-
-  // Hide BOTH scan and VIP buttons
-  document.getElementById('scanTab').style.display = 'none';
-  document.getElementById('vipTab').style.display = 'none';
-
-  stopScanner();
-  document.getElementById('stripe-popup').classList.add('active');
 }
 
 function showVipEntry() {
@@ -720,14 +704,12 @@ function showVipEntry() {
     return;
   }
   currentMode = "vip";
-  document.getElementById('scannerSection').classList.remove('active');
   document.getElementById('manualSection').style.display = 'block';
+  document.getElementById('scannerSection').classList.remove('active');
   document.getElementById('vipTab').classList.add('active');
-
-  // Hide BOTH scan and purchase buttons
+  // Hide scan + purchase
   document.getElementById('scanTab').style.display = 'none';
   document.getElementById('purchaseTab').style.display = 'none';
-
   stopScanner();
   document.getElementById('stripe-popup').classList.remove('active');
   document.getElementById('email').focus();
@@ -740,12 +722,10 @@ function resetCheckinUI() {
   document.getElementById('purchaseTab').classList.remove('active');
   document.getElementById('scanTab').classList.remove('active');
   document.getElementById('vipTab').classList.remove('active');
-
-  // SHOW all 3 buttons again
+  // Show ALL 3 buttons
   document.getElementById('scanTab').style.display = 'block';
   document.getElementById('purchaseTab').style.display = 'block';
   document.getElementById('vipTab').style.display = 'flex';
-
   stopScanner();
 }
 
@@ -897,11 +877,6 @@ if (guest.checkedIn && !guest.printed) {
 // New check-in
 document.getElementById('preferredNameInput').value = guest.preferredName || guest.actualName || '';
 document.getElementById('pronounsInput').value = guest.pronouns || '';
-document.getElementById('namepronouns-popup').classList.add('active');
-
-// New check-in
-document.getElementById('preferredNameInput').value = result.name || '';
-document.getElementById('pronounsInput').value = result.pronouns || '';
 document.getElementById('namepronouns-popup').classList.add('active');
 
 } catch (error) {
@@ -1071,8 +1046,8 @@ function backToNamePronouns() {
     // Get current values from the preview
     let name = document.getElementById('ticketGuestName').textContent || '';
     let pronouns = document.getElementById('ticketPronouns').textContent || '';
-    // Remove clover emoji if present
-    name = name.replace(/^🍀/, '').trim();
+    // Remove emoji if present
+    name = name.replace(/^[🌷]/, '').trim();
     // Fill the confirmation popup fields with current values
 document.getElementById('preferredNameInput').value = name;
 document.getElementById('pronounsInput').value = pronouns;
@@ -1086,45 +1061,6 @@ if (e.key === 'Enter') {
 document.getElementById('checkinBtn').click();
 }
 });
-// ...existing code...
-function showVipEntry() {
-  if (currentMode === "vip") {
-    resetCheckinUI();
-    return;
-  }
-  currentMode = "vip";
-  document.getElementById('scannerSection').classList.remove('active');
-  document.getElementById('manualSection').style.display = 'block';
-  document.getElementById('vipTab').classList.add('active');
-  document.getElementById('scanTab').classList.remove('active');
-  document.getElementById('purchaseTab').classList.remove('active');
-
-  // Hide scan and purchase buttons
-  document.getElementById('scanTab').style.display = 'none';
-  document.getElementById('purchaseTab').style.display = 'none';
-
-  stopScanner();
-  document.getElementById('stripe-popup').classList.remove('active');
-  document.getElementById('email').focus();
-}
-// ...existing code...
-
-function resetCheckinUI() {
-  currentMode = null;
-  document.getElementById('manualSection').style.display = 'none';
-  document.getElementById('scannerSection').classList.remove('active');
-  document.getElementById('purchaseTab').classList.remove('active');
-  document.getElementById('scanTab').classList.remove('active');
-  document.getElementById('vipTab').classList.remove('active');
-
-  // SHOW all buttons again
-  document.getElementById('purchaseTab').style.display = 'block';
-  document.getElementById('scanTab').style.display = 'block';
-  document.getElementById('vipTab').style.display = 'flex';
-
-  stopScanner();
-}
-// ...existing code...
 </script>
 </body>
 </html>
