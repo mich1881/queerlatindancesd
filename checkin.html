@@ -235,14 +235,14 @@ width: 100%;
 max-width: 1000px;
 padding: 0.9em 1em;
 border-radius: 8px;
-border: 2px solid #f520d5;
+border: 2px solid #f26992;
 font-size: 1.1em;
 margin-bottom: 1em;
 outline: none;
 transition: border-color 0.2s;
 }
 #manualSection input:focus {
-border-color: #f520d5;
+border-color: #f14276;
 }
 
 /* Scanner Section */
@@ -284,7 +284,7 @@ transition: background 0.2s, transform 0.1s;
 }
 button:hover {
 transform: translateY(-1px);
-background: #b10000; /* slightly darker than #c2bb01 */
+background: #f14276; /* slightly darker than #c2bb01 */
 }
 button:active {
 transform: translateY(0);
@@ -303,7 +303,7 @@ color: white;
 margin-top: 0.5em;
 }
 .btn-stop:hover {
-background: #a4284e;
+background: #f14276;
 }
 .btn-cancel {
 background: #f0f0f0;
@@ -317,7 +317,7 @@ background: #cf76ff;
 color: white;
 }
 .btn-confirm:hover {
-background: #a4284e;
+background: #f14276;
 }
 .btn-print {
 background: #cf76ff;
@@ -588,7 +588,7 @@ font-style: italic;
 <div class="popup-overlay" id="stripe-popup">
   <div class="popup-content">
     <h2>Purchase Ticket</h2>
-       <p>Scan QR Code to pay through Stripe (processing fee applies). After payment, close pop-up to return to check in using your name or email.</p>
+       <p>After payment, close pop-up to return to check in using your QR CODE or email.</p>
     <img src="images/eventpage/stripe-qr1.png" alt="Stripe QR Code" style="width:300px; margin:1em auto; display:block;">
     <div style="margin-top:1em;">
       <button class="btn-cancel" onclick="closePopup('stripe-popup')">Close</button>

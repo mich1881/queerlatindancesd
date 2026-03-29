@@ -536,14 +536,15 @@ if (e.key === 'Escape') document.getElementById('codeOfConductOverlay').style.di
 </script>
 <script>
 function eventToSchema(event) {
-   const eventDate = new Date(event.date);
-  eventDate.setMonth(eventDate.getMonth() - 1);
-  const validFrom = eventDate.toISOString().split('T')[0] + "T00:00:00-07:00";
+  // ✅ FIX: parse date correctly without timezone shift
+  const [year, month, day] = event.date.split('-').map(Number);
+  const validFrom = new Date(year, month - 1, day - 30).toISOString().split('T')[0] + "T00:00:00-07:00";
+
   return {
     "@type": "Event",
     "name": event.title,
-    "startDate": event.date + "T19:00:00-07:00", // Adjust time/offset as needed
-    "endDate": event.date + "T22:00:00-07:00",   // Example: event ends at 10 PM
+    "startDate": event.date + "T19:00:00-07:00",
+    "endDate": event.date + "T22:00:00-07:00",
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
     "eventStatus": "https://schema.org/EventScheduled",
     "location": {
@@ -558,8 +559,9 @@ function eventToSchema(event) {
         "addressCountry": "US"
       }
     },
+
     "image": [
-      window.location.origin + "/" + event.flyerUrl
+      "https://queerlatindance.com/" + event.flyerUrl
     ],
     "description": event.description,
     "organizer": {
@@ -570,13 +572,14 @@ function eventToSchema(event) {
     "offers": event.inviteUrl ? {
       "@type": "Offer",
       "url": event.inviteUrl,
-      "price": 20,
+      "price": 25,
       "priceCurrency": "USD",
       "availability": "https://schema.org/InStock",
       "validFrom": validFrom
     } : undefined,
+
     "performer": {
-      "@type": "Michelle F.",
+      "@type": "PerformingGroup",
       "name": "Queer Latin Dance SD"
     }
   };

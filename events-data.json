@@ -1,121 +1,121 @@
 {
   "upcoming": [
-                 {
+    {
       "id": "apr2026-salsa",
       "date": "2026-04-17",
       "month": "APR",
       "day": "17",
-      "title": "QSS",
+      "title": "Queer Salsa Social: ¡Que Dulce Ritmo!",
       "flyerUrl": "images/eventpage/qssapr2026flyer.png",
       "inviteUrl": "https://partiful.com/e/qXHvbufrpK61meBmFkBG",
-      "description": "Join us for an exciting QSS! Queer Salsa Social is an inclusive lgbtq+ event, queer event in San Diego. Latin dance social for the queer community. Enjoy Latin music, salsa & bachata music, and cumbia, merengue, banda and more! All levels welcome, no partner needed. Join us for a night of dancing, fun, and community! Queer event in San Diego, California."
-    },
-             {
+      "description": "Join us for an exciting Queer Salsa Social! An inclusive LGBTQ+ Latin dance event in San Diego. Enjoy salsa, bachata, cumbia, merengue and more! All levels welcome, no partner needed."
+    }
+  ],
+  "past": [
+    {
       "id": "mar2026-salsa",
       "date": "2026-03-20",
       "month": "MAR",
       "day": "20",
-      "title": "QSS",
+      "title": "Queer Salsa Social: Luck Be a Lady",
       "flyerUrl": "images/eventpage/qssmarch2026flyer.png",
-      "inviteUrl": "https://partiful.com/e/HMbNZi3PMprGdkNAHOUB?",
-      "description": "Join us for an exciting QSS! Queer Salsa Social is an inclusive lgbtq+ event, queer event in San Diego. Latin dance social for the queer community. Enjoy Latin music, salsa & bachata music, and cumbia, merengue, banda and more! All levels welcome, no partner needed. Join us for a night of dancing, fun, and community! Queer event in San Diego, California."
+      "inviteUrl": "https://partiful.com/e/HMbNZi3PMprGdkNAHOUB",
+      "description": "Join us for an exciting Queer Salsa Social! An inclusive LGBTQ+ Latin dance event in San Diego. Enjoy salsa, bachata, cumbia, merengue and more! All levels welcome, no partner needed."
     },
-         {
-      "id": "sep2025-banda",
+    {
+      "id": "feb2026-salsa",
       "date": "2026-02-13",
       "month": "FEB",
       "day": "13",
-      "title": "QSS",
+      "title": "Queer Salsa Social February 2026",
       "flyerUrl": "images/eventpage/qssfeb2026flyer.png",
       "inviteUrl": "https://partiful.com/e/1vrpFTS8VkpOghtuXWvT",
-      "description": "Join us for an exciting QSS! Queer Salsa Social is an inclusive lgbtq+ event, queer event in San Diego. Latin dance social for the queer community. Enjoy Latin music, salsa & bachata music, and cumbia, merengue, banda and more! All levels welcome, no partner needed. Join us for a night of dancing, fun, and community!"
+      "description": "Join us for an exciting Queer Salsa Social! An inclusive LGBTQ+ Latin dance event in San Diego. All levels welcome, no partner needed."
     },
-     {
-      "id": "sep2025-banda",
+    {
+      "id": "dec2025-salsa",
       "date": "2025-12-19",
       "month": "DEC",
       "day": "19",
-      "title": "QSS",
+      "title": "Queer Salsa Social December 2025",
       "flyerUrl": "images/eventpage/qssdecflyer.png",
       "inviteUrl": "https://partiful.com/e/yGWjdI5h1WfZFarjgS2t",
-      "description": "Join us for an exciting QSS!"
+      "description": "Join us for an exciting Queer Salsa Social! An inclusive LGBTQ+ Latin dance event in San Diego. All levels welcome, no partner needed."
     },
     {
-      "id": "sep2025-banda",
+      "id": "nov2025-salsa",
       "date": "2025-11-14",
       "month": "NOV",
       "day": "14",
-      "title": "QSS",
+      "title": "Queer Salsa Social November 2025",
       "flyerUrl": "images/eventpage/qssnovflyer.png",
       "inviteUrl": "https://partiful.com/e/iQ6QZai2ymRWOULbxGVo",
-      "description": "Join us for an exciting QSS!"
+      "description": "Join us for an exciting Queer Salsa Social! An inclusive LGBTQ+ Latin dance event in San Diego. All levels welcome, no partner needed."
     },
     {
-      "id": "sep2025-banda",
-      "date": "2025-09-21",
-      "month": "SEP",
-      "day": "21",
-      "title": "QSS",
-      "flyerUrl": "images/eventpage/qsssepflyer.png",
-      "description": "Join us for an exciting QSS!"
-    },
-    {
-      "id": "20251026-qss",
+      "id": "oct2025-salsa",
       "date": "2025-10-26",
       "month": "OCT",
       "day": "26",
-      "title": "QSS",
+      "title": "Queer Salsa Social October 2025",
       "flyerUrl": "images/eventpage/qssoctflyer.png",
       "inviteUrl": "https://partiful.com/e/z6Qf24ZhADBU6rijifAm",
-      "description": ""
-    }
-  ],
-  "past": [
-        {
-      "id": "20251026-qss",
+      "description": "Join us for an exciting Queer Salsa Social! An inclusive LGBTQ+ Latin dance event in San Diego. All levels welcome, no partner needed."
+    },
+    {
+      "id": "sep2025-salsa",
+      "date": "2025-09-21",
+      "month": "SEP",
+      "day": "21",
+      "title": "Queer Salsa Social September 2025",
+      "flyerUrl": "images/eventpage/qsssepflyer.png",
+      "description": "Join us for an exciting Queer Salsa Social! An inclusive LGBTQ+ Latin dance event in San Diego. All levels welcome, no partner needed."
+    },
+    {
+      "id": "oct2025-shefest",
       "date": "2025-10-11",
       "month": "OCT",
       "day": "11",
       "title": "She Fest Intro to Salsa On2 Workshop",
       "flyerUrl": "images/eventpage/shefest2025flyer.jpg",
       "inviteUrl": "https://www.instagram.com/p/DPk6z9AkUmx/",
-      "description": "https://www.instagram.com/p/DPk6z9AkUmx/"
+      "description": "She Fest Intro to Salsa On2 Workshop hosted by Queer Latin Dance SD in San Diego."
     },
     {
       "id": "aug2025-summer",
       "date": "2025-08-10",
       "month": "AUG",
       "day": "10",
-      "title": "Summer Salsa Social",
+      "title": "Summer Queer Salsa Social August 2025",
       "flyerUrl": "images/eventpage/qssaugflyer.png",
-      "description": "Summer salsa social event"
+      "description": "Summer Queer Salsa Social event in San Diego. LGBTQ+ Latin dance event."
     },
     {
       "id": "jul2025-summer",
       "date": "2025-07-13",
       "month": "JUL",
       "day": "13",
-      "title": "Summer Salsa Social",
+      "title": "Summer Queer Salsa Social July 2025",
       "flyerUrl": "images/eventpage/qssjulyflyer.png",
-      "description": "July summer salsa social"
+      "description": "July Summer Queer Salsa Social in San Diego. LGBTQ+ Latin dance event."
     },
     {
       "id": "jun2025-sober",
       "date": "2025-06-21",
       "month": "JUN",
       "day": "21",
-      "title": "Sober Pride Event",
+      "title": "Sober Pride Celebration 2025",
       "flyerUrl": "images/eventpage/soberprideflyer.jpeg",
-      "description": "Sober pride celebration"
+      "description": "Sober Pride celebration hosted by Queer Latin Dance SD in San Diego."
     },
     {
       "id": "may2025-social",
       "date": "2025-05-25",
       "month": "MAY",
       "day": "25",
-      "title": "May Social",
+      "title": "Queer Salsa Social May 2025",
       "flyerUrl": "images/eventpage/qssmayflyer.jpeg",
-      "description": "May social event"
+      "description": "May Queer Salsa Social in San Diego. LGBTQ+ Latin dance event."
     }
   ]
 }

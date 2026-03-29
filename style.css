@@ -4926,3 +4926,27 @@ body.events-page::before {
   width: 40px;
   height: 30px;
 }
+
+/* Two-column footer links for desktop */
+.footer-links-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5em 2em;
+  max-width: 400px;
+  margin: 1em auto 0 auto;
+  text-align: left;
+}
+
+.footer-links-columns a {
+  display: block;
+  padding: 0.2em 0;
+}
+
+/* Keep single column on mobile */
+@media (max-width: 768px) {
+  .footer-links-columns {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+    text-align: center;
+  }
+}
