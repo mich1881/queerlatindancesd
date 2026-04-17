@@ -352,7 +352,7 @@
 <div class="schedule-header">
   <h2 class="section-subtitle">
           <img src="images/eventpage/Schedulicon 1.png" alt="Calendar" class="calendar-icon" onclick="toggleCalendar('winter-p2')" title="View Calendar" style="height: 55px;width: 55px;cursor:pointer;">
-    Winter Part 2:
+    Spring Part 2:
   </h2>
   <h3 class="section-subtitle2" id="winter-p2-dates">Loading dates...</h3>
 </div>
@@ -1081,55 +1081,49 @@ function isDatePast(dateStr, year) {
   return new Date(year, month - 1, day) < new Date();
 }
 
-// Load schedules from calendar-data.json
 async function loadSchedulesFromCalendarData() {
   try {
     const response = await fetch('calendar-data.json');
     const data = await response.json();
-    // Winter Part 1: series1winter1 (Fridays) + series2winter1 (Sundays)
-const fridaysP1 = data.series1part1;
-const sundaysP1 = data.series2part1;
 
-if (fridaysP1 && sundaysP1) {
-  // Update inline dates (no times here)
-  document.getElementById('winter-p1-dates').innerHTML = 
-    `FRIDAYS: ${fridaysP1.dates.join(', ')}<br>SUNDAYS: ${sundaysP1.dates.join(', ')}`;
+    // Spring Part 1: friSpringP1 (Fridays) + sunSpringP1 (Sundays)
+    const fridaysP1 = data.friSpringP1;
+    const sundaysP1 = data.sunSpringP1;
 
-  // Update calendar modal - Fridays (times on top)
-  document.getElementById('calendar-fridays-winter-p1').innerHTML = 
-    `<li class="calendar-times">
-      <strong>Salsa (LEVEL 1):</strong> ${fridaysP1.times.salsa}<br>
-      <strong>Bachata (LEVEL 1):</strong> ${fridaysP1.times.bachata}
-    </li>` +
-    fridaysP1.dates.map(d => `<li class="${isDatePast(d, fridaysP1.year) ? 'past-date' : ''}">${d}</li>`).join('');
+    if (fridaysP1 && sundaysP1) {
+      document.getElementById('winter-p1-dates').innerHTML = 
+        `FRIDAYS: ${fridaysP1.dates.join(', ')}<br>SUNDAYS: ${sundaysP1.dates.join(', ')}`;
 
-  // Update calendar modal - Sundays (times on top)
-  document.getElementById('calendar-sundays-winter-p1').innerHTML = 
-    `<li class="calendar-times">
-      <strong>Salsa (LEVEL 1):</strong> ${sundaysP1.times.salsa}<br>
-      <strong>Bachata (LEVEL 2):</strong> ${sundaysP1.times.bachata}
-    </li>` +
-    sundaysP1.dates.map(d => `<li class="${isDatePast(d, sundaysP1.year) ? 'past-date' : ''}">${d}</li>`).join('');
-}
+      document.getElementById('calendar-fridays-winter-p1').innerHTML = 
+        `<li class="calendar-times">
+          <strong>Salsa (LEVEL 1):</strong> ${fridaysP1.times.salsa}<br>
+          <strong>Bachata (LEVEL 1):</strong> ${fridaysP1.times.bachata}
+        </li>` +
+        fridaysP1.dates.map(d => `<li class="${isDatePast(d, fridaysP1.year) ? 'past-date' : ''}">${d}</li>`).join('');
 
-// Winter Part 2: series1winter2 (Fridays) + series2winter2 (Sundays)
-const fridaysP2 = data.series1part2;
-const sundaysP2 = data.series2part2;
+      document.getElementById('calendar-sundays-winter-p1').innerHTML = 
+        `<li class="calendar-times">
+          <strong>Salsa (LEVEL 1):</strong> ${sundaysP1.times.salsa}<br>
+          <strong>Bachata (LEVEL 2):</strong> ${sundaysP1.times.bachata}
+        </li>` +
+        sundaysP1.dates.map(d => `<li class="${isDatePast(d, sundaysP1.year) ? 'past-date' : ''}">${d}</li>`).join('');
+    }
 
-if (fridaysP2 && sundaysP2) {
-  // Update inline dates (no times here)
-  document.getElementById('winter-p2-dates').innerHTML = 
-    `FRIDAYS: ${fridaysP2.dates.join(', ')}<br>SUNDAYS: ${sundaysP2.dates.join(', ')}`;
+    // Spring Part 2: friSpringP2 (Fridays) + sunSpringP2 (Sundays)
+    const fridaysP2 = data.friSpringP2;
+    const sundaysP2 = data.sunSpringP2;
 
-  // Update calendar modal - Fridays (times on top)
+    if (fridaysP2 && sundaysP2) {
+      document.getElementById('winter-p2-dates').innerHTML = 
+        `FRIDAYS: ${fridaysP2.dates.join(', ')}<br>SUNDAYS: ${sundaysP2.dates.join(', ')}`;
+
       document.getElementById('calendar-fridays-winter-p2').innerHTML = 
         `<li class="calendar-times">
           <strong>Salsa (LEVEL 1):</strong> ${fridaysP2.times.salsa}<br>
           <strong>Bachata (LEVEL 1):</strong> ${fridaysP2.times.bachata}
         </li>` +
         fridaysP2.dates.map(d => `<li class="${isDatePast(d, fridaysP2.year) ? 'past-date' : ''}">${d}</li>`).join('');
-      
-      // Update calendar modal - Sundays (times on top)
+
       document.getElementById('calendar-sundays-winter-p2').innerHTML = 
         `<li class="calendar-times">
           <strong>Salsa (LEVEL 1):</strong> ${sundaysP2.times.salsa}<br>
@@ -1137,11 +1131,12 @@ if (fridaysP2 && sundaysP2) {
         </li>` +
         sundaysP2.dates.map(d => `<li class="${isDatePast(d, sundaysP2.year) ? 'past-date' : ''}">${d}</li>`).join('');
     }
-    
+
   } catch (error) {
     console.error('Error loading calendar data:', error);
   }
 }
+
 document.addEventListener('DOMContentLoaded', loadSchedulesFromCalendarData);
 // FAQ Toggle functionality with accessibility improvements
 function toggleFAQ(button) {

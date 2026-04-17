@@ -761,14 +761,45 @@ if (link) link.onclick = function(e) { e.preventDefault(); openTermsModal(); };
 let calendarData = null;
 
 // Load calendar data from JSON
+// ...existing code...
 fetch('calendar-data.json')
 .then(response => response.json())
 .then(data => {
-calendarData = data.series1;
-console.log('Calendar data loaded:', calendarData);
+  calendarData = data.friSpringP1;  // ✅ updated from data.series1
+  console.log('Calendar data loaded:', calendarData);
+
+  // Update series dates
+  const seriesDatesSpan = document.getElementById('series-dates');
+  if (seriesDatesSpan) {
+    seriesDatesSpan.textContent = `${calendarData.dayOfWeek} – ${calendarData.dates.join(', ')}`;
+  }
+
+  // Update RSVP deadline
+  const rsvpSpan = document.getElementById('rsvp-deadline');
+  if (rsvpSpan && calendarData.rsvpDeadline) {
+    rsvpSpan.textContent = calendarData.rsvpDeadline;
+  }
+
+  // Update class times
+  const classTimesSpan = document.getElementById('class-times');
+  if (classTimesSpan) {
+    let timesText = '';
+    if (calendarData.times.salsa) timesText += `Salsa: ${calendarData.times.salsa}`;
+    if (calendarData.times.bachata) {
+      if (timesText) timesText += ' | ';
+      timesText += `Bachata: ${calendarData.times.bachata}`;
+    }
+    classTimesSpan.innerHTML = timesText;
+  }
+
+  // Update Google Calendar link
+  const gcalLinkFriday = document.getElementById('gcal-link-friday');
+  if (gcalLinkFriday) {
+    gcalLinkFriday.href = getGcalUrlFriday();
+  }
 })
 .catch(error => console.error('Error loading calendar data:', error));
-
+// ...existing code...
 function getSelectedPricing() {
 const selected = document.querySelector('.pricing-option.selected');
 if (!selected) return 'both';

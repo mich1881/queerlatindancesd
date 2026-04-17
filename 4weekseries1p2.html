@@ -584,8 +584,8 @@ Thank you for your support. Please email <a href="mailto:queerlatindancesd@gmail
 <td class="event-table-left">
 <!-- Salsa series description above pricing -->
 <div style="margin-bottom:1.2rem;font-size:1.2rem;color:#000000;line-height:1.5;">
-<div style="color:#ff0202;"><b>ATTN: Series 2 Salsa (LEVEL 2) Sundays will now be converted to Series 1 Salsa (LEVEL 1). 
-</b></div><p>NEW! If you're unable to attend class, you now have the option to transfer that credit over to one of our other classes for both Salsa & Bachata for <a href="4weekseries2p2.html" style="color:#2c3af7;">WINTER P2 Schedule ONLY</a>. Please keep in mind Bachata Series 2 (LEVEL 2) will remain.</b>
+<!-- <div style="color:#ff0202;"><b>ATTN: Series 2 Salsa (LEVEL 2) Sundays will now be converted to Series 1 Salsa (LEVEL 1). 
+</b></div><p>NEW! If you're unable to attend class, you now have the option to transfer that credit over to one of our other classes for both Salsa & Bachata for <a href="4weekseries2p2.html" style="color:#2c3af7;">WINTER P2 Schedule ONLY</a>. Please keep in mind Bachata Series 2 (LEVEL 2) will remain.</b> -->
 <a href="#course-details" class="read-more-link">See Course Details</a>
 <br><a href="courses.html#faqs">See FAQs</a>
 </div>
@@ -612,7 +612,7 @@ Thank you for your support. Please email <a href="mailto:queerlatindancesd@gmail
 <td class="event-table-right" style="padding-left: 56px;">
 <div class="event-section" style="padding:0; margin:0 0 18px 0; display:flex; justify-content:center; align-items:center;">
 <div style="position:relative; width:100%; max-width:520px; display:flex; align-items:center; justify-content:center;">
-<img id="gallery-img" src="images/lessons/4weekseries1-WINTER2.png" alt="4 Week Series Promo" style="width:100%;max-width:520px;height:auto;display:block;margin:0 0 18px 0;border-radius:18px;box-shadow:0 2px 12px #716cff22;object-fit:contain;transition:opacity 0.2s;" />
+<img id="gallery-img" src="images/lessons/Springp2-2.png" alt="4 Week Series Promo" style="width:100%;max-width:520px;height:auto;display:block;margin:0 0 18px 0;border-radius:18px;box-shadow:0 2px 12px #716cff22;object-fit:contain;transition:opacity 0.2s;" />
 </div>
 </div>
 <div class="event-section" id="course-details">
@@ -718,8 +718,9 @@ let calendarData = null;
 fetch('calendar-data.json')
 .then(response => response.json())
 .then(data => {
-calendarData = data.series1winter2;
-console.log('Calendar data loaded:', calendarData);
+  calendarData = data.friSpringP2;
+  locationData = data.location;  
+  console.log('Calendar data loaded:', calendarData);
 })
 .catch(error => console.error('Error loading calendar data:', error));
 
@@ -742,8 +743,8 @@ function getGcalUrlFriday() {
 if (!calendarData) return '#';
 
 const title = `Queer Salsa & Bachata Series (${calendarData.dayOfWeek})`;
-const details = `Join us for ${calendarData.dayOfWeek} Salsa & Bachata lessons! ${calendarData.location.name}, ${calendarData.location.address}`;
-const location = `${calendarData.location.name}, ${calendarData.location.address}`;
+const details = `Join us for ${calendarData.dayOfWeek} Salsa & Bachata lessons! ${locationData.name}, ${locationData.address}`;
+const location = `${locationData.name}, ${locationData.address}`;
 
 // Use googleCalendarDates from JSON
 const checkDataForRSVP = setInterval(() => {

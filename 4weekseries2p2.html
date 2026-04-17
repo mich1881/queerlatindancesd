@@ -715,8 +715,9 @@ let calendarData = null;
 fetch('calendar-data.json')
 .then(response => response.json())
 .then(data => {
-calendarData = data.series2winter2;
-console.log('Calendar data loaded:', calendarData);
+  calendarData = data.sunSpringP2;
+  locationData = data.location;  
+  console.log('Calendar data loaded:', calendarData);
 })
 .catch(error => console.error('Error loading calendar data:', error));
 
@@ -739,8 +740,8 @@ function getGcalUrlSunday() {
 if (!calendarData) return '#';
 
 const title = `Queer Salsa & Bachata Series (${calendarData.dayOfWeek})`;
-const details = `Join us for ${calendarData.dayOfWeek} Salsa & Bachata lessons! ${calendarData.location.name}, ${calendarData.location.address}`;
-const location = `${calendarData.location.name}, ${calendarData.location.address}`;
+const details = `Join us for ${calendarData.dayOfWeek} Salsa & Bachata lessons! ${locationData.name}, ${locationData.address}`;
+const location = `${locationData.name}, ${locationData.address}`;
 const checkDataForDates = setInterval(() => {
 if (calendarData) {
 const seriesDatesSpan = document.getElementById('series-dates');
