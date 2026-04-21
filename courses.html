@@ -321,24 +321,24 @@
 <div class="lessons-title">Class Offerings</div>
 <div class="schedule-header">
     <h2 class="section-subtitle">
-    <img src="images/eventpage/Schedulicon 1.png" alt="Calendar" class="calendar-icon" onclick="toggleCalendar('winter-p1')" title="View Calendar" style="height: 55px;width: 55px;cursor:pointer;">
+    <img src="images/eventpage/Schedulicon 1.png" alt="Calendar" class="calendar-icon" onclick="toggleCalendar('spring-p1')" title="View Calendar" style="height: 55px;width: 55px;cursor:pointer;">
     Spring Part 1:
   </h2>
-  <h3 class="section-subtitle2" id="winter-p1-dates">Loading dates...</h3>
+  <h3 class="section-subtitle2" id="spring-p1-dates">Loading dates...</h3>
 </div>
-<!-- Calendar Overlay for Winter P1 -->
-<div class="calendar-overlay" id="calendar-overlay-winter-p1">
+<!-- Calendar Overlay for Spring P1 -->
+<div class="calendar-overlay" id="calendar-overlay-spring-p1">
   <div class="calendar-modal">
-    <button class="calendar-close-btn" onclick="toggleCalendar('winter-p1')">×</button>
+    <button class="calendar-close-btn" onclick="toggleCalendar('spring-p1')">×</button>
     <h3 class="calendar-title">Spring Part 1 Schedule</h3>
     <div class="calendar-content">
       <div class="calendar-column">
         <h4>Fridays</h4>
-        <ul id="calendar-fridays-winter-p1"></ul>
+        <ul id="calendar-fridays-spring-p1"></ul>
       </div>
       <div class="calendar-column">
         <h4>Sundays</h4>
-        <ul id="calendar-sundays-winter-p1"></ul>
+        <ul id="calendar-sundays-spring-p1"></ul>
       </div>
     </div>
   </div>
@@ -348,27 +348,27 @@
 <div class="offers-row-top" id="upcoming-lessons-top">
 </div>
 
-<!-- Winter Part 1 Header -->
+<!-- Spring Part 1 Header -->
 <div class="schedule-header">
   <h2 class="section-subtitle">
-          <img src="images/eventpage/Schedulicon 1.png" alt="Calendar" class="calendar-icon" onclick="toggleCalendar('winter-p2')" title="View Calendar" style="height: 55px;width: 55px;cursor:pointer;">
+          <img src="images/eventpage/Schedulicon 1.png" alt="Calendar" class="calendar-icon" onclick="toggleCalendar('spring-p2')" title="View Calendar" style="height: 55px;width: 55px;cursor:pointer;">
     Spring Part 2:
   </h2>
-  <h3 class="section-subtitle2" id="winter-p2-dates">Loading dates...</h3>
+  <h3 class="section-subtitle2" id="spring-p2-dates">Loading dates...</h3>
 </div>
-<!-- Calendar Overlay for Winter P2 -->
-<div class="calendar-overlay" id="calendar-overlay-winter-p2">
+<!-- Calendar Overlay for Spring P2 -->
+<div class="calendar-overlay" id="calendar-overlay-spring-p2">
   <div class="calendar-modal">
-    <button class="calendar-close-btn" onclick="toggleCalendar('winter-p2')">×</button>
-    <h3 class="calendar-title">Winter Part 2 Schedule</h3>
+    <button class="calendar-close-btn" onclick="toggleCalendar('spring-p2')">×</button>
+    <h3 class="calendar-title">Spring Part 2 Schedule</h3>
     <div class="calendar-content">
       <div class="calendar-column">
         <h4>Fridays</h4>
-        <ul id="calendar-fridays-winter-p2"></ul>
+        <ul id="calendar-fridays-spring-p2"></ul>
       </div>
       <div class="calendar-column">
         <h4>Sundays</h4>
-        <ul id="calendar-sundays-winter-p2"></ul>
+        <ul id="calendar-sundays-spring-p2"></ul>
       </div>
     </div>
   </div>
@@ -1091,17 +1091,17 @@ async function loadSchedulesFromCalendarData() {
     const sundaysP1 = data.sunSpringP1;
 
     if (fridaysP1 && sundaysP1) {
-      document.getElementById('winter-p1-dates').innerHTML = 
+      document.getElementById('spring-p1-dates').innerHTML = 
         `FRIDAYS: ${fridaysP1.dates.join(', ')}<br>SUNDAYS: ${sundaysP1.dates.join(', ')}`;
 
-      document.getElementById('calendar-fridays-winter-p1').innerHTML = 
+      document.getElementById('calendar-fridays-spring-p1').innerHTML = 
         `<li class="calendar-times">
           <strong>Salsa (LEVEL 1):</strong> ${fridaysP1.times.salsa}<br>
           <strong>Bachata (LEVEL 1):</strong> ${fridaysP1.times.bachata}
         </li>` +
         fridaysP1.dates.map(d => `<li class="${isDatePast(d, fridaysP1.year) ? 'past-date' : ''}">${d}</li>`).join('');
 
-      document.getElementById('calendar-sundays-winter-p1').innerHTML = 
+      document.getElementById('calendar-sundays-spring-p1').innerHTML = 
         `<li class="calendar-times">
           <strong>Salsa (LEVEL 1):</strong> ${sundaysP1.times.salsa}<br>
           <strong>Bachata (LEVEL 2):</strong> ${sundaysP1.times.bachata}
@@ -1114,17 +1114,17 @@ async function loadSchedulesFromCalendarData() {
     const sundaysP2 = data.sunSpringP2;
 
     if (fridaysP2 && sundaysP2) {
-      document.getElementById('winter-p2-dates').innerHTML = 
+      document.getElementById('spring-p2-dates').innerHTML = 
         `FRIDAYS: ${fridaysP2.dates.join(', ')}<br>SUNDAYS: ${sundaysP2.dates.join(', ')}`;
 
-      document.getElementById('calendar-fridays-winter-p2').innerHTML = 
+      document.getElementById('calendar-fridays-spring-p2').innerHTML = 
         `<li class="calendar-times">
           <strong>Salsa (LEVEL 1):</strong> ${fridaysP2.times.salsa}<br>
           <strong>Bachata (LEVEL 1):</strong> ${fridaysP2.times.bachata}
         </li>` +
         fridaysP2.dates.map(d => `<li class="${isDatePast(d, fridaysP2.year) ? 'past-date' : ''}">${d}</li>`).join('');
 
-      document.getElementById('calendar-sundays-winter-p2').innerHTML = 
+      document.getElementById('calendar-sundays-spring-p2').innerHTML = 
         `<li class="calendar-times">
           <strong>Salsa (LEVEL 1):</strong> ${sundaysP2.times.salsa}<br>
           <strong>Bachata (LEVEL 2):</strong> ${sundaysP2.times.bachata}
