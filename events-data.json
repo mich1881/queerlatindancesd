@@ -1,5 +1,16 @@
 {
   "upcoming": [
+        {
+      "id": "may2026-salsa",
+      "date": "2026-05-29",
+      "time": "7:00 PM - 10:30 PM",
+      "month": "MAY",
+      "day": "29",
+      "title": "Queer Salsa Social: 1 Year Anniversary Celebration!",
+      "flyerUrl": "images/eventpage/qssmay2026flyer.png",
+      "inviteUrl": "https://partiful.com/e/FcXOIsBpkOtlH3nWflDb",
+      "description": "Join us for an exciting Queer Salsa Social! An inclusive LGBTQ+ Latin dance event in San Diego. Enjoy salsa, bachata, cumbia, merengue and more! All levels welcome, no partner needed."
+    },
     {
       "id": "apr2026-salsa",
       "date": "2026-04-17",
