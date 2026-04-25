@@ -13,7 +13,7 @@
     }
     body {
       font-family: 'Signika', Arial, sans-serif;
-      background: linear-gradient(135deg, #c1bff8 0%, #ffb6c1 100%);
+      background: linear-gradient(135deg, #c1bff8 0%, #c578e6 100%);
       padding: 2em;
       text-align: center;
       min-height: 100vh;
@@ -321,7 +321,7 @@ function generateUniqueId() {
 }
 function sendQrEmailToWorker(guestName, guestEmail, uniqueId, preferredName, pronouns) {
   const eventDate = document.getElementById('eventDate').value || '';
-  const subject = `Queer Latin Dance Social: ¡Que Dulce Ritmo! - Confirmation Ticket`;
+  const subject = `Queer Latin Dance Social: Fall into Rhythm - Confirmation Ticket`;
   const html = buildEmailHtml({
     guestName,
     qrCode: uniqueId,
@@ -638,13 +638,13 @@ function buildEmailHtml({ guestName, qrCode, preferredName, pronouns, eventDate 
   const displayName = preferredName || guestName || 'Guest';
   const displayDate = eventDate || document.getElementById('eventDate').value || 'April 17th, 2026, 7pm – 10:30pm';
   return `
-    <div style="background:#fff0f6;padding:0;margin:0;font-family:Arial,sans-serif;">
-      <div style="background:#e75480;padding:0.5em 0;">
+    <div style="background:#e8e3fa;padding:0;margin:0;font-family:Arial,sans-serif;">
+      <div style="background:#b67ff1;padding:0.5em 0;">
         <img src="https://queerlatindance.com/images/logos/logo1.png" alt="Event Banner" style="max-width:100%;height:auto;border-radius:12px;display:block;margin:0 auto;">
       </div>
       <div style="padding:2em;">
-        <h2 style="color:#e75480;margin-bottom:0.5em;">You're in ${displayName}! Here is your order confirmation for:</h2>
-        <h1 style="color:#8354c0;margin-bottom:1em;">Queer Salsa Social: ¡Que Dulce Ritmo!</h1>
+        <h2 style="color:#555;margin-bottom:0.5em;">You're in ${displayName}! Here is your order confirmation for:</h2>
+        <h1 style="color:#555;margin-bottom:1em;">Queer Salsa Social: Fall into Rhythm</h1>
         <div style="background:#fff;padding:1.5em;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.08);margin-bottom:2em;">
           <div style="text-align:center;">
             <h3 style="color:#333;margin-bottom:0.5em;font-size:1.5em;">Your ticket</h3>
@@ -653,7 +653,7 @@ function buildEmailHtml({ guestName, qrCode, preferredName, pronouns, eventDate 
             <div style="color:#555;">Present this QR code at the event entrance to be scanned.</div>
           </div>
         </div>
-        <div style="background:#f8f4ff;padding:1.5em;border-radius:12px;">
+        <div style="background:#e8e3fa;padding:1.5em;border-radius:12px;">
           <h3 style="color:#8354c0;margin-bottom:0.5em;">Event details</h3>
           <div style="margin-bottom:0.5em;">
             <span style="font-size:1.1em;">📅</span>
