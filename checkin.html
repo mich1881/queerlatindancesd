@@ -734,17 +734,27 @@ if (html5QrCode && html5QrCode.isScanning) {
 return;
 }
 
-html5QrCode = new Html5Qrcode("qr-reader");
+html5QrCode = new Html5Qrcode("qr-reader", {
+  experimentalFeatures: { useBarCodeDetectorIfSupported: true }
+});
 
 html5QrCode.start(
 { facingMode: "environment" },
 {
-fps: 10,
-qrbox: { width: 250, height: 250 }
+  fps: 30,
+  qrbox: { width: 250, height: 250 },
+  aspectRatio: 1.0,
+  disableFlip: false,
+  videoConstraints: {
+    facingMode: "environment",
+    width: { ideal: 1920 },
+    height: { ideal: 1080 },
+    advanced: [{ zoom: 1.5 }]
+  }
 },
 onQRCodeScanned,
 (errorMessage) => {
-// Ignore - no QR found yet
+  // Ignore - no QR found yet
 }
 ).catch((err) => {
 console.error("Camera error:", err);
