@@ -316,43 +316,14 @@
 </span>
 </nav>
 </div>
-<!-- ...existing code... -->
 
 <div class="lessons-title">Class Offerings</div>
-<div class="schedule-header">
-    <h2 class="section-subtitle">
-    <img src="images/eventpage/Schedulicon 1.png" alt="Calendar" class="calendar-icon" onclick="toggleCalendar('spring-p1')" title="View Calendar" style="height: 55px;width: 55px;cursor:pointer;">
-    Spring Part 1:
-  </h2>
-  <h3 class="section-subtitle2" id="spring-p1-dates">Loading dates...</h3>
-</div>
-<!-- Calendar Overlay for Spring P1 -->
-<div class="calendar-overlay" id="calendar-overlay-spring-p1">
-  <div class="calendar-modal">
-    <button class="calendar-close-btn" onclick="toggleCalendar('spring-p1')">×</button>
-    <h3 class="calendar-title">Spring Part 1 Schedule</h3>
-    <div class="calendar-content">
-      <div class="calendar-column">
-        <h4>Fridays</h4>
-        <ul id="calendar-fridays-spring-p1"></ul>
-      </div>
-      <div class="calendar-column">
-        <h4>Sundays</h4>
-        <ul id="calendar-sundays-spring-p1"></ul>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- Row 1: First 3 cards -->
-<div class="offers-row-top" id="upcoming-lessons-top">
-</div>
-
-<!-- Spring Part 1 Header -->
+<!-- Spring Part 2 (most current) shown first -->
 <div class="schedule-header">
   <h2 class="section-subtitle">
-          <img src="images/eventpage/Schedulicon 1.png" alt="Calendar" class="calendar-icon" onclick="toggleCalendar('spring-p2')" title="View Calendar" style="height: 55px;width: 55px;cursor:pointer;">
-    Spring Part 2:
+    <img src="images/eventpage/Schedulicon 1.png" alt="Calendar" class="calendar-icon" onclick="toggleCalendar('spring-p2')" title="View Calendar" style="height: 55px;width: 55px;cursor:pointer;">
+    Spring Part 2: INTRO LVL 1
   </h2>
   <h3 class="section-subtitle2" id="spring-p2-dates">Loading dates...</h3>
 </div>
@@ -374,8 +345,38 @@
   </div>
 </div>
 
-<!-- Row 2: Next 4 cards -->
+<!-- Row 2: Spring P2 cards -->
 <div class="offers-row-bottom" id="upcoming-lessons-bottom">
+</div>
+
+<!-- Spring Part 1 below -->
+<div class="schedule-header">
+  <h2 class="section-subtitle">
+    <img src="images/eventpage/Schedulicon 1.png" alt="Calendar" class="calendar-icon" onclick="toggleCalendar('spring-p1')" title="View Calendar" style="height: 55px;width: 55px;cursor:pointer;">
+    Summer Part 1 Coming Soon
+  </h2>
+  <h3 class="section-subtitle2" id="spring-p1-dates">Loading dates...</h3>
+</div>
+<!-- Calendar Overlay for Spring P1 -->
+<div class="calendar-overlay" id="calendar-overlay-spring-p1">
+  <div class="calendar-modal">
+    <button class="calendar-close-btn" onclick="toggleCalendar('spring-p1')">×</button>
+    <h3 class="calendar-title">Summer Part 1 Schedule (COMING SOON)</h3>
+    <div class="calendar-content">
+      <div class="calendar-column">
+        <h4>Fridays</h4>
+        <ul id="calendar-fridays-spring-p1"></ul>
+      </div>
+      <div class="calendar-column">
+        <h4>Sundays</h4>
+        <ul id="calendar-sundays-spring-p1"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Row 1: Spring P1 cards -->
+<div class="offers-row-top" id="upcoming-lessons-top">
 </div>
 
 <div class="offers-row" id="coming-soon-lessons">
@@ -399,7 +400,7 @@ font-style: normal;
   font-family: 'PassionOne', 'Nunito', Arial, sans-serif;
   font-size: 3rem;
   font-weight: 500;
-  color: #716cff;
+  color: #ff6565;
   margin: 2rem auto 1rem auto;
   padding: 0 1rem;
   width: auto;
@@ -1017,7 +1018,8 @@ return 'offer-card-bg';
 
 // Load upcoming lessons - split into two rows
 lessonsData.upcoming.forEach((lesson, index) => {
-if (index < 4) {
+if (lesson.hidden) return; // Skip hidden lessons
+if (index < 3) {
 upcomingLessonsTop.innerHTML += createLessonHTML(lesson);
 } else {
 upcomingLessonsBottom.innerHTML += createLessonHTML(lesson);
@@ -1026,6 +1028,7 @@ upcomingLessonsBottom.innerHTML += createLessonHTML(lesson);
 
 // Load coming soon lessons
 lessonsData.coming_soon.forEach(lesson => {
+if (lesson.hidden) return; // Skip hidden lessons
 comingSoonLessons.innerHTML += createLessonHTML(lesson);
 });
 
@@ -1114,6 +1117,7 @@ async function loadSchedulesFromCalendarData() {
     const sundaysP2 = data.sunSpringP2;
 
     if (fridaysP2 && sundaysP2) {
+
       document.getElementById('spring-p2-dates').innerHTML = 
         `FRIDAYS: ${fridaysP2.dates.join(', ')}<br>SUNDAYS: ${sundaysP2.dates.join(', ')}`;
 

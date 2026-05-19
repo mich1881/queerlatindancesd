@@ -1,5 +1,6 @@
 {
   "upcoming": [
+
         {
       "id": "progressive-series",
       "date": "january-2025",
@@ -10,9 +11,9 @@
       "description": "Advanced 4-week progressive course",
       "type": "series",
       "link": "4weekseries1.html",
-      "banner": "OPEN ENROLLMENT"
+      "banner": "ENDED"
     },
-  
+
     {
       "id": "4week-series",
       "date": "january-2025", 
@@ -23,7 +24,7 @@
       "description": "Structured 4-week intro course",
       "type": "series",
       "link": "4weekseries2.html",
-      "banner": "OPEN ENROLLMENT"
+      "banner": "ENDED"
     },
         {
       "id": "new-class-3",
@@ -37,17 +38,6 @@
       "link": "dropin.html",
       "banner": "AVAILABLE NOW"
     },
-        {
-      "id": "private-lessons",
-      "date": "ongoing",
-      "month": "PRIV",
-      "day": "ATE",
-      "title": "Private Lessons",
-      "flyerUrl": "images/eventpage/privateflyer.png", 
-      "description": "1-2 hour private lessons",
-      "type": "private",
-      "link": "privates.html"
-    },
             {
       "id": "new-class-1",
       "date": "February-2026",
@@ -60,6 +50,7 @@
       "link": "4weekseries1p2.html",
       "banner": "OPEN ENROLLMENT"
     },
+
     {
       "id": "new-class-2",
       "date": "February-2026",
@@ -70,18 +61,31 @@
       "description": "Description for 4 Week Series 2",
       "type": "series",
       "link": "4weekseries2p2.html",
-      "banner": "ENDED"
+      "banner": "ENDED",
+      "hidden": true
     },
+    
     {
       "id": "dropin-intro",
       "date": "january-2025",
       "month": "DROP",
       "day": "IN",
-      "title": "Drop-in: Winter",
+      "title": "Drop-in: Spring P2",
       "flyerUrl": "images/lessons/4weekseriesdropin.png",
       "description": "Drop-in classes for beginners",
       "type": "dropin",
       "link": "dropin2.html"
+    },
+    {
+      "id": "private-lessons",
+      "date": "ongoing",
+      "month": "PRIV",
+      "day": "ATE",
+      "title": "Private Lessons",
+      "flyerUrl": "images/eventpage/privateflyer.png", 
+      "description": "1-2 hour private lessons",
+      "type": "private",
+      "link": "privates.html"
     }
   ],
   "coming_soon": [

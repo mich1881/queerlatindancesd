@@ -594,7 +594,29 @@
                 const criticalIds = [
                     'course-app', 'loading-screen', 'auth-screen', 'dashboard-screen',
                     'login-form', 'register-form', 'admin-panel', 'course-player',
-                    'photoGallery', 'testimonialForm', 'sparkle-bg'
+                    'photoGallery', 'testimonialForm', 'sparkle-bg',
+                    // Auth form inputs
+                    'login-email', 'login-password',
+                    'register-name', 'register-email', 'register-password',
+                    // Dashboard elements
+                    'user-welcome', 'admin-btn',
+                    'my-courses-grid', 'available-courses-grid',
+                    // Course player elements
+                    'player-screen', 'course-video', 'lessons-list',
+                    'current-course-title', 'current-lesson-title',
+                    'lesson-progress', 'progress-text', 'course-progress-summary',
+                    'video-watermark',
+                    // Payment screen elements
+                    'payment-screen', 'payment-course-title', 'payment-course-description',
+                    'payment-course-price', 'payment-example-text',
+                    // Admin panel elements
+                    'pendingPaymentsList', 'userManagementList',
+                    'admin-student-email', 'admin-course-select',
+                    'userFilterStatus', 'userFilterCourse',
+                    // Notification
+                    'notification-container',
+                    // Payment overlay
+                    'paymentOverlay', 'selectedSeries', 'selectedPrice'
                 ];
                 
                 if (el.id && !criticalIds.includes(el.id) && !el.id.startsWith('obf_')) {
@@ -703,18 +725,18 @@
         document.head.appendChild(style);
     }
     
-    // 12. DETECT DEBUGGER ATTEMPTS
-    function detectDebugger() {
-        try {
-            // This will pause execution if debugger is open
-            debugger;
-        } catch (e) {
-            // Ignore errors
-        }
-    }
+    // // 12. DETECT DEBUGGER ATTEMPTS
+    // function detectDebugger() {
+    //     try {
+    //         // This will pause execution if debugger is open
+    //         debugger;
+    //     } catch (e) {
+    //         // Ignore errors
+    //     }
+    // }
     
-    // Run debugger detection periodically
-    setInterval(detectDebugger, 1000);
+    // // Run debugger detection periodically
+    // setInterval(detectDebugger, 1000);
     
     // 13. INITIALIZE PROTECTION ON PAGE LOAD
     function initializeProtection() {

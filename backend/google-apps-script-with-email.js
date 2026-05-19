@@ -14,7 +14,7 @@ const FROM_NAME = 'Queer Latin Dance SD';
 // ===== MAIN HANDLERS =====
 
 function doGet(e) {
-  // Handle GET requests for course access checking
+  // Handle GET requests for course access checking AND auth
   try {
     const action = e.parameter.action;
     
@@ -22,6 +22,10 @@ function doGet(e) {
       return handleCourseAccessCheck(e);
     } else if (action === 'getPendingPayments') {
       return handleGetPendingPayments(e);
+    } else if (action === 'login') {
+      return handleLogin(e.parameter);
+    } else if (action === 'register') {
+      return handleRegister(e.parameter);
     }
     
     return ContentService
@@ -47,6 +51,14 @@ function doPost(e) {
     // Handle course access updates (admin actions)
     if (formData.action === 'updateCourseAccess') {
       return handleCourseAccessUpdate(formData);
+    }
+
+    // ===== USER AUTH =====
+    if (formData.action === 'register') {
+      return handleRegister(formData);
+    }
+    if (formData.action === 'login') {
+      return handleLogin(formData);
     }
     
     // Handle regular form submissions (event/course registrations)
@@ -745,4 +757,107 @@ function convertCourseIdToName(courseId) {
   
   return courseMap[courseId] || courseId.replace(/-/g, ' ')
     .replace(/\b\w/g, l => l.toUpperCase());
+}
+
+// ===== USER AUTH FUNCTIONS =====
+
+const SPREADSHEET_ID = '1hnC7FE6VtJHJE0hNLNY6j-xzY_xbZAhGmtpbhpOYDGc';
+
+function getUsersSheet() {
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  let sheet = ss.getSheetByName('Users');
+  if (!sheet) {
+    sheet = ss.insertSheet('Users');
+    sheet.appendRow(['email', 'name', 'passwordHash', 'registeredAt', 'ownedCourses']);
+  }
+  return sheet;
+}
+
+function hashPassword(password) {
+  // Simple hash using Utilities.computeDigest (SHA-256)
+  const bytes = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, password);
+  return bytes.map(b => ('0' + (b & 0xFF).toString(16)).slice(-2)).join('');
+}
+
+function findUser(email) {
+  const sheet = getUsersSheet();
+  const data = sheet.getDataRange().getValues();
+  if (data.length <= 1) return null;
+  const headers = data[0]; // email, name, passwordHash, registeredAt, ownedCourses
+  for (let i = 1; i < data.length; i++) {
+    if (data[i][0] === email) {
+      return { row: i + 1, email: data[i][0], name: data[i][1], passwordHash: data[i][2], registeredAt: data[i][3], ownedCourses: data[i][4] };
+    }
+  }
+  return null;
+}
+
+function handleRegister(formData) {
+  try {
+    const { email, name, password } = formData;
+    if (!email || !name || !password) {
+      return jsonResponse({ success: false, error: 'Missing required fields' });
+    }
+    if (findUser(email)) {
+      return jsonResponse({ success: false, error: 'An account with this email already exists. Please sign in.' });
+    }
+    const sheet = getUsersSheet();
+    sheet.appendRow([email, name, hashPassword(password), new Date().toISOString(), '']);
+    return jsonResponse({ success: true, user: { email, name, ownedCourses: [] } });
+  } catch (err) {
+    return jsonResponse({ success: false, error: err.toString() });
+  }
+}
+
+function handleLogin(formData) {
+  try {
+    const { email, password } = formData;
+    if (!email || !password) {
+      return jsonResponse({ success: false, error: 'Missing email or password' });
+    }
+    const user = findUser(email);
+    if (!user) {
+      return jsonResponse({ success: false, error: 'No account found with that email. Please sign up first.' });
+    }
+    if (user.passwordHash !== hashPassword(password)) {
+      return jsonResponse({ success: false, error: 'Incorrect password. Please try again.' });
+    }
+    // Also pull owned courses from the main registrations sheet
+    const ownedCourses = getOwnedCoursesForUser(email);
+    return jsonResponse({ success: true, user: { email: user.email, name: user.name, ownedCourses } });
+  } catch (err) {
+    return jsonResponse({ success: false, error: err.toString() });
+  }
+}
+
+function getOwnedCoursesForUser(email) {
+  try {
+    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getActiveSheet();
+    const data = sheet.getDataRange().getValues();
+    if (data.length <= 1) return [];
+    const headers = data[0];
+    const emailIdx = headers.indexOf('email');
+    const courseIdx = Math.max(headers.indexOf('courseName'), headers.indexOf('series'));
+    const statusIdx = Math.max(headers.indexOf('accessGranted'), headers.indexOf('status'), headers.indexOf('paymentConfirmed'));
+    const typeIdx = headers.indexOf('registrationType');
+    const owned = [];
+    for (let i = 1; i < data.length; i++) {
+      const row = data[i];
+      if (row[emailIdx] !== email) continue;
+      if (typeIdx >= 0 && row[typeIdx] && row[typeIdx] !== 'online-course') continue;
+      const status = statusIdx >= 0 ? row[statusIdx] : '';
+      const granted = status === 'granted' || status === 'confirmed' || status === 'paid' || status === true || status === 'TRUE';
+      if (granted && row[courseIdx]) {
+        const key = convertCourseNameToId(row[courseIdx]);
+        if (!owned.includes(key)) owned.push(key);
+      }
+    }
+    return owned;
+  } catch (e) {
+    return [];
+  }
+}
+
+function jsonResponse(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }

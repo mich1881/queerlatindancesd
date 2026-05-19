@@ -25,7 +25,7 @@
 <div id="auth-screen" class="screen hidden">
 <div class="auth-container">
 <div class="logo-section">
-<h1>🕺💃 Queer Latin Dance</h1>
+<h1>Queer Latin Dance</h1>
 <h2>Online Course Portal</h2>
 <p>Learn to dance with pride and passion</p>
 </div>
@@ -47,7 +47,7 @@
 <span class="input-icon">🔒</span>
 </div>
 <button type="submit" class="auth-btn">Sign In</button>
-<button type="button" class="demo-btn" onclick="window.demoLogin()">🎭 Quick Demo Login</button>
+<button type="button" class="demo-btn" onclick="window.demoLogin()">Quick Demo Login</button>
 <button type="button" class="admin-demo-btn" onclick="window.adminDemoLogin()">⭐ Admin Demo Login</button>
 <button type="button" class="forgot-password-btn" onclick="window.forgotPassword()">🔑 Forgot Password?</button>
 <p class="auth-note">Demo: Use any email and password to try it out!</p>
@@ -162,7 +162,7 @@ Your browser doesn't support video playback.
 <div id="payment-screen" class="screen hidden">
 <div class="payment-container">
 <div class="payment-header">
-<h1>💰 Complete Your Purchase</h1>
+<h1>Complete Your Purchase</h1>
 <p>You're almost ready to start dancing!</p>
 </div>
 
@@ -176,36 +176,36 @@ Your browser doesn't support video playback.
 </div>
 
 <div class="payment-instructions">
-<h3>📱 Send Payment Via:</h3>
+<h3>Send Payment Via:</h3>
 
 <div class="payment-option">
-<h4>💳 PayPal</h4>
+<h4>PayPal</h4>
 <p><strong>Send to:</strong> <code>michelle@queerlatindance.com</code></p>
 <p><strong>Include in note:</strong> Your email + course name</p>
 </div>
 
 <div class="payment-option">
-<h4>💰 Venmo</h4>
+<h4>Venmo</h4>
 <p><strong>Send to:</strong> <code>@QueerLatinDance</code></p>
 <p><strong>Include in note:</strong> Your email + course name</p>
 </div>
 
 <div class="payment-option">
-<h4>🏦 Zelle</h4>
+<h4>Zelle</h4>
 <p><strong>Send to:</strong> <code>michelle@queerlatindance.com</code></p>
 <p><strong>Include in memo:</strong> Your email + course name</p>
 </div>
 </div>
 
 <div class="payment-example">
-<h4>📝 Example Payment Note:</h4>
+<h4>Example Payment Note:</h4>
 <div class="example-note">
 <code id="payment-example-text">carlos@email.com - Salsa Fundamentals</code>
 </div>
 </div>
 
 <div class="payment-timeline">
-<h4>⏱️ What Happens Next:</h4>
+<h4>⏱What Happens Next:</h4>
 <ol>
 <li>Send payment with your email + course name</li>
 <li>We'll verify your payment (usually within 24 hours)</li>
@@ -216,7 +216,7 @@ Your browser doesn't support video playback.
 
 <div class="payment-actions">
 <button onclick="showDashboard()" class="back-btn">← Back to Courses</button>
-<button onclick="markPaymentSent()" class="payment-sent-btn">✅ I've Sent Payment</button>
+<button onclick="markPaymentSent()" class="payment-sent-btn">I've Sent Payment</button>
 </div>
 </div>
 </div>
@@ -225,7 +225,7 @@ Your browser doesn't support video playback.
 <div id="admin-panel" class="screen hidden">
 <nav class="course-nav">
 <div class="nav-left">
-<h2>👑 Admin Panel</h2>
+<h2>Admin Panel</h2>
 <button onclick="showDashboard()" class="back-link">← Back to Dashboard</button>
 </div>
 <div class="nav-right">
@@ -235,12 +235,12 @@ Your browser doesn't support video playback.
 
 <div class="admin-content">
 <div class="admin-section">
-<h2>📋 Pending Course Payments</h2>
+<h2>Pending Course Payments</h2>
 <p>Review and approve course access for students</p>
 
 <div class="admin-actions">
 <button onclick="courseApp.loadPendingPayments()" class="btn-refresh">
-🔄 Refresh Payments
+Refresh Payments
 </button>
 </div>
 
@@ -250,7 +250,7 @@ Your browser doesn't support video playback.
 </div>
 
 <div class="admin-section">
-<h2>📊 Course Statistics</h2>
+<h2>Course Statistics</h2>
 <div class="stats-grid">
 <div class="stat-card">
 <div class="stat-number">0</div>
@@ -268,12 +268,13 @@ Your browser doesn't support video playback.
 </div>
 
 <div class="admin-section">
-<h2>➕ Quick Access Grant</h2>
+<h2>Quick Access Grant</h2>
 <p>Grant course access manually (demo mode)</p>
 <div class="admin-form">
 <input type="email" id="admin-student-email" placeholder="Student email address" />
 <select id="admin-course-select">
 <option value="">Select Course</option>
+ <option value="salsa-recap-lvl1">Salsa Recap (Level 1)</option> 
 <option value="salsa-fundamentals">Salsa Fundamentals</option>
 <option value="bachata-fundamentals">Bachata Fundamentals</option>
 <option value="advanced-salsa">Advanced Salsa</option>
@@ -288,10 +289,10 @@ Your browser doesn't support video playback.
 
 <div class="admin-actions">
 <button onclick="courseApp.loadAllUsers()" class="btn-refresh">
-🔄 Refresh Users
+Refresh Users
 </button>
 <button onclick="courseApp.checkExpiredSubscriptions()" class="btn-check">
-⏰ Check Expired Access
+Check Expired Access
 </button>
 </div>
 
@@ -304,6 +305,7 @@ Your browser doesn't support video playback.
 </select>
 <select id="userFilterCourse" onchange="courseApp.filterUsers()">
 <option value="all">All Courses</option>
+<option value="salsa-recap-lvl1">Salsa Recap (Level 1)</option>
 <option value="salsa-fundamentals">Salsa Fundamentals</option>
 <option value="bachata-fundamentals">Bachata Fundamentals</option>
 <option value="advanced-salsa">Advanced Salsa</option>
@@ -440,6 +442,31 @@ if (typeof courseApp !== 'undefined' && courseApp.loadPendingPayments) {
 setTimeout(() => courseApp.loadPendingPayments(), 100);
 }
 };
+
+window.grantCourseAccess = async function() {
+    const email = document.getElementById('admin-student-email').value;
+    const courseId = document.getElementById('admin-course-select').value;
+    
+    if (!email || !courseId) {
+        alert('Please enter an email and select a course!');
+        return;
+    }
+
+    try {
+        const url = `https://bitter-forest-4b9b.michf18.workers.dev/?action=grantAccess&email=${encodeURIComponent(email)}&courseId=${encodeURIComponent(courseId)}`;
+        const response = await fetch(url);
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(`✅ Access granted to ${email} for ${courseId}!`);
+        } else {
+            alert('❌ Error: ' + result.error);
+        }
+    } catch (err) {
+        alert('❌ Error: ' + err.message);
+    }
+};
+
 </script>
 
 <!-- Payment Overlay Modal -->

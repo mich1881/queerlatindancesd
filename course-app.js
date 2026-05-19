@@ -1,6 +1,9 @@
 // Queer Latin Dance Course Platform
 // Student Registration & Login System
 
+// ✅ Google Apps Script URL — update this if you redeploy
+const APPS_SCRIPT_URL = 'https://bitter-forest-4b9b.michf18.workers.dev';
+
 class CoursePlatform {
     constructor() {
         this.currentUser = null;
@@ -10,6 +13,50 @@ class CoursePlatform {
         
         // Define your courses here - easy to modify!
         this.courses = {
+            'salsa-recap-lvl1': {
+                id: 'salsa-recap-lvl1',
+                title: 'Salsa Recap (Level 1)',
+                description: 'Master the basic steps, timing, and partner connection in salsa dancing. Perfect for absolute beginners who want to build a strong foundation.',
+                price: 49,
+                icon: 'images/4weekseries1/IMG_8661.JPG',
+                duration: '4 hours',
+                lessons: 8,
+                level: 'Beginner',
+                videoLessons: [
+                    {
+                        id: 1,
+                        title: 'Welcome & Basic Steps',
+                        video: 'https://drive.google.com/file/d/1t0ofE40PeO3gxxdGUeG_l3Uf3Utln9Ks/preview',
+                        videoType: 'googledrive',
+                        duration: '15:30',
+                        description: 'Learn the fundamental salsa steps and timing'
+                    },
+                    {
+                        id: 2,
+                        title: 'Basic Timing & Rhythm',
+                        video: 'https://drive.google.com/file/d/18fIoQ6V75s1Vu66med0_3Wlj_ZVqkBqz/preview',
+                        videoType: 'googledrive',
+                        duration: '18:45',
+                        description: 'Understanding salsa rhythm and musical timing'
+                    },
+                    {
+                        id: 3,
+                        title: 'Partner Connection Basics',
+                        video: 'https://drive.google.com/file/d/1UHWNUdTdOHKSqqbmFoEZGJcynn27dO6m/preview',
+                        videoType: 'googledrive',
+                        duration: '22:15',
+                        description: 'How to connect with your dance partner'
+                    },
+                    {
+                        id: 4,
+                        title: 'Cross Body Lead',
+                        video: 'videos/salsa-fundamentals/lesson-4-cross-body-lead.mp4',
+                        videoType: 'mp4',
+                        duration: '20:00',
+                        description: 'The most important move in salsa dancing'
+                    },
+                ]
+            },
             'salsa-fundamentals': {
                 id: 'salsa-fundamentals',
                 title: 'Salsa Fundamentals',
@@ -261,45 +308,22 @@ class CoursePlatform {
         this.showLoading('Signing you in...');
 
         try {
-            // Get existing users from storage
-            const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
-            
-            if (users[email]) {
-                // Check password (in real app, this would be properly hashed)
-                if (this.verifyPassword(password, users[email].passwordHash)) {
-                    this.currentUser = users[email];
-                    this.saveCurrentUser();
-                    this.showSuccess(`Welcome back, ${this.currentUser.name}! 🎉`);
-                    setTimeout(() => this.showDashboard(), 1000);
-                } else {
-                    console.log('🔍 Password verification failed for:', email);
-                    console.log('🔍 Entered password hash:', this.hashPassword(password));
-                    console.log('🔍 Stored password hash:', users[email].passwordHash);
-                    
-                    this.showError(`Invalid password for ${email}. If you're having trouble, open browser console and type: fixMyLogin('${email}', 'your-desired-password')`);
-                }
-            } else {
-                // Demo mode: Create a temporary user for any email/password combination
-                console.log('🎬 Demo mode: Creating temporary user for', email);
-                this.currentUser = {
-                    name: email.split('@')[0], // Use part of email as name
-                    email: email,
-                    passwordHash: this.hashPassword(password),
-                    registeredAt: new Date().toISOString(),
-                    ownedCourses: []
-                };
-                
-                // Save to storage for consistency
-                users[email] = this.currentUser;
-                localStorage.setItem('QLDUsers', JSON.stringify(users));
+            const url = `${APPS_SCRIPT_URL}?action=login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const result = await response.json();
+
+            if (result.success) {
+                this.currentUser = result.user;
                 this.saveCurrentUser();
-                
-                this.showSuccess(`Welcome, ${this.currentUser.name}! 🎉 (Demo Mode)`);
+                this.showSuccess(`Welcome back, ${this.currentUser.name}! 🎉`);
                 setTimeout(() => this.showDashboard(), 1000);
+            } else {
+                this.showError(result.error || 'Login failed. Please try again.');
             }
         } catch (error) {
             console.error('Login error:', error);
-            this.showError('Login failed. Please try again.');
+            this.showError('Connection error. Please try again.');
         }
     }
 
@@ -323,50 +347,23 @@ class CoursePlatform {
         this.showLoading('Creating your account...');
 
         try {
-            const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
-            
-            if (users[email]) {
-                this.showError(`Account with ${email} already exists. Please use the "Sign In" tab instead, or try the browser console command: fixMyLogin('${email}', 'your-password')`);
-                // Reset back to auth screen and switch to login tab
-                setTimeout(() => {
-                    this.showAuthScreen();
-                    // Switch to login tab
-                    window.switchAuthTab('login');
-                    // Pre-fill email
-                    const emailInput = document.getElementById('login-email');
-                    if (emailInput) emailInput.value = email;
-                }, 2000);
-                return;
+            const url = `${APPS_SCRIPT_URL}?action=register&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const result = await response.json();
+
+            if (result.success) {
+                this.currentUser = result.user;
+                this.saveCurrentUser();
+                this.showSuccess(`Welcome to our dance community, ${name}! 🎉`);
+                setTimeout(() => this.showDashboard(), 1500);
+            } else {
+                this.showError(result.error || 'Registration failed. Please try again.');
+                setTimeout(() => this.showAuthScreen(), 1500);
             }
-
-            // Create new user
-            const newUser = {
-                id: this.generateUserId(),
-                name: name,
-                email: email,
-                passwordHash: this.hashPassword(password),
-                purchasedCourses: [],
-                ownedCourses: [], // Add this for course access tracking
-                progress: {},
-                joinDate: new Date().toISOString(),
-                lastLogin: new Date().toISOString(),
-                isAdmin: false
-            };
-
-            // Save to storage
-            users[email] = newUser;
-            localStorage.setItem('QLDUsers', JSON.stringify(users));
-
-            // Set as current user
-            this.currentUser = newUser;
-            this.saveCurrentUser();
-
-            this.showSuccess(`Welcome to our dance community, ${name}! 🎉`);
-            setTimeout(() => this.showDashboard(), 1500);
-
         } catch (error) {
             console.error('Registration error:', error);
-            this.showError('Registration failed. Please try again.');
+            this.showError('Connection error. Please try again.');
             setTimeout(() => this.showAuthScreen(), 1500);
         }
     }
@@ -718,21 +715,26 @@ class CoursePlatform {
         return card;
     }
 
-    userOwnsCourse(courseId) {
-        if (!this.currentUser) return false;
-        
-        // Check local purchased courses (for demo/testing)
-        if (this.currentUser.purchasedCourses && this.currentUser.purchasedCourses.includes(courseId)) {
-            return true;
-        }
-        
-        // Check server-side approved courses
-        const approvedStudents = this.getApprovedStudents();
-        const studentEmail = this.currentUser.email.toLowerCase();
-        
-        return approvedStudents[studentEmail] && 
-               approvedStudents[studentEmail].courses.includes(courseId);
+userOwnsCourse(courseId) {
+    if (!this.currentUser) return false;
+    
+    // ✅ Check ownedCourses from Google Sheet (via worker login response)
+    if (this.currentUser.ownedCourses && this.currentUser.ownedCourses.includes(courseId)) {
+        return true;
     }
+    
+    // Check local purchased courses (for demo/testing)
+    if (this.currentUser.purchasedCourses && this.currentUser.purchasedCourses.includes(courseId)) {
+        return true;
+    }
+    
+    // Check server-side approved courses
+    const approvedStudents = this.getApprovedStudents();
+    const studentEmail = this.currentUser.email.toLowerCase();
+    
+    return approvedStudents[studentEmail] && 
+           approvedStudents[studentEmail].courses.includes(courseId);
+}
 
     getApprovedStudents() {
         // In a real implementation, this would fetch from your server
@@ -3506,6 +3508,7 @@ class CoursePlatform {
             // Map course IDs to proper names and prices if missing
             if (!courseName || courseName === 'Unknown Course') {
                 const courseMapping = {
+                    'salsa-recap-lvl1': { name: 'Salsa Recap (Level 1)', price: 49 },
                     'salsa-fundamentals': { name: 'Salsa Fundamentals', price: 49 },
                     'bachata-sensual': { name: 'Bachata Sensual', price: 59 },
                     'advanced-salsa': { name: 'Advanced Salsa', price: 69 },
@@ -3558,28 +3561,22 @@ class CoursePlatform {
         console.log('✅ displayPendingPayments completed - HTML set');
     }
 
-    async grantCourseAccess(email, courseId, courseName) {
-        try {
-            // Grant monthly access by default
-            console.log(`🔧 Granting monthly access: ${email} -> ${courseId} (${courseName})`);
-            
-            // Use the new monthly subscription system
-            const userApproved = this.grantCourseAccessWithExpiry(email, courseId, 1); // 1 month
-            
-            this.showSuccess(`✅ Monthly access granted to ${email} for ${courseName} (expires ${new Date(userApproved.expiresAt).toLocaleDateString()})`);
-            
-            // Refresh admin data
-            setTimeout(() => {
-                this.loadPendingPayments();
-                this.loadAllUsers();
-            }, 500);
-            
-            return;
-        } catch (error) {
-            console.error('❌ Error granting access:', error);
-            this.showError('❌ Error granting course access');
+async grantCourseAccess(email, courseId, courseName) {
+    try {
+        const url = `https://bitter-forest-4b9b.michf18.workers.dev/?action=grantAccess&email=${encodeURIComponent(email)}&courseId=${encodeURIComponent(courseId)}`;
+        const response = await fetch(url);
+        const result = await response.json();
+        
+        if (result.success) {
+            this.showSuccess(`✅ Access granted to ${email} for ${courseName}`);
+            setTimeout(() => { this.loadPendingPayments(); this.loadAllUsers(); }, 500);
+        } else {
+            this.showError('❌ ' + result.error);
         }
+    } catch (error) {
+        this.showError('❌ Error granting access: ' + error.message);
     }
+}
 
     // Helper method for granting access with monthly expiry
     grantCourseAccessWithExpiry(email, courseId, months = 1) {
