@@ -45,11 +45,143 @@
   }
   </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/global.css">
   <link rel="stylesheet" href="style.css" />
 <style>
-/* === NEWSLETTER SECTION STYLES === */
+/* === LOGO === */
+.logo2 {
+  width: 70px;
+  height: auto;
+}
+
+/* === WORDMARK === */
+.qldsd-wordmark {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: clamp(2.8rem, 8vw, 7rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0em;
+  margin-bottom: 0.4rem;
+  line-height: 1;
+  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.816), 0 1px 4px rgba(0, 0, 0, 0.48);
+}
+.hero-tagline {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.92);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+
+/* === CTA BUTTONS === */
+.cta-btn {
+  background: rgba(219,221,125,0.92);
+  color: #402e51;
+  padding: 0.85rem 2.2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.2s;
+  letter-spacing: 0.02em;
+  display: inline-block;
+}
+.cta-btn:hover {
+  background: #b57edc;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+}
+.cta-btn1 {
+  background: linear-gradient(135deg, #db2777 0%, #a21caf 100%);
+  color: #fff;
+  padding: 0.85rem 2.2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(219,39,119,0.40);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  letter-spacing: 0.02em;
+  display: inline-block;
+}
+.cta-btn1:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(219,39,119,0.55);
+  color: #fff;
+  background: linear-gradient(135deg, #be185d 0%, #86198f 100%);
+}
+
+/* === HERO SECTION — SPLIT LAYOUT === */
+body {
+  padding-top: 0 !important;
+}
+#main-content {
+  padding-top: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-top: 0 !important;
+}
+.hero-flex {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0;
+  overflow: hidden;
+  background: #1601355f;
+}
+.hero-flex::after {
+  display: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 42%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 5vw;
+  background: linear-gradient(120deg, rgba(15,5,30,0.35) 0%, rgba(15,5,30,0.20) 60%, transparent 100%);
+  text-align: left;
+}
+/* subtle right-edge fade into gallery */
+#photoGallery {
+  flex: 0 0 58%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero {
+  background: linear-gradient(120deg, #e4d2f2 0%, #8986fe 100%);
+  color: #2e023367;
+  padding: 80px 20px 60px 20px;
+  text-align: center;
+  border-radius: 40px;
+  margin-bottom: 2rem;
+}
+.hero-content .cta-btn,
+.hero-content .cta-btn1 {
+  margin-right: 1rem;
+  margin-bottom: 0.75rem;
+  vertical-align: middle;
+}
+
+/* === NEWSLETTER SECTION === */
 .newsletter-preview-section {
 margin: 2rem 0;
 padding: 0 1rem;
@@ -133,7 +265,108 @@ position: relative;
 z-index: 1;
 }
 
-/* === TESTIMONIAL SECTION STYLES === */
+/* === SWIPE GALLERY STYLES (hero side panel) === */
+.swipe-gallery {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.swipe-img {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+.swipe-img.active {
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .hero-flex {
+    flex-direction: column;
+    height: 100svh;
+    min-height: unset;
+    position: relative;
+    width: 100vw;
+    overflow: hidden;
+  }
+  #photoGallery {
+    position: absolute;
+    inset: 0;
+    flex: unset;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: #1a0a30;
+  }
+  .swipe-gallery {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  #photoGallery .swipe-img {
+    position: absolute;
+    inset: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  #photoGallery .swipe-img.active {
+    display: block;
+  }
+  .hero-content {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    flex: unset;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: rgba(15, 5, 30, 0.45);
+    min-height: unset;
+    pointer-events: auto;
+  }
+  .hero-content::after {
+    display: none;
+  }
+  .qldsd-wordmark {
+    font-size: clamp(1.6rem, 7vw, 2.8rem) !important;
+    margin-bottom: 0.4rem;
+    text-align: center;
+    width: 100%;
+  }
+  .hero-tagline {
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    width: 100%;
+  }
+  .hero-content .cta-btn,
+  .hero-content .cta-btn1 {
+    display: block;
+    width: 80%;
+    max-width: 320px;
+    text-align: center;
+    margin: 0 auto 0.75rem auto;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+  }
+}
 .testimonial-flex {
 margin: 3rem 0;
 padding: 2rem 1rem;
@@ -230,7 +463,10 @@ color: #716cff;
 text-align: right;
 font-style: italic;
 }
-
+.logo2 {
+  width: 70px; /* change this number — smaller = smaller logo */
+  height: auto;
+}
 /* Mobile responsive for testimonials */
 @media (max-width: 768px) {
 .testimonial-cards-container {
@@ -388,43 +624,7 @@ transition: all 0.3s ease;
 background: #e8d8ff;
 color: #333;
 }
-.cta-btn {
-  background: #dbdd7d;
-  color: #402e51;
-  padding: 0.8rem 2rem;
-  border-radius: 10px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: background 0.2s, color 0.2s;
-  margin-bottom: 2rem;
-  margin-top: 0.1rem;
-  display: inline-block;
-}
-.cta-btn:hover {
-  background: #b57edc;
-  color: #181010;
-}
-.cta-btn1 {
-  background: #f87ebd;
-  color: #370241;
-  padding: 0.8rem 2rem;
-  border-radius: 10px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: background 0.2s, color 0.2s;
-  margin-bottom: 2rem;
-  margin-top: 0.1rem;
-  display: inline-block;
-}
-.cta-btn1:hover {
-  background: #b57edc;
-  color: #181010;
-}
-/* Mobile responsive for testimonial form */
+/* === MISSION & ABOUT STYLES === */
 @media (max-width: 768px) {
 .testimonial-form {
 padding: 1.5rem;
@@ -638,51 +838,6 @@ padding: 1rem;
 }
 }
 
-/* === HERO SECTION STYLES === */
-.hero-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2rem;
-  max-width: 1500px;
-  margin: 0 auto 1rem auto;
-  padding: 1rem 1rem;
-}
-.hero-content {
-  flex: 1 1 45%;
-  text-align: left;
-}
-#photoGallery {
-  flex: 1 1 50%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 1rem;
-}
-.hero {
-  background: linear-gradient(120deg, #e4d2f2 0%, #8986fe 100%);
-  color: #2e0233;
-  padding: 80px 20px 60px 20px;
-  text-align: center;
-  border-radius: 40px;
-  margin-bottom: 2rem;
-}
-.hero-content .qldsdlogo3 {
-  width: 650px;
-  max-width: 90vw;
-  height: auto;
-  margin: 10rem -10rem 0.5rem 0;
-  position: relative;
-  display: block;
-  object-fit: contain;
-  margin-top: 1rem;
-  margin-right: 35px;
-}
-.hero-content p {
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
-}
 /* === MISSION & ABOUT STYLES === */
 .mission, .about-hero-text .mission, .hero-content p.mission, .hero-content .mission {
 color: #a826ff !important;
@@ -870,12 +1025,6 @@ border: 2px solid #9d09ff;
 
 /* === RESPONSIVE STYLES === */
 @media (max-width: 900px) {
-.hero-content .qldsdlogo3 {
-width: 350px;
-max-width: 100vw;
-margin: 2rem 0;
-top: 1.2rem;
-}
 .about-hero-text h1 {
 font-size: 2.2rem;
 }
@@ -901,12 +1050,42 @@ gap: 1rem;
 padding: 1rem 0;
 }
 .hero-flex {
-flex-direction: column;
-gap: 1rem;
+  min-height: unset;
 }
 .newsletter-container {
 flex-direction: column;
 gap: 1rem;
+}
+.history-header {
+flex-direction: column;
+align-items: center;
+text-align: center;
+gap: 1rem;
+}
+.history-logo {
+width: 150px;
+}
+.salsa-history-title {
+text-align: center;
+font-size: 2rem;
+}
+.newspaper-columns {
+grid-template-columns: 1fr;
+column-rule: none;
+gap: 2rem;
+}
+.newspaper-columns .column {
+padding: 0;
+border-bottom: 1px solid #b57edc;
+padding-bottom: 1.5rem;
+margin-bottom: 1.5rem;
+}
+.newspaper-columns .column:last-child {
+border-bottom: none;
+margin-bottom: 0;
+}
+.salsa-history-section {
+padding: 1rem;
 }
 }
 
@@ -915,123 +1094,56 @@ gap: 1rem;
 padding: 40px 5px 30px 5px;
 border-radius: 20px;
 }
-
-.hero-content .qldsdlogo3 {
-width: 280px;
-max-width: 90vw;
-margin: 1.5rem 0;
-top: 0.2rem;
-}
 .hero-content p {
 font-size: 1rem;
 margin-bottom: 1.5rem;
 margin-top: 0.7rem;
 }
 .cta-btn, .cta-btn1 {
-  font-size: 1.1rem;
-  padding: 0.5rem 1.2rem;
-  margin-bottom: 1rem;
-  margin-top: -1rem;
+font-size: 1rem;
+padding: 0.5rem 1.2rem;
+margin-bottom: 0.75rem;
 }
-.about-hero-img {
-width: 100px;
-height: 100px;
-}
-.about-hero-text h1 {
-font-size: 1.3rem;
-margin-bottom: 1rem;
-}
-.gallery-title {
-font-size: 1.2rem;
-margin-bottom: 1rem;
-}
-.salsa-history-title {
-font-size: 1.2rem;
-margin-bottom: 0.5rem;
-}
-.gallery-photo {
-width: 98vw;
-max-width: 98vw;
-border-radius: 8px;
-}
-.gallery-grid {
-grid-template-columns: 1fr;
-gap: 0.5rem;
-padding: 0.5rem 0;
-}
-.logo, .logo1, .logo2 {
-width: 120px;
-max-width: 60vw;
-}
-
-.qldsdlogo3 {
-  width: 500px;      /* or whatever size you want */
-  max-width: 100%;   /* responsive on small screens */
-  height: auto;
-  display: block;
-  justify-content: left;
-  align-items: left;
-  position: relative;
-  display: block;
-  object-fit: contain;
-}
-}
-/* ====================
-MOBILE INDEX SECTION
-==================== */
-/* Mobile responsive for newspaper columns */
-@media (max-width: 900px) {
-.history-header {
+.about-hero-img { width: 100px; height: 100px; }
+.about-hero-text h1 { font-size: 1.3rem; margin-bottom: 1rem; }
+.gallery-title { font-size: 1.2rem; margin-bottom: 1rem; }
+.salsa-history-title { font-size: 1.2rem; margin-bottom: 0.5rem; }
+.gallery-photo { width: 98vw; max-width: 98vw; border-radius: 8px; }
+.gallery-grid { grid-template-columns: 1fr; gap: 0.5rem; padding: 0.5rem 0; }
+.testimonial-cards-container {
 flex-direction: column;
-align-items: center;
-text-align: center;
-gap: 1rem;
+gap: 1.5rem;
+padding: 0 0.5rem;
+max-width: 100%;
+max-height: 660px;
+overflow-y: auto;
+scrollbar-width: thin;
+scrollbar-color: #716cff #e8d8ff;
 }
-
-.history-logo {
-width: 150px;
+.testimonial-card {
+padding: 1.25rem;
+max-width: 100%;
+overflow: visible;
+box-sizing: border-box;
+height: auto !important;
+min-height: unset !important;
 }
-
-.salsa-history-title {
-text-align: center;
-font-size: 2rem;
-}
-
-.newspaper-columns {
-grid-template-columns: 1fr;
-column-rule: none;
-gap: 2rem;
-}
-
-.newspaper-columns .column {
-padding: 0;
-border-bottom: 1px solid #b57edc;
-padding-bottom: 1.5rem;
-margin-bottom: 1.5rem;
-}
-
-.newspaper-columns .column:last-child {
-border-bottom: none;
-margin-bottom: 0;
-}
-
-.salsa-history-section {
-padding: 1rem;
-}
+.testimonial-arrow { display: none !important; }
+.testimonial-form { padding: 1.5rem; margin: 0 0.5rem; }
+.form-actions { flex-direction: column; }
+.submit-testimonial-btn { padding: 0.75rem 1.25rem; font-size: 0.95rem; }
+.faq-container { grid-template-columns: 1fr; gap: 2rem; }
+.faq-title { order: -1; }
+.faq-title h2 { font-size: 4rem; flex-direction: row; gap: 0.2rem; margin-left: 0; margin-right: 0; }
+.faq-questions h3 { font-size: 1.2rem; text-align: center; }
+.faq-question { font-size: 1rem; padding: 1rem; }
+.faq-answer p { padding: 1rem; }
 }
 
 @media (max-width: 600px) {
-.history-logo {
-width: 120px;
-}
-
-.salsa-history-title {
-font-size: 1.6rem;
-}
-
-.newspaper-columns .column p {
-text-align: justify;
-}
+.history-logo { width: 120px; }
+.salsa-history-title { font-size: 1.6rem; }
+.newspaper-columns .column p { text-align: justify; }
 .mission-card p {
 font-size: 1.2rem;
 color: #C4F9CA;
@@ -1041,6 +1153,7 @@ font-family: 'Nunito', Arial, sans-serif;
 position: relative;
 }
 }
+
 .testimonial-stars {
   color: gold;
   font-size: 1.2em;
@@ -1053,7 +1166,7 @@ position: relative;
 <div id="sparkle-bg"></div>
 <header>
 <a href="index.html">
-<img src="images/logos/logo1.png" alt="Queer Latin Dance SD Logo" class="logo1" />
+<img src="images/logos/logo2.png" alt="Queer Latin Dance SD Logo" class="logo2" />
 </a>
   <!-- Cart Modal -->
   <div id="cart-modal" class="cart-modal">
@@ -1104,20 +1217,22 @@ position: relative;
 <main id="main-content">
 <section class="hero-flex" aria-labelledby="hero-heading">
 <div class="hero-content">
-<img src="images/home/qldsdlogo3.png" alt="Queer Latin Dance SD - Celebrates Your Identity in Every Step" class="qldsdlogo3" />
+<div class="qldsd-wordmark" id="hero-heading">Queer Latin Dance SD</div>
+<div class="hero-tagline">Salsa · Bachata · Community</div>
 <a href="courses.html" class="cta-btn1">Register for Classes!</a>
 <a href="Events.html" class="cta-btn">See Upcoming Events</a>
 </div>
 <section id="photoGallery" aria-label="Photo slideshow">
 <div class="swipe-gallery" role="region" aria-roledescription="carousel" aria-label="Community event photos">
 <img src="images/home/photo1.png" alt="Community members dancing at Sun Dance Day Fest, celebrating together outdoors" class="swipe-img faded-img active" />
+<img src="images/home/IMG_1733.jpg" alt="Dancers sharing a joyful moment at a community dance event" class="swipe-img faded-img" />
 <img src="images/home/photo2.png" alt="Dancers enjoying salsa at Sun Dance Day Fest in a vibrant outdoor setting" class="swipe-img faded-img" />
+<img src="images/home/IMG_1734.jpg" alt="Couple dancing salsa together at a community event, smiling and having fun" class="swipe-img faded-img" />
 <img src="images/Queer Salsa Social/IMG_0400.jpg" alt="Group of friends sharing a warm hug at a community dance event" class="swipe-img faded-img" />
 <img src="images/home/photo3.png" alt="Participants learning salsa moves at Sun Dance Day Fest" class="swipe-img faded-img" />
+<img src="images/SalsaSunsets/IMG_7851.JPG" alt="Pat and Miguel dancing together at Salsa Sunsets event" class="swipe-img faded-img"/>
 <img src="images/Queer Salsa Social/IMG_0729.jpeg" alt="Dancers having fun at Queer Salsa Social event" class="swipe-img faded-img" />
 <img src="images/home/photo4.png" alt="Colorful dance celebration at Sun Dance Day Fest with community members" class="swipe-img faded-img" />
-<img src="images/SalsaSunsets/IMG_7851.JPG" alt="Pat and Miguel dancing together at Salsa Sunsets event" class="swipe-img faded-img"/>
-<img src="images/home/photo6.png" alt="Joyful dancing scene from Sun Dance Day Fest" class="swipe-img faded-img" />
 <img src="images/home/photo7.png" alt="Community gathering and dancing at Sun Dance Day Fest" class="swipe-img faded-img" />
 <!-- ...existing swipe gallery code... -->
 </div>
