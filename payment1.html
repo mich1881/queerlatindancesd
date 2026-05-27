@@ -1031,9 +1031,9 @@ pricingConfig = {
 "bachata": { "price": 26, "calculation": "Bachata Only: 1 class x $26 per class = $26", "label": "Bachata Only Drop-in", "perHour": "$26 per class" }
 },
 "private": {
-"both": { "price": 170, "calculation": "Salsa & Bachata: 2 hours x $85 per hour = $170", "label": "Salsa & Bachata Private Lesson", "perHour": "$85 per hour" },
-"salsa": { "price": 85, "calculation": "Salsa Only: 1 hour x $85 per hour = $85", "label": "Salsa Only Private Lesson", "perHour": "$85 per hour" },
-"bachata": { "price": 85, "calculation": "Bachata Only: 1 hour x $85 per hour = $85", "label": "Bachata Only Private Lesson", "perHour": "$85 per hour" }
+"5 classes bundle": { "price": 375, "calculation": "5 Class Bundle: 5 hours x $75 per hour = $375", "label": "5 Class Bundle", "perHour": "$75 per hour" },
+"1-hr class": { "price": 85, "calculation": "1-hr Class: 1 hour x $85 per hour = $85", "label": "1-hr Private Lesson", "perHour": "$85 per hour" },
+"2-hr class": { "price": 156, "calculation": "2-hr Class: 2 hours x $78 per hour = $156", "label": "2-hr Private Lesson", "perHour": "$78 per hour" }
 }
 };
 }
@@ -1113,7 +1113,16 @@ let priceData = null;
 let normalizedPricing = pricing;
 if (pricing) {
   const lower = pricing.toLowerCase();
-  if (lower.startsWith('8wk')) {
+  // Private lesson options from privates.html
+  if (pricingType === 'private') {
+    if (lower.includes('bundle') || lower.includes('5 class')) {
+      normalizedPricing = 'both';   // maps to 5 Class Bundle in config
+    } else if (lower.includes('2hr') || lower.includes('2-hr')) {
+      normalizedPricing = 'bachata'; // maps to 2-hr lesson in config
+    } else {
+      normalizedPricing = 'salsa';  // maps to 1-hr lesson in config
+    }
+  } else if (lower.startsWith('8wk')) {
     if (lower.includes('salsa') && lower.includes('bachata')) {
       normalizedPricing = 'both8wk';
     } else if (lower.includes('salsa')) {
@@ -1345,9 +1354,9 @@ const price = option === 'both' ? '52' : '26';
 console.log('🔢 Dropin price:', price);
 return price;
 } else if (pricingType === 'private') {
-const price = option === 'both' ? '170' : '85';
-console.log('🔢 Private price:', price);
-return price;
+if (option && option.includes('Bundle')) { console.log('🔢 Private bundle price'); return '375'; }
+if (option && option.includes('2hr'))    { console.log('🔢 Private 2hr price');    return '156'; }
+console.log('🔢 Private 1hr price'); return '85';
 } else {
 // Handle specific 4-week series options
 if (option && option.includes('Salsa & Bachata')) {
@@ -1379,13 +1388,13 @@ if (option === 'both') return 'Salsa & Bachata Drop-in';
 if (option === 'salsa') return 'Salsa Only Drop-in';
 if (option === 'bachata') return 'Bachata Only Drop-in';
 } else if (pricingType === 'private') {
-if (option === 'both') return 'Salsa & Bachata Private Lesson';
-if (option === 'salsa') return 'Salsa Only Private Lesson';
-if (option === 'bachata') return 'Bachata Only Private Lesson';
+if (option && option.includes('5 Classes')) return '5 Classes Bundle';
+if (option && option.includes('2hr'))    return '2-hr Private Lesson';
+return '1-hr Private Lesson';
 } else {
-if (option === 'both') return 'Salsa & Bachata Series';
-if (option === 'salsa') return 'Salsa Only Series';
-if (option === 'bachata') return 'Bachata Only Series';
+if (option === '5 Classes Bundle') return '5 Classes Bundle';
+if (option === '1-hr Class') return '1-hr Private Lesson';
+if (option === '2-hr Class') return '2-hr Private Lesson';
 }
 return option || '';
 }
@@ -1426,7 +1435,15 @@ document.getElementById('paypalFormInner').onsubmit = async function(ev) {
   // Normalize series for JSON lookup
 if (series) {
   const lower = series.toLowerCase();
-  if (lower.includes('8wk')) {
+  if (pricingType === 'private') {
+    if (lower.includes('bundle') || lower.includes('5 class')) {
+      normalizedSeries = 'both';
+    } else if (lower.includes('2hr') || lower.includes('2-hr')) {
+      normalizedSeries = 'bachata';
+    } else {
+      normalizedSeries = 'salsa';
+    }
+  } else if (lower.includes('8wk')) {
     if (lower.includes('salsa') && lower.includes('bachata')) {
       normalizedSeries = 'both8wk';
     } else if (lower.includes('salsa')) {
@@ -1579,7 +1596,11 @@ document.getElementById('zelleFormInner').onsubmit = async function(ev) {
   let normalizedSeries = 'both';
 if (series) {
   const lower = series.toLowerCase();
-  if (lower.startsWith('8wk')) {
+  if (pricingType === 'private') {
+    if (lower.includes('bundle') || lower.includes('5 class')) { normalizedSeries = 'both'; }
+    else if (lower.includes('2hr') || lower.includes('2-hr')) { normalizedSeries = 'bachata'; }
+    else { normalizedSeries = 'salsa'; }
+  } else if (lower.startsWith('8wk')) {
     if (lower.includes('salsa') && lower.includes('bachata')) {
       normalizedSeries = 'both8wk';
     } else if (lower.includes('salsa')) {
@@ -1712,7 +1733,11 @@ document.getElementById('venmoFormInner').onsubmit = async function(ev) {
   let normalizedSeries = 'both';
 if (series) {
   const lower = series.toLowerCase();
-  if (lower.startsWith('8wk')) {
+  if (pricingType === 'private') {
+    if (lower.includes('bundle') || lower.includes('5 class')) { normalizedSeries = 'both'; }
+    else if (lower.includes('2hr') || lower.includes('2-hr')) { normalizedSeries = 'bachata'; }
+    else { normalizedSeries = 'salsa'; }
+  } else if (lower.startsWith('8wk')) {
     if (lower.includes('salsa') && lower.includes('bachata')) {
       normalizedSeries = 'both8wk';
     } else if (lower.includes('salsa')) {

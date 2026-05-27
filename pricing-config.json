@@ -84,22 +84,28 @@
   },
   "private": {
     "both": {
-      "price": 170,
-      "calculation": "Salsa & Bachata: 2 hours x $85 per hour = $170",
-      "label": "Salsa & Bachata Private Lesson",
-      "perHour": "$85 per hour"
+      "price": 375,
+      "paypalUrl": "https://www.paypal.com/paypalme/queerlatindance/375",
+      "venmoUrl": "https://venmo.com/?txn=pay&recipients=michf18&amount=375",
+      "calculation": "5 Class Bundle: 5 hours x $75 per hour = $375",
+      "label": "5 Class Bundle",
+      "perHour": "$75 per hour"
     },
     "salsa": {
       "price": 85,
-      "calculation": "Salsa Only: 1 hour x $85 per hour = $85",
-      "label": "Salsa Only Private Lesson",
+      "paypalUrl": "https://www.paypal.com/paypalme/queerlatindance/85",
+      "venmoUrl": "https://venmo.com/?txn=pay&recipients=michf18&amount=85",
+      "calculation": "1-hr Class: 1 hour x $85 per hour = $85",
+      "label": "1-hr Private Lesson",
       "perHour": "$85 per hour"
     },
     "bachata": {
-      "price": 85,
-      "calculation": "Bachata Only: 1 hour x $85 per hour = $85",
-      "label": "Bachata Only Private Lesson",
-      "perHour": "$85 per hour"
+      "price": 156,
+      "paypalUrl": "https://www.paypal.com/paypalme/queerlatindance/156",
+      "venmoUrl": "https://venmo.com/?txn=pay&recipients=michf18&amount=156",
+      "calculation": "2-hr Class: 2 hours x $78 per hour = $156",
+      "label": "2-hr Private Lesson",
+      "perHour": "$78 per hour"
     }
   },
   "stripeLinks": {

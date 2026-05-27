@@ -968,9 +968,9 @@
               </div>
               <div style="font-style:italic;font-size:1.13rem;margin-bottom:1.1rem;">Please select from the following:</div>
               <div class="pricing-options" style="align-items:center;margin-left:0;">
-                <div class="pricing-option" tabindex="0" data-desc="">Salsa Only</div>
-                <div class="pricing-option" tabindex="0" data-desc="">Bachata Only</div>
-                <div class="pricing-option" tabindex="0" data-desc="">Salsa &amp; Bachata</div>
+                <div class="pricing-option" tabindex="0" data-desc="">1-hr class</div>
+                <div class="pricing-option" tabindex="0" data-desc="">2-hr class</div>
+                <div class="pricing-option" tabindex="0" data-desc="">5 classes bundle</div>
                 <div class="scheduling-section" style="width:100%;margin-top:1.2rem;">
                   <div class="scheduling-title">Select Your Private Lesson Date & Time</div>
                   <form id="private-schedule-form" style="margin-bottom:1.5rem;">
@@ -1021,7 +1021,8 @@
                   </ul>
                   <b>Pricing:</b>
                   <ul style="margin:0 0 0 1.2em;padding:0 0 0 1.2em;list-style:square;color:#030202;">
-                    <li><b>Privates</b> – $170 for both classes, $85 for single class</li>
+                    <li><b>Privates</b>: $156 for 2-hr class, $85 for single class</li>
+                    <li><b>Bundle</b>: Purchase 5 one-hour classes for $375 and save $50</li>
                   </ul>
                   <br>
                   <b>Important Notes:</b>
@@ -1168,13 +1169,13 @@
         let total = 'Total: $85 (one-time payment)';
         if (selected) {
           const text = selected.textContent.trim().toLowerCase();
-          if (text.includes('salsa') && text.includes('bachata')) {
-            price = '$170';
-            total = 'Total: $170 (one-time payment)';
-          } else if (text.includes('salsa')) {
-            price = '$85';
-            total = 'Total: $85 (one-time payment)';
-          } else if (text.includes('bachata')) {
+          if (text.includes('bundle')) {
+            price = '$375';
+            total = 'Total: $375 — save $50 (5 classes)';
+          } else if (text.includes('2-hr')) {
+            price = '$156';
+            total = 'Total: $156 (one-time payment)';
+          } else {
             price = '$85';
             total = 'Total: $85 (one-time payment)';
           }
@@ -1261,18 +1262,18 @@
       getTicketsBtn.addEventListener('click', function(e) {
         e.preventDefault();
         const selected = document.querySelector('.pricing-option.selected');
-        let option = 'Privates-Salsa & Bachata';
-        let price = '170';
+        let option = 'Privates-1hr';
+        let price = '85';
         if (selected) {
           const text = selected.textContent.trim().toLowerCase();
-          if (text.includes('salsa') && text.includes('bachata')) {
-            option = 'Privates-Salsa & Bachata';
-            price = '170';
-          } else if (text.includes('salsa')) {
-            option = 'Privates-Salsa Only';
-            price = '85';
-          } else if (text.includes('bachata')) {
-            option = 'Privates-Bachata Only';
+          if (text.includes('bundle')) {
+            option = 'Privates-5 Class Bundle';
+            price = '375';
+          } else if (text.includes('2-hr')) {
+            option = 'Privates-2hr';
+            price = '156';
+          } else {
+            option = 'Privates-1hr';
             price = '85';
           }
         }
@@ -1413,13 +1414,37 @@
       container.appendChild(monthDiv);
     }
     document.addEventListener('DOMContentLoaded', function() {
-      // Render calendar for June 2026 through Dec 2026, start at current month
       const today = new Date();
       const rangeStart = new Date('2026-06-01');
       const rangeEnd = new Date('2026-12-31');
-      const startMonth = new Date(Math.max(today.getFullYear() * 12 + today.getMonth(), rangeStart.getFullYear() * 12 + rangeStart.getMonth()));
-      const monthIdx = (startMonth.getFullYear() - rangeStart.getFullYear()) * 12 + (startMonth.getMonth() - rangeStart.getMonth());
-      renderSundayCalendar('calendar-container', rangeStart, rangeEnd, Math.max(0, monthIdx));
+
+      // Build the same months array the calendar uses
+      const months = [];
+      let d = new Date(rangeStart);
+      while (d <= rangeEnd) {
+        const y = d.getFullYear(), m = d.getMonth();
+        if (!months.find(x => x.year === y && x.month === m)) months.push({ year: y, month: m });
+        d.setDate(d.getDate() + 1);
+      }
+
+      // Start at today's month (clamped to range), then advance to first month with available dates
+      const todayMonths = today.getFullYear() * 12 + today.getMonth();
+      const rangeStartMonths = rangeStart.getFullYear() * 12 + rangeStart.getMonth();
+      let monthIdx = Math.max(0, Math.min(todayMonths - rangeStartMonths, months.length - 1));
+
+      // If current month has no available dates, find the next month that does
+      const hasDateInMonth = (idx) => {
+        const { year, month } = months[idx];
+        return AVAILABLE_DATES.some(iso => {
+          const [y, m] = iso.split('-').map(Number);
+          return y === year && (m - 1) === month;
+        });
+      };
+      while (monthIdx < months.length - 1 && !hasDateInMonth(monthIdx)) {
+        monthIdx++;
+      }
+
+      renderSundayCalendar('calendar-container', rangeStart, rangeEnd, monthIdx);
     });
 
     // Store current month index globally so re-render stays on same month
