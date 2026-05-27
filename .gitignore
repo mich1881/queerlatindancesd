@@ -1,0 +1,7 @@
+# Admin-only pages — never push to origin
+privatesignore.html
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
