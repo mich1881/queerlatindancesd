@@ -636,7 +636,7 @@ function removeGuestEntry(btn) {
 function buildEmailHtml({ guestName, qrCode, preferredName, pronouns, eventDate }) {
   const qrImage = `https://quickchart.io/qr?text=${encodeURIComponent(qrCode)}&size=400`;
   const displayName = preferredName || guestName || 'Guest';
-  const displayDate = eventDate || document.getElementById('eventDate').value || 'April 17th, 2026, 7pm – 10:30pm';
+  const displayDate = eventDate || document.getElementById('eventDate').value || 'April 17th, 2026, 6:30pm – 11:00pm';
   return `
     <div style="background:#e8e3fa;padding:0;margin:0;font-family:Arial,sans-serif;">
       <div style="background:#b67ff1;padding:0.5em 0;">

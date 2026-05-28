@@ -553,40 +553,6 @@ font-style: italic;
   box-shadow: 0 0 0 4px #ffb269, 0 6px 32px rgba(255, 180, 0, 0.6);
 }
 
-/* Loading overlay */
-.scanner-loading-overlay {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(250, 250, 234, 0.92);
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  gap: 0.7em;
-}
-.scanner-loading-overlay .loading-spinner {
-  width: 48px;
-  height: 48px;
-  border: 5px solid #e0c8ff;
-  border-top-color: #d37cff;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-.scanner-loading-overlay .loading-text {
-  color: #a259ff;
-  font-size: 1.3em;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-#scannerSection {
-  position: relative;
-}
-
 </style>
 </head>
 <body>
@@ -607,7 +573,7 @@ font-style: italic;
 
 <!-- Manual Entry Section (hidden by default) -->
 <div id="manualSection" style="display:none;">
-  <input type="text" id="email" placeholder="Enter name or email">
+  <input type="text" id="email" placeholder="Enter name">
   <div class="manual-buttons">
     <button id="checkinBtn">Check In</button>
   </div>
@@ -615,12 +581,8 @@ font-style: italic;
 
 <!-- QR Scanner Section -->
 <div id="scannerSection">
-<div id="scanner-loading-overlay" class="scanner-loading-overlay">
-  <div class="loading-spinner"></div>
-  <div class="loading-text">LOADING CAMERA…</div>
-</div>
 <div id="qr-reader"></div>
-<p class="scanner-hint">Hold QR code in front of camera — works near &amp; far.</p>
+<p class="scanner-hint">Show QR CODE in front of the camera.</p>
 <button class="btn-stop" onclick="resetCheckinUI()">Stop Scanner</button>
 </div>
 <div class="popup-overlay" id="stripe-popup">
@@ -646,7 +608,16 @@ font-style: italic;
 <h2>Success!</h2>
 <p>Please confirm your details for your name tag:</p>
 <input type="text" id="preferredNameInput" placeholder="Preferred name for name tag">
-<input type="text" id="pronounsInput" placeholder="Pronouns">
+<select id="pronounsInput" style="width:100%;padding:0.8em;margin:0.5em 0;border:2px solid #ffb6c1;border-radius:8px;font-size:1em;outline:none;cursor:pointer;background:#fff;color:#444;">
+  <option value="" style="color:#aaa;">Preferred Role (Optional)</option>
+  <option value="Lead">Lead</option>
+  <option value="Follow">Follow</option>
+  <option value="Switch">Switch</option>
+</select>
+<style>
+  #pronounsInput:has(option[value=""]:checked) { color: #aaa; }
+  #pronounsInput option:not([value=""]) { color: #444; }
+</style>
 <div class="popup-buttons">
 <button class="btn-cancel" onclick="closePopup('namepronouns-popup')">Cancel</button>
 <button class="btn-confirm" id="namePronounsSubmitBtn">Continue</button>
@@ -772,46 +743,30 @@ if (html5QrCode && html5QrCode.isScanning) {
 return;
 }
 
-// Show loading overlay
-const overlay = document.getElementById('scanner-loading-overlay');
-if (overlay) overlay.style.display = 'flex';
-
 html5QrCode = new Html5Qrcode("qr-reader", {
   experimentalFeatures: { useBarCodeDetectorIfSupported: true }
 });
 
-// Use a smaller qrbox ratio so both close and far codes are detected
-const containerWidth = document.getElementById('qr-reader').offsetWidth || 280;
-const qrboxSize = Math.min(Math.floor(containerWidth * 0.8), 280);
-
 html5QrCode.start(
 { facingMode: "environment" },
 {
-  fps: 15,
-  qrbox: { width: qrboxSize, height: qrboxSize },
+  fps: 30,
+  qrbox: { width: 250, height: 250 },
   aspectRatio: 1.0,
   disableFlip: false,
   videoConstraints: {
     facingMode: "environment",
-    width: { ideal: 1280 },
-    height: { ideal: 720 }
-    // No forced zoom — let the OS autofocus handle near/far
+    width: { ideal: 1920 },
+    height: { ideal: 1080 },
+    advanced: [{ zoom: 1.5 }]
   }
 },
-(qrCode) => {
-  // Hide overlay on first successful frame (camera is live)
-  if (overlay) overlay.style.display = 'none';
-  onQRCodeScanned(qrCode);
-},
+onQRCodeScanned,
 (errorMessage) => {
-  // Hide loading once camera stream is active (errors fire continuously while scanning)
-  if (overlay && overlay.style.display !== 'none') overlay.style.display = 'none';
+  // Ignore - no QR found yet
 }
-).then(() => {
-  if (overlay) overlay.style.display = 'none';
-}).catch((err) => {
+).catch((err) => {
 console.error("Camera error:", err);
-if (overlay) overlay.style.display = 'none';
 showResult("Camera access denied. Please allow camera or use manual entry.", "error");
 showManualEntry();
 });
@@ -1110,7 +1065,7 @@ function backToNamePronouns() {
     let name = document.getElementById('ticketGuestName').textContent || '';
     let pronouns = document.getElementById('ticketPronouns').textContent || '';
     // Remove emoji if present
-    name = name.replace(/^[🌷]/, '').trim();
+    name = name.replace('🎉', '').trim();
     // Fill the confirmation popup fields with current values
 document.getElementById('preferredNameInput').value = name;
 document.getElementById('pronounsInput').value = pronouns;
@@ -1124,6 +1079,14 @@ if (e.key === 'Enter') {
 document.getElementById('checkinBtn').click();
 }
 });
+
+// Grey placeholder for role dropdown
+const roleSelect = document.getElementById('pronounsInput');
+function updateRoleColor() {
+  roleSelect.style.color = roleSelect.value === '' ? '#aaa' : '#444';
+}
+roleSelect.addEventListener('change', updateRoleColor);
+updateRoleColor();
 </script>
 </body>
 </html>
