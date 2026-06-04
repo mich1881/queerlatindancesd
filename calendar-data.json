@@ -5,12 +5,12 @@
   },
 
   "friSpringP1": {
-    "title": "4 Week Friday Series - Spring Part 1",
-    "dayOfWeek": "Fridays",
+    "title": "4 Week Thursday Series - Summer",
+    "dayOfWeek": "Thursdays",
     "year": 2026,
-    "dates": ["4/10", "4/24", "5/1", "5/8"],
-    "rsvpDeadline": "Wednesday, 4/7",
-    "googleCalendarDates": ["20260410", "20260424", "20260501", "20260508"],
+    "dates": ["7/23", "7/30", "8/6", "8/13"],
+    "rsvpDeadline": "Wednesday, 7/22",
+    "googleCalendarDates": ["20260723", "20260730", "20260806", "20260813"],
     "times": {
       "salsa": "6:00pm - 7:00pm",
       "bachata": "7:00pm - 8:00pm",
@@ -19,32 +19,32 @@
       "calendarEnd": "2000"
     },
     "calendarEvents": {
-      "2026-04-10": { "salsa": true, "bachata": true },
-      "2026-04-24": { "salsa": true, "bachata": true },
-      "2026-05-01": { "salsa": true, "bachata": true },
-      "2026-05-08": { "salsa": true, "bachata": true }
+      "2026-07-23": { "salsa": true, "bachata": true },
+      "2026-07-30": { "salsa": true, "bachata": true },
+      "2026-08-06": { "salsa": true, "bachata": true },
+      "2026-08-13": { "salsa": true, "bachata": true }
     }
   },
 
   "sunSpringP1": {
-    "title": "4 Week Sunday Series - Spring Part 1",
+    "title": "4 Week Sunday Series - Summer",
     "dayOfWeek": "Sundays",
     "year": 2026,
-    "dates": ["4/12", "4/19", "5/3", "5/10"],
-    "rsvpDeadline": "Wednesday, 4/7",
-    "googleCalendarDates": ["20260412", "20260419", "20260503", "20260510"],
+    "dates": ["7/26", "8/2", "8/9", "8/23"],
+    "rsvpDeadline": "Wednesday, 7/22",
+    "googleCalendarDates": ["20260726", "20260802", "20260809", "20260823"],
     "times": {
-      "salsa": "4:00pm - 5:00pm",
-      "bachata": "5:00pm - 6:00pm",
-      "both": "4:00pm - 6:00pm",
-      "calendarStart": "1600",
-      "calendarEnd": "1800"
+      "salsa": "5:00pm - 6:00pm",
+      "bachata": "6:00pm - 7:00pm",
+      "both": "5:00pm - 7:00pm",
+      "calendarStart": "1700",
+      "calendarEnd": "1900"
     },
     "calendarEvents": {
-      "2026-04-12": { "salsa": true, "bachata": true },
-      "2026-04-19": { "salsa": true, "bachata": true },
-      "2026-05-03": { "salsa": true, "bachata": true },
-      "2026-05-10": { "salsa": true, "bachata": true }
+      "2026-07-26": { "salsa": true, "bachata": true },
+      "2026-08-02": { "salsa": true, "bachata": true },
+      "2026-08-09": { "salsa": true, "bachata": true },
+      "2026-08-23": { "salsa": true, "bachata": true }
     }
   },
 
@@ -88,12 +88,12 @@
     "year": 2026,
     "rsvpDeadline": "Wednesday, 4/7",
     "dates": {
-      "fridays": ["4/10", "4/24", "5/1", "5/8"],
-      "sundays": ["4/12", "4/19", "5/3", "5/10"]
+      "thursdays": ["7/23", "7/30", "8/6", "8/13"],
+      "sundays": ["7/26", "8/2", "8/9", "8/23"]
     },
     "googleCalendarDates": {
-      "fridays": ["20260410", "20260424", "20260501", "20260508"],
-      "sundays": ["20260412", "20260419", "20260503", "20260510"]
+      "thursdays": ["20260723", "20260730", "20260806", "20260813"],
+      "sundays": ["20260726", "20260802", "20260809", "20260823"]
     },
     "times": {
       "fridays": {

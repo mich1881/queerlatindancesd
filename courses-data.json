@@ -4,34 +4,34 @@
         {
       "id": "progressive-series",
       "date": "january-2025",
-      "month": "JAN",
-      "day": "2025",
-      "title": "Friday Series",
+      "month": "JUL",
+      "day": "2026",
+      "title": "Thursday Series",
       "flyerUrl": "images/lessons/Spring1.png",
       "description": "Advanced 4-week progressive course",
       "type": "series",
       "link": "4weekseries1.html",
-      "banner": "ENDED"
+      "banner": "OPEN ENROLLMENT"
     },
 
     {
       "id": "4week-series",
       "date": "january-2025", 
-      "month": "JAN",
-      "day": "2025",
+      "month": "Jul",
+      "day": "2026",
       "title": "Sunday Series",
       "flyerUrl": "images/lessons/Spring1.png",
       "description": "Structured 4-week intro course",
       "type": "series",
       "link": "4weekseries2.html",
-      "banner": "ENDED"
+      "banner": "OPEN ENROLLMENT"
     },
         {
       "id": "new-class-3",
       "date": "january-2025",
       "month": "DROP",
       "day": "IN",
-      "title": "Drop-in: Spring",
+      "title": "Drop-in",
       "flyerUrl": "images/lessons/4weekseriesdropin.png",
       "description": "Description for Drop-in Spring",
       "type": "dropin",
@@ -43,7 +43,7 @@
       "date": "February-2026",
       "month": "FEB",
       "day": "2026",
-      "title": "Friday Series P2",
+      "title": "Friday Series",
       "flyerUrl": "images/lessons/Springp2-1.png",
       "description": "Description for Friday Series P2",
       "type": "series",
@@ -61,7 +61,7 @@
       "description": "Description for 4 Week Series 2",
       "type": "series",
       "link": "4weekseries2p2.html",
-      "banner": "ENDED",
+      "banner": "OPEN ENROLLMENT",
       "hidden": true
     },
     
@@ -70,7 +70,7 @@
       "date": "january-2025",
       "month": "DROP",
       "day": "IN",
-      "title": "Drop-in: Spring P2",
+      "title": "Drop-in",
       "flyerUrl": "images/lessons/4weekseriesdropin.png",
       "description": "Drop-in classes for beginners",
       "type": "dropin",
