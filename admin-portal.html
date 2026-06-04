@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>QLDSD Admin Portal</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #1a0a30; color: #eee; min-height: 100vh; }
+
+  /* ── LOCK SCREEN ── */
+  #lockScreen {
+    position: fixed; inset: 0; background: #1a0a30;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999;
+  }
+  #lockScreen h1 { color: #a259ff; font-size: 2rem; margin-bottom: 0.5rem; }
+  #lockScreen p { color: #888; margin-bottom: 2rem; font-size: 0.9rem; }
+  #lockScreen input {
+    padding: 0.8rem 1.2rem; border-radius: 10px; border: 2px solid #a259ff;
+    background: #2d1b4e; color: #fff; font-size: 1.1rem; width: 280px; text-align: center; outline: none;
+  }
+  #lockScreen button {
+    margin-top: 1rem; padding: 0.8rem 2rem; background: #a259ff; color: #fff;
+    border: none; border-radius: 10px; font-size: 1.1rem; cursor: pointer; width: 280px;
+  }
+  #lockScreen button:hover { background: #8b3fd9; }
+  #lockError { color: #ff6b6b; margin-top: 0.8rem; font-size: 0.95rem; min-height: 1.2rem; }
+
+  /* ── MAIN APP ── */
+  #app { display: none; }
+  header {
+    background: linear-gradient(120deg, #2d1b6e, #4a2fa0);
+    padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  header h1 { font-size: 1.4rem; color: #fff; }
+  header span { font-size: 0.85rem; color: #b57edc; }
+  #signOutBtn {
+    background: #ff6b6b; color: #fff; border: none; border-radius: 8px;
+    padding: 0.4rem 1rem; cursor: pointer; font-size: 0.9rem;
+  }
+
+  /* ── TABS ── */
+  .tabs { display: flex; gap: 0; background: #12072a; border-bottom: 2px solid #3a1f7a; }
+  .tab-btn {
+    padding: 1rem 2rem; background: none; border: none; color: #888;
+    font-size: 1rem; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s;
+  }
+  .tab-btn.active { color: #a259ff; border-bottom-color: #a259ff; background: #1a0a30; }
+  .tab-btn:hover { color: #c990ff; }
+  .tab-content { display: none; padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  /* ── CARDS ── */
+  .reg-card {
+    background: #2d1b4e; border-radius: 14px; padding: 1.2rem 1.4rem;
+    margin-bottom: 1rem; border: 1.5px solid #3a1f7a; position: relative;
+  }
+  .reg-card.verified { border-color: #27ae60; }
+  .reg-card.finished { border-color: #888; opacity: 0.7; }
+  .reg-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+  .reg-name { font-size: 1.1rem; font-weight: 700; color: #fff; }
+  .reg-series { font-size: 0.85rem; color: #b57edc; margin-top: 0.2rem; }
+  .reg-detail { font-size: 0.85rem; color: #999; margin-top: 0.15rem; }
+  .badge {
+    padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+  }
+  .badge.pending { background: #f39c12; color: #fff; }
+  .badge.verified { background: #27ae60; color: #fff; }
+  .badge.finished { background: #555; color: #ccc; }
+
+  /* Credits display */
+  .credits-display { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.6rem; flex-wrap: wrap; }
+  .credit-dot {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #27ae60; border: 2px solid #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #fff; font-weight: 700;
+  }
+  .credit-dot.used { background: #555; border-color: #777; }
+  .credit-label { font-size: 0.85rem; color: #b57edc; margin-left: 0.5rem; }
+
+  /* Attendance log */
+  .attendance-log { margin-top: 0.7rem; }
+  .attendance-log h4 { font-size: 0.82rem; color: #888; margin-bottom: 0.4rem; }
+  .attendance-entry { font-size: 0.8rem; color: #aaa; margin-bottom: 0.15rem; }
+
+  /* Action buttons */
+  .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
+  .btn {
+    padding: 0.5rem 1.1rem; border: none; border-radius: 8px; font-size: 0.9rem;
+    cursor: pointer; font-weight: 600; transition: all 0.2s;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+  .btn-verify { background: #27ae60; color: #fff; }
+  .btn-checkin { background: #a259ff; color: #fff; }
+  .btn-undo { background: #e67e22; color: #fff; }
+  .btn-danger { background: #e74c3c; color: #fff; }
+  .btn-secondary { background: #3a2060; color: #c990ff; border: 1px solid #5a3a9a; }
+
+  /* Credits selector */
+  .credits-selector { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; }
+  .credits-selector label { font-size: 0.85rem; color: #aaa; }
+  .credits-selector select {
+    padding: 0.35rem 0.6rem; border-radius: 6px; background: #1a0a30;
+    border: 1px solid #5a3a9a; color: #fff; font-size: 0.9rem; outline: none;
+  }
+
+  /* Filter bar */
+  .filter-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
+  .filter-bar input, .filter-bar select {
+    padding: 0.5rem 0.8rem; border-radius: 8px; border: 1.5px solid #3a1f7a;
+    background: #2d1b4e; color: #fff; font-size: 0.9rem; outline: none;
+  }
+  .filter-bar input { width: 220px; }
+  .count-badge { background: #3a1f7a; color: #c990ff; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.85rem; }
+
+  /* Summary stats */
+  .stats-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .stat-box { background: #2d1b4e; border-radius: 12px; padding: 1rem 1.4rem; border: 1px solid #3a1f7a; min-width: 130px; }
+  .stat-box .num { font-size: 2rem; font-weight: 900; color: #a259ff; }
+  .stat-box .lbl { font-size: 0.8rem; color: #888; margin-top: 0.2rem; }
+
+  /* Online courses section (mirrors courses-login admin) */
+  .online-student-card {
+    background: #2d1b4e; border-radius: 12px; padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem; border: 1.5px solid #3a1f7a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+  }
+  .grant-form { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+  .grant-form input, .grant-form select {
+    padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #5a3a9a;
+    background: #1a0a30; color: #fff; font-size: 0.9rem; outline: none;
+  }
+  .grant-form input { width: 240px; }
+
+  /* Empty state */
+  .empty { text-align: center; color: #555; padding: 3rem; font-size: 1rem; }
+
+  /* Refresh btn */
+  .refresh-btn { background: #3a1f7a; color: #c990ff; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; font-size: 0.85rem; }
+  .refresh-btn:hover { background: #5a3a9a; }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .tab-btn { padding: 0.8rem 0.9rem; font-size: 0.85rem; }
+    .tab-content { padding: 1rem; }
+    header { padding: 0.8rem 1rem; }
+  }
+
+  .spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid #a259ff44; border-top-color: #a259ff; border-radius: 50%; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     LOCK SCREEN
+══════════════════════════════════════════ -->
+<div id="lockScreen">
+  <h1>🔐 QLDSD Admin Portal</h1>
+  <p>Type <strong>qldsd</strong> anywhere to reveal the password field, or click below</p>
+  <input type="password" id="passwordInput" placeholder="Admin password" autocomplete="current-password" />
+  <button onclick="doLogin()">Enter</button>
+  <div id="lockError"></div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MAIN APP
+══════════════════════════════════════════ -->
+<div id="app">
+  <header>
+    <div>
+      <h1>🏳️‍🌈 QLDSD Admin Portal</h1>
+      <span id="adminWelcome">Logged in</span>
+    </div>
+    <button id="signOutBtn" onclick="signOut()">Sign Out</button>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('pending')">📋 Pending Registrations</button>
+    <button class="tab-btn" onclick="switchTab('attendance')">✅ Attendance & Credits</button>
+    <button class="tab-btn" onclick="switchTab('online')">🌐 Online Courses</button>
+  </div>
+
+  <!-- ── TAB 1: PENDING REGISTRATIONS ── -->
+  <div id="tab-pending" class="tab-content active">
+    <div class="stats-row" id="pendingStats"></div>
+    <div class="filter-bar">
+      <input type="text" id="pendingSearch" placeholder="Search name or email…" oninput="renderPending()" />
+      <select id="pendingFilter" onchange="renderPending()">
+        <option value="all">All</option>
+        <option value="pending">⏳ Pending only</option>
+        <option value="verified">✅ Verified only</option>
+      </select>
+      <button class="refresh-btn" onclick="loadRegistrations()">🔄 Refresh</button>
+      <span class="count-badge" id="pendingCount">0</span>
+    </div>
+    <div id="pendingList"><div class="empty">Loading…</div></div>
+    <button class="btn btn-checkin" onclick="quickAddRegistration()">
+  ➕ Add Registration
+</button>
+  </div>
+
+  <!-- ── TAB 2: ATTENDANCE & CREDITS ── -->
+  <div id="tab-attendance" class="tab-content">
+    <div class="filter-bar">
+      <input type="text" id="attendSearch" placeholder="Search name, email, or series…" oninput="renderAttendance()" />
+      <select id="seriesFilter" onchange="renderAttendance()">
+        <option value="all">All Series</option>
+        <option value="4 Week">4-Week Series</option>
+        <option value="8 Week">8-Week Series</option>
+        <option value="Drop-in">Drop-in</option>
+        <option value="Private">Private</option>
+      </select>
+      <button class="refresh-btn" onclick="loadRegistrations()">🔄 Refresh</button>
+      <span class="count-badge" id="attendCount">0 enrolled</span>
+    </div>
+    <div id="attendanceList"><div class="empty">Loading…</div></div>
+  </div>
+
+  <!-- ── TAB 3: ONLINE COURSES ── -->
+  <div id="tab-online" class="tab-content">
+    <h2 style="color:#a259ff;margin-bottom:1rem;">Grant Online Course Access</h2>
+    <div class="grant-form">
+      <input type="email" id="grantEmail" placeholder="Student email address" />
+      <select id="grantCourse">
+        <option value="">Select Course…</option>
+        <option value="salsa-recap-lvl1">Salsa Recap (Level 1)</option>
+        <option value="salsa-fundamentals">Salsa Fundamentals</option>
+        <option value="bachata-fundamentals">Bachata Fundamentals</option>
+        <option value="advanced-salsa">Advanced Salsa</option>
+      </select>
+      <button class="btn btn-verify" onclick="grantOnlineAccess()">Grant Access</button>
+    </div>
+    <p style="color:#666;font-size:0.85rem;margin-top:0.7rem;">This calls the Cloudflare Worker to grant course access stored server-side.</p>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════
+const WORKER_URL = 'https://restless-feather-b6a9.michf18.workers.dev';
+let adminToken = sessionStorage.getItem('adminToken') || '';
+let allRegistrations = [];
+
+// ══════════════════════════════════════════
+// SECRET KEYBOARD UNLOCK (type "qldsd")
+// ══════════════════════════════════════════
+let keyBuf = '';
+document.addEventListener('keydown', function(e) {
+  keyBuf += e.key.toLowerCase();
+  if (keyBuf.includes('qldsd')) {
+    document.getElementById('passwordInput').focus();
+    keyBuf = '';
+  }
+  if (keyBuf.length > 10) keyBuf = keyBuf.slice(-10);
+});
+
+// Also allow Enter key on password field
+document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+
+// ══════════════════════════════════════════
+// LOGIN / LOGOUT
+// ══════════════════════════════════════════
+async function doLogin() {
+  const pw = document.getElementById('passwordInput').value;
+  const errEl = document.getElementById('lockError');
+  errEl.textContent = '';
+  if (!pw) { errEl.textContent = 'Please enter a password.'; return; }
+
+  try {
+    const res = await fetch(`${WORKER_URL}/api/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    });
+    const data = await res.json();
+    if (data.success) {
+      adminToken = data.token;
+      sessionStorage.setItem('adminToken', adminToken);
+      document.getElementById('lockScreen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      loadRegistrations();
+    } else {
+      errEl.textContent = '❌ Wrong password. Try again.';
+      document.getElementById('passwordInput').value = '';
+    }
+  } catch (err) {
+    errEl.textContent = '⚠️ Connection error. Make sure the Worker is deployed.';
+  }
+}
+
+function signOut() {
+  adminToken = '';
+  sessionStorage.removeItem('adminToken');
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('lockScreen').style.display = 'flex';
+  document.getElementById('passwordInput').value = '';
+}
+
+// Auto-login if token exists in session
+if (adminToken) {
+  document.getElementById('lockScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  loadRegistrations();
+}
+
+// ══════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ══════════════════════════════════════════
+// LOAD REGISTRATIONS FROM WORKER
+// ══════════════════════════════════════════
+async function loadRegistrations() {
+  try {
+    const res = await fetch(`${WORKER_URL}/api/admin/registrations`, {
+      headers: { 'Authorization': 'Bearer ' + adminToken }
+    });
+    if (res.status === 401) { signOut(); return; }
+    allRegistrations = await res.json();
+    // Sort newest first
+    allRegistrations.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+    renderPending();
+    renderAttendance();
+    renderStats();
+  } catch (err) {
+    document.getElementById('pendingList').innerHTML = `<div class="empty">⚠️ Could not load registrations. Is the Worker deployed?</div>`;
+  }
+}
+
+// ══════════════════════════════════════════
+// STATS
+// ══════════════════════════════════════════
+function renderStats() {
+  const pending = allRegistrations.filter(r => r.status === 'pending').length;
+  const verified = allRegistrations.filter(r => r.status === 'verified').length;
+  const total = allRegistrations.length;
+  document.getElementById('pendingStats').innerHTML = `
+    <div class="stat-box"><div class="num">${total}</div><div class="lbl">Total Registrations</div></div>
+    <div class="stat-box"><div class="num" style="color:#f39c12">${pending}</div><div class="lbl">Awaiting Verification</div></div>
+    <div class="stat-box"><div class="num" style="color:#27ae60">${verified}</div><div class="lbl">Verified & Active</div></div>
+  `;
+}
+
+// ══════════════════════════════════════════
+// TAB 1: PENDING REGISTRATIONS
+// ══════════════════════════════════════════
+function renderPending() {
+  const q = (document.getElementById('pendingSearch').value || '').toLowerCase();
+  const filter = document.getElementById('pendingFilter').value;
+
+  let regs = allRegistrations.filter(r => {
+    const matchQ = !q || `${r.firstName} ${r.lastName} ${r.email} ${r.series}`.toLowerCase().includes(q);
+    const matchF = filter === 'all' || r.status === filter;
+    return matchQ && matchF;
+  });
+
+  document.getElementById('pendingCount').textContent = `${regs.length} shown`;
+
+  if (!regs.length) {
+    document.getElementById('pendingList').innerHTML = '<div class="empty">No registrations found.</div>';
+    return;
+  }
+
+  document.getElementById('pendingList').innerHTML = regs.map(r => pendingCard(r)).join('');
+}
+
+function pendingCard(r) {
+  const date = r.submittedAt ? new Date(r.submittedAt).toLocaleString() : '—';
+  const badgeCls = r.status === 'verified' ? 'verified' : 'pending';
+  const badgeLabel = r.status === 'verified' ? '✅ Verified' : '⏳ Pending';
+
+  // Credit options based on series type
+  const creditOptions = [2,3,4,5,6,7,8].map(n => `<option value="${n}">${n} credits</option>`).join('');
+
+  const verifyBlock = r.status === 'pending' ? `
+    <div class="credits-selector">
+      <label>Assign credits:</label>
+      <select id="credits-${r.id}">
+        <option value="4">4 credits (4-week)</option>
+        <option value="8">8 credits (8-week)</option>
+        ${creditOptions}
+      </select>
+    </div>
+    <div class="actions">
+      <button class="btn btn-verify" onclick="verifyPayment('${r.id}')">✅ Verify Payment & Assign Credits</button>
+    </div>
+  ` : `<div class="actions">
+    <span style="color:#27ae60;font-size:0.9rem;">✅ Payment verified — ${r.creditsTotal} credits assigned</span>
+  </div>`;
+
+  return `
+    <div class="reg-card ${r.status}" id="regcard-${r.id}">
+      <div class="reg-header">
+        <div>
+          <div class="reg-name">${r.firstName} ${r.lastName}</div>
+          <div class="reg-series">${r.series || '—'}</div>
+          <div class="reg-detail">📧 ${r.email}${r.phone ? ' · 📞 ' + r.phone : ''}${r.pronouns ? ' · ' + r.pronouns : ''}${r.role ? ' · ' + r.role : ''}</div>
+          <div class="reg-detail">💰 ${r.amount || '—'} via ${r.paymentMethod || '—'} · Submitted: ${date}</div>
+        </div>
+        <span class="badge ${badgeCls}">${badgeLabel}</span>
+      </div>
+      ${verifyBlock}
+    </div>
+  `;
+}
+
+async function verifyPayment(regId) {
+  const selectEl = document.getElementById('credits-' + regId);
+  const credits = selectEl ? parseInt(selectEl.value) : 4;
+
+  const res = await fetch(`${WORKER_URL}/api/admin/verify-payment`, {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + adminToken, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ regId, credits })
+  });
+  const data = await res.json();
+  if (data.success) {
+    await loadRegistrations();
+    alert(`✅ Payment verified! ${credits} credits assigned to ${data.reg.firstName} ${data.reg.lastName}.`);
+  } else {
+    alert('❌ Error: ' + (data.error || 'Unknown error'));
+  }
+}
+
+async function quickAddRegistration() {
+
+  const firstName = prompt("First name:");
+  if (!firstName) return;
+
+  const lastName = prompt("Last name:");
+  if (!lastName) return;
+
+  const email = prompt("Email:");
+  if (!email) return;
+
+  const series = prompt(
+    "Series (4 Week, 8 Week, Drop-in, Private):",
+    "4 Week"
+  );
+
+  try {
+
+    const res = await fetch(
+      `${WORKER_URL}/api/admin/manual-registration`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + adminToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          series,
+          status: 'pending'
+        })
+      }
+    );
+
+    const data = await res.json();
+
+    if (data.success) {
+      await loadRegistrations();
+      alert("✅ Registration added");
+    } else {
+      alert(data.error || "Failed");
+    }
+
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+// ══════════════════════════════════════════
+// TAB 2: ATTENDANCE & CREDITS
+// ══════════════════════════════════════════
+function renderAttendance() {
+  const q = (document.getElementById('attendSearch').value || '').toLowerCase();
+  const seriesFilter = document.getElementById('seriesFilter').value;
+
+  let regs = allRegistrations.filter(r => {
+    if (r.status !== 'verified') return false;
+    const matchQ = !q || `${r.firstName} ${r.lastName} ${r.email} ${r.series}`.toLowerCase().includes(q);
+    const matchS = seriesFilter === 'all' || (r.series || '').includes(seriesFilter);
+    return matchQ && matchS;
+  });
+
+  document.getElementById('attendCount').textContent = `${regs.length} enrolled`;
+
+  if (!regs.length) {
+    document.getElementById('attendanceList').innerHTML = '<div class="empty">No verified students yet. Verify payments first in the Pending tab.</div>';
+    return;
+  }
+
+  document.getElementById('attendanceList').innerHTML = regs.map(r => attendanceCard(r)).join('');
+}
+
+function attendanceCard(r) {
+  const total = r.creditsTotal || 0;
+  const remaining = r.creditsRemaining || 0;
+  const used = total - remaining;
+
+  // Build credit dots
+  const dots = Array.from({ length: total }, (_, i) => {
+    const isUsed = i < used;
+    return `<div class="credit-dot ${isUsed ? 'used' : ''}" title="${isUsed ? 'Class attended' : 'Credit remaining'}">${isUsed ? '✓' : (total - i)}</div>`;
+  }).join('');
+
+  // Attendance log
+  const log = (r.attendance || []).map((a, i) =>
+    `<div class="attendance-entry">Class ${i + 1}: ${new Date(a.date).toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' })}</div>`
+  ).join('');
+
+  const noCredits = remaining <= 0;
+
+  return `
+    <div class="reg-card verified" id="attendcard-${r.id}">
+      <div class="reg-header">
+        <div>
+          <div class="reg-name">${r.firstName} ${r.lastName}</div>
+          <div class="reg-series">${r.series || '—'}</div>
+          <div class="reg-detail">📧 ${r.email}${r.role ? ' · ' + r.role : ''}</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:1.4rem;font-weight:900;color:${noCredits ? '#e74c3c' : '#27ae60'}">${remaining}</div>
+          <div style="font-size:0.75rem;color:#888;">credits left</div>
+        </div>
+      </div>
+
+      <div class="credits-display">
+        ${dots}
+        <span class="credit-label">${used}/${total} classes attended</span>
+      </div>
+
+      ${log ? `<div class="attendance-log"><h4>Attendance log:</h4>${log}</div>` : ''}
+
+      <div class="actions">
+        <button class="btn btn-checkin" onclick="doCheckin('${r.id}')" ${noCredits ? 'disabled' : ''}>
+          ${noCredits ? '🚫 No Credits Left' : '📋 CHECK IN (deduct 1 credit)'}
+        </button>
+        ${used > 0 ? `<button class="btn btn-undo" onclick="doUndo('${r.id}')">↩️ Undo Last Check-in</button>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+async function doCheckin(regId) {
+  const r = allRegistrations.find(x => x.id === regId);
+  if (!r) return;
+  if (!confirm(`Check in ${r.firstName} ${r.lastName}? This will deduct 1 credit (${r.creditsRemaining} → ${r.creditsRemaining - 1}).`)) return;
+
+  const res = await fetch(`${WORKER_URL}/api/admin/checkin-credit`, {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + adminToken, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ regId })
+  });
+  const data = await res.json();
+  if (data.success) {
+    await loadRegistrations();
+    alert(`✅ ${r.firstName} ${r.lastName} checked in! Credits remaining: ${data.creditsRemaining}`);
+  } else {
+    alert('❌ Error: ' + (data.error || 'Unknown error'));
+  }
+}
+
+async function doUndo(regId) {
+  const r = allRegistrations.find(x => x.id === regId);
+  if (!r) return;
+  if (!confirm(`Undo last check-in for ${r.firstName} ${r.lastName}? This will add 1 credit back.`)) return;
+
+  const res = await fetch(`${WORKER_URL}/api/admin/undo-checkin`, {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + adminToken, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ regId })
+  });
+  const data = await res.json();
+  if (data.success) {
+    await loadRegistrations();
+    alert(`↩️ Check-in undone. Credits remaining: ${data.creditsRemaining}`);
+  } else {
+    alert('❌ Error: ' + (data.error || 'Unknown error'));
+  }
+
+}
+
+// ══════════════════════════════════════════
+// TAB 3: ONLINE COURSE ACCESS
+// ══════════════════════════════════════════
+async function grantOnlineAccess() {
+  const email = document.getElementById('grantEmail').value.trim();
+  const courseId = document.getElementById('grantCourse').value;
+  if (!email || !courseId) { alert('Please enter an email and select a course.'); return; }
+
+  try {
+    const res = await fetch(`${WORKER_URL}/api/admin/grant-access`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminKey: '', email, courseId, action: 'grant' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert(`✅ Access granted to ${email} for ${courseId}!`);
+      document.getElementById('grantEmail').value = '';
+    } else {
+      alert('❌ Error: ' + (data.error || 'Check Worker logs'));
+    }
+  } catch (err) {
+    alert('❌ Connection error: ' + err.message);
+  }
+}
+
+</script>
+</body>
+</html>

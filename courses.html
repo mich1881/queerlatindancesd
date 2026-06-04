@@ -9,6 +9,7 @@
 <link rel="icon" type="image/png" href="images/icons/favicon.png">
 <!-- Navigation and footer styles are now global. Unique lessons page styles are moved to style.css. -->
 <style>
+
 /* === LESSONS PAGE STYLES === */
 .lessons-title {
   font-size: 5rem;
@@ -55,7 +56,7 @@
 }
 .offer-title {
   font-size: 2rem;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Monserrat','Nunito', sans-serif;
   color: #ece6ef;
   margin-bottom: 0.7rem;
   font-weight: 1000;
@@ -63,7 +64,7 @@
 }
 .offer-main {
   font-size: 1.5rem;
-  font-family: 'Nunito','Times New Roman', Times, serif;
+  font-family: 'Monserrat','Times New Roman', Times, serif;
   font-weight: 900;
   color: #ffffff;
   margin-bottom: 0.2rem;
@@ -78,7 +79,7 @@
 @media (max-width: 900px) {
   .lessons-title {
     font-size: 2.1rem;
-    margin-top: 1.5rem;
+    margin-top: -2rem;
     margin-bottom: 1rem;
     padding: 0 1rem;
   }
@@ -225,7 +226,7 @@
 .calendar-close-btn:hover { color: #716cff; }
 .calendar-title {
   color: #fff;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Monserrat','Nunito', Arial, sans-serif;
   font-size: 1.6rem;
   font-weight: 800;
   text-align: center;
@@ -238,7 +239,7 @@
 .calendar-column { flex: 1; text-align: center; }
 .calendar-column h4 {
   color: #933bff;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Monserrat','Nunito', Arial, sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 0.8rem;
@@ -246,7 +247,7 @@
 .calendar-column ul { list-style: none; padding: 0; margin: 0; }
 .calendar-column li {
   color: #000000;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Monserrat','Nunito', Arial, sans-serif;
   font-size: 1.05rem;
   padding: 0.5rem 0.8rem;
   margin: 0.3rem 0;
@@ -317,13 +318,13 @@
 </nav>
 </div>
 
-<div class="lessons-title">CLASS OFFERINGS</div>
-
+<section class="qld-section">
+<h1>CLASS OFFERINGS</h1>
 <!-- Spring Part 2 (most current) shown first -->
 <div class="schedule-header">
   <h2 class="section-subtitle">
     <img src="images/eventpage/Schedulicon 1.png" alt="Calendar" class="calendar-icon" onclick="toggleCalendar('spring-p2')" title="View Calendar" style="height: 55px;width: 55px;cursor:pointer;">
-    Spring Pt 2: INTRO LVL 1
+    Spring Series Part 2
   </h2>
   <h3 class="section-subtitle2" id="spring-p2-dates">Loading dates...</h3>
 </div>
@@ -401,7 +402,6 @@ font-style: normal;
   font-size: 3rem;
   font-weight: 500;
   color: #ff6565;
-  margin: 2rem auto 1rem auto;
   padding: 0 1rem;
   width: auto;
 }
@@ -471,7 +471,7 @@ right: 0;
 width: 100%;
 background: linear-gradient(135deg, #db58b8 0%, #d91f47 100%);
 color: #fff;
-font-family: 'Nunito', Arial, sans-serif;
+font-family: 'Monserrat','Nunito', Arial, sans-serif;
 font-size: 1.2rem;
 font-weight: 1000;
 padding: 10px 28px;
@@ -519,7 +519,7 @@ position: absolute;
 top: 50%;
 left: 50%;
 transform: translate(-50%, -50%) rotate(-360deg);
-font-family: 'Cherry Bomb One', 'Nunito', 'Passion One', sans-serif;
+font-family: 'Monserrat', 'Nunito', 'Passion One', sans-serif;
 font-size: 7vw;
 font-weight: 900;
 color: #ffffff;
@@ -538,7 +538,7 @@ background: linear-gradient(135deg, #716cff 0%, #b57edc 100%);
 color: #ffffff;
 padding: 0.8rem 2rem;
 border-radius: 25px;
-font-family: 'Nunito', Arial, sans-serif;
+font-family: 'Monserrat', Arial, sans-serif;
 font-weight: 700;
 font-size: 1.1rem;
 text-align: center;
@@ -584,7 +584,7 @@ border-radius: 18px;
 .mobile-flyer-label {
 display: block;
 text-align: center;
-font-family: 'Nunito', Arial, sans-serif;
+font-family: 'Monserrat', Arial, sans-serif;
 font-weight: 800;
 font-size: 1.1rem;
 color: #fff;
@@ -703,7 +703,7 @@ padding-left: -50rem;
 }
 
 .faq-questions h3 {
-font-family: 'Nunito', Arial, sans-serif;
+font-family: 'Monserrat','Nunito', Arial, sans-serif;
 font-size: 1.2rem;
 color: #4c38a6;
 margin-bottom: 1.5rem;
@@ -742,7 +742,7 @@ color: #4c38a6;
 padding: 1rem;
 text-align: left;
 font-size: 1rem;
-font-family: 'Nunito', Arial, sans-serif;
+font-family: 'Monserrat','Nunito', Arial, sans-serif;
 font-weight: 700;
 cursor: pointer;
 display: flex;
@@ -936,15 +936,15 @@ padding: 1rem;
 </div>
 </div>
 </section>
-<footer class="footer">
+<footer class="footer" role="contentinfo">
 <div class="footer-bottom">
 <div class="footer-newsletter">
-<h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
-<form>
-<input type="email" placeholder="Enter your email ..." required>
-<button type="submit">Subscribe</button>
+<h2>Subscribe to our Newsletter</h2>
+<form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec" aria-label="Footer newsletter subscription form">
+  <input type="email" id="footer-email" name="email" placeholder="Enter your email ..." required aria-required="true">
+  <button type="submit">Subscribe</button>
 </form>
-<div class="footer-links">
+<nav class="footer-links" aria-label="Footer navigation">
 <a href="courses.html">Courses</a>
 <a href="Events.html">Events</a>
 <a href="gallery.html">Gallery</a> 
@@ -953,19 +953,18 @@ padding: 1rem;
 <a href="book-us.html">Book Us</a>
 <a href="merch.html">Merch</a>
 <a href="contact.html">Contact Us</a>
-</div>
-
+</nav>
 </div>
 <div class="footer-social">
 <h3>Follow Us</h3>
 <div class="footer-social-icons">
-<a href="https://www.instagram.com/queerlatindancesd/"><img src="images/icons/instagramlogo.png" alt="Instagram"></a>
-<a href="https://www.youtube.com/@QueerLatinDance"><img src="images/icons/youtubeicon.png" alt="YouTube"></a>
-<a href="https://www.tiktok.com/@queerlatindance"><img src="images/icons/tiktokicon2.png" alt="TikTok"></a>
-<a href="https://linktr.ee/queerlatindancesd"><img src="images/icons/linktreelogo.png" alt="Linktree"></a>
+  <a href="https://www.instagram.com/queerlatindancesd/" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram (opens in new tab)"><img src="images/icons/instagramlogo.png" alt="" role="presentation"></a>
+  <a href="https://www.youtube.com/@QueerLatinDance" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to our YouTube channel (opens in new tab)"><img src="images/icons/youtubeicon.png" alt="" role="presentation"></a>
+  <a href="https://www.tiktok.com/@queerlatindance" target="_blank" rel="noopener noreferrer" aria-label="Follow us on TikTok (opens in new tab)"><img src="images/icons/tiktokicon2.png" alt="" role="presentation"></a>
+  <a href="https://linktr.ee/queerlatindancesd" target="_blank" rel="noopener noreferrer" aria-label="Visit our Linktree (opens in new tab)"><img src="images/icons/linktreelogo.png" alt="" role="presentation"></a>
 </div>
 <div class="footer-copyright">
-© 2026 Queer Latin Dance. All Rights Reserved.
+  © 2026 Queer Latin Dance. All Rights Reserved.
 </div>
 </div>
 </div>

@@ -24,7 +24,6 @@ width: 80vw !important;
 }
 </style>
 </head>
-<body class="gallery-page">
 <div id="sparkle-bg"></div>
 <!-- Place this in the <body> of each page -->
 <header>
@@ -77,12 +76,11 @@ width: 80vw !important;
 </nav>
 </div>
 <main>
-<section>
-<h1 class="gallery-title">QUEER LATIN DANCE GALLERY</h1>
+<section class="qld-section">
+<h1>QUEER LATIN DANCE<p></p>GALLERY</h1>
 <div class="event-filters">
 <!-- filter buttons -->
 </div> 
-
 <div class="gallery-grid">
 <div class="gallery-item">
 <button class="filter-btn active" data-event="Studio Lessons">Queer Salsa Social</button>
@@ -145,15 +143,15 @@ width: 80vw !important;
 </div>
 </div>
 </main>
-<footer class="footer">
+<footer class="footer" role="contentinfo">
 <div class="footer-bottom">
 <div class="footer-newsletter">
-<h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
-<form>
-<input type="email" placeholder="Enter your email ..." required>
-<button type="submit">Subscribe</button>
+<h2>Subscribe to our Newsletter</h2>
+<form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec" aria-label="Footer newsletter subscription form">
+  <input type="email" id="footer-email" name="email" placeholder="Enter your email ..." required aria-required="true">
+  <button type="submit">Subscribe</button>
 </form>
-<div class="footer-links">
+<nav class="footer-links" aria-label="Footer navigation">
 <a href="courses.html">Courses</a>
 <a href="Events.html">Events</a>
 <a href="gallery.html">Gallery</a> 
@@ -162,23 +160,22 @@ width: 80vw !important;
 <a href="book-us.html">Book Us</a>
 <a href="merch.html">Merch</a>
 <a href="contact.html">Contact Us</a>
-</div>
+</nav>
 </div>
 <div class="footer-social">
 <h3>Follow Us</h3>
 <div class="footer-social-icons">
-<a href="https://www.instagram.com/queerlatindancesd/"><img src="images/icons/instagramlogo.png" alt="Instagram"></a>
-<a href="https://www.youtube.com/@QueerLatinDance"><img src="images/icons/youtubeicon.png" alt="YouTube"></a>
-<a href="https://www.tiktok.com/@queerlatindance"><img src="images/icons/tiktokicon2.png" alt="TikTok"></a>
-<a href="https://linktr.ee/queerlatindancesd"><img src="images/icons/linktreelogo.png" alt="Linktree"></a>
+  <a href="https://www.instagram.com/queerlatindancesd/" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram (opens in new tab)"><img src="images/icons/instagramlogo.png" alt="" role="presentation"></a>
+  <a href="https://www.youtube.com/@QueerLatinDance" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to our YouTube channel (opens in new tab)"><img src="images/icons/youtubeicon.png" alt="" role="presentation"></a>
+  <a href="https://www.tiktok.com/@queerlatindance" target="_blank" rel="noopener noreferrer" aria-label="Follow us on TikTok (opens in new tab)"><img src="images/icons/tiktokicon2.png" alt="" role="presentation"></a>
+  <a href="https://linktr.ee/queerlatindancesd" target="_blank" rel="noopener noreferrer" aria-label="Visit our Linktree (opens in new tab)"><img src="images/icons/linktreelogo.png" alt="" role="presentation"></a>
 </div>
 <div class="footer-copyright">
-© 2026 Queer Latin Dance. All Rights Reserved.
+  © 2026 Queer Latin Dance. All Rights Reserved.
 </div>
 </div>
 </div>
 </footer>
-
 <!-- Lightbox Modal -->
 <div id="lightbox-modal" style="display:none;">
 <span id="lightbox-close">&times;</span>

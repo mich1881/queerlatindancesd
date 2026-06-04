@@ -20,12 +20,6 @@ overflow: hidden !important;
 /* Mobile responsive styles for directory table */
 @media (max-width: 768px) {
 /* Directory title mobile styles */
-.directory-section h1 {
-font-size: 2.2rem !important;
-line-height: 1.1 !important;
-margin: 1rem 0 1.5rem 0 !important;
-}
-
 .directory-table {
 width: 100% !important;
 font-size: 0.8rem !important;
@@ -138,8 +132,8 @@ font-size: 1.3rem;
 </nav>
 </div>
 <main>
-<section class="directory-section">
-<h1>Queer & Queer-Friendly Dance Instructors & Studios</h1>
+<section class="qld-section">
+<h1>QLDSD RECOMMENDED<p></p>INSTRUCTORS & ARTISTS</h1>
 <div class="map-container" style="margin: 2rem auto; max-width: 1000px; border-radius: 18px; overflow: hidden; box-shadow: 0 8px 32px rgba(199, 165, 241, 0.3); border: 4px solid #f2f0f4; background: linear-gradient(145deg, #ffffff, #ffffff); padding: 4px;">
 <div id="directory-map" style="height: 500px; width: 100%; border-radius: 14px;"></div>
 </div>
@@ -245,7 +239,7 @@ font-size: 1.3rem;
 <img src="images/logos/thesalsabeatlogo.jpg" alt="The Salsa Beat Logo" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;">
 <a href="https://www.thesalsabeat.com/" target="_blank">The Salsa Beat</a>
 </td>
-<td data-label="Instructors">Ericka & Juan-2-3</td>
+<td data-label="Instructors">Erica & Juan-2-3</td>
 <td data-label="Address">Studio K, 9340 Clairemont Mesa Blvd, San Diego, CA 92123</td>
 </tr>
 <tr data-studio="Queer Tango">
@@ -296,15 +290,15 @@ font-size: 1.3rem;
 </table>
 </section>
 </main>
-<footer class="footer">
+<footer class="footer" role="contentinfo">
 <div class="footer-bottom">
 <div class="footer-newsletter">
-<h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
-<form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec">
-<input type="email" name="email" required placeholder="Enter your email ..." />
-<button type="submit">Subscribe</button>
+<h2>Subscribe to our Newsletter</h2>
+<form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec" aria-label="Footer newsletter subscription form">
+  <input type="email" id="footer-email" name="email" placeholder="Enter your email ..." required aria-required="true">
+  <button type="submit">Subscribe</button>
 </form>
-<div class="footer-links">
+<nav class="footer-links" aria-label="Footer navigation">
 <a href="courses.html">Courses</a>
 <a href="Events.html">Events</a>
 <a href="gallery.html">Gallery</a> 
@@ -313,19 +307,22 @@ font-size: 1.3rem;
 <a href="book-us.html">Book Us</a>
 <a href="merch.html">Merch</a>
 <a href="contact.html">Contact Us</a>
-</div>
+</nav>
 </div>
 <div class="footer-social">
 <h3>Follow Us</h3>
 <div class="footer-social-icons">
-<a href="https://www.instagram.com/queerlatindancesd/"><img src="images/icons/instagramlogo.png" alt="Instagram"></a>
-<a href="https://www.youtube.com/@QueerLatinDance"><img src="images/icons/youtubeicon.png" alt="YouTube"></a>
-<a href="https://www.tiktok.com/@queerlatindance"><img src="images/icons/tiktokicon2.png" alt="TikTok"></a>
-<a href="https://linktr.ee/queerlatindancesd"><img src="images/icons/linktreelogo.png" alt="Linktree"></a>
+  <a href="https://www.instagram.com/queerlatindancesd/" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram (opens in new tab)"><img src="images/icons/instagramlogo.png" alt="" role="presentation"></a>
+  <a href="https://www.youtube.com/@QueerLatinDance" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to our YouTube channel (opens in new tab)"><img src="images/icons/youtubeicon.png" alt="" role="presentation"></a>
+  <a href="https://www.tiktok.com/@queerlatindance" target="_blank" rel="noopener noreferrer" aria-label="Follow us on TikTok (opens in new tab)"><img src="images/icons/tiktokicon2.png" alt="" role="presentation"></a>
+  <a href="https://linktr.ee/queerlatindancesd" target="_blank" rel="noopener noreferrer" aria-label="Visit our Linktree (opens in new tab)"><img src="images/icons/linktreelogo.png" alt="" role="presentation"></a>
 </div>
 <div class="footer-copyright">
-© 2026 Queer Latin Dance. All Rights Reserved.
+  © 2026 Queer Latin Dance. All Rights Reserved.
 </div>
+</div>
+</div>
+</footer>
 </div>
 </div>
 </footer>
