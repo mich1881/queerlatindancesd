@@ -5,6 +5,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Huninn:wght@400;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Boldonse:opsz,wght@6..144,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=TikTok+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Lato:wght@300;400;700&display=swap');
+
 /* Example: Add at the very top of style.css */
 @font-face {
   font-family: 'Signika';
@@ -253,7 +255,7 @@ body.gallery-page {
 }
 header h1 {
   font-size: 5rem;
-  font-weight: 700;
+  font-weight: 400;
   margin: 3rem 0;
 }
 .logo1, .logo2 {
@@ -498,7 +500,7 @@ button {
   top: 10px;
   right: 20px;
   font-size: 2rem;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
 }
 .about-list {
   margin: 1.5rem 0;
@@ -509,7 +511,7 @@ button {
 .about-list li {
   margin-bottom: 0.75rem;
   font-size: 1.3rem;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
   color: #ffffff;
 }
 .about-links {
@@ -748,7 +750,7 @@ button {
   font-size: 3.2rem;
   margin-bottom: 1.5rem;
   letter-spacing: -1px;
-  font-weight: 900;
+  font-weight: 400;
   background: linear-gradient(90deg, #ffe066 10%, #ff6f91 50%, #b57edc 90%);
   background-clip: text;
   -webkit-background-clip: text;
@@ -839,7 +841,7 @@ button {
   -webkit-background-clip: unset !important;
   -webkit-text-fill-color: unset !important;
   background-clip: unset !important;
-  font-weight: 700;
+  font-weight: 400;
 }
 /* --- INFO CARDS --- */
 /* --- QUEER SALSA SUNSETS LOGO & CARD --- */
@@ -994,11 +996,11 @@ button {
   width: 260px;
   background: #fff;
   color: #222;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
 }
 .footer-newsletter button {
   font-size: 1.2rem;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
   font-weight: 200;
   background: #fff;
   color: #000;
@@ -1179,7 +1181,7 @@ button {
 }
 
 body {
-  font-family: 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -1310,7 +1312,7 @@ html, body {
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 8px 25px rgba(75, 0, 130, 0.15);
-  font-family: 'Nunito','Signika', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito','Signika', Arial, sans-serif;
     border-radius: 0;
   overflow: visible;
 }
@@ -1471,20 +1473,20 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Signika', 'Huninn', Arial, sans-serif;
 }
 p {
-  font-family: 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
   font-size: 1.2rem;
   line-height: 1.6;
 }
 nav a {
-  font-family: 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
-  font-size: 1.5rem;
+  font-family: 'Montserrat', 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
+  font-size: 1.0rem;
   line-height: 1.2;
 }
 button,
 input,
 textarea {
-  font-family: 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
-  font-size: 1.5rem;
+  font-family: 'Montserrat', 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
+  font-size: 1.0rem;
   line-height: 1.6;
 }
 
@@ -1543,7 +1545,7 @@ nav a {
   font-size:1.1rem;
   margin: 0 0.3rem;
   text-decoration: none;
-  font-weight: 800;
+  font-weight: 400;
   vertical-align: middle;
   padding: 0;
 }
@@ -1822,7 +1824,7 @@ button {
   top: 10px;
   right: 20px;
   font-size: 2rem;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
 }
 .michelle-journey {
   padding: 4rem 2rem;
@@ -1831,12 +1833,12 @@ button {
 }
 
 .michelle-journey h1 {
-  font-family: 'PassionOne', Arial, sans-serif;
+  font-family: 'Monserrat','PassionOne', Arial, sans-serif;
   font-size: 4rem;
   text-align: right;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  font-weight: 1000;
+  font-weight: 400;
   background:#ffffff;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1867,11 +1869,11 @@ button {
   text-align: right;
   margin-left: auto;
   margin-right: 0;
-  font-size: 1.2rem;
-  width: 600px;
-  color: #5a5349;
-  font-weight: 200;
-  font-family: 'Nunito', sans-serif;
+  font-size: 1.0rem;
+  width: 700px;
+  color: #000000;
+  font-weight: 400;
+  font-family: 'Montserrat','Nunito', sans-serif;
 }
 
 .journey-layout {
@@ -1920,7 +1922,7 @@ button {
         margin-bottom: 1.25rem;
         text-align: justify;
         width: 100%;
-        font-family: 'Nunito', Arial, sans-serif;
+        font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
       }
     }
 /* === HERO BLOB SECTION === */
@@ -2357,7 +2359,7 @@ button {
 /* --- MISSION CARD --- */
 /* --- Mission Card Section --- */
 .mission-text {
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
   font-size: 1.0rem;
   color: #ffffff;
   text-align: center;
@@ -2438,7 +2440,7 @@ button {
   color: #C4F9CA;
   text-align: left;
   margin: 0 auto 1.2rem auto;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
   text-shadow: 2px 2px 4px rgb(0, 0, 0), 1px 1px 2px rgba(0,0,0,0.7);
   position: relative;
   z-index: 10;
@@ -2510,7 +2512,7 @@ button {
 }
 
 .index-info-card p {
-  font-family: 'Nunito','Signika', 'Huninn', Arial, sans-serif; /* Paragraph font */
+  font-family: 'Montserrat', 'Nunito','Signika', 'Huninn', Arial, sans-serif; /* Paragraph font */
   color: #ffffff; /* Paragraph color */
   font-size: 1.2rem;
   margin: 0.5rem 0.8rem 0.8rem 0.8rem; /* Add right margin to match left */
@@ -2611,11 +2613,11 @@ button {
   width: 260px;
   background: #fff;
   color: #222;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
 }
 .footer-newsletter button {
   font-size: 1.2rem;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
   font-weight: 200;
   background: #fff;
   color: #000;
@@ -2796,7 +2798,7 @@ button {
 }
 
 body {
-  font-family: 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -2994,19 +2996,19 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Signika', 'Huninn', Arial, sans-serif;
 }
 p {
-  font-family: 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
   font-size: 1.2rem;
   line-height: 1.6;
 }
 nav a {
-  font-family: 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
   font-size: 1.5rem;
   line-height: 1.2;
 }
 button,
 input,
 textarea {
-  font-family: 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', 'Signika', 'Huninn', Arial, sans-serif;
   font-size: 1.5rem;
   line-height: 1.6;
 }
@@ -3067,7 +3069,7 @@ nav a {
   font-size:1.1rem;
   margin: 0 0.3rem;
   text-decoration: none;
-  font-weight: 1500;
+  font-weight: 400;
   vertical-align: middle;
   padding: 0;
 }
@@ -3521,7 +3523,7 @@ body.events-page::before {
   top: 10px;
   right: 20px;
   font-size: 2rem;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
 }
 .about-list {
   margin: 1.5rem 0;
@@ -3532,7 +3534,7 @@ body.events-page::before {
 .about-list li {
   margin-bottom: 0.75rem;
   font-size: 1.3rem;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
   color: #ffffff;
 }
 .about-links {
@@ -3843,7 +3845,7 @@ body.events-page::before {
 /* --- MISSION CARD --- */
 /* --- Mission Card Section --- */
 .mission-text {
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
   font-size: 1.0rem;
   color: #ffffff;
   text-align: center;
@@ -3924,7 +3926,7 @@ body.events-page::before {
   color: #C4F9CA;
   text-align: left;
   margin: 0 auto 1.2rem auto;
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
   text-shadow: 2px 2px 4px rgb(0, 0, 0), 1px 1px 2px rgba(0,0,0,0.7);
   position: relative;
   z-index: 10;
@@ -3996,7 +3998,7 @@ body.events-page::before {
 }
 
 .index-info-card p {
-  font-family: 'Nunito','Signika', 'Huninn', Arial, sans-serif; /* Paragraph font */
+  font-family: 'Montserrat', 'Nunito','Signika', 'Huninn', Arial, sans-serif; /* Paragraph font */
   color: #ffffff; /* Paragraph color */
   font-size: 1.2rem;
   margin: 0.5rem 0.8rem 0.8rem 0.8rem; /* Add right margin to match left */
@@ -4050,7 +4052,7 @@ body.events-page::before {
   border-radius: 1.2rem;
   padding: 0.7rem 2.2rem;
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 300;
   box-shadow: 0 2px 12px #a259ff22;
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s, color 0.2s;
@@ -4070,8 +4072,8 @@ body.events-page::before {
   box-shadow: none;
   padding: 2rem;
   color: #5c2ca9;
-  font-weight: 500;
-  font-family: 'Huninn', Arial, sans-serif;
+  font-weight: 300;
+  font-family: 'Montserrat', 'Huninn', Arial, sans-serif;
 }
 
 /* History header with logo */
