@@ -33,13 +33,7 @@
     * {
       box-sizing: border-box;
     }
-    body {
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #f3e5f5 0%, #d1aaff 40%, #b388ff 70%, #a259c6 100%);
-      font-family: 'Nunito', Arial, sans-serif;
-    }
+    
     .book-us-container {
       max-width: 1200px;
       margin: 0 auto;
@@ -66,8 +60,8 @@
     .button-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 3rem;
-      margin: 4rem 0;
+      gap: 2.5rem;
+      margin-top: auto;
       padding: 0 2rem;
     }
     .circle-button {
@@ -264,16 +258,61 @@
   </style>
 </head>
 <body>
-      <div class="back-home">
-      <a href="index.html">← Back to Home</a>
-    </div>
+<header>
+<a href="index.html">
+<img src="images/logos/logo2.png" alt="Queer Latin Dance SD Logo" class="logo2" />
+</a>
+<!-- Cart Modal -->
+<div id="cart-modal" class="cart-modal">
+<div class="cart-modal-title">Your Cart</div>
+<div id="cart-items"></div>
+<button onclick="viewCart()" class="cart-modal-btn view">View Cart</button>
+<button onclick="closeCart()" class="cart-modal-btn close">Close</button>
+</div>
+<!-- Desktop Navigation -->
+<nav>
+<a href="courses.html">Courses</a>
+<a href="Events.html">Events</a>
+<a href="gallery.html">Gallery</a> 
+<a href="directory.html">Directory</a>
+<a href="team.html">Team</a>
+<a href="book-us.html">Book Us</a>
+<a href="merch.html">Merch</a>
+<span id="cart-nav" class="cart-nav">
+<img src="images/icons/cart-icon.png" alt="Cart" class="cart-icon-img">
+<span id="cart-count" class="cart-count">0</span>
+</span>
+</nav>
+<!-- Mobile Navigation Toggle -->
+<button class="mobile-nav-toggle" aria-label="Toggle navigation">
+<span></span>
+<span></span>
+<span></span>
+</button>
+</header>
+
+<!-- Mobile Navigation Menu -->
+<div class="mobile-nav-menu">
+<nav>
+<a href="courses.html">Courses</a>
+<a href="Events.html">Events</a>
+<a href="gallery.html">Gallery</a> 
+<a href="directory.html">Directory</a>
+<a href="team.html">Team</a>
+<a href="book-us.html">Book Us</a>
+<a href="merch.html">Merch</a>
+<span id="cart-nav-mobile" class="cart-nav-mobile">
+<img src="images/icons/cart-icon.png" alt="Cart" class="cart-icon-img">
+<span id="cart-count-mobile" class="cart-count-mobile">0</span>
+</span>
+</nav>
+</div>
   <main>
-    <div class="book-us-container">
         <section class="qld-section">
         <h1>BOOK US<p></p>FOR YOUR EVENT</h1>
         <p>Let's bring the joy of Latin dance to your celebration!</p>
       </div>
-
+    <div class="book-us-container">
       <div class="button-grid">
       <!-- Private Events Button -->
       <a href="private-events.html" class="circle-button">

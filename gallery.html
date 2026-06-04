@@ -9,11 +9,15 @@
 <link rel="stylesheet" href="style.css" />
 <script src="generated-galleries.js"></script>
 <style>
-/* Fix mobile gallery scrollbar issues */
+.gallery-grid {
+display: grid;
+margin-top: -40px;
+}
 @media (max-width: 768px) {
 .gallery-grid {
 overflow-y: visible !important;
 max-height: none !important;
+margin-top: -50px !important;
 }
 .gallery-photo {
 width: 80vw !important;
@@ -79,7 +83,6 @@ width: 80vw !important;
 <section class="qld-section">
 <h1>QUEER LATIN DANCE<p></p>GALLERY</h1>
 <div class="event-filters">
-<!-- filter buttons -->
 </div> 
 <div class="gallery-grid">
 <div class="gallery-item">
