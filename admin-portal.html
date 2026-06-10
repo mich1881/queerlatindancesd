@@ -7,7 +7,6 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', Arial, sans-serif; background: #1a0a30; color: #eee; min-height: 100vh; }
-
   /* ── LOCK SCREEN ── */
   #lockScreen {
     position: fixed; inset: 0; background: #1a0a30;
@@ -241,7 +240,8 @@
 // CONFIG
 // ══════════════════════════════════════════
 const WORKER_URL = 'https://restless-feather-b6a9.michf18.workers.dev';
-let adminToken = sessionStorage.getItem('adminToken') || '';
+// let adminToken = sessionStorage.getItem('adminToken') || '';
+let adminToken = localStorage.getItem('adminToken') || '';
 let allRegistrations = [];
 
 // ══════════════════════════════════════════
@@ -280,7 +280,8 @@ async function doLogin() {
     const data = await res.json();
     if (data.success) {
       adminToken = data.token;
-      sessionStorage.setItem('adminToken', adminToken);
+      // sessionStorage.setItem('adminToken', adminToken);
+      localStorage.setItem('adminToken', adminToken);
       document.getElementById('lockScreen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
       loadRegistrations();
@@ -295,7 +296,8 @@ async function doLogin() {
 
 function signOut() {
   adminToken = '';
-  sessionStorage.removeItem('adminToken');
+  // sessionStorage.removeItem('adminToken');
+  localStorage.removeItem('adminToken');
   document.getElementById('app').style.display = 'none';
   document.getElementById('lockScreen').style.display = 'flex';
   document.getElementById('passwordInput').value = '';
@@ -392,9 +394,19 @@ function pendingCard(r) {
         ${creditOptions}
       </select>
     </div>
-    <div class="actions">
-      <button class="btn btn-verify" onclick="verifyPayment('${r.id}')">✅ Verify Payment & Assign Credits</button>
-    </div>
+<div class="actions">
+  <button class="btn btn-verify" onclick="verifyPayment('${r.id}')">
+    ✅ Verify Payment & Assign Credits
+  </button>
+
+  <button class="btn btn-secondary" onclick="editRegistration('${r.id}')">
+    ✏️ Edit
+  </button>
+
+  <button class="btn btn-danger" onclick="deleteRegistration('${r.id}')">
+    🗑️ Delete
+  </button>
+</div>
   ` : `<div class="actions">
     <span style="color:#27ae60;font-size:0.9rem;">✅ Payment verified — ${r.creditsTotal} credits assigned</span>
   </div>`;
@@ -419,17 +431,27 @@ async function verifyPayment(regId) {
   const selectEl = document.getElementById('credits-' + regId);
   const credits = selectEl ? parseInt(selectEl.value) : 4;
 
-  const res = await fetch(`${WORKER_URL}/api/admin/verify-payment`, {
-    method: 'POST',
-    headers: { 'Authorization': 'Bearer ' + adminToken, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ regId, credits })
-  });
-  const data = await res.json();
-  if (data.success) {
-    await loadRegistrations();
-    alert(`✅ Payment verified! ${credits} credits assigned to ${data.reg.firstName} ${data.reg.lastName}.`);
-  } else {
-    alert('❌ Error: ' + (data.error || 'Unknown error'));
+  try {
+    const res = await fetch(`${WORKER_URL}/api/admin/verify-payment`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + adminToken,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ regId, credits })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      await loadRegistrations(); // 🔥 THIS is what refreshes Pending + Verified
+      alert(`✅ Payment verified! ${credits} credits assigned.`);
+    } else {
+      alert('❌ Error: ' + (data.error || 'Unknown error'));
+    }
+
+  } catch (err) {
+    alert('❌ Network error: ' + err.message);
   }
 }
 
@@ -601,26 +623,133 @@ async function doUndo(regId) {
 async function grantOnlineAccess() {
   const email = document.getElementById('grantEmail').value.trim();
   const courseId = document.getElementById('grantCourse').value;
-  if (!email || !courseId) { alert('Please enter an email and select a course.'); return; }
+
+  if (!email || !courseId) {
+    alert('Please enter an email and select a course.');
+    return;
+  }
+
+  const token = sessionStorage.getItem('adminToken');
+
+  if (!token) {
+    alert('You are NOT logged into admin.');
+    return;
+  }
 
   try {
     const res = await fetch(`${WORKER_URL}/api/admin/grant-access`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ adminKey: '', email, courseId, action: 'grant' })
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        email,
+        courseId,
+        action: 'grant'
+      })
     });
+
     const data = await res.json();
+
     if (data.success) {
-      alert(`✅ Access granted to ${email} for ${courseId}!`);
-      document.getElementById('grantEmail').value = '';
+      alert(`✅ Access granted to ${email}`);
     } else {
-      alert('❌ Error: ' + (data.error || 'Check Worker logs'));
+      alert('❌ Error: ' + (data.error || 'Unknown'));
     }
+
   } catch (err) {
     alert('❌ Connection error: ' + err.message);
   }
 }
+async function adminLogin(password) {
+  const res = await fetch("https://bitter-forest-4b9b.michf18.workers.dev/api/admin/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password })
+  });
 
+  const data = await res.json();
+
+  if (!data.success) {
+    alert("❌ Wrong admin password");
+    return;
+  }
+
+  localStorage.setItem("adminToken", data.token);
+
+  alert("✅ Admin login successful");
+  console.log("ADMIN TOKEN:", data.token);
+}
+
+//FUNCTIONS TO EDIT & DELETE
+async function editRegistration(regId) {
+
+  const r = allRegistrations.find(x => x.id === regId);
+  if (!r) return;
+
+  const series = prompt(
+    "Series:",
+    r.series || ""
+  );
+
+  if (series === null) return;
+
+  const role = prompt(
+    "Role (Lead/Follow):",
+    r.role || ""
+  );
+
+  const res = await fetch(
+    `${WORKER_URL}/api/admin/edit-registration`,
+    {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + adminToken,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        regId,
+        series,
+        role
+      })
+    }
+  );
+
+  const data = await res.json();
+
+  if (data.success) {
+    await loadRegistrations();
+    alert("✅ Updated");
+  } else {
+    alert(data.error || "Update failed");
+  }
+}
+
+async function deleteRegistration(regId) {
+
+  if (!confirm("Delete this registration?")) return;
+
+  const res = await fetch(
+    `${WORKER_URL}/api/admin/delete-registration`,
+    {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + adminToken,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ regId })
+    }
+  );
+
+  const data = await res.json();
+
+  if (data.success) {
+    await loadRegistrations();
+  } else {
+    alert(data.error || "Delete failed");
+  }
+}
 </script>
 </body>
 </html>

@@ -1,9 +1,7 @@
 // Queer Latin Dance Course Platform
 // Student Registration & Login System
-
-// ✅ Google Apps Script URL — update this if you redeploy
+// Google Apps Script URL — update this if you redeploy
 const APPS_SCRIPT_URL = 'https://bitter-forest-4b9b.michf18.workers.dev';
-
 class CoursePlatform {
     constructor() {
         this.currentUser = null;
@@ -23,9 +21,10 @@ class CoursePlatform {
                 lessons: 8,
                 level: 'Beginner',
                 videoLessons: [
+                    //SALSA VARIATION A
                     {
                         id: 1,
-                        title: 'Welcome & Basic Steps',
+                        title: 'Salsa Week 1A',
                         video: 'https://drive.google.com/file/d/1t0ofE40PeO3gxxdGUeG_l3Uf3Utln9Ks/preview',
                         videoType: 'googledrive',
                         duration: '15:30',
@@ -33,7 +32,73 @@ class CoursePlatform {
                     },
                     {
                         id: 2,
-                        title: 'Basic Timing & Rhythm',
+                        title: 'Salsa Week 2A',
+                        video: 'https://drive.google.com/file/d/1Q7iX8nipE2TYvx5VgZMEkrk82_J4VLwJ/preview',
+                        videoType: 'googledrive',
+                        duration: '18:45',
+                        description: 'Understanding salsa rhythm and musical timing'
+                    },
+                    {
+                        id: 3,
+                        title: 'Salsa Week 3A',
+                        video: 'https://drive.google.com/file/d/1TkDTNKCdtjJ3RMTEVUOef4y8dPpgBTf9/preview',
+                        videoType: 'googledrive',
+                        duration: '22:15',
+                        description: 'How to connect with your dance partner'
+                    },
+                    {
+                        id: 4,
+                        title: 'Salsa Week 4A',
+                        video: 'https://drive.google.com/file/d/1dyCFI5aAlD8o4W0mL9rOLg_g6TnrPZXb/preview',
+                        videoType: 'mp4',
+                        duration: '20:00',
+                        description: 'The most important move in salsa dancing'
+                    },
+                    //SALSA VARIATION B
+                    {
+                        id: 1,
+                        title: 'Salsa Week 1B',
+                        video: 'https://drive.google.com/file/d/1t0ofE40PeO3gxxdGUeG_l3Uf3Utln9Ks/preview',
+                        videoType: 'googledrive',
+                        duration: '15:30',
+                        description: 'Learn the fundamental salsa steps and timing'
+                    },
+                    {
+                        id: 2,
+                        title: 'Salsa Week 2B',
+                        video: 'https://drive.google.com/file/d/15_P7Dv04rc1-0BduLcDh-T3kttzlCOjv/',
+                        videoType: 'googledrive',
+                        duration: '18:45',
+                        description: 'Understanding salsa rhythm and musical timing'
+                    },
+                    {
+                        id: 3,
+                        title: 'Salsa Week 3B',
+                        video: 'https://drive.google.com/file/d/1SmogXNnqD6CuD5ulxJjrAdCVk9nVuYWi/preview',
+                        videoType: 'googledrive',
+                        duration: '22:15',
+                        description: 'How to connect with your dance partner'
+                    },
+                    {
+                        id: 4,
+                        title: 'Salsa Week 4B',
+                        video: 'https://drive.google.com/file/d/1L1CJt6Mbh0e_KV1MwGGS6xoZNsbNw3x1/preview',
+                        videoType: 'mp4',
+                        duration: '20:00',
+                        description: 'The most important move in salsa dancing'
+                    },
+                    //SALSA VARIATION C
+                    {
+                        id: 1,
+                        title: 'Salsa Week 1C',
+                        video: 'https://drive.google.com/file/d/1t0ofE40PeO3gxxdGUeG_l3Uf3Utln9Ks/preview',
+                        videoType: 'googledrive',
+                        duration: '15:30',
+                        description: 'Learn the fundamental salsa steps and timing'
+                    },
+                    {
+                        id: 2,
+                        title: 'Salsa Week 2C',
                         video: 'https://drive.google.com/file/d/18fIoQ6V75s1Vu66med0_3Wlj_ZVqkBqz/preview',
                         videoType: 'googledrive',
                         duration: '18:45',
@@ -41,16 +106,16 @@ class CoursePlatform {
                     },
                     {
                         id: 3,
-                        title: 'Partner Connection Basics',
-                        video: 'https://drive.google.com/file/d/1UHWNUdTdOHKSqqbmFoEZGJcynn27dO6m/preview',
+                        title: 'Salsa Week 3C',
+                        video: 'https://drive.google.com/file/d/1SmogXNnqD6CuD5ulxJjrAdCVk9nVuYWi/preview',
                         videoType: 'googledrive',
                         duration: '22:15',
                         description: 'How to connect with your dance partner'
                     },
                     {
                         id: 4,
-                        title: 'Cross Body Lead',
-                        video: 'videos/salsa-fundamentals/lesson-4-cross-body-lead.mp4',
+                        title: 'Salsa Week 4C',
+                        video: 'https://drive.google.com/file/d/1L1CJt6Mbh0e_KV1MwGGS6xoZNsbNw3x1/preview',
                         videoType: 'mp4',
                         duration: '20:00',
                         description: 'The most important move in salsa dancing'
@@ -313,11 +378,22 @@ class CoursePlatform {
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const result = await response.json();
 
-            if (result.success) {
-                this.currentUser = result.user;
-                this.saveCurrentUser();
-                this.showSuccess(`Welcome back, ${this.currentUser.name}! 🎉`);
-                setTimeout(() => this.showDashboard(), 1000);
+if (result.success) {
+    this.currentUser = result.user;
+    // IMPORTANT: rehydrate course access from KV
+    try {
+        const res = await fetch(
+            `/api/course-access?email=${encodeURIComponent(email)}`
+        );
+        const data = await res.json();
+        this.currentUser.ownedCourses = data.courses || [];
+    } catch (err) {
+        console.log('⚠️ Failed to load course access:', err);
+        this.currentUser.ownedCourses = this.currentUser.ownedCourses || [];
+    }
+    this.saveCurrentUser();
+    this.showSuccess(`Welcome back, ${this.currentUser.name}! 🎉`);
+    setTimeout(() => this.showDashboard(), 1000);
             } else {
                 this.showError(result.error || 'Login failed. Please try again.');
             }
@@ -375,105 +451,6 @@ class CoursePlatform {
         setTimeout(() => this.showAuthScreen(), 1000);
     }
 
-    // ===== PASSWORD DEBUGGING & RESET FUNCTIONS =====
-    debugUserPassword(email) {
-        console.log('🔍 DEBUG: Checking password for:', email);
-        const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
-        const user = users[email];
-        
-        if (user) {
-            console.log('✅ User found:', {
-                email: user.email,
-                name: user.name,
-                passwordHash: user.passwordHash,
-                joinDate: user.joinDate
-            });
-            
-            // Show what passwords would generate this hash
-            console.log('🔑 Testing common passwords:');
-            const testPasswords = ['demo123', 'password', 'admin123', '123456', email.split('@')[0]];
-            testPasswords.forEach(testPwd => {
-                const testHash = this.hashPassword(testPwd);
-                const matches = testHash === user.passwordHash;
-                console.log(`${matches ? '✅' : '❌'} "${testPwd}" -> ${testHash} (${matches ? 'MATCH!' : 'no match'})`);
-            });
-            
-            return user;
-        } else {
-            console.log('❌ User not found in storage');
-            return null;
-        }
-    }
-    
-    resetUserPassword(email, newPassword) {
-        console.log('🔧 Resetting password for:', email);
-        const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
-        
-        if (users[email]) {
-            const oldHash = users[email].passwordHash;
-            const newHash = this.hashPassword(newPassword);
-            
-            users[email].passwordHash = newHash;
-            users[email].lastPasswordReset = new Date().toISOString();
-            
-            localStorage.setItem('QLDUsers', JSON.stringify(users));
-            
-            console.log('✅ Password reset completed:', {
-                email: email,
-                oldHash: oldHash,
-                newHash: newHash,
-                newPassword: newPassword
-            });
-            
-            this.showSuccess(`✅ Password reset for ${email}. New password: "${newPassword}"`);
-            return true;
-        } else {
-            console.log('❌ User not found, cannot reset password');
-            this.showError('❌ User not found');
-            return false;
-        }
-    }
-    
-    // Quick function to fix login issues
-    fixUserLogin(email, desiredPassword) {
-        console.log('🔧 Fixing login for:', email);
-        
-        // Debug current state
-        this.debugUserPassword(email);
-        
-        // Reset password to desired password
-        const success = this.resetUserPassword(email, desiredPassword);
-        
-        if (success) {
-            console.log('✅ Login fixed! You can now login with:', {
-                email: email,
-                password: desiredPassword
-            });
-        }
-        
-        return success;
-    }
-
-    // ===== UTILITY METHODS =====
-
-    generateUserId() {
-        return 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    }
-
-    hashPassword(password) {
-        // Simple hash for demo purposes (in production, use proper hashing)
-        let hash = 0;
-        for (let i = 0; i < password.length; i++) {
-            const char = password.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash; // Convert to 32-bit integer
-        }
-        return hash.toString();
-    }
-
-    verifyPassword(password, hash) {
-        return this.hashPassword(password) === hash;
-    }
 
     // ===== USER INTERFACE =====
 
@@ -717,34 +694,16 @@ class CoursePlatform {
 
 userOwnsCourse(courseId) {
     if (!this.currentUser) return false;
-    
-    // ✅ Check ownedCourses from Google Sheet (via worker login response)
-    if (this.currentUser.ownedCourses && this.currentUser.ownedCourses.includes(courseId)) {
+
+    if (
+        this.currentUser.ownedCourses &&
+        this.currentUser.ownedCourses.includes(courseId)
+    ) {
         return true;
     }
-    
-    // Check local purchased courses (for demo/testing)
-    if (this.currentUser.purchasedCourses && this.currentUser.purchasedCourses.includes(courseId)) {
-        return true;
-    }
-    
-    // Check server-side approved courses
-    const approvedStudents = this.getApprovedStudents();
-    const studentEmail = this.currentUser.email.toLowerCase();
-    
-    return approvedStudents[studentEmail] && 
-           approvedStudents[studentEmail].courses.includes(courseId);
+
+    return false;
 }
-
-    getApprovedStudents() {
-        // In a real implementation, this would fetch from your server
-        // For now, we'll use localStorage to simulate server-side approval
-        return JSON.parse(localStorage.getItem('approvedStudents') || '{}');
-    }
-
-    saveApprovedStudents(studentsData) {
-        localStorage.setItem('approvedStudents', JSON.stringify(studentsData));
-    }
 
     getCourseProgress(courseId) {
         if (!this.currentUser || !this.currentUser.progress || !this.currentUser.progress[courseId]) {
@@ -949,7 +908,7 @@ userOwnsCourse(courseId) {
         if (!this.currentCourse || !this.currentCourse.videoLessons[lessonIndex]) return;
 
         // Validate course access before loading lesson
-        const hasAccess = await this.validateVideoAccess(this.currentCourse.id, lessonIndex);
+        const hasAccess = await this.validateVideoAccess(this.currentCourse.id);
         
         if (!hasAccess) {
             this.showError('❌ Course access required. Please purchase this course to watch lessons.');
@@ -1310,47 +1269,20 @@ userOwnsCourse(courseId) {
         this.submitPaymentRequest(paymentRequest, paymentMethod);
     }
     
-    async submitPaymentRequest(paymentRequest, paymentMethod) {
-        try {
-            // Send to backend for email confirmation and admin notification
-            await this.sendPaymentRequestToBackend(paymentRequest);
-            
-            // Save to local storage for admin panel
-            const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
-            
-            // Remove any existing payment for this user+course to prevent duplicates
-            const cleanedPayments = pendingPayments.filter(payment => 
-                !((payment.email === paymentRequest.email || payment.userEmail === paymentRequest.email) && 
-                  payment.courseId === paymentRequest.courseId)
-            );
-            
-            // Add new payment request
-            cleanedPayments.push(paymentRequest);
-            localStorage.setItem('pendingPayments', JSON.stringify(cleanedPayments));
-            
-            console.log('✅ Payment request submitted successfully');
-            
-            // Close payment overlay
-            this.closePaymentOverlay();
-            
-            // Show success message
-            this.showEmailConfirmationSuccess(paymentMethod, paymentRequest);
-            
-        } catch (error) {
-            console.error('❌ Error submitting payment request:', error);
-            this.showError('Failed to submit payment request. Please try again or contact support.');
-            
-            // Still save locally as backup
-            const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
-            const cleanedPayments = pendingPayments.filter(payment => 
-                !((payment.email === paymentRequest.email || payment.userEmail === paymentRequest.email) && 
-                  payment.courseId === paymentRequest.courseId)
-            );
-            cleanedPayments.push(paymentRequest);
-            localStorage.setItem('pendingPayments', JSON.stringify(cleanedPayments));
-        }
+   async submitPaymentRequest(paymentRequest, paymentMethod) {
+    try {
+        await this.sendPaymentRequestToBackend(paymentRequest);
+
+        this.closePaymentOverlay();
+        this.showEmailConfirmationSuccess(paymentMethod, paymentRequest);
+
+        console.log('✅ Payment request submitted to backend');
+
+    } catch (error) {
+        console.error('❌ Error submitting payment request:', error);
+        this.showError('Failed to submit payment request. Please try again or contact support.');
     }
-    
+}
     async sendPaymentRequestToBackend(paymentRequest) {
         // Use the same backend as payment1.html
         const backendUrl = 'https://restless-feather-b6a9.michf18.workers.dev/api/payment-form';
@@ -3364,522 +3296,140 @@ userOwnsCourse(courseId) {
     }
 
     async loadPendingPayments() {
-        console.log('🔧 loadPendingPayments() started');
-        try {
-            // For demo mode, auto-use demo key unless in production
-            let adminKey = 'demo'; // Auto-use demo mode for testing
-            
-            // Optional: ask for confirmation in production
-            // const adminKey = prompt('Enter admin key (for demo, use "demo"):');
-            // if (!adminKey) {
-            //     console.log('❌ Admin key cancelled by user');
-            //     return;
-            // }
-            
-            console.log('✅ Using admin key:', adminKey);
-            
-            let payments = [];
-            let isDemo = false;
-            
-            // Try backend first
-            try {
-                const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/api/admin/pending-payments', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ adminKey })
-                });
-                
-                if (response.ok) {
-                    const result = await response.json();
-                    
-                    if (result.success) {
-                        payments = result.pendingPayments;
-                        console.log('✅ Loaded pending payments from backend');
-                    } else {
-                        throw new Error(result.error || 'Backend error');
-                    }
-                } else {
-                    throw new Error(`HTTP ${response.status}: Backend endpoint not found`);
-                }
-                
-            } catch (backendError) {
-                console.log('⚠️ Backend not available, using demo mode:', backendError.message);
-                isDemo = true;
-                
-                // Use local storage for demo - exclude granted payments
-                const localPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
-                payments = localPayments.filter(payment => 
-                    payment.status !== 'granted' && payment.status !== 'denied'
-                );
-            }
-            
-            // Only create demo payments if we haven't granted access yet AND no payments exist at all
-            if (isDemo && payments.length === 0) {
-                // Check if there are ANY payments in storage to prevent auto-creation
-                const allPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
-                
-                // Only auto-create if there are absolutely no payments at all
-                if (allPayments.length === 0) {
-                    console.log('🎬 No payments found at all - creating initial demo payment');
-                    
-                    const userName = this.currentUser.name || this.currentUser.email.split('@')[0];
-                    const userFirstName = userName.split(' ')[0] || this.currentUser.email.split('@')[0];
-                    const userLastName = userName.split(' ')[1] || 'Student';
-                    
-                    const demoPayment = {
-                        id: 'auto-demo-' + Date.now(),
-                        email: this.currentUser.email,
-                        userEmail: this.currentUser.email,
-                        firstName: userFirstName,
-                        lastName: userLastName,
-                        name: userName,  
-                        courseName: 'Salsa Fundamentals',
-                        series: 'Salsa Fundamentals',
-                        courseId: 'salsa-fundamentals',
-                        paymentMethod: 'Zelle',
-                        method: 'Zelle',
-                        timestamp: new Date().toISOString(),
-                        status: 'demo-pending',
-                        amount: 49,
-                        price: 49
-                    };
-                    
-                    // Save to storage and use it
-                    localStorage.setItem('pendingPayments', JSON.stringify([demoPayment]));
-                    payments = [demoPayment];
-                    
-                    console.log('✅ Created single demo payment:', demoPayment);
-                    this.showSuccess('🎬 Demo Mode: Created sample payment. Use testing tools to create more or clear all.');
-                } else {
-                    console.log('🎯 Payments exist in storage but filtered out - not creating new ones');
-                }
-            }
-            
-            console.log('📊 Final payments to display:', payments);
-            
-            this.displayPendingPayments(payments, isDemo);
-            
-        } catch (error) {
-            console.error('❌ Error loading pending payments:', error);
-            this.showError('❌ Error loading pending payments');
-            
-            // Fallback: show basic admin panel even if payments fail to load
-            const container = document.getElementById('pendingPaymentsList');
-            if (container) {
-                container.innerHTML = '<p class="error-message">❌ Error loading pending payments. Please try again or contact support.</p>';
-            }
-        }
-    }
+    console.log('🔧 loadPendingPayments() started');
 
-    displayPendingPayments(payments, isDemo = false) {
-        console.log('🎯 displayPendingPayments() called with:', { payments: payments.length, isDemo });
-        const container = document.getElementById('pendingPaymentsList');
-        if (!container) {
-            console.error('❌ pendingPaymentsList element not found!');
-            return;
-        }
-        console.log('✅ Found pendingPaymentsList container');
-        
-        if (payments.length === 0) {
-            const message = isDemo 
-                ? '<p class="no-payments">Demo Mode: No pending payments. Purchase a course to see pending payments here.</p>'
-                : '<p class="no-payments">No pending course payments found.</p>';
-            container.innerHTML = message;
-            console.log('✅ Displayed no-payments message');
-            return;
-        }
-        
-        const html = payments.map(payment => {
-            // Debug log to see what we're working with
-            console.log('🔍 Processing payment:', payment);
-            
-            // Add robust fallbacks for undefined values
-            const firstName = payment.firstName || payment.name?.split(' ')[0] || payment.email?.split('@')[0] || 'Student';
-            const lastName = payment.lastName || payment.name?.split(' ')[1] || '';
-            const email = payment.email || payment.userEmail || 'unknown@email.com';
-            
-            // Better course name mapping
-            let courseName = payment.courseName || payment.series;
-            let courseId = payment.courseId;
-            let amount = payment.amount || payment.price;
-            
-            // Map course IDs to proper names and prices if missing
-            if (!courseName || courseName === 'Unknown Course') {
-                const courseMapping = {
-                    'salsa-recap-lvl1': { name: 'Salsa Recap (Level 1)', price: 49 },
-                    'salsa-fundamentals': { name: 'Salsa Fundamentals', price: 49 },
-                    'bachata-sensual': { name: 'Bachata Sensual', price: 59 },
-                    'advanced-salsa': { name: 'Advanced Salsa', price: 69 },
-                    'bachata-basics': { name: 'Bachata Basics', price: 49 }
-                };
-                
-                if (courseId && courseMapping[courseId]) {
-                    courseName = courseMapping[courseId].name;
-                    if (!amount || amount === 0) {
-                        amount = courseMapping[courseId].price;
-                    }
-                } else {
-                    courseName = 'Unknown Course';
-                    courseId = courseId || 'unknown-course';
-                    amount = amount || 0;
-                }
-            }
-            
-            const method = payment.paymentMethod || payment.method || 'Unknown';
-            const timestamp = payment.timestamp || new Date().toISOString();
-            const status = payment.status || 'Pending';
-            
-            console.log('✅ Processed values:', { firstName, lastName, email, courseName, amount, method, status });
-            
-            const cardHtml = `
-                <div class="payment-item" data-email="${email}" data-course="${courseId}">
-                    <div class="payment-info">
-                        <h4>${firstName} ${lastName}</h4>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Course:</strong> ${courseName}</p>
-                        <p><strong>Amount:</strong> $${amount}</p>
-                        <p><strong>Method:</strong> ${method}</p>
-                        <p><strong>Date:</strong> ${new Date(timestamp).toLocaleDateString()}</p>
-                        <p><strong>Status:</strong> <span class="status pending">${status}</span></p>
-                    </div>
-                    <div class="payment-actions">
-                        <button onclick="courseApp.grantCourseAccess('${email}', '${courseId}', '${courseName}')" 
-                                class="btn-grant">✅ Grant Access</button>
-                        <button onclick="courseApp.denyPayment('${email}', '${courseId}')" 
-                                class="btn-deny">❌ Deny</button>
-                    </div>
-                </div>
-            `;
-            
-            console.log(`🔍 Creating payment card with attributes: data-email="${email}" data-course="${courseId}"`);
-            return cardHtml;
-        }).join('');
-        
-        container.innerHTML = html;
-        console.log('✅ displayPendingPayments completed - HTML set');
-    }
-
-async grantCourseAccess(email, courseId, courseName) {
     try {
-        const url = `https://bitter-forest-4b9b.michf18.workers.dev/?action=grantAccess&email=${encodeURIComponent(email)}&courseId=${encodeURIComponent(courseId)}`;
-        const response = await fetch(url);
-        const result = await response.json();
-        
-        if (result.success) {
-            this.showSuccess(`✅ Access granted to ${email} for ${courseName}`);
-            setTimeout(() => { this.loadPendingPayments(); this.loadAllUsers(); }, 500);
-        } else {
-            this.showError('❌ ' + result.error);
+        // Try backend first (no fake demo key logic needed)
+        const response = await fetch(
+            'https://restless-feather-b6a9.michf18.workers.dev/api/admin/pending-payments',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ adminKey: 'demo' }) // replace later with real auth
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
         }
+
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.error || 'Backend error');
+        }
+
+        const payments = result.pendingPayments || [];
+
+        console.log('✅ Loaded pending payments from backend:', payments.length);
+        this.displayPendingPayments(payments, false);
+
     } catch (error) {
-        this.showError('❌ Error granting access: ' + error.message);
+        console.log('⚠️ Backend failed, using local fallback:', error.message);
     }
 }
 
-    // Helper method for granting access with monthly expiry
-    grantCourseAccessWithExpiry(email, courseId, months = 1) {
-        const approvedStudents = this.getApprovedStudents();
-        
-        if (!approvedStudents[email.toLowerCase()]) {
-            approvedStudents[email.toLowerCase()] = {
-                email: email,
-                courses: [],
-                grantedAt: new Date().toISOString()
+    displayPendingPayments(payments) {
+    console.log('🎯 displayPendingPayments() called with:', { payments: payments.length });
+
+    const container = document.getElementById('pendingPaymentsList');
+    if (!container) {
+        console.error('❌ pendingPaymentsList element not found!');
+        return;
+    }
+
+    console.log('✅ Found pendingPaymentsList container');
+
+    if (payments.length === 0) {
+        container.innerHTML = '<p class="no-payments">No pending course payments found.</p>';
+        console.log('✅ Displayed no-payments message');
+        return;
+    }
+
+    const html = payments.map(payment => {
+        console.log('🔍 Processing payment:', payment);
+
+        const firstName = payment.firstName || payment.name?.split(' ')[0] || payment.email?.split('@')[0] || 'Student';
+        const lastName = payment.lastName || payment.name?.split(' ')[1] || '';
+        const email = payment.email || payment.userEmail || 'unknown@email.com';
+
+        let courseName = payment.courseName || payment.series;
+        let courseId = payment.courseId;
+        let amount = payment.amount || payment.price;
+
+        if (!courseName || courseName === 'Unknown Course') {
+            const courseMapping = {
+                'salsa-recap-lvl1': { name: 'Salsa Recap (Level 1)', price: 49 },
+                'salsa-fundamentals': { name: 'Salsa Fundamentals', price: 49 },
+                'bachata-sensual': { name: 'Bachata Sensual', price: 59 },
+                'advanced-salsa': { name: 'Advanced Salsa', price: 69 },
+                'bachata-basics': { name: 'Bachata Basics', price: 49 }
             };
-        }
 
-        const userApproved = approvedStudents[email.toLowerCase()];
-        
-        if (!userApproved.courses.includes(courseId)) {
-            userApproved.courses.push(courseId);
-        }
-        
-        // Set expiration date
-        const expiryDate = new Date();
-        expiryDate.setMonth(expiryDate.getMonth() + months);
-        userApproved.expiresAt = expiryDate.toISOString();
-        
-        this.saveApprovedStudents(approvedStudents);
-        
-        return userApproved;
-    }
-
-    async denyPayment(email, courseId) {
-        if (!confirm(`Deny course access for ${email}?`)) return;
-        
-        try {
-            // For testing, auto-use demo mode
-            console.log(`🔧 Denying access: ${email} -> ${courseId}`);
-            let adminKey = 'demo'; // Auto-use demo mode for testing
-            
-            // Optional: still ask for confirmation in production
-            // const adminKey = prompt('Enter admin key to confirm:');
-            // if (!adminKey) return;
-            
-            let success = false;
-            
-            // Try backend first
-            try {
-                const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/api/admin/grant-access', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        adminKey,
-                        email,
-                        courseId,
-                        action: 'grant'
-                    })
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    success = true;
-                    console.log('✅ Access granted via backend');
-                } else {
-                    throw new Error(result.error || 'Backend error');
-                }
-                
-            } catch (backendError) {
-                console.log('⚠️ Backend not available, using demo mode:', backendError.message);
-                
-                // Demo mode - grant access locally
-                if (adminKey === 'demo' || adminKey) {
-                    console.log('🎬 Demo Mode: Granting access locally');
-                    
-                    // Update the user in QLDUsers storage
-                    const users = JSON.parse(localStorage.getItem('QLDUsers') || '{}');
-                    if (users[email]) {
-                        if (!users[email].ownedCourses) {
-                            users[email].ownedCourses = [];
-                        }
-                        if (!users[email].ownedCourses.includes(courseId)) {
-                            users[email].ownedCourses.push(courseId);
-                        }
-                        localStorage.setItem('QLDUsers', JSON.stringify(users));
-                        console.log(`✅ Updated user ${email} with course access`);
-                    } else {
-                        console.log(`⚠️ User ${email} not found in system, creating basic entry`);
-                        // Create a basic user entry if they don't exist
-                        users[email] = {
-                            id: this.generateUserId(),
-                            name: email.split('@')[0],
-                            email: email,
-                            passwordHash: this.hashPassword('demo123'),
-                            purchasedCourses: [],
-                            ownedCourses: [courseId],
-                            progress: {},
-                            joinDate: new Date().toISOString(),
-                            lastLogin: new Date().toISOString(),
-                            isAdmin: false
-                        };
-                        localStorage.setItem('QLDUsers', JSON.stringify(users));
-                    }
-                    
-                    // Update current user if it's the same email
-                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    if (currentUser && currentUser.email === email) {
-                        if (!currentUser.ownedCourses) {
-                            currentUser.ownedCourses = [];
-                        }
-                        if (!currentUser.ownedCourses.includes(courseId)) {
-                            currentUser.ownedCourses.push(courseId);
-                        }
-                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                        this.currentUser = currentUser;
-                        console.log('✅ Updated current user with course access');
-                    }
-                    
-                    // Update pending payments - check both email fields and remove granted payments
-                    const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
-                    console.log('🔍 Before update - Pending payments:', pendingPayments.length, pendingPayments);
-                    
-                    let removedCount = 0;
-                    const updatedPayments = pendingPayments.map(payment => {
-                        // Check if this payment matches the granted access
-                        const paymentEmail = payment.email || payment.userEmail;
-                        const paymentCourse = payment.courseId;
-                        
-                        console.log(`🔍 Checking payment: email="${paymentEmail}" vs "${email}", course="${paymentCourse}" vs "${courseId}"`);
-                        
-                        // Update status instead of removing - this prevents re-creation
-                        if (paymentEmail === email && paymentCourse === courseId) {
-                            console.log('✅ Marking payment as granted:', payment);
-                            removedCount++;
-                            return { ...payment, status: 'granted', grantedAt: new Date().toISOString() };
-                        }
-                        
-                        return payment; // Keep this payment unchanged
-                    });
-                    
-                    console.log(`🔍 After update - Pending payments: ${updatedPayments.length} (granted ${removedCount})`);
-                    localStorage.setItem('pendingPayments', JSON.stringify(updatedPayments));
-                    
-                    success = true;
-                    console.log('✅ Access granted in demo mode');
-                }
-            }
-            
-            if (success) {
-                this.showSuccess(`✅ Course access granted to ${email} for ${courseName}${adminKey === 'demo' ? ' (Demo Mode)' : ''}`);
-                
-                // Immediately remove the payment card from UI for instant feedback
-                console.log(`🔍 Looking for payment card: [data-email="${email}"][data-course="${courseId}"]`);
-                const paymentCard = document.querySelector(`[data-email="${email}"][data-course="${courseId}"]`);
-                console.log('🔍 Payment card found:', !!paymentCard, paymentCard);
-                
-                if (paymentCard) {
-                    console.log('✅ Payment card found - removing...');
-                    paymentCard.style.opacity = '0.3';
-                    paymentCard.style.transform = 'scale(0.95)';
-                    paymentCard.style.transition = 'all 0.3s ease';
-                    paymentCard.style.pointerEvents = 'none';
-                    
-                    // Add "processing" indicator
-                    const actionButtons = paymentCard.querySelector('.payment-actions');
-                    if (actionButtons) {
-                        actionButtons.innerHTML = '<div style="color: #28a745; font-weight: bold;">✅ Processing...</div>';
-                    }
-                    
-                    setTimeout(() => {
-                        if (paymentCard && paymentCard.parentNode) {
-                            paymentCard.remove();
-                            console.log('✅ Payment card removed from DOM');
-                        }
-                    }, 300);
-                } else {
-                    console.warn('⚠️ Payment card not found - trying alternative selectors');
-                    
-                    // Try alternative selectors
-                    const allCards = document.querySelectorAll('.payment-item');
-                    console.log('🔍 All payment cards found:', allCards.length);
-                    allCards.forEach((card, index) => {
-                        console.log(`Card ${index}:`, {
-                            email: card.getAttribute('data-email'),
-                            course: card.getAttribute('data-course')
-                        });
-                    });
-                    
-                    // Try to find by email only
-                    const cardByEmail = document.querySelector(`[data-email="${email}"]`);
-                    if (cardByEmail) {
-                        console.log('✅ Found card by email, removing...');
-                        cardByEmail.style.opacity = '0.3';
-                        cardByEmail.style.pointerEvents = 'none';
-                        setTimeout(() => {
-                            if (cardByEmail && cardByEmail.parentNode) {
-                                cardByEmail.remove();
-                            }
-                        }, 300);
-                    }
-                }
-                
-                // Refresh the entire list after a short delay
-                setTimeout(() => {
-                    console.log('🔄 Refreshing pending payments list...');
-                    this.loadPendingPayments();
-                }, 800);
-                
-                // Update UI if this is the current user
-                if (this.currentUser && this.currentUser.email === email) {
-                    this.updateCourseAccessUI();
+            if (courseId && courseMapping[courseId]) {
+                courseName = courseMapping[courseId].name;
+                if (!amount || amount === 0) {
+                    amount = courseMapping[courseId].price;
                 }
             } else {
-                this.showError(`❌ Failed to grant access`);
+                courseName = 'Unknown Course';
+                courseId = courseId || 'unknown-course';
+                amount = amount || 0;
             }
-            
-        } catch (error) {
-            console.error('❌ Error granting access:', error);
-            this.showError('❌ Error granting course access');
         }
-    }
+
+        const method = payment.paymentMethod || payment.method || 'Unknown';
+        const timestamp = payment.timestamp || new Date().toISOString();
+        const status = payment.status || 'Pending';
+
+        const cardHtml = `
+            <div class="payment-item" data-email="${email}" data-course="${courseId}">
+                <div class="payment-info">
+                    <h4>${firstName} ${lastName}</h4>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Course:</strong> ${courseName}</p>
+                    <p><strong>Amount:</strong> $${amount}</p>
+                    <p><strong>Method:</strong> ${method}</p>
+                    <p><strong>Date:</strong> ${new Date(timestamp).toLocaleDateString()}</p>
+                    <p><strong>Status:</strong> <span class="status pending">${status}</span></p>
+                </div>
+                <div class="payment-actions">
+                    <button onclick="courseApp.grantCourseAccess('${email}', '${courseId}', '${courseName}')" 
+                            class="btn-grant">✅ Grant Access</button>
+                    <button onclick="courseApp.denyPayment('${email}', '${courseId}')" 
+                            class="btn-deny">❌ Deny</button>
+                </div>
+            </div>
+        `;
+
+        return cardHtml;
+    }).join('');
+
+    container.innerHTML = html;
+    console.log('✅ displayPendingPayments completed - HTML set');
+}
 
     async denyPayment(email, courseId) {
-        if (!confirm(`Deny course access for ${email}?`)) return;
-        
-        try {
-            // For testing, auto-use demo mode
-            console.log(`🔧 Denying access: ${email} -> ${courseId}`);
-            let adminKey = 'demo'; // Auto-use demo mode for testing
-            
-            // Optional: still ask for confirmation in production
-            // const adminKey = prompt('Enter admin key to confirm:');
-            // if (!adminKey) return;
-            
-            let success = false;
-            
-            // Try backend first
-            try {
-                const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/api/admin/grant-access', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        adminKey,
-                        email,
-                        courseId,
-                        action: 'deny'
-                    })
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    success = true;
-                    console.log('✅ Access denied via backend');
-                } else {
-                    throw new Error(result.error || 'Backend error');
-                }
-                
-            } catch (backendError) {
-                console.log('⚠️ Backend not available, using demo mode:', backendError.message);
-                
-                // Demo mode - deny access locally
-                if (adminKey === 'demo' || adminKey) {
-                    console.log('🎬 Demo Mode: Denying access locally');
-                    
-                    // Remove from pending payments
-                    const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
-                    const updatedPayments = pendingPayments.map(payment => {
-                        if (payment.email === email && payment.courseId === courseId) {
-                            return { ...payment, status: 'denied' };
-                        }
-                        return payment;
-                    });
-                    localStorage.setItem('pendingPayments', JSON.stringify(updatedPayments));
-                    
-                    success = true;
-                    console.log('✅ Access denied in demo mode');
-                }
-            }
-            
-            if (success) {
-                this.showSuccess(`❌ Payment denied for ${email}${adminKey === 'demo' ? ' (Demo Mode)' : ''}`);
-                
-                // Refresh the admin panel list
-                setTimeout(() => {
-                    this.loadPendingPayments();
-                }, 500);
-                
-            } else {
-                this.showError(`❌ Failed to deny payment`);
-            }
-            
-        } catch (error) {
-            console.error('❌ Error denying payment:', error);
-            this.showError('❌ Error denying payment');
-        }
-    }
+    const response = await fetch('/api/admin/grant-access', {
+        method: 'POST',
+        body: JSON.stringify({
+            email,
+            courseId,
+            action: 'deny'
+        })
+    });
 
+    const result = await response.json();
+
+    if (result.success) {
+        this.showSuccess(`❌ Payment denied for ${email}`);
+        this.loadPendingPayments();
+    } else {
+        this.showError('❌ Failed to deny payment');
+    }
+}
     // ===== END ADMIN PANEL =====
 
     // ===== END FUTURE RECOMMENDATIONS =====
@@ -3947,65 +3497,6 @@ async grantCourseAccess(email, courseId, courseName) {
         if (adminPanel) adminPanel.classList.add('hidden');
         
         console.log('✅ All user data and UI reset complete');
-    }
-
-    createSamplePayments() {
-        console.log('🧪 Creating sample payments...');
-        
-        // Clear existing payments first
-        localStorage.removeItem('pendingPayments');
-        
-        const timestamp1 = new Date();
-        const timestamp2 = new Date(timestamp1.getTime() + 60000); // 1 minute later
-        
-        const samplePayments = [
-            {
-                id: 'sample-test-' + Date.now(),
-                email: 'test@example.com',
-                userEmail: 'test@example.com',
-                firstName: 'Test',
-                lastName: 'User',
-                name: 'Test User',
-                courseName: 'Salsa Fundamentals',
-                series: 'Salsa Fundamentals',
-                courseId: 'salsa-fundamentals',
-                paymentMethod: 'Zelle',
-                method: 'Zelle',
-                timestamp: timestamp1.toISOString(),
-                status: 'pending',
-                amount: 49,
-                price: 49
-            },
-            {
-                id: 'sample-pb-' + (Date.now() + 1),
-                email: 'pb.petel26@gmail.com',
-                userEmail: 'pb.petel26@gmail.com',
-                firstName: 'Pb',
-                lastName: 'Petel',
-                name: 'Pb Petel',
-                courseName: 'Bachata Sensual',
-                series: 'Bachata Sensual',
-                courseId: 'bachata-sensual',
-                paymentMethod: 'Venmo',
-                method: 'Venmo',
-                timestamp: timestamp2.toISOString(),
-                status: 'pending',
-                amount: 59,
-                price: 59
-            }
-        ];
-        
-        localStorage.setItem('pendingPayments', JSON.stringify(samplePayments));
-        console.log('✅ Created exactly 2 clean sample payments:', samplePayments);
-        this.showSuccess('🧪 Created 2 clean sample payments - Test User (Salsa $49) & Pb Petel (Bachata $59)');
-        
-        // Refresh admin panel if it's open
-        const adminPanel = document.getElementById('admin-panel');
-        if (adminPanel && !adminPanel.classList.contains('hidden')) {
-            setTimeout(() => this.loadPendingPayments(), 500);
-        }
-        
-        return samplePayments;
     }
 
     // ===== USER MANAGEMENT & SUBSCRIPTION SYSTEM =====
@@ -4566,6 +4057,48 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+document.addEventListener('visibilitychange', async () => {
+    if (document.visibilityState === 'visible') {
+        const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+        if (!user?.email) return;
+
+        try {
+            const res = await fetch(
+                `/api/course-access`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        email: user.email,
+                        courseId: "all"
+                    })
+                }
+            );
+
+            const data = await res.json();
+
+            if (!user.ownedCourses) user.ownedCourses = [];
+
+            if (data.hasAccess && data.reg?.series) {
+                const course = data.reg.series.toLowerCase();
+                if (!user.ownedCourses.includes(course)) {
+                    user.ownedCourses.push(course);
+                }
+            }
+
+            localStorage.setItem('currentUser', JSON.stringify(user));
+
+            if (window.courseApp) {
+                window.courseApp.currentUser = user;
+                window.courseApp.updateCourseAccessUI?.();
+            }
+
+        } catch (err) {
+            console.log('sync failed:', err);
+        }
+    }
+});
+
 // Backup initialization in case DOMContentLoaded already fired
 if (document.readyState === 'loading') {
     // DOM is still loading, DOMContentLoaded will fire
@@ -4587,4 +4120,49 @@ if (document.readyState === 'loading') {
             }
         }
     }, 100);
+}
+
+function getAdminToken() {
+  return localStorage.getItem('adminToken');
+}
+
+async function adminFetch(url, options = {}) {
+  const token = getAdminToken();
+
+  return fetch(url, {
+    ...options,
+    headers: {
+      ...(options.headers || {}),
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
+    }
+  });
+  async function checkKVAccess(email) {
+    try {
+
+        const response = await fetch(
+            'https://restless-feather-b6a9.michf18.workers.dev//api/course-access',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            }
+        );
+
+        const data = await response.json();
+
+        return data;
+
+    } catch (err) {
+
+        console.error('Access check failed:', err);
+
+        return {
+            success: false,
+            hasAccess: false
+        };
+    }
+}
 }
