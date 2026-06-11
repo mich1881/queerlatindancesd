@@ -1784,6 +1784,7 @@ userOwnsCourse(courseId) {
                 this.currentUser.accessType = result.accessType;
                 this.saveCurrentUser();
                 
+                console.log("ACCESS RESPONSE", result);
                 return result.hasAccess;
             } else {
                 console.error('❌ Course access error:', result.error);

@@ -169,7 +169,7 @@
 <div id="app">
   <header>
     <div>
-      <h1>🏳️‍🌈 QLDSD Admin Portal</h1>
+      <h1>QLDSD Admin Portal</h1>
       <span id="adminWelcome">Logged in</span>
     </div>
     <button id="signOutBtn" onclick="signOut()">Sign Out</button>
@@ -383,33 +383,53 @@ function pendingCard(r) {
   const badgeLabel = r.status === 'verified' ? '✅ Verified' : '⏳ Pending';
 
   // Credit options based on series type
-  const creditOptions = [2,3,4,5,6,7,8].map(n => `<option value="${n}">${n} credits</option>`).join('');
+  const creditOptions = [1,2,3,4,5,6,7,8].map(n => `<option value="${n}">${n} credits</option>`).join('');
 
   const verifyBlock = r.status === 'pending' ? `
-    <div class="credits-selector">
-      <label>Assign credits:</label>
-      <select id="credits-${r.id}">
-        <option value="4">4 credits (4-week)</option>
-        <option value="8">8 credits (8-week)</option>
-        ${creditOptions}
-      </select>
-    </div>
-<div class="actions">
-  <button class="btn btn-verify" onclick="verifyPayment('${r.id}')">
-    ✅ Verify Payment & Assign Credits
-  </button>
+  <div class="credits-selector">
+    <label>Assign credits:</label>
+    <select id="credits-${r.id}">
+      <option value="4">4 credits (4-week)</option>
+      <option value="8">8 credits (8-week)</option>
+      ${creditOptions}
+    </select>
+  </div>
 
-  <button class="btn btn-secondary" onclick="editRegistration('${r.id}')">
-    ✏️ Edit
-  </button>
+  <div class="actions">
+    <button class="btn btn-verify"
+      onclick="verifyPayment('${r.id}')">
+      ✅ Verify Payment & Assign Credits
+    </button>
 
-  <button class="btn btn-danger" onclick="deleteRegistration('${r.id}')">
-    🗑️ Delete
-  </button>
-</div>
-  ` : `<div class="actions">
-    <span style="color:#27ae60;font-size:0.9rem;">✅ Payment verified — ${r.creditsTotal} credits assigned</span>
-  </div>`;
+    <button class="btn btn-secondary"
+      onclick="editRegistration('${r.id}')">
+      ✏️ Edit
+    </button>
+
+    <button class="btn btn-danger"
+      onclick="deleteRegistration('${r.id}')">
+      🗑️ Delete
+    </button>
+  </div>
+` : `
+  <div class="actions">
+
+    <span style="color:#27ae60;font-size:0.9rem;">
+      ✅ Payment verified — ${r.creditsTotal} credits assigned
+    </span>
+
+    <button class="btn btn-secondary"
+      onclick="editRegistration('${r.id}')">
+      ✏️ Edit
+    </button>
+
+    <button class="btn btn-danger"
+      onclick="deleteRegistration('${r.id}')">
+      🗑️ Delete
+    </button>
+
+  </div>
+`;
 
   return `
     <div class="reg-card ${r.status}" id="regcard-${r.id}">
