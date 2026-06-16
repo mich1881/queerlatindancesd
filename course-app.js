@@ -8,12 +8,12 @@ class CoursePlatform {
         this.currentCourse = null;
         this.currentLesson = null;
         this.lessonProgress = {};
-        
+        this.courseAccess = {};
         // Define your courses here - easy to modify!
         this.courses = {
             'salsa-recap-lvl1': {
                 id: 'salsa-recap-lvl1',
-                title: 'Salsa Recap (Level 1)',
+                title: 'In Person Classes: Salsa Recap Videos',
                 description: 'Master the basic steps, timing, and partner connection in salsa dancing. Perfect for absolute beginners who want to build a strong foundation.',
                 price: 49,
                 icon: 'images/4weekseries1/IMG_8661.JPG',
@@ -23,101 +23,101 @@ class CoursePlatform {
                 videoLessons: [
                     //SALSA VARIATION A
                     {
-                        id: 1,
+                        id: 'A1',
                         title: 'Salsa Week 1A',
                         video: 'https://drive.google.com/file/d/1t0ofE40PeO3gxxdGUeG_l3Uf3Utln9Ks/preview',
                         videoType: 'googledrive',
-                        duration: '15:30',
+                        duration: '03:42',
                         description: 'Learn the fundamental salsa steps and timing'
                     },
                     {
-                        id: 2,
+                        id: 'A2',
                         title: 'Salsa Week 2A',
                         video: 'https://drive.google.com/file/d/1Q7iX8nipE2TYvx5VgZMEkrk82_J4VLwJ/preview',
                         videoType: 'googledrive',
-                        duration: '18:45',
+                        duration: '01:17',
                         description: 'Understanding salsa rhythm and musical timing'
                     },
                     {
-                        id: 3,
+                        id: 'A3',
                         title: 'Salsa Week 3A',
                         video: 'https://drive.google.com/file/d/1TkDTNKCdtjJ3RMTEVUOef4y8dPpgBTf9/preview',
                         videoType: 'googledrive',
-                        duration: '22:15',
+                        duration: '01:18',
                         description: 'How to connect with your dance partner'
                     },
                     {
-                        id: 4,
+                        id: 'A4',
                         title: 'Salsa Week 4A',
                         video: 'https://drive.google.com/file/d/1dyCFI5aAlD8o4W0mL9rOLg_g6TnrPZXb/preview',
-                        videoType: 'mp4',
-                        duration: '20:00',
+                        videoType: 'googledrive',
+                        duration: '03:06',
                         description: 'The most important move in salsa dancing'
                     },
                     //SALSA VARIATION B
                     {
-                        id: 1,
+                        id: 'B1',
                         title: 'Salsa Week 1B',
                         video: 'https://drive.google.com/file/d/1t0ofE40PeO3gxxdGUeG_l3Uf3Utln9Ks/preview',
                         videoType: 'googledrive',
-                        duration: '15:30',
+                        duration: '03:42',
                         description: 'Learn the fundamental salsa steps and timing'
                     },
                     {
-                        id: 2,
+                        id: 'B2',
                         title: 'Salsa Week 2B',
-                        video: 'https://drive.google.com/file/d/15_P7Dv04rc1-0BduLcDh-T3kttzlCOjv/',
+                        video: 'https://drive.google.com/file/d/15_P7Dv04rc1-0BduLcDh-T3kttzlCOjv/preview',
                         videoType: 'googledrive',
-                        duration: '18:45',
+                        duration: '01:17',
                         description: 'Understanding salsa rhythm and musical timing'
                     },
                     {
-                        id: 3,
+                        id: 'B3',
                         title: 'Salsa Week 3B',
                         video: 'https://drive.google.com/file/d/1SmogXNnqD6CuD5ulxJjrAdCVk9nVuYWi/preview',
                         videoType: 'googledrive',
-                        duration: '22:15',
+                        duration: '01:18',
                         description: 'How to connect with your dance partner'
                     },
                     {
-                        id: 4,
+                        id: 'B4',
                         title: 'Salsa Week 4B',
                         video: 'https://drive.google.com/file/d/1L1CJt6Mbh0e_KV1MwGGS6xoZNsbNw3x1/preview',
-                        videoType: 'mp4',
-                        duration: '20:00',
+                        videoType: 'googledrive',
+                        duration: '03:06',
                         description: 'The most important move in salsa dancing'
                     },
                     //SALSA VARIATION C
                     {
-                        id: 1,
+                        id: 'C1',
                         title: 'Salsa Week 1C',
                         video: 'https://drive.google.com/file/d/1t0ofE40PeO3gxxdGUeG_l3Uf3Utln9Ks/preview',
                         videoType: 'googledrive',
-                        duration: '15:30',
+                        duration: '03:42',
                         description: 'Learn the fundamental salsa steps and timing'
                     },
                     {
-                        id: 2,
+                        id: 'C2',
                         title: 'Salsa Week 2C',
                         video: 'https://drive.google.com/file/d/18fIoQ6V75s1Vu66med0_3Wlj_ZVqkBqz/preview',
                         videoType: 'googledrive',
-                        duration: '18:45',
+                        duration: '01:47',
                         description: 'Understanding salsa rhythm and musical timing'
                     },
                     {
-                        id: 3,
+                        id: 'C3',
                         title: 'Salsa Week 3C',
                         video: 'https://drive.google.com/file/d/1SmogXNnqD6CuD5ulxJjrAdCVk9nVuYWi/preview',
                         videoType: 'googledrive',
-                        duration: '22:15',
+                        duration: '01:32',
                         description: 'How to connect with your dance partner'
                     },
                     {
-                        id: 4,
+                        id: 'C4',
                         title: 'Salsa Week 4C',
                         video: 'https://drive.google.com/file/d/1L1CJt6Mbh0e_KV1MwGGS6xoZNsbNw3x1/preview',
-                        videoType: 'mp4',
-                        duration: '20:00',
+                        videoType: 'googledrive',
+                        duration: '01:02',
                         description: 'The most important move in salsa dancing'
                     },
                 ]
@@ -283,6 +283,40 @@ class CoursePlatform {
         this.init();
     }
 
+     async checkCourseAccess(courseId) {
+        if (!this.currentUser?.email) return false;
+
+        try {
+            const response = await fetch(
+                'https://restless-feather-b6a9.michf18.workers.dev/api/course-access',
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: this.currentUser.email,
+                        courseId: courseId
+                    })
+                }
+            );
+
+                let data = {};
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    console.error('Invalid JSON response');
+                    return false;
+                }
+
+            this.courseAccess[courseId] = hasAccess;
+
+            return hasAccess;
+
+        } catch (err) {
+            console.error(err);
+            return false;
+        }
+    }
+
     init() {
         console.log('🚀 Initializing Course Platform...');
         this.initializeSecurity(); // Enable security measures
@@ -294,7 +328,19 @@ class CoursePlatform {
             console.log('🎵 Course Platform Initialized!');
         }, 100);
     }
+async checkAllCourseAccess() {
+    if (!this.currentUser?.email) return;
 
+    const courseIds = Object.keys(this.courses);
+
+    const results = await Promise.all(
+        courseIds.map(id => this.checkCourseAccess(id))
+    );
+
+    console.log('🔐 All course access loaded:', this.courseAccess);
+
+    return results;
+}
     setupEventListeners() {
         // Authentication forms
         document.getElementById('login-form')?.addEventListener('submit', (e) => {
@@ -318,48 +364,35 @@ class CoursePlatform {
 
     // ===== AUTHENTICATION SYSTEM =====
 
-    checkAuthStatus() {
-        console.log('🔍 Checking authentication status...');
-        const savedUser = localStorage.getItem('currentUser');
-        console.log('💾 Saved user data:', savedUser ? 'Found' : 'None');
-        
-        if (savedUser) {
-            try {
-                this.currentUser = JSON.parse(savedUser);
-                console.log('✅ Found saved user:', this.currentUser.name);
-                
-                // Check if user is admin
-                this.checkAdminAccess();
-                
-                console.log('🎯 About to show dashboard...');
-                this.showSuccess(`Welcome back, ${this.currentUser.name}! 💃`);
-                this.showDashboard();
-            } catch (error) {
-                console.error('❌ Error loading saved user:', error);
-                this.showAuthScreen();
-            }
-        } else {
-            console.log('👤 No saved user, showing auth screen');
+    async checkAuthStatus() {
+    console.log('🔍 Checking authentication status...');
+
+    const savedUser = localStorage.getItem('currentUser');
+    console.log('💾 Saved user data:', savedUser ? 'Found' : 'None');
+
+    if (savedUser) {
+        try {
+            this.currentUser = JSON.parse(savedUser);
+
+            console.log('✅ Found saved user:', this.currentUser.name);
+
+            this.isAdmin();
+
+            // 🔥 important: wait for permissions BEFORE UI loads
+            await this.checkAllCourseAccess();
+
+            this.showSuccess(`Welcome back, ${this.currentUser.name}! 💃`);
+            this.showDashboard();
+
+        } catch (error) {
+            console.error('❌ Error loading saved user:', error);
             this.showAuthScreen();
         }
+    } else {
+        console.log('👤 No saved user, showing auth screen');
+        this.showAuthScreen();
     }
-
-    checkAdminAccess() {
-        // Simple admin check - you can change this email to your admin email
-        const adminEmails = [
-            'michelle@queerlatindance.com', 
-            'admin@queerlatindance.com',
-            'admin@demo.com'  // Demo admin for testing
-        ];
-        const isAdmin = adminEmails.includes(this.currentUser.email.toLowerCase());
-        
-        const adminBtn = document.getElementById('admin-btn');
-        if (adminBtn) {
-            adminBtn.style.display = isAdmin ? 'block' : 'none';
-        }
-        
-        this.currentUser.isAdmin = isAdmin;
-    }
+}
 
     async handleLogin() {
         const email = document.getElementById('login-email').value.trim();
@@ -382,10 +415,17 @@ if (result.success) {
     this.currentUser = result.user;
     // IMPORTANT: rehydrate course access from KV
     try {
-        const res = await fetch(
-            `/api/course-access?email=${encodeURIComponent(email)}`
-        );
-        const data = await res.json();
+const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/api/course-access', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    email: email,
+    courseId: courseId
+  })
+});
+        const data = await response.json();
         this.currentUser.ownedCourses = data.courses || [];
     } catch (err) {
         console.log('⚠️ Failed to load course access:', err);
@@ -693,8 +733,10 @@ if (result.success) {
     }
 
 userOwnsCourse(courseId) {
-    if (!this.currentUser) return false;
-
+    if (!this.currentUser?.email) {
+    console.warn('No user logged in');
+    return false;
+}
     if (
         this.currentUser.ownedCourses &&
         this.currentUser.ownedCourses.includes(courseId)
@@ -1755,8 +1797,6 @@ userOwnsCourse(courseId) {
             console.log('❌ No user logged in');
             return false;
         }
-
-        // Admins have access to all courses
         if (this.isAdmin()) {
             console.log('👑 Admin access granted for course:', courseId);
             return true;
@@ -1812,7 +1852,6 @@ userOwnsCourse(courseId) {
     // Update course access from server
     async refreshCourseAccess() {
         if (!this.currentUser) return;
-        
         try {
             const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/api/course-access', {
                 method: 'POST',
@@ -1854,40 +1893,90 @@ userOwnsCourse(courseId) {
 
     // Update UI to show which courses the user owns
     updateCourseAccessUI() {
-        if (!this.currentUser || !this.currentUser.ownedCourses) return;
-        
-        const ownedCourses = this.currentUser.ownedCourses;
-        
-        // Update course cards to show access status
-        const courseCards = document.querySelectorAll('.course-card');
-        courseCards.forEach(card => {
-            const courseId = card.dataset.courseId;
-            const buyButton = card.querySelector('.buy-btn');
-            const accessIndicator = card.querySelector('.access-indicator');
-            
-            if (ownedCourses.includes(courseId)) {
-                // User owns this course
-                if (buyButton) {
-                    buyButton.textContent = '✅ Access Granted';
-                    buyButton.style.backgroundColor = '#4CAF50';
-                    buyButton.onclick = () => this.startCourse(courseId);
+    if (!this.currentUser || !this.currentUser.ownedCourses) return;
+    if (!user) {
+    console.log("⚠️ No user found, creating session fallback");
+
+    this.currentUser = {
+        email: email,
+        ownedCourses: [],
+        isDemo: true
+    };
+
+    this.saveCurrentUser();
+    this.showDashboard();
+    return;
+}   
+    const ownedCourses = this.currentUser.ownedCourses;
+    const courseCards = document.querySelectorAll('.course-card');
+    courseCards.forEach(card => {
+        const courseId = card.dataset.courseId;
+        const buyButton = card.querySelector('.buy-btn');
+        const existingIndicator = card.querySelector('.access-indicator');
+
+        // 🔥 FIX: support BOTH string + object format
+        const courseData = ownedCourses.find(c =>
+            typeof c === "string"
+                ? c === courseId
+                : c.courseId === courseId
+        );
+
+        const hasAccess = !!courseData;
+        if (hasAccess) {
+            // User owns this course
+            if (buyButton) {
+                buyButton.textContent = '✅ Access Granted';
+                buyButton.style.backgroundColor = '#4CAF50';
+                buyButton.onclick = () => this.startCourse(courseId);
+            }
+            // remove old indicator if it exists (prevents duplicates)
+            if (existingIndicator) existingIndicator.remove();
+            const indicator = document.createElement('div');
+            indicator.className = 'access-indicator owned';
+            let expiryHTML = `🎓 You own this course`;
+
+            if (typeof courseData === "object" && courseData.expiresAt) {
+                const expiryDate = new Date(courseData.expiresAt);
+                const now = new Date();
+
+                const msLeft = expiryDate - now;
+                const daysLeft = Math.ceil(msLeft / (1000 * 60 * 60 * 24));
+
+                // 🔴 EXPIRED
+                if (msLeft <= 0) {
+                    expiryHTML = `⛔ <strong>Access expired</strong>`;
+
+                    if (buyButton) {
+                        buyButton.textContent = '❌ Expired';
+                        buyButton.style.backgroundColor = '#999';
+                        buyButton.onclick = () => this.purchaseCourse(courseId);
+                    }
                 }
-                
-                // Add access indicator if it doesn't exist
-                if (!accessIndicator) {
-                    const indicator = document.createElement('div');
-                    indicator.className = 'access-indicator owned';
-                    indicator.innerHTML = '🎓 You own this course';
-                    card.appendChild(indicator);
+                // 🔴 EXPIRING SOON
+                else if (daysLeft <= 3) {
+                    expiryHTML = `⚠️ <strong>${daysLeft} day${daysLeft === 1 ? '' : 's'} remaining</strong>`;
+                    indicator.style.color = "#ff3b30";
+                    indicator.style.fontWeight = "600";
                 }
-            } else {
-                // User doesn't own this course
-                if (accessIndicator && accessIndicator.classList.contains('owned')) {
-                    accessIndicator.remove();
+                // 🟡 NORMAL
+                else {
+                    expiryHTML = `⏳ ${daysLeft} days remaining`;
                 }
             }
-        });
-    }
+            // 👑 ADMIN VIEW (optional but powerful)
+            if (this.isAdmin && this.isAdmin()) {
+                expiryHTML += `<br><small style="opacity:0.7">🛠 admin view</small>`;
+            }
+
+            indicator.innerHTML = expiryHTML;
+            card.appendChild(indicator);
+            console.log("🔥 ENTERED ACCESS BLOCK");
+            console.log("hasAccess:", hasAccess);
+            console.log("card:", card);
+            console.log("courseData:", courseData);
+        }
+    });
+}
 
     // ===== COURSE ACCESS & NAVIGATION =====
 
@@ -3419,6 +3508,7 @@ userOwnsCourse(courseId) {
             email,
             courseId,
             action: 'deny'
+
         })
     });
 
@@ -3907,24 +3997,6 @@ userOwnsCourse(courseId) {
 
 // ===== GLOBAL FUNCTIONS (for onclick handlers) =====
 
-function demoLogin() {
-    console.log('🎭 Demo Login clicked');
-    if (window.courseApp) {
-        document.getElementById('login-email').value = 'demo@example.com';
-        document.getElementById('login-password').value = 'demo123';
-        window.courseApp.handleLogin();
-    }
-}
-
-function adminDemoLogin() {
-    console.log('⭐ Admin Demo Login clicked');
-    if (window.courseApp) {
-        document.getElementById('login-email').value = 'michelle@queerlatindance.com';
-        document.getElementById('login-password').value = 'admin123';
-        window.courseApp.handleLogin();
-    }
-}
-
 function switchAuthTab(tab) {
     console.log('🔄 Switching auth tab to:', tab);
     const loginForm = document.getElementById('login-form');
@@ -4022,23 +4094,6 @@ window.fixMyLogin = function(email, desiredPassword) {
     }
 };
 
-// Quick fix for the specific user mentioned
-window.fixPbLogin = function() {
-    const email = 'pb.petel26@gmail.com';
-    const password = prompt('Enter the password you want to use for pb.petel26@gmail.com:');
-    if (password && window.courseApp) {
-        return window.courseApp.fixUserLogin(email, password);
-    }
-};
-
-// Make demo login functions globally available
-window.demoLogin = demoLogin;
-window.adminDemoLogin = adminDemoLogin;
-
-// Export for use in other files
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = CoursePlatform;
-}
 
 // Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -4065,7 +4120,7 @@ document.addEventListener('visibilitychange', async () => {
 
         try {
             const res = await fetch(
-                `/api/course-access`,
+                `https://restless-feather-b6a9.michf18.workers.dev/api/course-access`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -4142,7 +4197,7 @@ async function adminFetch(url, options = {}) {
     try {
 
         const response = await fetch(
-            'https://restless-feather-b6a9.michf18.workers.dev//api/course-access',
+            'https://restless-feather-b6a9.michf18.workers.dev/api/course-access',
             {
                 method: 'POST',
                 headers: {

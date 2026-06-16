@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Lato:wght@300;400;700&display=swap');
+@font-face {
+  font-family: 'PassionOne';
+  src: url('fonts/Passion_One/PassionOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 /* Course Platform Styles */
 /* Override main site rainbow background completely */
 html, body {
@@ -334,10 +341,12 @@ body {
     min-height: calc(100vh - 80px);
     background: var(--bg-light);
     border-radius: var(--border-radius);
+    font-family: 'Montserrat', sans-serif;
 }
 
 .welcome-hero {
     text-align: center;
+    font-family: 'PassionOne', cursive;
     margin-bottom: 60px;
     color: var(--text-dark);
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
@@ -348,17 +357,20 @@ body {
 }
 
 .welcome-hero h1 {
-    font-size: 2.5em;
+    font-size: 3em;
     margin-bottom: 15px;
+    font-family:'Montserrat';
 }
 
 .welcome-hero p {
     font-size: 1.2em;
     opacity: 0.9;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .course-section {
     margin-bottom: 60px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .section-title {
@@ -367,6 +379,7 @@ body {
     margin-bottom: 30px;
     text-align: center;
     font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .courses-grid {
@@ -411,6 +424,7 @@ body {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-medium);
     border: 2px solid rgba(255, 215, 0, 0.3);
+    font-family: 'Montserrat', sans-serif;
 }
 
 .admin-icon {
@@ -1602,6 +1616,7 @@ body.course-page {
     padding: 2rem;
     margin-bottom: 2rem;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Montserrat', sans-serif;
 }
 
 .admin-section h2 {
@@ -1610,6 +1625,7 @@ body.course-page {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .admin-actions {
@@ -1898,6 +1914,7 @@ body.course-page {
 .nav-left h2 {
     margin: 0;
     color: var(--text-dark);
+    font-family: 'PassionOne','Montserrat', sans-serif;
 }
 
 .nav-right {

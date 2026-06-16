@@ -593,7 +593,11 @@ function attendanceCard(r) {
           ${noCredits ? '🚫 No Credits Left' : '📋 CHECK IN (deduct 1 credit)'}
         </button>
         ${used > 0 ? `<button class="btn btn-undo" onclick="doUndo('${r.id}')">↩️ Undo Last Check-in</button>` : ''}
-      </div>
+        <button class="btn btn-secondary"
+          onclick="adjustCredits('${r.id}')">
+          🎟️ Adjust Credits
+        </button>
+        </div>
     </div>
   `;
 }
@@ -649,7 +653,8 @@ async function grantOnlineAccess() {
     return;
   }
 
-  const token = sessionStorage.getItem('adminToken');
+  // const token = sessionStorage.getItem('adminToken');
+  const token = localStorage.getItem('adminToken');
 
   if (!token) {
     alert('You are NOT logged into admin.');
@@ -768,6 +773,49 @@ async function deleteRegistration(regId) {
     await loadRegistrations();
   } else {
     alert(data.error || "Delete failed");
+  }
+}
+async function adjustCredits(regId) {
+  const r = allRegistrations.find(x => x.id === regId);
+  if (!r) return;
+
+  const newTotal = prompt(
+    `Adjust TOTAL credits for ${r.firstName} ${r.lastName}`,
+    r.creditsTotal
+  );
+
+  if (newTotal === null) return;
+
+  const total = parseInt(newTotal);
+  if (isNaN(total) || total < 0) {
+    alert("Invalid number");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${WORKER_URL}/api/admin/adjust-credits`, {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + adminToken,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        regId,
+        creditsTotal: total
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      await loadRegistrations();
+      alert(`✅ Credits updated to ${total}`);
+    } else {
+      alert(data.error || "Update failed");
+    }
+
+  } catch (err) {
+    alert("Network error: " + err.message);
   }
 }
 </script>
