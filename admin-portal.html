@@ -95,7 +95,8 @@
   .btn-checkin { background: #a259ff; color: #fff; }
   .btn-undo { background: #e67e22; color: #fff; }
   .btn-danger { background: #e74c3c; color: #fff; }
-  .btn-secondary { background: #3a2060; color: #c990ff; border: 1px solid #5a3a9a; margin: 0.5rem; }
+  .btn-secondary { background: #3a2060; color: #c990ff; }
+  .btn-attendance { background: #3a2060; color: #c990ff; margin-top:0.5rem}
 
   /* Credits selector */
   .credits-selector { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; }
@@ -522,12 +523,12 @@ function pendingCard(r) {
 
     <button class="btn btn-secondary"
       onclick="editRegistration('${r.id}')">
-      ✏️ Edit
+      Edit
     </button>
 
     <button class="btn btn-danger"
       onclick="deleteRegistration('${r.id}')">
-      🗑️ Delete
+      Delete
     </button>
   </div>
 ` : `
@@ -734,9 +735,9 @@ if (compactView) {
         ${log ? `
           <button
             id="attendance-btn-${r.id}"
-            class="btn btn-secondary"
+            class="btn btn-attendance"
             onclick="toggleAttendanceLog('${r.id}')">
-            📋 Show Attendance Log
+            📋 Attendance Log
           </button>
 
           <div
@@ -752,11 +753,11 @@ if (compactView) {
         <button class="btn btn-checkin" onclick="doCheckin('${r.id}')" ${noCredits ? 'disabled' : ''}>
           ${noCredits ? '🚫 No Credits Left' : 'Check-in (-1)'}
         </button>
+        <button class="btn btn-checkin" onclick="addCredits('${r.id}')">
+            + Add Credits
+        </button>
         ${used > 0 ? `<button class="btn btn-undo" onclick="doUndo('${r.id}')">↩️ Undo Last Check-in</button>` : ''}
         </div>
-            <button class="btn btn-checkin" style="margin-top: 8px;" onclick="addCredits('${r.id}')">
-            + Add Credits
-             </button>
     </div>
   `;
 }
