@@ -52,13 +52,13 @@
 
   /* ── CARDS ── */
   .reg-card {
-    background: #2d1b4e; border-radius: 14px; padding: 1.2rem 1.4rem;
-    margin-bottom: 1rem; border: 1.5px solid #3a1f7a; position: relative;
+    background: #2d1b4e; border-radius: 14px; padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem; border: 0.5px solid #3a1f7a; position: relative;
   }
   .reg-card.verified { border-color: #27ae60; }
   .reg-card.finished { border-color: #888; opacity: 0.7; }
   .reg-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
-  .reg-name { font-size: 1.1rem; font-weight: 700; color: #fff; }
+  .reg-name { font-size: 0.85rem; font-weight: 700; color: #fff; }
   .reg-series { font-size: 0.85rem; color: #b57edc; margin-top: 0.2rem; }
   .reg-detail { font-size: 0.85rem; color: #999; margin-top: 0.15rem; }
   .badge {
@@ -71,8 +71,8 @@
   /* Credits display */
   .credits-display { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.6rem; flex-wrap: wrap; }
   .credit-dot {
-    width: 24px; height: 24px; border-radius: 50%;
-    background: #27ae60; border: 2px solid #fff;
+    width: 16px; height: 16px; border-radius:50%;
+    background: #27ae60; border: 1px solid #fff;
     display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #fff; font-weight: 700;
   }
   .credit-dot.used { background: #555; border-color: #777; }
@@ -86,7 +86,7 @@
   /* Action buttons */
   .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
   .btn {
-    padding: 0.5rem 1.1rem; border: none; border-radius: 8px; font-size: 0.9rem;
+    padding: 0.1rem 0.5rem; border: none; border-radius: 8px; font-size: 0.8rem;
     cursor: pointer; font-weight: 600; transition: all 0.2s;
   }
   .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
@@ -95,7 +95,7 @@
   .btn-checkin { background: #a259ff; color: #fff; }
   .btn-undo { background: #e67e22; color: #fff; }
   .btn-danger { background: #e74c3c; color: #fff; }
-  .btn-secondary { background: #3a2060; color: #c990ff; border: 1px solid #5a3a9a; }
+  .btn-secondary { background: #3a2060; color: #c990ff; border: 1px solid #5a3a9a; margin: 0.5rem; }
 
   /* Credits selector */
   .credits-selector { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; }
@@ -136,7 +136,7 @@
   .empty { text-align: center; color: #555; padding: 3rem; font-size: 1rem; }
 
   /* Refresh btn */
-  .refresh-btn { background: #3a1f7a; color: #c990ff; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; font-size: 0.85rem; }
+  .refresh-btn { background: #3a1f7a; color: #c990ff; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; font-size: 0.85rem; margin-bottom: 10px; }
   .refresh-btn:hover { background: #5a3a9a; }
 
   /* Mobile */
@@ -188,6 +188,36 @@
   color: #7c3aed;   /* purple */
   font-weight: bold;
   font-size: 14px;
+}
+
+.compact-attendance {
+  padding: 8px 12px;
+}
+
+.compact-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.compact-name {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: white;
+}
+
+.compact-credits {
+  width: 40px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #27ae60;
+}
+
+.compact-credits.zero {
+  color: #e74c3c;
 }
 </style>
 </head>
@@ -255,6 +285,12 @@
       <button class="refresh-btn" onclick="loadRegistrations()">🔄 Refresh</button>
       <span class="count-badge" id="attendCount">0 enrolled</span>
     </div>
+        <button
+      class="refresh-btn"
+      id="compactToggleBtn"
+      onclick="toggleCompactView()">
+      📱 Compact View
+    </button>
     <div id="attendanceList"><div class="empty">Loading…</div></div>
   </div>
 
@@ -382,6 +418,20 @@ if (adminToken) {
 // ══════════════════════════════════════════
 // TABS
 // ══════════════════════════════════════════
+
+let compactView = false;
+function toggleCompactView() {
+
+  compactView = !compactView;
+
+  document.getElementById('compactToggleBtn').textContent =
+    compactView
+      ? '📋 Detailed View'
+      : '📱 Compact View';
+
+  renderAttendance();
+}
+
 function switchTab(name) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -483,8 +533,8 @@ function pendingCard(r) {
 ` : `
   <div class="actions">
 
-    <span style="color:#27ae60;font-size:0.9rem;">
-      ✅ Payment verified — ${r.creditsTotal} credits assigned
+    <span style="color:#27ae60;font-size:0.8rem;">
+      ✅ Payment verified ${r.creditsTotal} credits
     </span>
 
     <button class="btn btn-secondary"
@@ -635,7 +685,33 @@ function attendanceCard(r) {
   ).join('');
 
   const noCredits = remaining <= 0;
+if (compactView) {
 
+  return `
+    <div class="reg-card compact-attendance">
+
+      <div class="compact-row">
+
+        <div class="compact-name">
+          ${r.firstName} ${r.lastName}
+        </div>
+
+        <div class="compact-credits ${noCredits ? 'zero' : ''}">
+          ${remaining}
+        </div>
+
+        <button
+          class="btn btn-checkin"
+          onclick="doCheckin('${r.id}')"
+          ${noCredits ? 'disabled' : ''}>
+          ✓
+        </button>
+
+      </div>
+
+    </div>
+  `;
+}
   return `
     <div class="reg-card verified" id="attendcard-${r.id}">
       <div class="reg-header">
@@ -655,15 +731,30 @@ function attendanceCard(r) {
         <span class="credit-label">${used}/${total} classes attended</span>
       </div>
 
-      ${log ? `<div class="attendance-log"><h4>Attendance log:</h4>${log}</div>` : ''}
+        ${log ? `
+          <button
+            id="attendance-btn-${r.id}"
+            class="btn btn-secondary"
+            onclick="toggleAttendanceLog('${r.id}')">
+            📋 Show Attendance Log
+          </button>
+
+          <div
+            id="attendance-log-${r.id}"
+            class="attendance-log"
+            style="display:none;">
+              <h4>Attendance log:</h4>
+              ${log}
+          </div>
+        ` : ''}
 
       <div class="actions">
         <button class="btn btn-checkin" onclick="doCheckin('${r.id}')" ${noCredits ? 'disabled' : ''}>
-          ${noCredits ? '🚫 No Credits Left' : '📋 CHECK IN (deduct 1 credit)'}
+          ${noCredits ? '🚫 No Credits Left' : 'Check-in (-1)'}
         </button>
         ${used > 0 ? `<button class="btn btn-undo" onclick="doUndo('${r.id}')">↩️ Undo Last Check-in</button>` : ''}
         </div>
-            <button onclick="addCredits('${r.id}')">
+            <button class="btn btn-checkin" style="margin-top: 8px;" onclick="addCredits('${r.id}')">
             + Add Credits
              </button>
     </div>
@@ -896,6 +987,17 @@ async function addCredits(regId) {
 
   alert("Credits added!");
   location.reload();
+}
+
+function toggleAttendanceLog(regId) {
+  const logEl = document.getElementById(`attendance-log-${regId}`);
+  const btnEl = document.getElementById(`attendance-btn-${regId}`);
+  if (!logEl || !btnEl) return;
+  const isHidden = logEl.style.display === 'none';
+  logEl.style.display = isHidden ? 'block' : 'none';
+  btnEl.textContent = isHidden
+    ? '📋 Hide Attendance Log'
+    : '📋 Show Attendance Log';
 }
 </script>
 </body>
