@@ -27,7 +27,7 @@
 <div class="logo-section">
 <h1>Queer Latin Dance</h1>
 <h2>Online Course Portal</h2>
-<p>Learn to dance with pride and passion</p>
+<p>Learn to dance Salsa & Bachata with QLDSD</p>
 </div>
 
 <div class="auth-tabs">
@@ -47,10 +47,7 @@
 <span class="input-icon">🔒</span>
 </div>
 <button type="submit" class="auth-btn">Sign In</button>
-<button type="button" class="demo-btn" onclick="window.demoLogin()">Quick Demo Login</button>
-<button type="button" class="admin-demo-btn" onclick="window.adminDemoLogin()">⭐ Admin Demo Login</button>
 <button type="button" class="forgot-password-btn" onclick="window.forgotPassword()">🔑 Forgot Password?</button>
-<p class="auth-note">Demo: Use any email and password to try it out!</p>
 </form>
 
 <!-- Register Form -->
@@ -69,7 +66,7 @@
 <span class="input-icon">🔒</span>
 </div>
 <button type="submit" class="auth-btn">Create Account</button>
-<p class="auth-terms">By signing up, you agree to learn amazing dance moves! 💫</p>
+<p class="auth-terms">By signing up, you agree to learn amazing dance moves!</p>
 </form>
 </div>
 </div>
@@ -186,13 +183,13 @@ Your browser doesn't support video playback.
 
 <div class="payment-option">
 <h4>Venmo</h4>
-<p><strong>Send to:</strong> <code>@QueerLatinDance</code></p>
+<p><strong>Send to:</strong> <code>@michf18</code></p>
 <p><strong>Include in note:</strong> Your email + course name</p>
 </div>
 
 <div class="payment-option">
 <h4>Zelle</h4>
-<p><strong>Send to:</strong> <code>michelle@queerlatindance.com</code></p>
+<p><strong>Send to:</strong> <code>michf18@gmail.com</code></p>
 <p><strong>Include in memo:</strong> Your email + course name</p>
 </div>
 </div>
@@ -200,12 +197,12 @@ Your browser doesn't support video playback.
 <div class="payment-example">
 <h4>Example Payment Note:</h4>
 <div class="example-note">
-<code id="payment-example-text">carlos@email.com - Salsa Fundamentals</code>
+<code id="payment-example-text">youremail@email.com - Salsa Fundamentals</code>
 </div>
 </div>
 
 <div class="payment-timeline">
-<h4>⏱What Happens Next:</h4>
+<h4>What Happens Next:</h4>
 <ol>
 <li>Send payment with your email + course name</li>
 <li>We'll verify your payment (usually within 24 hours)</li>
@@ -269,12 +266,11 @@ Refresh Payments
 
 <div class="admin-section">
 <h2>Quick Access Grant</h2>
-<p>Grant course access manually (demo mode)</p>
 <div class="admin-form">
 <input type="email" id="admin-student-email" placeholder="Student email address" />
 <select id="admin-course-select">
 <option value="">Select Course</option>
- <option value="salsa-recap-lvl1">Salsa Recap (Level 1)</option> 
+ <option value="salsa-recap-lvl1">In-Class - Salsa Recap</option> 
 <option value="salsa-fundamentals">Salsa Fundamentals</option>
 <option value="bachata-fundamentals">Bachata Fundamentals</option>
 <option value="advanced-salsa">Advanced Salsa</option>
@@ -305,7 +301,7 @@ Check Expired Access
 </select>
 <select id="userFilterCourse" onchange="courseApp.filterUsers()">
 <option value="all">All Courses</option>
-<option value="salsa-recap-lvl1">Salsa Recap (Level 1)</option>
+<option value="salsa-recap-lvl1">In-Class - Salsa Recap</option>
 <option value="salsa-fundamentals">Salsa Fundamentals</option>
 <option value="bachata-fundamentals">Bachata Fundamentals</option>
 <option value="advanced-salsa">Advanced Salsa</option>
@@ -317,41 +313,9 @@ Check Expired Access
 </div>
 </div>
 
-<div class="admin-section">
-<h2>🧪 Testing Tools</h2>
-<p>Create test payments to see how grant access works</p>
-<div class="admin-form">
-<button onclick="courseApp.createSamplePayments()" class="btn-test">
-🧪 Create Clean Sample Payments
-</button>
-<button onclick="courseApp.removeDuplicatePayments(); courseApp.loadPendingPayments()" class="btn-test">
-🧹 Remove Duplicate Payments
-</button>
-<button onclick="courseApp.clearAllTestPayments()" class="btn-clear">
-🗑️ Clear All Test Payments
-</button>
-<button onclick="courseApp.clearAllUsers()" class="btn-clear" style="background-color: #d32f2f;">
-🗑️ Clear All Users
-</button>
-</div>
-<div class="testing-info">
-<p><strong>How to test:</strong></p>
-<ol>
-<li>Click "Create Test Payment" to add a fake payment request</li>
-<li>The payment will appear in the pending payments list above</li>
-<li>Click "Grant Access" on the payment card</li>
-<li>Watch the card fade out and disappear</li>
-<li>The user now has access to that course</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-</div>
 
 <!-- Notification Container -->
 <div id="notification-container"></div>
-
 <script src="course-app.js"></script>
 
 <!-- Fallback for JavaScript issues -->
@@ -371,97 +335,72 @@ document.getElementById('auth-screen').classList.add('active');
 // Debug info
 console.log('📄 HTML loaded, JavaScript should initialize soon...');
 
-// Quick admin function for testing
-window.grantAccessQuick = function(email, courseId) {
-if (typeof courseApp !== 'undefined') {
-// Grant access directly for testing
-const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-if (currentUser.email === email) {
-if (!currentUser.ownedCourses) {
-currentUser.ownedCourses = [];
-}
-if (!currentUser.ownedCourses.includes(courseId)) {
-currentUser.ownedCourses.push(courseId);
-localStorage.setItem('currentUser', JSON.stringify(currentUser));
-courseApp.currentUser = currentUser;
-courseApp.showSuccess(`✅ Quick access granted for ${courseId}!`);
-courseApp.updateCourseAccessUI();
-return true;
-}
-}
-}
-return false;
-};
-
 // Create test payment for admin testing (deprecated - use createSamplePayments instead)
-window.createTestPayment = function(email, courseId, courseName, amount = 49) {
-console.log('⚠️ createTestPayment is deprecated. Use courseApp.createSamplePayments() instead');
-
 // Remove any existing payments for this user/course first to prevent duplicates
-const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
-const cleanedPayments = pendingPayments.filter(payment => 
-!((payment.email === email || payment.userEmail === email) && payment.courseId === courseId)
-);
-
-const testPayment = {
-id: Date.now() + Math.random(), // Unique ID
-email: email,
-userEmail: email,
-firstName: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
-lastName: 'Student',
-name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1) + ' Student',
-courseName: courseName,
-series: courseName,
-courseId: courseId,
-paymentMethod: 'Zelle',
-method: 'Zelle',
-timestamp: new Date().toISOString(),
-status: 'pending',
-amount: amount,
-price: amount
-};
-
-cleanedPayments.push(testPayment);
-localStorage.setItem('pendingPayments', JSON.stringify(cleanedPayments));
-
-console.log('✅ Test payment created:', testPayment);
+// const pendingPayments = JSON.parse(localStorage.getItem('pendingPayments') || '[]');
 
 if (typeof courseApp !== 'undefined' && courseApp.loadPendingPayments) {
 setTimeout(() => courseApp.loadPendingPayments(), 100);
 }
 
-return testPayment;
-};
-
-// Clear all test payments
-window.clearTestPayments = function() {
-localStorage.removeItem('pendingPayments');
-console.log('🧹 All test payments cleared');
-
-if (typeof courseApp !== 'undefined' && courseApp.loadPendingPayments) {
-setTimeout(() => courseApp.loadPendingPayments(), 100);
+function getAdminToken() {
+    return localStorage.getItem('adminToken');
 }
-};
 
+async function adminFetch(url, options = {}) {
+    const token = getAdminToken();
+
+    return fetch(url, {
+        ...options,
+        headers: {
+            ...(options.headers || {}),
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {})
+        }
+    });
+}
 window.grantCourseAccess = async function() {
     const email = document.getElementById('admin-student-email').value;
     const courseId = document.getElementById('admin-course-select').value;
-    
+
     if (!email || !courseId) {
         alert('Please enter an email and select a course!');
         return;
     }
 
+    // Get admin token from localStorage
+    const token = localStorage.getItem('adminToken');
+
+    if (!token) {
+        alert('❌ Admin not logged in.');
+        return;
+    }
+alert(localStorage.getItem('adminToken'));
     try {
-        const url = `https://bitter-forest-4b9b.michf18.workers.dev/?action=grantAccess&email=${encodeURIComponent(email)}&courseId=${encodeURIComponent(courseId)}`;
-        const response = await fetch(url);
+        const response = await fetch(
+            'https://bitter-forest-4b9b.michf18.workers.dev/api/admin/grant-access',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    email,
+                    courseId,
+                    action: 'grant'
+                })
+            }
+        );
+
         const result = await response.json();
-        
+
         if (result.success) {
             alert(`✅ Access granted to ${email} for ${courseId}!`);
         } else {
-            alert('❌ Error: ' + result.error);
+            alert('❌ Error: ' + (result.error || 'Unknown error'));
         }
+
     } catch (err) {
         alert('❌ Error: ' + err.message);
     }

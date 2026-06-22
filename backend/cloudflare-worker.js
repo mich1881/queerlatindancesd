@@ -9,8 +9,8 @@ export default {
         status: 200,
         headers: {
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         },
       });
     }
@@ -18,7 +18,161 @@ export default {
     const url = new URL(request.url);
     const pathname = url.pathname;
 
+    // ============================================================
+    // ADMIN: manually add a registration
+    // ============================================================
+    if (pathname === '/api/admin/add-registration' && request.method === 'POST') {
+      if (!await verifyAdmin(request, env.ADMIN_KV)) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+      }
+      const body = await request.json();
+      const regId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+      const regRecord = {
+        id: regId,
+        firstName: body.firstName || '',
+        lastName: body.lastName || '',
+        email: body.email || '',
+        phone: body.phone || '',
+        pronouns: body.pronouns || '',
+        role: body.role || '',
+        series: body.series || '',
+        amount: body.amount || '',
+        paymentMethod: body.paymentMethod || 'Manual',
+        submittedAt: new Date().toISOString(),
+        status: body.status || 'pending',
+        creditsTotal: body.creditsTotal || 0,
+        creditsRemaining: body.creditsRemaining || 0,
+        attendance: [],
+        addedManually: true
+      };
+      // If admin already verified, set credits
+      if (body.status === 'verified' && body.credits) {
+        regRecord.creditsTotal = parseInt(body.credits);
+        regRecord.creditsRemaining = parseInt(body.credits);
+        regRecord.verifiedAt = new Date().toISOString();
+      }
+      await env.ADMIN_KV.put('reg:' + regId, JSON.stringify(regRecord));
+      return new Response(JSON.stringify({ success: true, reg: regRecord }), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+    }
+
+    // ============================================================
+    // ADMIN: delete a registration
+    // ============================================================
+    if (pathname === '/api/admin/delete-registration' && request.method === 'POST') {
+      if (!await verifyAdmin(request, env.ADMIN_KV)) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+      }
+      const { regId } = await request.json();
+      await env.ADMIN_KV.delete('reg:' + regId);
+      return new Response(JSON.stringify({ success: true }), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+    }
+
+    // ============================================================
+    // ADMIN: secure login check
+    // ============================================================
+    if (pathname === '/api/admin/login' && request.method === 'POST') {
+      const { password } = await request.json();
+      if (password !== env.ADMIN_PASSWORD) {
+        return new Response(JSON.stringify({ success: false, error: 'Wrong password' }), { status: 401, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+      }
+      const token = btoa('admin:' + Date.now() + ':' + Math.random());
+      // Store token in KV for 8 hours
+      if (env.ADMIN_KV) await env.ADMIN_KV.put('admintoken:' + token, '1', { expirationTtl: 28800 });
+      return new Response(JSON.stringify({ success: true, token }), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+    }
+
+    // Helper: verify admin token
+    async function verifyAdmin(req, kv) {
+      const auth = req.headers.get('Authorization') || '';
+      const token = auth.replace('Bearer ', '');
+      if (!token) return false;
+      if (!kv) return false;
+      const val = await kv.get('admintoken:' + token);
+      return val === '1';
+    }
+
+    // ============================================================
+    // ADMIN: get all in-person registrations (pending + verified)
+    // ============================================================
+    if (pathname === '/api/admin/registrations' && request.method === 'GET') {
+      if (!await verifyAdmin(request, env.ADMIN_KV)) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+      }
+      const list = await env.ADMIN_KV.list({ prefix: 'reg:' });
+      const regs = [];
+      for (const key of list.keys) {
+        const val = await env.ADMIN_KV.get(key.name);
+        if (val) regs.push(JSON.parse(val));
+      }
+      return new Response(JSON.stringify(regs), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+    }
+
+    // ============================================================
+    // ADMIN: verify payment → assign credits
+    // ============================================================
+    if (pathname === '/api/admin/verify-payment' && request.method === 'POST') {
+      if (!await verifyAdmin(request, env.ADMIN_KV)) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+      }
+      const { regId, credits } = await request.json();
+      const key = 'reg:' + regId;
+      const val = await env.ADMIN_KV.get(key);
+      if (!val) return new Response(JSON.stringify({ error: 'Registration not found' }), { status: 404, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+      const reg = JSON.parse(val);
+      reg.status = 'verified';
+      reg.creditsTotal = credits;
+      reg.creditsRemaining = credits;
+      reg.verifiedAt = new Date().toISOString();
+      reg.attendance = reg.attendance || [];
+      await env.ADMIN_KV.put(key, JSON.stringify(reg));
+      return new Response(JSON.stringify({ success: true, reg }), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+    }
+
+    // ============================================================
+    // ADMIN: check in student (deduct 1 credit)
+    // ============================================================
+    if (pathname === '/api/admin/checkin-credit' && request.method === 'POST') {
+      if (!await verifyAdmin(request, env.ADMIN_KV)) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+      }
+      const { regId } = await request.json();
+      const key = 'reg:' + regId;
+      const val = await env.ADMIN_KV.get(key);
+      if (!val) return new Response(JSON.stringify({ error: 'Registration not found' }), { status: 404, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+      const reg = JSON.parse(val);
+      if (reg.creditsRemaining <= 0) {
+        return new Response(JSON.stringify({ error: 'No credits remaining' }), { status: 400, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+      }
+      reg.creditsRemaining -= 1;
+      reg.attendance = reg.attendance || [];
+      reg.attendance.push({ date: new Date().toISOString() });
+      await env.ADMIN_KV.put(key, JSON.stringify(reg));
+      return new Response(JSON.stringify({ success: true, creditsRemaining: reg.creditsRemaining, reg }), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+    }
+
+    // ============================================================
+    // ADMIN: undo last check-in (add 1 credit back)
+    // ============================================================
+    if (pathname === '/api/admin/undo-checkin' && request.method === 'POST') {
+      if (!await verifyAdmin(request, env.ADMIN_KV)) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+      }
+      const { regId } = await request.json();
+      const key = 'reg:' + regId;
+      const val = await env.ADMIN_KV.get(key);
+      if (!val) return new Response(JSON.stringify({ error: 'Registration not found' }), { status: 404, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+      const reg = JSON.parse(val);
+      if (reg.creditsRemaining < reg.creditsTotal) {
+        reg.creditsRemaining += 1;
+        if (reg.attendance && reg.attendance.length > 0) reg.attendance.pop();
+        await env.ADMIN_KV.put(key, JSON.stringify(reg));
+      }
+      return new Response(JSON.stringify({ success: true, creditsRemaining: reg.creditsRemaining, reg }), { headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+    }
+
+    // ============================================================
     // Handle both event payments and course payments
+    // ============================================================
     if (request.method === 'POST' && (pathname === '/api/payment-form' || pathname === '/api/course-payment')) {
       try {
         const formData = await request.json();
@@ -53,6 +207,29 @@ export default {
         
         // Add course/event type to formData for tracking
         formData.registrationType = isCoursePayment ? 'online-course' : 'in-person-event';
+
+        // Store in-person registrations in KV for admin portal
+        if (!isCoursePayment && env.ADMIN_KV) {
+          const regId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+          const regRecord = {
+            id: regId,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone || '',
+            pronouns: formData.pronouns || '',
+            role: formData.role || '',
+            series: formData.series || '',
+            amount: formData.amount || '',
+            paymentMethod: formData.paymentMethod || '',
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            creditsTotal: 0,
+            creditsRemaining: 0,
+            attendance: []
+          };
+          await env.ADMIN_KV.put('reg:' + regId, JSON.stringify(regRecord));
+        }
         
         // Send email to student with payment instructions
         const studentEmailSent = await sendPaymentInstructionsEmail(formData, env, isCoursePayment);

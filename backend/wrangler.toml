@@ -2,6 +2,18 @@ name = "restless-feather-b6a9"
 main = "cloudflare-worker.js"
 compatibility_date = "2023-12-01"
 
+# KV namespace for admin portal (registrations, credits, tokens)
+# Run: wrangler kv:namespace create ADMIN_KV  → then paste the id below
+[[kv_namespaces]]
+binding = "ADMIN_KV"
+id = "f21b890cca954222bb188574b6fddb21"
+preview_id = "f21b890cca954222bb188574b6fddb21"
+
+[[kv_namespaces]]
+binding = "USERS"
+id = "dfa42b05f32c47b5a2248ac9ad7fa64c"
+preview_id = "dfa42b05f32c47b5a2248ac9ad7fa64c"
+
 # Environment variables for production
 [env.production.vars]
 ADMIN_EMAIL = "queerlatindancesd@gmail.com"
