@@ -6,17 +6,17 @@
 <title>QLDSD Admin Portal</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; background: #1a0a30; color: #eee; min-height: 100vh; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #b5a0fc; color: hsl(0, 0%, 93%); min-height: 100vh; }
   /* ── LOCK SCREEN ── */
   #lockScreen {
-    position: fixed; inset: 0; background: #1a0a30;
+    position: fixed; inset: 0; background: #524563;
     display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999;
   }
-  #lockScreen h1 { color: #a259ff; font-size: 2rem; margin-bottom: 0.5rem; }
-  #lockScreen p { color: #888; margin-bottom: 2rem; font-size: 0.9rem; }
+  #lockScreen h1 { color: #dfc6ff; font-size: 2rem; margin-bottom: 0.5rem; }
+  #lockScreen p { color: #f5c1ff; margin-bottom: 2rem; font-size: 0.9rem; }
   #lockScreen input {
-    padding: 0.8rem 1.2rem; border-radius: 10px; border: 2px solid #a259ff;
-    background: #2d1b4e; color: #fff; font-size: 1.1rem; width: 280px; text-align: center; outline: none;
+    padding: 0.8rem 1.2rem; border-radius: 10px; border: 2px solid #fcf9ff;
+    background: #e8e2f3; color: #312c37; font-size: 1.1rem; width: 280px; text-align: center; outline: none;
   }
   #lockScreen button {
     margin-top: 1rem; padding: 0.8rem 2rem; background: #a259ff; color: #fff;
@@ -28,39 +28,39 @@
   /* ── MAIN APP ── */
   #app { display: none; }
   header {
-    background: linear-gradient(120deg, #2d1b6e, #4a2fa0);
+    background: linear-gradient(120deg, #7a5beb, #d3c9f5);
     padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between;
     position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   }
   header h1 { font-size: 1.4rem; color: #fff; }
-  header span { font-size: 0.85rem; color: #b57edc; }
+  header span { font-size: 0.85rem; color: #fbf5ff; }
   #signOutBtn {
     background: #ff6b6b; color: #fff; border: none; border-radius: 8px;
     padding: 0.4rem 1rem; cursor: pointer; font-size: 0.9rem;
   }
 
   /* ── TABS ── */
-  .tabs { display: flex; gap: 0; background: #12072a; border-bottom: 2px solid #3a1f7a; }
+  .tabs { display: flex; gap: 0; background: #c6abff; border-bottom: 2px solid #987bdb; }
   .tab-btn {
-    padding: 1rem 2rem; background: none; border: none; color: #888;
+    padding: 1rem 2rem; background: none; border: none; color: #524e4e;
     font-size: 1rem; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s;
   }
-  .tab-btn.active { color: #a259ff; border-bottom-color: #a259ff; background: #1a0a30; }
+  .tab-btn.active { color: #a259ff; border-bottom-color: #a259ff; background: #fff; }
   .tab-btn:hover { color: #c990ff; }
   .tab-content { display: none; padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto; }
   .tab-content.active { display: block; }
 
   /* ── CARDS ── */
   .reg-card {
-    background: #2d1b4e; border-radius: 14px; padding: 0.5rem 1rem;
-    margin-bottom: 0.5rem; border: 0.5px solid #3a1f7a; position: relative;
+    background: #fff; border-radius: 14px; padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem; border: 0.5px solid #fff; position: relative;
   }
   .reg-card.verified { border-color: #27ae60; }
   .reg-card.finished { border-color: #888; opacity: 0.7; }
   .reg-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
-  .reg-name { font-size: 0.85rem; font-weight: 700; color: #fff; }
-  .reg-series { font-size: 0.85rem; color: #b57edc; margin-top: 0.2rem; }
-  .reg-detail { font-size: 0.85rem; color: #999; margin-top: 0.15rem; }
+  .reg-name { font-size: 0.85rem; font-weight: 700; color: #8c28f7; }
+  .reg-series { font-size: 0.85rem; color: #58347c; margin-top: 0.2rem; }
+  .reg-detail { font-size: 0.85rem; color: #888; margin-top: 0.15rem; }
   .badge {
     padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
   }
@@ -72,16 +72,16 @@
   .credits-display { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.6rem; flex-wrap: wrap; }
   .credit-dot {
     width: 16px; height: 16px; border-radius:50%;
-    background: #27ae60; border: 1px solid #fff;
-    display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #fff; font-weight: 700;
+    background: #27ae60; border: 2px solid #27ae60;
+    display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #fff; font-weight: 700;
   }
   .credit-dot.used { background: #555; border-color: #777; }
-  .credit-label { font-size: 0.85rem; color: #b57edc; margin-left: 0.5rem; }
+  .credit-label { font-size: 0.85rem; color: #411e4b; margin-left: 0.5rem; }
 
   /* Attendance log */
   .attendance-log { margin-top: 0.7rem; }
-  .attendance-log h4 { font-size: 0.82rem; color: #888; margin-bottom: 0.4rem; }
-  .attendance-entry { font-size: 0.8rem; color: #aaa; margin-bottom: 0.15rem; }
+  .attendance-log h4 { font-size: 0.82rem; color: #432f62; margin-bottom: 0.4rem; }
+  .attendance-entry { font-size: 0.8rem; color: #382e4a; margin-bottom: 0.15rem; }
 
   /* Action buttons */
   .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
@@ -92,53 +92,53 @@
   .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
   .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
   .btn-verify { background: #27ae60; color: #fff; }
-  .btn-checkin { background: #a259ff; color: #fff; }
+  .btn-checkin { background: #27ae60; color: #fff; }
   .btn-undo { background: #e67e22; color: #fff; }
   .btn-danger { background: #e74c3c; color: #fff; }
-  .btn-secondary { background: #3a2060; color: #c990ff; }
-  .btn-attendance { background: #3a2060; color: #c990ff; margin-top:0.5rem}
+  .btn-secondary { background: #a97ced; color: #ffffff; }
+  .btn-attendance { background: #a97ced; color: #fcf9ff; margin-top:0.5rem}
 
   /* Credits selector */
   .credits-selector { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; }
   .credits-selector label { font-size: 0.85rem; color: #aaa; }
   .credits-selector select {
-    padding: 0.35rem 0.6rem; border-radius: 6px; background: #1a0a30;
-    border: 1px solid #5a3a9a; color: #fff; font-size: 0.9rem; outline: none;
+    padding: 0.35rem 0.6rem; border-radius: 6px; background: #cba6ff;
+    border: 1px solid #bbb4c9; color: #fff; font-size: 0.9rem; outline: none;
   }
 
   /* Filter bar */
   .filter-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
   .filter-bar input, .filter-bar select {
-    padding: 0.5rem 0.8rem; border-radius: 8px; border: 1.5px solid #3a1f7a;
-    background: #2d1b4e; color: #fff; font-size: 0.9rem; outline: none;
+    padding: 0.5rem 0.8rem; border-radius: 8px; border: 1.5px solid #dfd1ff;
+    background: #ffffff; font-size: 0.9rem; color: #201a1a;outline: none;
   }
   .filter-bar input { width: 220px; }
-  .count-badge { background: #3a1f7a; color: #c990ff; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.85rem; }
+  .count-badge { background: #f4f0ff; color: #750ad9; padding: 0.3rem 0.8rem; border-radius: 10px; font-size: 0.85rem; }
 
   /* Summary stats */
   .stats-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-  .stat-box { background: #2d1b4e; border-radius: 12px; padding: 1rem 1.4rem; border: 1px solid #3a1f7a; min-width: 130px; }
-  .stat-box .num { font-size: 2rem; font-weight: 900; color: #a259ff; }
-  .stat-box .lbl { font-size: 0.8rem; color: #888; margin-top: 0.2rem; }
+  .stat-box { background: #f7f5fa; border-radius: 12px; padding: 1rem 1.4rem; border: 2px solid #836eb3d1; min-width: 130px; }
+  .stat-box .num { font-size: 2rem; font-weight: 900; color: #8e6ca9; }
+  .stat-box .lbl { font-size: 0.8rem; color: #523371; margin-top: 0.2rem; }
 
   /* Online courses section (mirrors courses-login admin) */
   .online-student-card {
-    background: #2d1b4e; border-radius: 12px; padding: 1rem 1.2rem;
+    background: #cfb5ff; border-radius: 12px; padding: 1rem 1.2rem;
     margin-bottom: 0.8rem; border: 1.5px solid #3a1f7a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
   }
   .grant-form { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
   .grant-form input, .grant-form select {
-    padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #5a3a9a;
-    background: #1a0a30; color: #fff; font-size: 0.9rem; outline: none;
+    padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #d1baff;
+    background: #f0e4ff; color: #fff; font-size: 0.9rem; outline: none;
   }
   .grant-form input { width: 240px; }
 
   /* Empty state */
-  .empty { text-align: center; color: #555; padding: 3rem; font-size: 1rem; }
+  .empty { text-align: center; color: #fff6f6; padding: 3rem; font-size: 1rem; }
 
   /* Refresh btn */
-  .refresh-btn { background: #3a1f7a; color: #c990ff; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; font-size: 0.85rem; margin-bottom: 10px; }
-  .refresh-btn:hover { background: #5a3a9a; }
+  .refresh-btn { background: #b37dff; color: #ffffff; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; font-size: 0.85rem; margin-bottom: 10px; }
+  .refresh-btn:hover { background: #7a54b0; }
 
   /* Mobile */
   @media (max-width: 600px) {
@@ -206,7 +206,7 @@
   flex: 1;
   font-size: 0.95rem;
   font-weight: 700;
-  color: white;
+  color: rgb(127, 91, 175);
 }
 
 .compact-credits {
@@ -248,9 +248,9 @@
   </header>
 
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('pending')">📋 Pending Registrations</button>
-    <button class="tab-btn" onclick="switchTab('attendance')">✅ Attendance & Credits</button>
-    <button class="tab-btn" onclick="switchTab('online')">🌐 Online Courses</button>
+    <button class="tab-btn active" onclick="switchTab('pending')">Pending Registrations</button>
+    <button class="tab-btn" onclick="switchTab('attendance')">Attendance & Credits</button>
+    <button class="tab-btn" onclick="switchTab('online')">Online Courses</button>
   </div>
 
   <!-- ── TAB 1: PENDING REGISTRATIONS ── -->
@@ -297,7 +297,7 @@
 
   <!-- ── TAB 3: ONLINE COURSES ── -->
   <div id="tab-online" class="tab-content">
-    <h2 style="color:#a259ff;margin-bottom:1rem;">Grant Online Course Access</h2>
+    <h2 style="color:#ffffff;margin-bottom:1rem;">Grant Online Course Access</h2>
     <div class="grant-form">
       <input type="email" id="grantEmail" placeholder="Student email address" />
       <select id="grantCourse">
@@ -309,7 +309,7 @@
       </select>
       <button class="btn btn-verify" onclick="grantOnlineAccess()">Grant Access</button>
     </div>
-    <p style="color:#666;font-size:0.85rem;margin-top:0.7rem;">This calls the Cloudflare Worker to grant course access stored server-side.</p>
+    <p style="color:#ffffff;font-size:0.85rem;margin-top:0.7rem;">This calls the Cloudflare Worker to grant course access stored server-side.</p>
   </div>
 </div>
 <!-- ── TAB 4: EDIT COURSES ── -->
