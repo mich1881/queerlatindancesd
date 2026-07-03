@@ -2202,9 +2202,10 @@ button {
   margin-right: 0;
   background: #6850c2;
   color: #fff;
-  padding: 2.5rem 0 2.5rem 0;
+  padding: -1rem 0 -1rem 0;
   text-align: left;
   font-family: 'Monserrat', Arial, sans-serif;
+  height: 50%;
   width: 100vw;
   box-sizing: border-box;
   position: relative;
@@ -2212,15 +2213,22 @@ button {
   right: 50%;
   transform: translateX(-50%);
 }
-
 .footer-bottom {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
   width: 100%;
+  min-width: 0;
   box-sizing: border-box;
-  padding: 2.5rem;
-  align-items: start;
+  padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+  padding-right: 0;
+  margin-right: 0;
+  min-height: 220px;
+  gap: 0;
+  position: relative;
+  padding-right: 0;
+  margin-right: 1.5rem;
 }
 
 .footer-newsletter {
