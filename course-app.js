@@ -9,17 +9,16 @@ class CoursePlatform {
         this.currentLesson = null;
         this.lessonProgress = {};
         this.courseAccess = {};
-        // Define your courses here - easy to modify!
         this.courses = {
             'salsa-recap-lvl1': {
                 id: 'salsa-recap-lvl1',
                 title: 'In Person Classes: Salsa Recap Videos',
-                description: 'Master the basic steps, timing, and partner connection in salsa dancing. Perfect for absolute beginners who want to build a strong foundation.',
-                price: 49,
-                icon: 'images/4weekseries1/IMG_8661.JPG',
+                description: 'Recap videos for in-person salsa classes. To practice outside of the studio at home or with other students in class and prepare you for the next lessons.',
+                price: 80,
+                icon: 'images/4weekseries1/IMG_9905.JPG',
                 duration: '4 hours',
-                lessons: 8,
-                level: 'Beginner',
+                lessons: 12,
+                level: 'Salsa Level 1',
                 videoLessons: [
                     //SALSA VARIATION A
                     {
@@ -28,7 +27,7 @@ class CoursePlatform {
                         video: 'https://drive.google.com/file/d/1t0ofE40PeO3gxxdGUeG_l3Uf3Utln9Ks/preview',
                         videoType: 'googledrive',
                         duration: '03:42',
-                        description: 'Learn the fundamental salsa steps and timing'
+                        description: 'Salsa basic drills and timing'
                     },
                     {
                         id: 'A2',
@@ -36,7 +35,7 @@ class CoursePlatform {
                         video: 'https://drive.google.com/file/d/1Q7iX8nipE2TYvx5VgZMEkrk82_J4VLwJ/preview',
                         videoType: 'googledrive',
                         duration: '01:17',
-                        description: 'Understanding salsa rhythm and musical timing'
+                        description: 'Salsa rhythm and basic variations'
                     },
                     {
                         id: 'A3',
@@ -74,7 +73,7 @@ class CoursePlatform {
                     {
                         id: 'B3',
                         title: 'Salsa Week 3B',
-                        video: 'https://drive.google.com/file/d/1SmogXNnqD6CuD5ulxJjrAdCVk9nVuYWi/preview',
+                        video: 'https://drive.google.com/file/d/1zcW0HZETnvyI5nJ2sHXFMxuAk0DacxTs/preview',
                         videoType: 'googledrive',
                         duration: '01:18',
                         description: 'How to connect with your dance partner'
@@ -82,7 +81,7 @@ class CoursePlatform {
                     {
                         id: 'B4',
                         title: 'Salsa Week 4B',
-                        video: 'https://drive.google.com/file/d/1L1CJt6Mbh0e_KV1MwGGS6xoZNsbNw3x1/preview',
+                        video: 'https://drive.google.com/file/d/1xZiR7tUobJvK1FeXy2GnLbqWDIA8mwIq/preview',
                         videoType: 'googledrive',
                         duration: '03:06',
                         description: 'The most important move in salsa dancing'
@@ -125,7 +124,7 @@ class CoursePlatform {
             'salsa-fundamentals': {
                 id: 'salsa-fundamentals',
                 title: 'Salsa Fundamentals',
-                description: 'Master the basic steps, timing, and partner connection in salsa dancing. Perfect for absolute beginners who want to build a strong foundation.',
+                description: 'Learn the basics, strengthen, build a strong Salsa foundation.',
                 price: 49,
                 icon: 'images/4weekseries1/IMG_8661.JPG',
                 duration: '4 hours',
@@ -135,16 +134,16 @@ class CoursePlatform {
                     {
                         id: 1,
                         title: 'Welcome & Basic Steps',
-                        video: 'https://drive.google.com/file/d/1UHWNUdTdOHKSqqbmFoEZGJcynn27dO6m/preview',
-                        videoType: 'googledrive',
-                        duration: '15:30',
-                        description: 'Learn the fundamental salsa steps and timing'
+                        video: 'https://pub-f5414e507f874cda9f93105c49892fc8.r2.dev/Salsa%20Videos%20Level%201/video-output-E439A4E8-B730-4FF9-95FB-3DB36582BF7A-1.mp4',
+                        videoType: 'mp4',
+                        duration: '01:55',
+                        description: 'Introduction: Goals & Expectations'
                     },
                     {
                         id: 2,
                         title: 'Basic Timing & Rhythm',
                         video: 'https://drive.google.com/uc?export=download&id=1UHWNUdTdOHKSqqbmFoEZGJcynn27dO6m',
-                        videoType: 'googledrive',
+                        videoType: 'mp4',
                         duration: '18:45',
                         description: 'Understanding salsa rhythm and musical timing'
                     },
@@ -152,7 +151,7 @@ class CoursePlatform {
                         id: 3,
                         title: 'Partner Connection Basics',
                         video: 'https://drive.google.com/file/d/1UHWNUdTdOHKSqqbmFoEZGJcynn27dO6m/preview',
-                        videoType: 'googledrive',
+                        videoType: 'mp4',
                         duration: '22:15',
                         description: 'How to connect with your dance partner'
                     },
@@ -284,38 +283,22 @@ class CoursePlatform {
     }
 
      async checkCourseAccess(courseId) {
-        if (!this.currentUser?.email) return false;
-
-        try {
-            const response = await fetch(
-                'https://restless-feather-b6a9.michf18.workers.dev/api/course-access',
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email: this.currentUser.email,
-                        courseId: courseId
-                    })
-                }
-            );
-
-                let data = {};
-                try {
-                    data = await response.json();
-                } catch (e) {
-                    console.error('Invalid JSON response');
-                    return false;
-                }
-
-            this.courseAccess[courseId] = hasAccess;
-
-            return hasAccess;
-
-        } catch (err) {
-            console.error(err);
-            return false;
-        }
+    if (!this.currentUser?.email) return false;
+    try {
+        const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/api/course-access', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: this.currentUser.email, courseId })
+        });
+        const data = await response.json();
+        const hasAccess = data.hasAccess === true; // 👈 actually read it
+        this.courseAccess[courseId] = hasAccess;   // 👈 save it correctly
+        return hasAccess;
+    } catch (e) {
+        console.error('checkCourseAccess error:', e);
+        return false;
     }
+}
 
     init() {
         console.log('🚀 Initializing Course Platform...');
@@ -713,17 +696,27 @@ const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/
                         <span>📈 ${course.level}</span>
                     </div>
                     <div class="course-footer">
-                        ${isOwned ? `
-                            <span class="status-badge">✓ Purchased ${progress > 0 ? `(${progress}% complete)` : ''}</span>
+                    ${isOwned ? `
+                        <div class="course-progress-container">
+                            <div class="course-progress-bar">
+                                <div class="course-progress-fill" style="width: ${progress}%"></div>
+                            </div>
+                            <span class="progress-label">${progress > 0 ? `${progress}% complete` : 'Not started'}</span>
+                        </div>
+                        <div class="course-footer">
+                            <span class="status-badge">✓ Purchased</span>
                             <button class="course-btn btn-success" onclick="courseApp.openCourse('${course.id}')">
-                                ${progress > 0 ? 'Continue Learning' : 'Start Course'}
+                                ${progress > 0 ? '▶ Continue Learning' : 'Start Course'}
                             </button>
-                        ` : `
+                        </div>
+                    ` : `
+                        <div class="course-footer">
                             <span class="course-price">$${course.price}</span>
                             <button class="course-btn btn-primary" onclick="courseApp.showPaymentInstructions('${course.id}')">
                                 Buy Now - $${course.price}
                             </button>
-                        `}
+                        </div>
+                    `}
                     </div>
                 </div>
             `;
@@ -760,6 +753,8 @@ userOwnsCourse(courseId) {
         const completedLessons = Object.values(courseProgress).filter(progress => progress >= 90).length;
         return Math.round((completedLessons / course.videoLessons.length) * 100);
     }
+
+
 
     // ===== COURSE PURCHASE (Demo Mode) =====
 
@@ -1841,13 +1836,28 @@ userOwnsCourse(courseId) {
     }
 
     // Check if user owns a course (local fallback)
-    userOwnsCourse(courseId) {
-        if (!this.currentUser) return false;
-        
-        // Check if user has locally stored access
-        const localAccess = this.currentUser.ownedCourses || [];
-        return localAccess.includes(courseId);
+userOwnsCourse(courseId) {
+    if (!this.currentUser?.email) {
+        console.warn('No user logged in');
+        return false;
     }
+
+    // ✅ Also check this.courseAccess (populated by checkAllCourseAccess on login)
+    if (this.courseAccess && this.courseAccess[courseId] === true) {
+        return true;
+    }
+
+    // ✅ Handle BOTH string format AND object format { courseId, expiresAt }
+    if (this.currentUser.ownedCourses) {
+        return this.currentUser.ownedCourses.some(c => {
+            if (typeof c === 'string') return c === courseId;
+            if (typeof c === 'object') return c.courseId === courseId;
+            return false;
+        });
+    }
+
+    return false;
+}
 
     // Update course access from server
     async refreshCourseAccess() {
@@ -3840,7 +3850,6 @@ userOwnsCourse(courseId) {
                 <p><strong>Email:</strong> ${user.email}</p>
                 <p><strong>Status:</strong> <span class="status-badge status-${status}">${this.getStatusLabel(status)}</span></p>
                 <p><strong>Joined:</strong> ${new Date(user.joinDate || user.registeredAt || Date.now()).toLocaleDateString()}</p>
-                
                 <h4>Course Access:</h4>
                 ${courses.length > 0 ? 
                     courses.map(course => `
@@ -4146,7 +4155,12 @@ document.addEventListener('visibilitychange', async () => {
 
             if (window.courseApp) {
                 window.courseApp.currentUser = user;
-                window.courseApp.updateCourseAccessUI?.();
+
+                // ✅ Only update UI if user is NOT currently watching a lesson
+                const onPlayerScreen = document.getElementById('player-screen')?.classList.contains('active');
+                if (!onPlayerScreen) {
+                    window.courseApp.updateCourseAccessUI?.();
+                }
             }
 
         } catch (err) {

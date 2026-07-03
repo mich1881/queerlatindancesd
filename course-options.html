@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Courses | Queer Latin Dance SD</title>
+<link rel="stylesheet" href="styles/global.css">
+<link rel="stylesheet" href="style.css" />
+<link rel="icon" href="/favicon.ico?v=4">
+<link rel="icon" type="image/png" href="/images/icons/favicon-v2.png?v=4">
+<link rel="apple-touch-icon" href="/images/icons/favicon-v2.png">
+<style>
+
+  /* ── PAGE HERO ── */
+  .co-hero {
+    text-align: center;
+    padding: 2rem 1rem 2rem;
+  }
+
+  .co-hero-eyebrow {
+    font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #b57edc;
+    margin-bottom: 0.75rem;
+  }
+
+  .co-hero-title {
+    font-family: 'PassionOne', 'Lilita One', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .co-hero-title span {
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .co-hero-subtitle {
+    font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+
+  /* ── INTRO VIDEO ── */
+  .co-video-section {
+    max-width: 860px;
+    margin: 0 auto 5rem;
+    padding: 0 1.5rem;
+  }
+
+  .co-video-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(113, 108, 255, 0.35);
+    background: #1a0d2e;
+  }
+
+  .co-video-wrapper iframe,
+  .co-video-wrapper video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .co-video-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a0d2e, #2e1a47);
+    color: rgba(255,255,255,0.5);
+    font-family: 'Montserrat', Arial, sans-serif;
+    gap: 1rem;
+  }
+
+  .co-video-placeholder span {
+    font-size: 3.5rem;
+  }
+
+  .co-video-placeholder p {
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+  }
+
+  /* ── SECTION DIVIDER ── */
+  .co-divider {
+    text-align: center;
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+  }
+
+  .co-divider h2 {
+    font-family: 'PassionOne', 'Lilita One', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+  }
+
+  .co-divider p {
+    font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .co-divider-line {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    border-radius: 2px;
+    margin: 1rem auto 0;
+  }
+
+  /* ── CATEGORY LABEL ── */
+  .co-category {
+    max-width: 1200px;
+    margin: 0 auto 1rem;
+    padding: 0 1.5rem;
+  }
+
+  .co-category-label {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #b57edc;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .co-category-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(181, 126, 220, 0.3);
+  }
+
+  /* ── CARDS GRID ── */
+  .co-grid {
+    max-width: 1200px;
+    margin: 0 auto 4rem;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.75rem;
+  }
+
+  /* ── SINGLE CARD ── */
+  .co-card {
+    background: #8a86fea3;
+    border: 1px solid rgba(255, 255, 255, 0.448);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+  }
+
+  .co-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(113, 108, 255, 0.3);
+    border-color: rgba(113, 108, 255, 0.5);
+  }
+
+  /* Flyer image */
+  .co-card-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Badge on top of image */
+  .co-card-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    color: #fff;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+  }
+
+  .co-card-badge.open    { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+  .co-card-badge.soon    { background: linear-gradient(135deg, #f39c12, #e67e22); }
+  .co-card-badge.ongoing { background: linear-gradient(135deg, #716cff, #b57edc); }
+  .co-card-badge.online  { background: linear-gradient(135deg, #3498db, #716cff); }
+
+  /* Card body */
+  .co-card-body {
+    padding: 1.4rem 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .co-card-type {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #f1dcff;
+    margin-bottom: 0.4rem;
+  }
+
+  .co-card-title {
+    font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+
+  .co-card-desc {
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 0.9rem;
+    color: rgb(255, 255, 255);
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 1.2rem;
+  }
+
+  /* Pricing row */
+  .co-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1rem;
+    margin-top: auto;
+    gap: 1rem;
+  }
+
+  .co-card-price {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: #ffffff;
+  }
+
+  .co-card-price-note {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.5);
+    display: block;
+    margin-top: 1px;
+  }
+
+  .co-card-btn {
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 0.55rem 1.3rem;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .co-card-btn:hover {
+    opacity: 0.88;
+    transform: scale(1.04);
+  }
+
+  .co-card-btn.secondary {
+    background: rgba(113, 108, 255, 0.15);
+    border: 1px solid rgba(113, 108, 255, 0.4);
+    color: #b57edc;
+  }
+
+  /* ── PRIVATE / WIDE CARD ── */
+  .co-card.wide {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    max-height: 280px;
+  }
+
+  .co-card.wide .co-card-image {
+    width: 300px;
+    flex-shrink: 0;
+    aspect-ratio: auto;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .co-card.wide .co-card-body {
+    justify-content: center;
+  }
+
+  /* ── ONLINE CARD SPECIAL ── */
+  .co-card.coming-soon {
+    border-color: rgba(52, 152, 219, 0.3);
+    background: rgba(52, 152, 219, 0.05);
+  }
+
+  .co-card.coming-soon .co-card-price {
+    color: rgba(255,255,255,0.45);
+    font-size: 1rem;
+  }
+
+  /* ── CTA STRIP ── */
+.co-cta-wrapper {
+    align-items: center;
+    display: flex;
+  }
+  .co-cta {
+    max-width: 700px;
+    margin: 1rem auto 5rem;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(113, 108, 255, 0.288), rgba(181,126,220,0.12));
+    border: 1px solid rgba(113,108,255,0.25);
+    border-radius: 24px;
+  }
+
+  .co-cta h3 {
+    font-family: 'PassionOne', 'Lilita One', sans-serif;
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .co-cta p {
+    font-family: 'Nunito', Arial, sans-serif;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .co-cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .co-cta-btn {
+    padding: 0.75rem 2rem;
+    border-radius: 30px;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .co-cta-btn.primary {
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    color: #fff;
+    border: none;
+  }
+
+  .co-cta-btn.outline {
+    background: transparent;
+    border: 2px solid rgba(113,108,255,0.5);
+    color: #b57edc;
+  }
+
+  .co-cta-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .co-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+
+    .co-card.wide {
+      flex-direction: column;
+      max-height: none;
+      grid-column: auto;
+    }
+
+    .co-card.wide .co-card-image {
+      width: 100%;
+      height: 220px;
+    }
+  }
+
+  /* ── LEVEL PILL (on card image) ── */
+  .co-level-pill {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+  }
+
+  /* ── CARD META (lessons + duration) ── */
+  .co-card-meta {
+    display: flex;
+    gap: 1.2rem;
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1rem;
+  }
+
+  /* ── PRICE "SOON" STATE ── */
+  .co-card-price.soon {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* ── LEVEL FILTER TABS ── */
+  .co-level-tab {
+    background: #8a86fe43;
+    border: 1px solid rgba(255, 255, 255, 0.239);
+    color: rgba(255,255,255,0.6);
+    border-radius: 30px;
+    padding: 0.45rem 1.1rem;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .co-level-tab:hover {
+    border-color: rgba(113,108,255,0.5);
+    color: #fff;
+  }
+
+  .co-level-tab.active {
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    border-color: transparent;
+    color: #fff;
+  }
+
+</style>
+</head>
+<body>
+<div id="sparkle-bg"></div>
+
+<!-- ── HEADER ── -->
+<header>
+  <a href="index.html">
+    <img src="images/logos/logo2.png" alt="Queer Latin Dance SD Logo" class="logo2" />
+  </a>
+  <div id="cart-modal" class="cart-modal">
+    <div class="cart-modal-title">Your Cart</div>
+    <div id="cart-items"></div>
+    <button onclick="viewCart()" class="cart-modal-btn view">View Cart</button>
+    <button onclick="closeCart()" class="cart-modal-btn close">Close</button>
+  </div>
+  <nav>
+    <a href="courses.html">Courses</a>
+    <a href="Events.html">Events</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="directory.html">Directory</a>
+    <a href="team.html">Team</a>
+    <a href="book-us.html">Book Us</a>
+    <a href="merch.html">Merch</a>
+    <span id="cart-nav" class="cart-nav">
+      <img src="images/icons/cart-icon.png" alt="Cart" class="cart-icon-img">
+      <span id="cart-count" class="cart-count">0</span>
+    </span>
+  </nav>
+  <button class="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="mobile-nav-menu" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
+  <nav>
+    <a href="courses.html">Courses</a>
+    <a href="Events.html">Events</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="directory.html">Directory</a>
+    <a href="team.html">Team</a>
+    <a href="book-us.html">Book Us</a>
+    <a href="merch.html">Merch</a>
+  </nav>
+</div>
+<!-- ── HERO ── -->
+<section class="co-hero">
+  <p class="co-hero-eyebrow">Queer Latin Dance SD</p>
+  <h1 class="co-hero-title">Find your <span>Perfect </span>Class</h1>
+  <!-- <p class="co-hero-subtitle">Self-paced video courses you can take anytime, anywhere — beginner to advanced. Learn at home and bring it to the dance floor.</p> -->
+</section>
+
+<!-- Filter tabs -->
+<!-- <div class="co-category" style="margin-bottom:2rem;">
+  <div id="level-tabs" style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+    <button class="co-level-tab active" data-level="all">All Levels</button>
+    <button class="co-level-tab" data-level="Beginner">Beginner</button>
+    <button class="co-level-tab" data-level="Advanced">Advanced</button>
+  </div>
+</div> -->
+
+<div class="co-grid" id="online-grid">
+  <!-- Populated by JS -->
+</div>
+<!-- ── INTRO VIDEO ── -->
+<section class="co-video-section">
+  <div class="co-video-wrapper">
+    <!-- Replace the video tag with an iframe for Google Drive previews -->
+    <iframe 
+      src="https://drive.google.com/file/d/1KYzsZH88MAjauJwFT0T8J62oQj0AeRVj/preview" 
+      allow="autoplay" 
+      allowfullscreen>
+    </iframe>
+</section>
+<!-- ── CTA STRIP ── -->
+<div class="co-cta">
+  <h3>Not sure where to start? 💃</h3>
+  <p>Start with <strong>Salsa Fundamentals</strong> if you're brand new, or jump into <strong>Advanced Salsa</strong> if you already have the basics. Questions? We're here to help!</p>
+  <div class="co-cta-buttons">
+    <a href="contact.html" class="co-cta-btn primary">Ask Us Anything</a>
+    <a href="courses.html" class="co-cta-btn outline">In-Person Classes</a>
+  </div>
+</div>
+<!-- ── FOOTER ── -->
+<footer class="footer" role="contentinfo">
+  <div class="footer-bottom">
+    <div class="footer-newsletter">
+      <h2>Subscribe to our Newsletter</h2>
+      <form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec" aria-label="Footer newsletter subscription form">
+        <input type="email" name="email" placeholder="Enter your email ..." required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="courses.html">Courses</a>
+        <a href="Events.html">Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="directory.html">Directory</a>
+        <a href="team.html">Team</a>
+        <a href="book-us.html">Book Us</a>
+        <a href="merch.html">Merch</a>
+        <a href="contact.html">Contact Us</a>
+      </nav>
+    </div>
+    <div class="footer-social">
+      <h3>Follow Us</h3>
+      <div class="footer-social-icons">
+        <a href="https://www.instagram.com/queerlatindancesd/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="images/icons/instagramlogo.png" alt=""></a>
+        <a href="https://www.youtube.com/@QueerLatinDance" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><img src="images/icons/youtubeicon.png" alt=""></a>
+        <a href="https://www.tiktok.com/@queerlatindance" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><img src="images/icons/tiktokicon2.png" alt=""></a>
+        <a href="https://linktr.ee/queerlatindancesd" target="_blank" rel="noopener noreferrer" aria-label="Linktree"><img src="images/icons/linktreelogo.png" alt=""></a>
+      </div>
+      <div class="footer-copyright">© 2026 Queer Latin Dance. All Rights Reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+
+// ── ONLINE COURSES ──────────────────────────────────────────────────────────
+// To add a new online course, just push a new object into this array.
+// Fields:
+//   id          – must match the id in course-app.js this.courses{}
+//   title       – display name
+//   description – 1–2 sentence pitch
+//   level       – 'Beginner' | 'Intermediate' | 'Advanced'
+//   lessons     – number of video lessons
+//   duration    – total video time string
+//   price       – display price string  (e.g. '$49')
+//   priceNote   – small sub-text        (e.g. 'one-time purchase')
+//   badge       – pill label            (e.g. 'Available Now')
+//   badgeClass  – CSS modifier: open | soon | ongoing | online
+//   image       – path to cover image
+//   link        – page to enroll / view course (e.g. 'courses.html')
+// ─────────────────────────────────────────────────────────────────────────────
+const ONLINE_COURSES = [
+  {
+    id:          'salsa-fundamentals',
+    title:       'Recap Library',
+    description: 'Salsa & Bachata Recap videos from our in-person classes. Recap videos only.',
+    level:       'Beginner',
+    lessons:     8,
+    duration:    '4 hrs total',
+    price:       '$10',
+    priceNote:   'Per month (auto-renew)',
+    badge:       'Available Now',
+    badgeClass:  'open',
+    image:       'images/4weekseries1/IMG_8661.JPG',
+    link:        'courses.html',
+  },
+  {
+    id:          'bachata-fundamentals',
+    title:       'Fundamentals: Salsa or Bachata',
+    description: 'Choose between Salsa or Bachata Fundamentals.',
+    level:       'Beginner',
+    lessons:     6,
+    duration:    '3 hrs total',
+    price:       '$20',
+    priceNote:   'Per month (auto-renew)',
+    badge:       'Available Now',
+    badgeClass:  'open',
+    image:       'images/4weekseries1/IMG_9905.JPG',
+    link:        'courses.html',
+  },
+  {
+    id:          'advanced-salsa',
+    title:       'All Access',
+    description: 'Access to recap library and both Salsa & Bachata Fundamentals',
+    level:       'All Access',
+    lessons:     10,
+    duration:    '5 hrs total',
+    price:       '$35',
+    priceNote:   'Per month (auto-renew)',
+    badge:       'Available Now',
+    badgeClass:  'open',
+    image:       'images/4weekseries1/IMG_0505.JPG',
+    link:        'courses.html',
+  },
+  // ── ADD NEW ONLINE COURSES BELOW ──────────────────────────────────────────
+  // {
+  //   id:          'bachata-sensual',
+  //   title:       'Bachata Sensual',
+  //   description: 'Coming soon...',
+  //   level:       'Intermediate',
+  //   lessons:     8,
+  //   duration:    '4 hrs total',
+  //   price:       'Coming Soon',
+  //   priceNote:   'stay tuned!',
+  //   badge:       'Coming Soon',
+  //   badgeClass:  'soon',
+  //   image:       'images/lessons/onlinelessonscover.png',
+  //   link:        'courses.html',
+  // },
+];
+
+// ── LEVEL BADGE COLOURS ───────────────────────────────────────────────────────
+const LEVEL_COLORS = {
+  'Beginner':     '#27ae60',
+  'Intermediate': '#f39c12',
+//   'Advanced':     '#e74c3c',
+};
+
+// ── BUILD A CARD ──────────────────────────────────────────────────────────────
+function buildOnlineCard(course) {
+  const levelColor = LEVEL_COLORS[course.level] || '#716cff';
+  const isSoon     = course.badgeClass === 'soon';
+
+  return `
+    <div class="co-card online-card" data-level="${course.level}">
+      <img class="co-card-image" src="${course.image}" alt="${course.title}" loading="lazy"
+           onerror="this.style.display='none'">
+
+      <!-- availability badge -->
+      <span class="co-card-badge ${course.badgeClass}">${course.badge}</span>
+
+      <!-- level pill -->
+      <span class="co-level-pill" style="background:${levelColor}20;color:${levelColor};border:1px solid ${levelColor}50;">
+        ${course.level}
+      </span>
+
+      <div class="co-card-body">
+        <div class="co-card-type">Online Course</div>
+        <div class="co-card-title">${course.title}</div>
+        <div class="co-card-desc">${course.description}</div>
+
+        <!-- meta row -->
+        <div class="co-card-meta">
+          <span>🎬 ${course.lessons} lessons</span>
+          <span>⏱ ${course.duration}</span>
+        </div>
+
+        <div class="co-card-footer">
+          <div>
+            <div class="co-card-price${isSoon ? ' soon' : ''}">${course.price}</div>
+            <span class="co-card-price-note">${course.priceNote}</span>
+          </div>
+          ${isSoon
+            ? `<span class="co-card-btn secondary" style="cursor:default;">Notify Me</span>`
+            : `<a href="${course.link}" class="co-card-btn">Enroll →</a>`
+          }
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ── RENDER & FILTER ───────────────────────────────────────────────────────────
+function renderCourses(levelFilter = 'all') {
+  const grid = document.getElementById('online-grid');
+  const filtered = levelFilter === 'all'
+    ? ONLINE_COURSES
+    : ONLINE_COURSES.filter(c => c.level === levelFilter);
+
+  grid.innerHTML = filtered.length
+    ? filtered.map(buildOnlineCard).join('')
+    : `<p style="color:rgba(255,255,255,0.5);padding:1rem;grid-column:1/-1;">No courses available at this level yet.</p>`;
+}
+
+// ── LEVEL-TAB FILTER ─────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  renderCourses();
+
+  document.getElementById('level-tabs').addEventListener('click', (e) => {
+    const btn = e.target.closest('.co-level-tab');
+    if (!btn) return;
+    document.querySelectorAll('.co-level-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderCourses(btn.dataset.level);
+  });
+});
+
+</script>
+</body>
+</html>

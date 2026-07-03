@@ -542,14 +542,15 @@ body {
     background: var(--success-color);
     color: white;
     padding: 6px 12px;
-    border-radius: 20px;
+    border-radius: 8px;
     font-size: 0.9em;
     font-weight: 600;
 }
 
 .course-btn {
-    padding: 12px 24px;
+    padding: 10px 15px;
     border: none;
+    width: 50%;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
@@ -2148,6 +2149,32 @@ body.course-page {
 .btn-check:hover {
     background: #e0a800;
 }
+/* ...existing code... */
+.course-progress-container {
+    margin: 10px 0;
+}
+
+.course-progress-bar {
+    background: #e0e0e0;
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.course-progress-fill {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.progress-label {
+    font-size: 0.75rem;
+    color: #888;
+    font-weight: 500;
+}
+/* ...existing code... */
 
 /* Mobile responsive for user management */
 @media (max-width: 768px) {

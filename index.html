@@ -59,14 +59,13 @@
 
 /* === WORDMARK === */
 .qldsd-wordmark {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  font-size: clamp(2.8rem, 8vw, 7rem);
+  font-family: 'Montserrat', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: clamp(2.8rem, 5vw, 3.2rem);
   font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0em;
+  color: #f6eed5;
+  letter-spacing: -.05em;
   margin-bottom: 0.4rem;
   line-height: 1;
-  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.816), 0 1px 4px rgba(0, 0, 0, 0.48);
 }
 .hero-tagline {
   font-family: 'Montserrat', Arial, sans-serif;
@@ -94,8 +93,8 @@
   display: inline-block;
 }
 .cta-btn:hover {
-  background: #b57edc;
-  color: #fff;
+  background: rgba(198, 199, 113, 0.92);
+  color: #352f4a;
   transform: translateY(-3px);
   box-shadow: 0 8px 28px rgba(0,0,0,0.3);
 }
@@ -142,7 +141,7 @@ body {
   align-items: stretch;
   padding: 0;
   overflow: hidden;
-  background: #1601355f;
+  background: #533d9f;
 }
 .hero-flex::after {
   display: none;
@@ -155,7 +154,7 @@ body {
   flex-direction: column;
   justify-content: center;
   padding: 0 5vw;
-  background: linear-gradient(120deg, rgba(15,5,30,0.35) 0%, rgba(15,5,30,0.20) 60%, transparent 100%);
+  background: linear-gradient(120deg, rgba(120, 97, 158, 0.839) 0%, rgba(15,5,30,0.20) 60%, transparent 100%);
   text-align: left;
 }
 /* subtle right-edge fade into gallery */
@@ -211,7 +210,7 @@ max-width: 400px;
 
 .newsletter-subscribe h2 {
 margin-bottom: 1rem;
-color: #4B0082;
+color: #6850c2;
 font-family: 'Montserrat', Arial, sans-serif;
 }
 
@@ -223,24 +222,24 @@ gap: 1rem;
 
 .newsletter-subscribe input {
 padding: 0.75rem;
-border: 2px solid #4B0082;
+border: 2px solid #6850c2;
 border-radius: 8px;
 font-size: 1rem;
 }
 
 .newsletter-subscribe button {
 padding: 0.75rem;
-background-color: #4B0082;
-color: white;
+background-color: linear-gradient(135deg, #716cff 0%, #a259ff 100%);
+color: linear-gradient(135deg, #716cff 0%, #a259ff 100%);
 border: none;
-border-radius: 8px;
+border-radius: 50px;
 font-size: 1rem;
 cursor: pointer;
 transition: background-color 0.3s;
 }
 
 .newsletter-subscribe button:hover {
-background-color: #6B0F9C;
+background-color: #674a98;
 }
 
 .newsletter-swipe-gallery {
@@ -290,7 +289,7 @@ z-index: 1;
   display: block;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .hero-flex {
     flex-direction: column;
     height: 100svh;
@@ -349,9 +348,10 @@ z-index: 1;
     display: none;
   }
   .qldsd-wordmark {
-    font-size: clamp(1.6rem, 7vw, 2.8rem) !important;
+    font-size: clamp(1.1rem, 6vw, 2.2rem) !important;
     margin-bottom: 0.4rem;
     text-align: center;
+    color: #f6eed5;
     width: 100%;
   }
   .hero-tagline {
@@ -508,7 +508,7 @@ background: linear-gradient(135deg, #716cff 0%, #a259ff 100%);
 color: white;
 border: none;
 padding: 0.75rem 1.5rem;
-border-radius: 25px;
+border-radius: 50px;
 font-size: 1rem;
 font-weight: 600;
 cursor: pointer;
@@ -600,8 +600,7 @@ margin-top: 1.5rem;
 background: #716cff;
 color: white;
 border: none;
-padding: 0.75rem 1.5rem;
-border-radius: 8px;
+border-radius: 50px;
 font-size: 1rem;
 font-weight: 600;
 cursor: pointer;
@@ -846,104 +845,6 @@ padding: 1rem;
 }
 }
 
-/* === MISSION & ABOUT STYLES === */
-.mission, .about-hero-text .mission, .hero-content p.mission, .hero-content .mission {
-color: #a826ff !important;
-background: none !important;
--webkit-background-clip: unset !important;
--webkit-text-fill-color: unset !important;
-background-clip: unset !important;
-font-weight: 700;
-}
-
-/* --- MISSION CARD --- */
-/* --- Mission Card Section --- */
-.mission-text {
-font-family: 'Monserrat', 'Nunito', Arial, sans-serif;
-font-size: 1.0rem;
-color: #ffffff;
-text-align: center;
-font-weight: 100;
-margin-top: 1rem;
-margin-bottom: 1rem;
-text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-line-height: 1.6;
-}
-.mission-card {
-max-width: 1800px;
-height: auto;
-min-height: 600px;
-margin: 2.5rem auto;
-padding: 4rem 2rem;
-position: relative;
-text-align: center;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-opacity: 1;
-}
-.mission-card::before {
-content: "";
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background: url('images/SalsaSunsets/qssjun14.png') center center/cover no-repeat;
-opacity: 0.83;
-mask: 
-linear-gradient(to right, transparent 0%, black 8%, #6825e3 92%, transparent 100%),
-linear-gradient(to bottom, transparent 0%, black 8%, #6825e3 92%, transparent 100%);
--webkit-mask: 
-linear-gradient(to right, transparent 0%, black 8%, rgb(104, 37, 227) 92%, transparent 100%),
-linear-gradient(to bottom, transparent 0%, black 8%, #6825e3 92%, transparent 100%);
-mask-composite: intersect;
--webkit-mask-composite: source-in;
-pointer-events: none;
-z-index: -2;
-}
-.mission-card::after {
-content: "";
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background: rgba(45, 25, 85, 0.4);
-pointer-events: none;
-z-index: -1;
-}
-.mission-card h1, .mission-card h2 {
-font-family: 'PassionOne','Lilita One','Signika',Arial,sans-serif;
-font-size: 4.5rem;
-text-align: center;
-margin-bottom: 1.5rem;
-letter-spacing: -1px;
-font-weight: 900;
-color: #ffffff;
-text-shadow: 3px 3px 8px rgba(0,0,0,0.9), 1px 1px 2px rgba(0,0,0,0.8);
-position: relative;
-z-index: 1;
-text-transform: uppercase;
-}
-.mission-logo {
-max-width: 300px;
-height: auto;
-display: block;
-margin: 0 auto 1.5rem auto;
-position: relative;
-z-index: 10;
-}
-.mission-card p {
-font-size: 1.2rem;
-color: #C4F9CA;
-text-align: left;
-margin: 0 auto 1.2rem auto;
-font-family: 'Monserrat','Nunito', Arial, sans-serif;
-text-shadow: 2px 2px 4px rgb(0, 0, 0), 1px 1px 2px rgba(0,0,0,0.7);
-position: relative;
-}
 /* === SALSA HISTORY SECTION === */
 .salsa-history-section {
 margin: 2.5rem auto 2rem auto;
@@ -1225,7 +1126,7 @@ position: relative;
 <main id="main-content">
 <section class="hero-flex" aria-labelledby="hero-heading">
 <div class="hero-content">
-<div class="qldsd-wordmark" id="hero-heading">Queer Latin Dance SD</div>
+<div class="qldsd-wordmark" id="hero-heading">Queer Latin Dance San Diego</div>
 <div class="hero-tagline">Salsa · Bachata · Community</div>
 <a href="courses.html" class="cta-btn1">Register for Classes!</a>
 <a href="Events.html" class="cta-btn">See Upcoming Events</a>
@@ -1234,16 +1135,15 @@ position: relative;
 <div class="swipe-gallery" role="region" aria-roledescription="carousel" aria-label="Community event photos">
 <img src="images/home/photo1.png" alt="Community members dancing at Sun Dance Day Fest, celebrating together outdoors" class="swipe-img faded-img active" />
 <img src="images/home/photo2.png" alt="Dancers sharing a joyful moment at a community dance event" class="swipe-img faded-img" />
-<img src="images/SalsaSunsets/IMG_7851.JPG" alt="Pat and Miguel dancing together at Salsa Sunsets event" class="swipe-img faded-img"/>
-<img src="images/Queer Salsa Social/QSS_1year.png" alt="Couple dancing salsa together at Sun Dance Day Fest, smiling and having fun" class="swipe-img faded-img" />
-<img src="images/home/photo4.png" alt="Couple dancing salsa together at a community event, smiling and having fun" class="swipe-img faded-img" />
-<img src="images/Queer Salsa Social/IMG_0729.jpeg" alt="Dancers having fun at Queer Salsa Social event" class="swipe-img faded-img" />
-<img src="images/Queer Salsa Social/IMG_0400.jpg" alt="Group of friends sharing a warm hug at a community dance event" class="swipe-img faded-img" />
-<img src="images/home/photo5.png" alt="Participants learning salsa moves at Sun Dance Day Fest" class="swipe-img faded-img" />
-<img src="images/home/photo6.png" alt="Colorful dance celebration at Sun Dance Day Fest with community members" class="swipe-img faded-img" />
-<img src="images/home/photo7.png" alt="Community gathering and dancing at Sun Dance Day Fest" class="swipe-img faded-img" />
-<img src="images/home/photo8.png" alt="Dancers sharing a joyful moment at Sun Dance Day Fest" class="swipe-img faded-img" />
-<img src="images/home/photo9.png" alt="Couple dancing salsa together at Sun Dance Day Fest, smiling and having fun" class="swipe-img faded-img" />
+<img src="images/home/photo3.png" alt="Pat and Miguel dancing together at Salsa Sunsets event" class="swipe-img faded-img"/>
+<img src="images/home/photo4.png" alt="Couple dancing salsa together at Sun Dance Day Fest, smiling and having fun" class="swipe-img faded-img" />
+<img src="images/home/photo5.png" alt="Couple dancing salsa together at a community event, smiling and having fun" class="swipe-img faded-img" />
+<img src="images/home/photo6.png" alt="Dancers having fun at Queer Salsa Social event" class="swipe-img faded-img" />
+<img src="images/home/photo7.png" alt="Group of friends sharing a warm hug at a community dance event" class="swipe-img faded-img" />
+<img src="images/home/photo8.png" alt="Participants learning salsa moves at Sun Dance Day Fest" class="swipe-img faded-img" />
+<img src="images/home/photo9.png" alt="Colorful dance celebration at Sun Dance Day Fest with community members" class="swipe-img faded-img" />
+<img src="images/home/photo10.png" alt="Community gathering and dancing at Sun Dance Day Fest" class="swipe-img faded-img" />
+<img src="images/home/photo12.png" alt="Couple dancing salsa together at Sun Dance Day Fest, smiling and having fun" class="swipe-img faded-img" />
 <!-- ...existing swipe gallery code... -->
 </div>
 </section>

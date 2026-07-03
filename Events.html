@@ -473,25 +473,25 @@ function createEventHTML(event) {
 }
 
 // Load upcoming events
-console.log('Today is:', today.toDateString());
+let upcomingHTML = '';
+const pastEventsToShow = [...eventsData.past];
+
 eventsData.upcoming.forEach(event => {
-const eventDate = new Date(event.date);
-eventDate.setHours(0, 0, 0, 0); // Set to start of event date
-console.log(`Event ${event.title} (${event.date}):`, eventDate.toDateString(), 'vs Today:', today.toDateString(), 'Future?', eventDate >= today);
-if (eventDate >= today) {
-upcomingEvents.innerHTML += createEventHTML(event);
-} else {
-// Move to past events if date has passed
-console.log('Moving to past:', event.title);
-eventsData.past.unshift(event);
-}
+  const eventDate = new Date(event.date);
+  eventDate.setHours(0, 0, 0, 0);
+  if (eventDate >= today) {
+    upcomingHTML += createEventHTML(event); 
+  } else {
+    pastEventsToShow.unshift(event);
+  }
 });
 
-// Load past events (sorted by date, most recent first)
-eventsData.past.sort((a, b) => new Date(b.date) - new Date(a.date));
-eventsData.past.forEach(event => {
-pastEvents.innerHTML += createEventHTML(event);
-});
+// ✅ Set innerHTML ONCE — no more flicker
+upcomingEvents.innerHTML = upcomingHTML;
+
+// ✅ Set innerHTML ONCE for past events
+pastEventsToShow.sort((a, b) => new Date(b.date) - new Date(a.date));
+pastEvents.innerHTML = pastEventsToShow.map(createEventHTML).join('');
 
 // Show past events section if it has events
 if (eventsData.past.length > 0) {

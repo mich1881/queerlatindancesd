@@ -1076,9 +1076,39 @@ padding: 1rem;
 .faq-answer p {
 padding: 1rem;
 }
+
+.video-item {
+  margin-bottom: 2rem;
+}
+.video-item h4 {
+  font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
+  color: #4c38a6;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.video-item p {
+  font-family: 'Nunito', Arial, sans-serif;
+  color: #555;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.video-item iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  border: none;
+}
 }
 
 </style>
+<!-- Video Modal — reuses .calendar-overlay and .calendar-modal CSS -->
+<div class="calendar-overlay" id="video-modal-overlay" onclick="closeVideoModal(event)">
+  <div class="calendar-modal" style="max-width:720px; max-height:85vh; overflow-y:auto;">
+    <button class="calendar-close-btn" onclick="closeVideoModal()">×</button>
+    <h3 class="calendar-title" id="video-modal-title"></h3>
+    <div id="video-modal-list"></div>
+  </div>
+</div>
 <!-- FAQ Section -->
 <section class="faq-section" id="faqs" aria-labelledby="faq-heading">
 <div class="faq-container">

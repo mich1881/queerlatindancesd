@@ -107,13 +107,13 @@
   }
 
   /* Filter bar */
-  .filter-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
+  .filter-bar { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
   .filter-bar input, .filter-bar select {
     padding: 0.5rem 0.8rem; border-radius: 8px; border: 1.5px solid #dfd1ff;
     background: #ffffff; font-size: 0.9rem; color: #201a1a;outline: none;
   }
   .filter-bar input { width: 220px; }
-  .count-badge { background: #f4f0ff; color: #750ad9; padding: 0.3rem 0.8rem; border-radius: 10px; font-size: 0.85rem; }
+  .count-badge { background: #f4f0ff; color: #750ad9; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; }
 
   /* Summary stats */
   .stats-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
@@ -137,7 +137,7 @@
   .empty { text-align: center; color: #fff6f6; padding: 3rem; font-size: 1rem; }
 
   /* Refresh btn */
-  .refresh-btn { background: #b37dff; color: #ffffff; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; font-size: 0.85rem; margin-bottom: 10px; }
+  .refresh-btn { background: #8e60c4; color: #ffffff; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
   .refresh-btn:hover { background: #7a54b0; }
 
   /* Mobile */
@@ -309,9 +309,22 @@
       </select>
       <button class="btn btn-verify" onclick="grantOnlineAccess()">Grant Access</button>
     </div>
-    <p style="color:#ffffff;font-size:0.85rem;margin-top:0.7rem;">This calls the Cloudflare Worker to grant course access stored server-side.</p>
-  </div>
-</div>
+
+    <div style="margin-top:1rem;">
+      <button class="btn btn-secondary" onclick="autoGrantInPersonStudents()">
+        ⚡ Auto-Grant All In-Person Students → Salsa Recap
+      </button>
+      <p style="color:#fff;font-size:0.8rem;margin-top:0.4rem;">Grants salsa-recap-lvl1 to all verified in-person registrations.</p>
+    </div>
+
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-top:2rem; margin-bottom:1rem;">
+      <h2 style="color:#ffffff;">Course Access Student List</h2>
+      <button class="refresh-btn" onclick="loadOnlineStudents()">🔄 Refresh</button>
+    </div>
+    <div id="onlineStudentsList"><div class="empty">Loading…</div></div>
+  </div> <!-- ✅ closes tab-online -->
+
+</div> <!-- ✅ closes #app -->
 <!-- ── TAB 4: EDIT COURSES ── -->
 <div id="editModal" class="modal">
   <div class="modal-content">
@@ -350,23 +363,23 @@ const WORKER_URL = 'https://restless-feather-b6a9.michf18.workers.dev';
 let adminToken = localStorage.getItem('adminToken') || '';
 let allRegistrations = [];
 
-// ══════════════════════════════════════════
-// SECRET KEYBOARD UNLOCK (type "qldsd")
-// ══════════════════════════════════════════
-let keyBuf = '';
-document.addEventListener('keydown', function(e) {
-  keyBuf += e.key.toLowerCase();
-  if (keyBuf.includes('qldsd')) {
-    document.getElementById('passwordInput').focus();
-    keyBuf = '';
-  }
-  if (keyBuf.length > 10) keyBuf = keyBuf.slice(-10);
-});
+// // ══════════════════════════════════════════
+// // SECRET KEYBOARD UNLOCK (type "qldsd")
+// // ══════════════════════════════════════════
+// let keyBuf = '';
+// document.addEventListener('keydown', function(e) {
+//   keyBuf += e.key.toLowerCase();
+//   if (keyBuf.includes('qldsd')) {
+//     document.getElementById('passwordInput').focus();
+//     keyBuf = '';
+//   }
+//   if (keyBuf.length > 10) keyBuf = keyBuf.slice(-10);
+// });
 
-// Also allow Enter key on password field
-document.getElementById('passwordInput').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') doLogin();
-});
+// // Also allow Enter key on password field
+// document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+//   if (e.key === 'Enter') doLogin();
+// });
 
 // ══════════════════════════════════════════
 // LOGIN / LOGOUT
@@ -431,13 +444,6 @@ function toggleCompactView() {
       : '📱 Compact View';
 
   renderAttendance();
-}
-
-function switchTab(name) {
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  event.target.classList.add('active');
 }
 
 // ══════════════════════════════════════════
@@ -804,8 +810,15 @@ async function doUndo(regId) {
 // ══════════════════════════════════════════
 // TAB 3: ONLINE COURSE ACCESS
 // ══════════════════════════════════════════
+const COURSES_CONFIG = [
+  { id: 'salsa-recap-lvl1',       label: 'In-Person Salsa Recap (Level 1)' },
+  { id: 'salsa-fundamentals',     label: 'Salsa Fundamentals' },
+  { id: 'bachata-fundamentals',   label: 'Bachata Fundamentals' },
+  { id: 'advanced-salsa',         label: 'Advanced Salsa' },
+];
+
 async function grantOnlineAccess() {
-  const email = document.getElementById('grantEmail').value.trim();
+  const email = document.getElementById('grantEmail').value.trim().toLowerCase();
   const courseId = document.getElementById('grantCourse').value;
 
   if (!email || !courseId) {
@@ -815,7 +828,6 @@ async function grantOnlineAccess() {
 
   // const token = sessionStorage.getItem('adminToken');
   const token = localStorage.getItem('adminToken');
-
   if (!token) {
     alert('You are NOT logged into admin.');
     return;
@@ -839,6 +851,8 @@ async function grantOnlineAccess() {
 
     if (data.success) {
       alert(`✅ Access granted to ${email}`);
+      document.getElementById('grantEmail').value = '';
+      await loadOnlineStudents(); // refresh list
     } else {
       alert('❌ Error: ' + (data.error || 'Unknown'));
     }
@@ -846,6 +860,93 @@ async function grantOnlineAccess() {
   } catch (err) {
     alert('❌ Connection error: ' + err.message);
   }
+}
+async function revokeOnlineAccess(email, courseId) {
+  const courseName = COURSES_CONFIG.find(c => c.id === courseId)?.label || courseId;
+  if (!confirm(`Revoke access for ${email} from "${courseName}"?`)) return;
+
+  try {
+    const res = await fetch(`${WORKER_URL}/api/admin/grant-access`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}` },
+      body: JSON.stringify({ email, courseId, action: 'revoke' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      alert(`✅ Access revoked for ${email}`);
+      await loadOnlineStudents();
+    } else {
+      alert('❌ Error: ' + (data.error || 'Unknown'));
+    }
+  } catch (err) {
+    alert('❌ Connection error: ' + err.message);
+  }
+}
+function renderOnlineStudents(users) {
+  const listEl = document.getElementById('onlineStudentsList');
+
+  // Build courseId → [students] map
+  const courseMap = {};
+  COURSES_CONFIG.forEach(c => courseMap[c.id] = []);
+
+  Object.entries(users).forEach(([email, userData]) => {
+    (userData.ownedCourses || []).forEach(c => {
+      const courseId = typeof c === 'string' ? c : c.courseId;
+      const expiresAt = c.expiresAt || null;
+      if (courseMap[courseId] !== undefined) {
+        courseMap[courseId].push({ email, expiresAt });
+      }
+    });
+  });
+  listEl.innerHTML = COURSES_CONFIG.map(course => {
+    const students = courseMap[course.id] || [];
+    const rows = students.length === 0
+      ? '<p style="color:#888;font-size:0.85rem;margin-top:0.5rem;">No students have access yet.</p>'
+      : students.map(s => `
+          <div class="online-student-card">
+            <div>
+              <div style="font-weight:700;color:#3a1f7a;font-size:0.9rem;">📧 ${s.email}</div>
+              ${s.expiresAt ? `<div style="font-size:0.75rem;color:#888;">Expires: ${new Date(s.expiresAt).toLocaleDateString()}</div>` : ''}
+            </div>
+            <button class="btn btn-danger" onclick="revokeOnlineAccess('${s.email}', '${course.id}')">
+              🚫 Revoke
+            </button>
+          </div>
+        `).join('');
+
+    return `
+      <div style="background:#fff;border-radius:14px;padding:1rem 1.2rem;margin-bottom:1rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+          <h3 style="color:#4c38a6;font-size:1rem;">${course.label}</h3>
+          <span style="background:#f4f0ff;color:#750ad9;padding:0.2rem 0.6rem;border-radius:10px;font-size:0.8rem;">
+            ${students.length} student${students.length !== 1 ? 's' : ''}
+          </span>
+        </div>
+        ${rows}
+      </div>
+    `;
+  }).join('');
+}
+async function autoGrantInPersonStudents() {
+  const inPersonStudents = allRegistrations.filter(r => r.status === 'verified');
+  if (!inPersonStudents.length) { alert('No verified in-person students found.'); return; }
+  if (!confirm(`Grant salsa-recap-lvl1 access to ${inPersonStudents.length} verified students?`)) return;
+
+  let success = 0, failed = 0;
+  for (const r of inPersonStudents) {
+    try {
+      const res = await fetch(`${WORKER_URL}/api/admin/grant-access`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}` },
+        body: JSON.stringify({ email: r.email.toLowerCase().trim(), courseId: 'salsa-recap-lvl1', action: 'grant' })
+      });
+      const data = await res.json();
+      data.success ? success++ : failed++;
+    } catch { failed++; }
+  }
+
+  alert(`✅ Done! ${success} granted, ${failed} failed.`);
+  await loadOnlineStudents();
 }
 async function adminLogin(password) {
   const res = await fetch("https://bitter-forest-4b9b.michf18.workers.dev/api/admin/login", {
@@ -923,20 +1024,14 @@ async function saveStudentEdit() {
   );
 
   const data = await res.json();
-
   if (data.success) {
-
     alert("✅ Registration updated!");
-
     closeEditModal();
-
     await loadRegistrations();
-
   } else {
 
     alert("❌ Update failed: " + (data.error || "Unknown error"));
     console.log(data);
-
   }
 }
 async function deleteRegistration(regId) {
@@ -1000,6 +1095,35 @@ function toggleAttendanceLog(regId) {
     ? '📋 Hide Attendance Log'
     : '📋 Show Attendance Log';
 }
+// ...existing code...
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+  if (name === 'online') loadOnlineStudents(); // 👈 add this line
+}
+
+// 👇 This whole function was missing — add it
+async function loadOnlineStudents() {
+  const listEl = document.getElementById('onlineStudentsList');
+  listEl.innerHTML = '<div class="empty">Loading…</div>';
+
+  try {
+    const res = await fetch(`${WORKER_URL}/api/admin/online-students`, {
+      headers: { 'Authorization': 'Bearer ' + adminToken }
+    });
+    if (!res.ok) {
+      listEl.innerHTML = '<div class="empty">⚠️ Worker endpoint not found. Make sure you added it.</div>';
+      return;
+    }
+    const data = await res.json();
+    renderOnlineStudents(data.users || {});
+  } catch (err) {
+    listEl.innerHTML = `<div class="empty">⚠️ Error: ${err.message}</div>`;
+  }
+}
+// ...existing code...
 </script>
 </body>
 </html>
