@@ -53,21 +53,23 @@
   }
 
   /* ── INTRO VIDEO ── */
-  .co-video-section {
-    max-width: 860px;
-    margin: 0 auto 5rem;
-    padding: 0 1.5rem;
-  }
+.co-video-section {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 5rem;
+  padding: 0 1.5rem;
+}
 
-  .co-video-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16/9;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(113, 108, 255, 0.35);
-    background: #1a0d2e;
-  }
+.co-video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 860px;   /* controls size */
+  aspect-ratio: 16/9;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(113, 108, 255, 0.35);
+  background: #1a0d2e;
+}
 
   .co-video-wrapper iframe,
   .co-video-wrapper video {
@@ -530,15 +532,17 @@
   <!-- Populated by JS -->
 </div>
 <!-- ── INTRO VIDEO ── -->
-<section class="co-video-section">
+<div class="co-video-section">
   <div class="co-video-wrapper">
-    <!-- Replace the video tag with an iframe for Google Drive previews -->
-    <iframe 
-      src="https://drive.google.com/file/d/1KYzsZH88MAjauJwFT0T8J62oQj0AeRVj/preview" 
-      allow="autoplay" 
-      allowfullscreen>
-    </iframe>
-</section>
+    <video
+      controls
+      playsinline
+      preload="metadata"
+    >
+      <source src="https://pub-f5414e507f874cda9f93105c49892fc8.r2.dev/Salsa%20Videos%20Level%201/video-output-E439A4E8-B730-4FF9-95FB-3DB36582BF7A-1.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
 <!-- ── CTA STRIP ── -->
 <div class="co-cta">
   <h3>Not sure where to start? 💃</h3>
