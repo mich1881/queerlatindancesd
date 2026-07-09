@@ -1,0 +1,47 @@
+[
+    {
+        "id": "recap-library",
+        "title": "Recap Library",
+        "description": "Salsa & Bachata recap videos from our weekly classes.",
+        "longDescription": "Never miss a class again. Watch recap videos whenever you want and practice at home.",
+        "level": "Beginner",
+        "lessons": 8,
+        "duration": "4 Hours",
+        "price": "$10",
+        "priceNote": "Per month",
+        "badge": "Available Now",
+        "badgeClass": "open",
+        "image": "images/4weekseries1/IMG_8661.JPG",
+        "video": "videos/recap-preview.mp4"
+    },
+    {
+        "id": "fundamentals",
+        "title": "Salsa & Bachata Fundamentals",
+        "description": "Build your dancing from the ground up.",
+        "longDescription": "Complete beginner courses designed to teach proper technique and confidence.",
+        "level": "Beginner",
+        "lessons": 12,
+        "duration": "7 Hours",
+        "price": "$20",
+        "priceNote": "Per month",
+        "badge": "Available Now",
+        "badgeClass": "open",
+        "image": "images/4weekseries1/IMG_9905.JPG",
+        "video": "videos/fundamentals-preview.mp4"
+    },
+    {
+        "id": "all-access",
+        "title": "All Access",
+        "description": "Everything in one membership.",
+        "longDescription": "Unlimited access to every online course and future updates.",
+        "level": "All Levels",
+        "lessons": 25,
+        "duration": "20 Hours",
+        "price": "$35",
+        "priceNote": "Per month",
+        "badge": "Best Value",
+        "badgeClass": "open",
+        "image": "images/4weekseries1/IMG_0505.JPG",
+        "video": "videos/all-access-preview.mp4"
+    }
+]

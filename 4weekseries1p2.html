@@ -4,58 +4,69 @@
 <link rel="stylesheet" href="styles/global.css">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="fonts/Passion_One/PassionOne-Regular.ttf" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-body {
-  background: linear-gradient(120deg,
-    #ffe29f 0%,   /* light yellow */
-    #ffb6b9 15%,  /* light pink */
-    #ffb6ff 30%,  /* light magenta */
-    #b5d8ff 45%,  /* light blue */
-    #baffc9 60%,  /* light green */
-    #fff6b7 75%,  /* light gold */
-    #ffd6e0 90%,  /* light rose */
-    #ffe29f 100%  /* repeat yellow */
-  );
+  @font-face {
+  font-family: 'PassionOne';
+  src: url('fonts/Passion_One/PassionOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
-
+@font-face {
+  font-family: 'Nunito';
+  src: url('fonts/Nunito/static/Nunito-Regular.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+body {
+background: linear-gradient(120deg,
+#ffe29f 0%,   /* light yellow */
+#ffb6b9 15%,  /* light pink */
+#ffb6ff 30%,  /* light magenta */
+#b5d8ff 45%,  /* light blue */
+#baffc9 60%,  /* light green */
+#fff6b7 75%,  /* light gold */
+#ffd6e0 90%,  /* light rose */
+#ffe29f 100%  /* repeat yellow */
+);
+}
 /* Uniform font for all text elements */
 p, ul, li, span, div, table, td, th, a, label, input, button {
-  font-family: inherit;
-  font-size: 1em;
-  font-weight: 400;
-  color: inherit;
+font-family: 'Nunito', Arial, sans-serif;
+font-size: 1em;
+font-weight: 700;
 }
 
 /* Headings: bold and larger */
 h1, h2, h3, h4, h5, h6 {
-  font-family: inherit;
-  font-weight: 700;
-  color: #222;
-  margin-top: 1.2em;
-  margin-bottom: 0.5em;
-  line-height: 1.2;
+font-family: 'Nunito', Arial, sans-serif;
+font-weight: 700;
+color: #222;
+margin-top: 1.2em;
+margin-bottom: 0.5em;
+line-height: 1.2;
 }
 
-h1 { font-size: 2.2em; }
-h2 { font-size: 1.6em; }
+h1 { font-size: 1.3em; }
+h2 { font-size: 1.3em; }
 h3 { font-size: 1.3em; }
-h4 { font-size: 1.1em; }
+h4 { font-size: 1.3em; }
 h5, h6 { font-size: 1em; }
 
 /* Remove bold from non-heading elements */
 b, strong {
-  font-weight: 700;
+font-weight: 700;
 }
 
 /* Optional: Make links inherit color unless otherwise styled */
 a {
-  color: #716cff;
-  text-decoration: underline;
+color: #716cff;
+text-decoration: underline;
 }
+
 /* === CALENDAR CONTAINER STYLES === */
-calendar-container {
+.calendar-container {
 background: rgba(20, 12, 40, 0.85);
 border: 2px solid #ffe066;
 border-radius: 18px;
@@ -85,88 +96,22 @@ margin: 0 auto;
 padding-top: 10px;
 position: relative;
 z-index: 1;
-font-family: 'Huninn', Arial, sans-serif;
-}
-@media (max-width: 900px) {
-.main-flex {
-flex-direction: column;
-gap: 32px;
-padding-top: 12px;
-max-width: 98vw;
-}
-
-.event-table-2col {
-display: block !important;
-width: 100%;
-max-width: 100%;
-margin-left: 0;
-}
-
-/* Make both columns stack vertically as single column */
-.event-table-left, .event-table-right {
-display: block !important;
-width: 100% !important;
-padding: 1rem !important;
-margin-bottom: 1.5rem !important;
-}
-
-/* Remove table row structure on mobile */
-.event-table-2col tr {
-display: block !important;
-}
-
-/* Remove table cell structure on mobile */
-.event-table-2col td {
-display: block !important;
-width: 100% !important;
-padding: 0 !important;
-}
-
-/* Gallery styling for mobile */
-#swipe-gallery {
-max-width: 100%;
-margin: 0 auto;
-}
-
-#gallery-img {
-max-width: 95%;
-margin: 0 auto 1rem auto;
-}
-
-/* Gallery navigation buttons for mobile */
-#gallery-prev, #gallery-next {
-position: absolute;
-top: 50%;
-width: 32px;
-height: 32px;
-font-size: 1.2em;
-}
-
-#gallery-prev {
-left: 5px;
-}
-
-#gallery-next {
-right: 5px;
-}
-
-.mobile-spacing {
-height: 60px !important;
-}
+font-family: 'Nunito', Arial, sans-serif;
 }
 .event-title {
-font-family: 'Huninn', 'Nunito', Arial, sans-serif;
-font-size: 5rem;
+font-family: 'PassionOne', 'Nunito', Arial, sans-serif;
+font-size: 4rem;
 font-weight: 500;
-margin-top: 50px;
-margin-bottom: 10px;
+margin-top: 60px;
+margin-left: 50px;
+margin-bottom: -20px;
 color: #ffffff;
-letter-spacing: -1.5px;
+letter-spacing: 1.0px;
 text-align: left;
 background: none;
 border-radius: 0;
 box-shadow: none;
--webkit-text-stroke: 2.5px #00a0ae;
+line-height: 1.0;
 }
 .left-col {
 flex: 1 1 340px;
@@ -181,22 +126,21 @@ max-width: 1300px;
 margin: 0 auto;
 border-spacing: 0 0;
 background: rgba(255, 255, 255, 0.027);
-border-radius: 0px;
 box-shadow: 0 2px 12px #e1d9ff33;
 overflow: hidden;
 font-family: 'Nunito', Arial, sans-serif;
 font-size: 1.08rem;
 }
 .event-table-left {
-width: 1000px;
+width: 35%;
 vertical-align: top;
 padding: 36px 24px 36px 36px;
 }
 .event-table-right {
-width: 1000px;
+width:70%;
+padding:20px 10px 20px 8px;
 vertical-align: top;
-padding: 32px 32px 32px 32px;
-}
+} 
 .info-card {
 display: flex;
 flex-direction: row;
@@ -208,11 +152,11 @@ padding: 6px 10px;
 min-width: 120px;
 width: auto;
 margin-bottom: 10px;
-font-size: 0.85rem;
+font-size: 1.08rem;
 }
 .info-label {
 font-family: 'Nunito', Arial, sans-serif;
-font-size: 0.92rem;
+font-size: 1.08rem;
 font-weight: 700;
 color: #322234;
 margin-bottom: 2px;
@@ -232,8 +176,9 @@ color: #322234;
 margin-bottom: 4px;
 text-align: left;
 }
+
 .event-value {
-font-size: 1.05rem;
+font-size: 1.08rem;
 color: #444;
 text-align: left;
 }
@@ -264,7 +209,7 @@ margin-bottom: 8px;
 }
 .organizer-name {
 font-family: 'Nunito', Arial, sans-serif;
-font-size: 1.35rem;
+font-size: 1.08rem;
 font-weight: 900;
 color: #222;
 margin-bottom: 24px;
@@ -274,6 +219,7 @@ display: flex;
 flex-direction: row;
 gap: 48px;
 }
+
 .organizer-card {
 flex: 1;
 background: rgba(4, 2, 2, 0);
@@ -289,7 +235,7 @@ min-width: 180px;
 margin-bottom: 12px;
 }
 .organizer-card-title {
-font-family: 'Nunito', Arial, sans-serif;
+font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
 font-size: 1.08rem;
 font-weight: 700;
 color: #32223400;
@@ -340,196 +286,228 @@ background: #e6e0ff;
 .pricing-option.selected {
 background: #716cff;
 color: #fff;
-border: 2px solid #4b2fcf;
+border: 2px solid #716cff;
 box-shadow: 0 4px 16px #716cff77;
 transform: scale(1.06);
 }
-
-@media (max-width: 768px) {
-/* Pricing section mobile adjustments */
-.pricing-options {
-margin-left: 0 !important;
-gap: 0.25rem !important;
-flex-wrap: wrap !important;
-align-items: center !important;
-justify-content: center !important;
-width: 100% !important;
+/* Pricing sections for 4 week & 8 week option buttons*/
+.pricing-header{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    margin-top:2px;
 }
 
-.pricing-option {
-font-size: 0.7rem !important;
-padding: 0.3rem 0.5rem !important;
-min-width: 80px !important;
-width: min(140px, 90vw) !important;
-max-width: 140px !important;
-text-align: center !important;
-margin: 0 auto 0.25rem auto !important;
-box-sizing: border-box !important;
-display: flex !important;
-align-items: center !important;
-justify-content: center !important;
-}
-.main-flex {
-flex-direction: column !important;
-padding: 0.5rem !important;
-gap: 0.25rem !important;
-max-width: 100vw !important;
+.price-tag{
+    display:inline-flex;
+    align-items:center;
+    background:#f6f3ff;
+    color:#716cff;
+    font-size:1rem;
+    border-radius:7px;
+    padding:2px 12px 2px 10px;
+    box-shadow:0 1px 4px #716cff18;
+    min-width:90px;
+    text-align:left;
+    margin-top:3px;
 }
 
-.event-title {
-font-size: 1.8rem !important;
-text-align: left !important;
--webkit-text-stroke: 2px #00a0ae !important;
-line-height: 1.2 !important;
+.price-total{
+    font-size:0.98rem;
+    color:#716cff;
+    margin-top:10px;
+    margin-bottom:10px;
+    text-align:left;
+    min-width:170px;
+}
+.pricing-cards{
+    display:flex;
+    flex-direction:row;
+    align-items:flex-start;
+    gap:16px;
+    width:100%;
 }
 
-.event-table-2col {
-display: block !important;
-width: 100% !important;
-max-width: 100% !important;
-margin-left: 0 !important;
-margin-right: 0 !important;
-font-size: 0.75rem !important;
+.pricing-card{
+    background:rgba(255,255,255,0.30);
+    border-radius:18px;
+    box-shadow:0 2px 12px #716cff22;
+    padding:1.2em 1em 1em 1em;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    min-width:180px;
 }
 
-/* Make both columns stack vertically as single column */
-.event-table-left, .event-table-right {
-display: block !important;
-width: 100% !important;
-padding: 0.5rem !important;
-margin-bottom: 0.5rem !important;
+.pricing-card-label{
+    font-family:'Nunito',sans-serif;
+    font-size:1rem;
+    color:#716cff;
+    margin-bottom:0.7em;
+    letter-spacing:1px;
 }
 
-/* Remove table row structure on mobile */
-.event-table-2col tr {
-display: block !important;
+.pricing-options-container{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    width:100%;
+}
+.register-container{
+    margin-top:1.2rem;
+    display:flex;
+    justify-content:center;
+    width:100%;
+}
+  .co-hero-title {
+    font-family: 'PassionOne', 'Lilita One', sans-serif;
+    font-size: 5rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom:0;
+  }
+
+  .co-hero-title span {
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-family: 'PassionOne', 'Lilita One', sans-serif;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .co-card-btn {
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 0.55rem 1.3rem;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .co-card-btn:hover {
+    opacity: 0.88;
+    transform: scale(1.04);
+  }
+.pricing-description{
+    margin-top:1.1rem;
+    font-size:1rem;
+    color:#444;
+    min-height:48px;
 }
 
-/* Remove table cell structure on mobile */
-.event-table-2col td {
-display: block !important;
-width: 100% !important;
-padding: 0 !important;
+/* Right Column */
+.series-highlight{
+    color:#716cff;
+    font-weight:700;
 }
 
-/* Mobile typography adjustments */
-.event-label {
-font-size: 0.8rem !important;
-margin-bottom: 0.25rem !important;
+.deadline-highlight{
+    color:#ff2d2d;
+    font-weight:700;
 }
 
-.event-value {
-font-size: 0.75rem !important;
-line-height: 1.3 !important;
-margin-bottom: 0.5rem !important;
+@media (max-width:768px){
+
+    *{
+        box-sizing:border-box;
+    }
+
+    body{
+        overflow-x:hidden;
+    }
+
+    .main-flex{
+        display:block !important;
+        width:100%;
+        max-width:100%;
+        padding:0 16px !important;
+        margin:0 auto !important;
+    }
+
+    .event-table-2col{
+        display:block !important;
+        width:100%;
+        max-width:100%;
+        margin:0 auto !important;
+    }
+
+    .event-table-2col tbody,
+    .event-table-2col tr{
+        display:block !important;
+        width:100%;
+    }
+
+    .event-table-left,
+    .event-table-right{
+        display:block !important;
+        width:100% !important;
+        max-width:100% !important;
+        padding:16px !important;
+        margin:0 auto 20px auto !important;
+        box-sizing:border-box;
+    }
+
+    .event-table-left *,
+    .event-table-right *{
+        max-width:100%;
+    }
+.co-hero-title{
+    font-size:2rem !important;
+    margin:90px 0 0 0 !important;
+    padding:0 16px !important;
+    line-height:1.15 !important;
+    text-align:left !important;
+}
+.event-value,
+.event-label,
+.pricing-card,
+.pricing-options,
+.pricing-header,
+.register-container,
+.pricing-description{
+    width: 100%;
+    box-sizing:border-box;
 }
 
-.event-value ul {
-margin-left: 0.5rem !important;
-padding-left: 0.25rem !important;
+.pricing-options-container{
+    width:100% !important;
 }
 
-.event-value ul li {
-font-size: 0.7rem !important;
-margin-bottom: 0.2rem !important;
-line-height: 1.2 !important;
+.pricing-option{
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    margin:0 0 8px 0 !important;
 }
 
-/* Pricing section mobile adjustments */
-.pricing-options {
-margin-left: 0 !important;
-gap: 0.25rem !important;
-flex-wrap: wrap !important;
-}
+    .pricing-cards{
+        display:flex !important;
+        flex-direction:column !important;
+        align-items:center !important;
+        width:100% !important;
+        gap:16px !important;
+    }
 
-.pricing-option {
-font-size: 0.7rem !important;
-padding: 0.3rem 0.5rem !important;
-min-width: 80px !important;
+    .pricing-card{
+        width:100% !important;
+        max-width:280px !important;
+        min-width:unset !important;
+        margin:0 auto !important;
+    }
+    .pricing-options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
-
-#price-tag {
-font-size: 0.75rem !important;
-padding: 0.2rem 0.6rem !important;
-}
-
-#price-total {
-font-size: 0.7rem !important;
-}
-
-#get-tickets-btn {
-font-size: 0.85rem !important;
-padding: 0.5rem 1.5rem !important;
-}
-
-/* Gallery styling for mobile */
-#swipe-gallery {
-max-width: 100% !important;
-margin: 0 auto !important;
-}
-
-#gallery-img {
-max-width: 90% !important;
-margin: 0 auto 0.5rem auto !important;
-height: auto !important;
-object-fit: contain !important;
-}
-
-/* Gallery navigation buttons for mobile */
-#gallery-prev, #gallery-next {
-position: absolute !important;
-top: 50% !important;
-width: 24px !important;
-height: 24px !important;
-font-size: 0.8rem !important;
-}
-
-#gallery-prev {
-left: 2px !important;
-}
-
-#gallery-next {
-right: 2px !important;
-}
-
-/* Organizer section mobile adjustments */
-.organizer-section {
-padding: 0.5rem !important;
-}
-
-.organizer-label {
-font-size: 0.8rem !important;
-}
-
-.organizer-name {
-font-size: 0.9rem !important;
-margin-bottom: 0.5rem !important;
-}
-
-.organizer-cards {
-flex-direction: column !important;
-gap: 0.5rem !important;
-}
-
-.organizer-card {
-min-width: auto !important;
-padding: 0.5rem !important;
-}
-
-.organizer-card-title {
-font-size: 0.75rem !important;
-}
-
-.organizer-card-link {
-font-size: 0.7rem !important;
-}
-
-/* Back button mobile adjustment */
-.main-flex + a {
-top: 10px !important;
-left: 10px !important;
-font-size: 0.8rem !important;
-padding: 4px 10px 4px 6px !important;
+.register-container {
+    margin-bottom: -90px;
 }
 }
 </style>
@@ -570,48 +548,64 @@ Thank you for your support. Please email <a href="mailto:queerlatindancesd@gmail
 </div>
 </div>
 </div>
-<a href="courses.html" style="position:fixed;top:28px;left:38px;z-index:10;text-decoration:none;font-family:'Nunito',Arial,sans-serif;font-size:1.13rem;font-weight:800;color:#716cff;background:#fff6;padding:7px 18px 7px 12px;border-radius:8px;box-shadow:0 2px 8px #716cff22;display:inline-flex;align-items:center;gap:7px;transition:background 0.18s,box-shadow 0.18s;">
+<a href="courses.html" style="position:fixed;top:28px;left:38px;z-index:10;text-decoration:none;font-family:'Montserrat','Nunito',sans-serif;font-size:1.13rem;font-weight:500;color:#716cff;background:#fff6;padding:7px 18px 7px 12px;border-radius:8px;box-shadow:0 2px 8px #716cff22;display:inline-flex;align-items:center;gap:7px;transition:background 0.18s,box-shadow 0.18s;">
 <span style="font-size:1.25em;line-height:1;">&#8592;</span>Back
 </a>
 
+<!-- Add mobile spacing to push content down and make back button visible on mobile -->
 <div class="mobile-spacing" style="height: 0;"></div>
-
 <div class="main-flex">
 <div class="left-col">
-<h1 class="event-title">4 Week Series 1<br>Level 1: Intro to Salsa & Bachata</h1>
-<table class="event-table-2col" style="margin-left: 32px;">
+<h1 class="co-hero-title">4 Week Friday Series Part 2:<span><br>Level 1 Fundamentals</span></h1>
+<table class="event-table-2col">
 <tr>
 <td class="event-table-left">
 <!-- Salsa series description above pricing -->
-<div style="margin-bottom:1.2rem;font-size:1.2rem;color:#000000;line-height:1.5;">
-<!-- <div style="color:#ff0202;"><b>ATTN: Series 2 Salsa (LEVEL 2) Sundays will now be converted to Series 1 Salsa (LEVEL 1). 
-</b></div><p>NEW! If you're unable to attend class, you now have the option to transfer that credit over to one of our other classes for both Salsa & Bachata for <a href="4weekseries2p2.html" style="color:#2c3af7;">WINTER P2 Schedule ONLY</a>. Please keep in mind Bachata Series 2 (LEVEL 2) will remain.</b> -->
-<a href="#course-details" class="read-more-link">See Course Details</a>
+<div style="margin-bottom: 1.2rem; margin-top: -1.5rem;color:#716cff">
+<br><a href="#course-details" class="read-more-link">See Course Details</a>
 <br><a href="courses.html#faqs">See FAQs</a>
 </div>
-<div class="event-section" style="margin-top: 0; margin-bottom: 1.2rem;">
+</div>
+<div class="event-section" style="margin-top: 10px; margin-bottom: 1.2rem;">
 <div>
 <span class="event-label">Pricing</span>
-<div style="display:flex;flex-direction:column;align-items:flex-start;margin-top:2px;">
-<span id="price-tag" style="display:inline-flex;align-items:center;background:#f6f3ff;color:#7c3aed;font-size:1.01rem;font-weight:800;border-radius:7px;padding:2px 12px 2px 10px;box-shadow:0 1px 4px #716cff18;min-width:90px;text-align:left;margin-top:2px;">$20 per hr</span>
-<span id="price-total" style="font-size:0.98rem;color:#444;font-weight:600;margin-top:2px;text-align:left;min-width:170px;">Total: 4 weeks x $20/hr = $80</span>
+<div class="pricing-header">
+    <span id="price-tag" class="price-tag">$20 per hr</span>
+    <span id="price-total" class="price-total">
+        Total: 4 weeks x $20/hr = $80
+    </span>
 </div>
 </div>
-<div style="font-style:italic;font-size:1.13rem;margin-bottom:1.1rem;">Please select from the following:</div>
-<div class="pricing-options" style="align-items:center;margin-left:0;">
-<div class="pricing-option" tabindex="0" data-desc="">Salsa Only</div>
-<div class="pricing-option" tabindex="0" data-desc="">Bachata Only</div>
-<div class="pricing-option" tabindex="0" data-desc="">Salsa &amp; Bachata</div>
-<div style="margin-top:1.2rem; display:flex; justify-content:center; width:100%;">
-<a id="get-tickets-btn" href="#" style="background:#716cff;color:#fff;font-family:'Nunito',Arial,sans-serif;font-weight:900;font-size:1.1rem;padding:0.7rem 2.2rem;border-radius:1.2rem;text-decoration:none;box-shadow:0 2px 12px #716cff44;transition:background 0.18s,color 0.18s;">Register</a>
+<div class="pricing-cards">
+  <!-- 4 Week Card -->
+  <div class="pricing-card">
+    <div class="pricing-card-label">4 weeks</div>
+    <div class="pricing-options-container">
+      <div class="pricing-option" tabindex="0" data-desc="">Salsa Only</div>
+      <div class="pricing-option" tabindex="0" data-desc="">Bachata Only</div>
+      <div class="pricing-option" tabindex="0" data-desc="">Salsa &amp; Bachata</div>
+    </div>
+  </div>
+  <!-- 8 Week Card -->
+  <!-- <div class="pricing-card">
+    <div class="pricing-card-label">8 weeks</div>
+    <div class="pricing-options-container">
+      <div class="pricing-option" tabindex="0" data-desc="">8wk Salsa Only</div>
+      <div class="pricing-option" tabindex="0" data-desc="">8wk Bachata Only</div>
+      <div class="pricing-option" tabindex="0" data-desc="">8wk Salsa &amp; Bachata</div>
+    </div>
+  </div> -->
 </div>
+<div class="register-container">
+    <a id="get-tickets-btn" class="co-card-btn" href="#">
+        Register
+    </a>
 </div>
-<div id="pricing-desc" style="margin-top:1.1rem;font-size:1.08rem;color:#444;min-height:48px;"></div>
-</div>
+<div id="pricing-desc" class="pricing-description"></div>
 </td>
-<td class="event-table-right" style="padding-left: 56px;">
-<div class="event-section" style="padding:0; margin:0 0 18px 0; display:flex; justify-content:center; align-items:center;">
-<div style="position:relative; width:100%; max-width:520px; display:flex; align-items:center; justify-content:center;">
+<td class="event-table-right">
+<div class="event-section" style="padding:0; margin:0 0 0 0; display:flex; justify-content:center; align-items:center;">
+<div style="position:relative; width:100%; display:flex; align-items:center; justify-content:center;">
 <img id="gallery-img" src="images/lessons/Springp2-2.png" alt="4 Week Series Promo" style="width:100%;max-width:520px;height:auto;display:block;margin:0 0 18px 0;border-radius:18px;box-shadow:0 2px 12px #716cff22;object-fit:contain;transition:opacity 0.2s;" />
 </div>
 </div>
@@ -622,38 +616,51 @@ Thank you for your support. Please email <a href="mailto:queerlatindancesd@gmail
 <a id="gcal-link-friday" href="#" target="_blank" title="Add Series to Google Calendar" style="display:inline-block;margin-left:8px;vertical-align:middle;">
   <img src="images/eventpage/Schedulicon 1.png" alt="Google Calendar" style="height:20px;width:20px;vertical-align:middle;filter:drop-shadow(0 1px 2px #fff8);" />
 </a>
-<span id="series-dates" style="color:#943dff;font-weight:700;">Loading...</span><br>
-<b>RSVP Deadline:</b> <span id="rsvp-deadline" style="color:#ff2d2d;font-weight:700;">Loading...</span>
-  <br>Class Times: <span id="class-times" style="color:#943dff;font-weight:700;">Loading...</span><br>
+<span id="series-dates" class="series-highlight">Loading...</span><br>
+<b>RSVP Deadline:</b>
+<span id="rsvp-deadline" class="deadline-highlight">Loading...</span>
+<br>Class Times:
+<span id="class-times" class="series-highlight">Loading...</span>
+<br>
 <section class="event-section">
-<h2 class="event-label">Series Overview</h2>
-<div class="event-value">
-<h3>4 Week Series 1: Level 1 Introduction to Salsa On2 & Bachata</h3>
+    <h2 class="event-label">Series Overview</h2>
+    <h2 class="event-label">4 Week Series: Fundamentals</h2>
 <p>
-A fast-paced beginner class that is meant to be retaken so you don’t have to commit to 6–8 week long classes. The series cycles for new students and for students who are retaking the series to develop muscle memory and build a strong foundation in their basics. Each cycle of the series, is a slightly different variation of the material.
+A fast-paced beginner class that is meant to be retaken so you don’t have to commit to 6-8 week long classes. The series cycles for new students and for students who are retaking the series to develop muscle memory and build a strong foundation in their basics. Each cycle of the series, is a slightly different variation of the material.
 </p>
-<h4>What's it like taking Salsa Series 1?</h4>
+<h2 class="event-label">Salsa Level 1</h2>
 <ul>
-<li><strong>1st time TIMING & RHYTHM:</strong> Exposed to basics, learn timing and rhythm, retain at least 50% of the material.</li>
-<li><strong>2nd time retaking FUNDAMENTALS:</strong> Do the basics on your own, retain an extra 30%, get familiar with the basics.</li>
-<li><strong>3rd time retaking MUSCLE MEMORY:</strong> Develop muscle memory of the basics. Retain an extra 20%, successfully execute basic combos.</li>
+<li><strong>1st time BASICS:</strong> Exposure to the basics, learn timing and rhythm, retain at least 30% of the material.</li>
+<li><strong>2nd time retaking BODY MECHANICS:</strong> Do the basics on your own, retain an extra 30%, focus on body movement</li>
+<li><strong>3rd time retaking STYLING:</strong> Develop muscle memory of the basics. Retain an extra 40%, successfully execute basic combos. Add styling</li>
 </ul>
-<h4>What's it like taking Bachata Series 1?</h4>
+<!-- <p>
+<b>Bachata Series 2 portion:</b> The Bachata Series 2 portion is meant to be retaken as many times as you need. Most students find Bachata a little more challenging in terms of hip and body movement as it takes a lot of independent practice and body awareness to translate the knowledge into movement.
+</p> -->
+<h2 class="event-label">Bachata Level 1</h2>
 <ul>
 <li>Bachata Series 1 is meant to be taken once or as many times as you need. Bachata basics are much easier to learn than Salsa due to simpler rhythm and timing and can get more complex as you progress due to hip and body movement.</li>
 </ul>
-<p><em>Note: Retention and progress depend on your background in body movement and dance. <b>Practicing outside of class is mandatory and recap videos will be provided.</b> The homework (documentaries and reading material) is optional but highly recommended.</em></p>
-<h4>About the Instructor:</h4>
+<p><em>Note: Retention and progress depend on your background in body movement and dance.</em></p>
+<h2 class="event-label">About the Instructor</h2>
 <p>Michelle’s passion for movement began in El Centro, California, where she has over 24 years of experience in gymnastics, ballet, karate, and 12 years of classical music, including choir and violin. These early experiences built her discipline, strength, flexibility, and body awareness. She later began her Latin dance journey at UC San Diego and now has over 8 years of experience in salsa and bachata.
 <a href="michelle.html" class="read-more-link">Read more...</a></p>
 </div>
 </section>
-You can sign up for <b>Salsa</b>, <b>Bachata</b>, or <b>both</b>! Drop-ins are available if you can’t make all the dates, but we highly recommend joining the full series to progress with us into the next 4-Week Series 2 beginner lessons.
+You can sign up for <b>Salsa</b>, <b>Bachata</b>, or <b>both</b>! Drop-ins are available if you can’t make all the dates, but we highly recommend joining the full series to progress with us into the next 4-week Part 2 beginner lessons.
+<br>
+<b>Pricing:</b>
+<ul>
+<li><b>Salsa Only</b> – $80 total for 4 hours of instruction <span style="color:#090606;">($20/hr)</span></li>
+<li><b>Bachata Only</b> – $80 total for 4 hours of instruction <span style="color:#070101;">($20/hr)</span></li>
+<li><b>Salsa & Bachata BOTH</b> – $144 total for 8 hours of instruction <span style="color:#040101;">($18/hr)</span></li>
+<li><b>Drop-In</b> – $52 for both classes, $26.00 for single class</li>
+</ul>
 <br>
 <b>Important Notes:</b>
-<ul style="margin:0 0 0 1.2em;padding:0 0 0 1.2em;list-style:square;color:#090808;">
-  <li>Payment is non-refundable. We book studio space in advance and are unable to offer refunds at this time.</li>
-<li>We have a limited number of reduced-price spots available. Please contact us if you'd like to be considered.</li>
+<ul>
+<li><b>Payment is non-refundable. We book studio space in advance and are unable to offer refunds at this time.</li>
+<li><b>We have a limited number of reduced-price spots available. Please contact us if you'd like to be considered.</li>
 </ul>
 <br>
 <span style="color:#716cff;font-weight:700;">Thank you for understanding. We can’t wait to dance with you!</span><br>
@@ -668,31 +675,8 @@ Studio K<br>
 9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123 &amp; D, San Diego CA 92126
 <div class="event-map">
 <a href="https://maps.app.goo.gl/P8sKwApM5b67xiLa8?g_st=ipc" target="_blank" rel="noopener" style="display:block;">
-  <iframe src="https://www.google.com/maps?q=9340+Clairemont+Mesa+Blvd,+Ste+F,+San+Diego,+CA+92123&output=embed" width="100%" height="220" style="border:0;border-radius:12px;margin-top:12px;box-shadow:0 2px 12px #e1d9ff33;pointer-events:none;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" tabindex="-1"></iframe>
+<iframe src="https://www.google.com/maps?q=9340+Clairemont+Mesa+Blvd,+Ste+F,+San+Diego,+CA+92123&output=embed" width="100%" height="220" style="border:0;border-radius:12px;margin-top:12px;box-shadow:0 2px 12px #e1d9ff33;pointer-events:none;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" tabindex="-1"></iframe>
 </a>
-</div>
-<div class="organizer-section" style="margin-top:24px; padding-left:0;">
-<div class="organizer-label">ORGANIZERS</div>
-<div class="organizer-name">Queer Latin Dance SD</div>
-<div class="organizer-cards">
-  <div class="organizer-card">
-    <div class="organizer-icon">
-      <svg width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="10" width="24" height="16" rx="6" fill="#b1b1ff"/><rect x="6" y="10" width="24" height="16" rx="6" stroke="#a1a1c1" stroke-width="2"/><path d="M6 10l12 10 12-10" stroke="#a259ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div class="organizer-card-title">Questions?</div>
-    <a href="contact.html" class="organizer-card-link">Contact organizer</a>
-  </div>
-  <div class="organizer-card">
-    <div class="organizer-icon">
-      <svg width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="20" height="20" rx="5" fill="#b1b1ff"/><rect x="8" y="8" width="20" height="20" rx="5" stroke="#a1a1c1" stroke-width="2"/><rect x="13" y="13" width="10" height="2" rx="1" fill="#a259ff"/><rect x="13" y="17" width="10" height="2" rx="1" fill="#a259ff"/><rect x="13" y="21" width="10" height="2" rx="1" fill="#a259ff"/></svg>
-    </div>
-    <div class="organizer-card-title">Self Service</div>
-    <a href="#" class="organizer-card-link">Manage order</a>
-  </div>
-</div>
-</div>
-</div>
-</div>
 </td>
 </tr>
 </table>

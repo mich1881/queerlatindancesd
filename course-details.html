@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Courses | Queer Latin Dance SD</title>
+<link rel="stylesheet" href="styles/global.css">
+<link rel="stylesheet" href="style.css" />
+<link rel="icon" href="/favicon.ico?v=4">
+<link rel="icon" type="image/png" href="/images/icons/favicon-v2.png?v=4">
+<link rel="apple-touch-icon" href="/images/icons/favicon-v2.png">
+<style>
+
+  /* ── PAGE HERO ── */
+  .co-hero {
+    text-align: center;
+    padding: 2rem 1rem 2rem;
+  }
+
+  .co-hero-eyebrow {
+    font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #b57edc;
+    margin-bottom: 0.75rem;
+  }
+
+  .co-hero-title {
+    font-family: 'PassionOne', 'Lilita One', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .co-hero-title span {
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .co-hero-subtitle {
+    font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
+    font-size: 1.1rem;
+    color: #b57edc;
+    max-width: 560px;
+    margin: 0 auto 0rem;
+    line-height: 1.7;
+  }
+
+  /* ── INTRO VIDEO ── */
+.co-video-section {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 5rem;
+  padding: 0 1.5rem;
+}
+
+.co-video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 860px;   /* controls size */
+  aspect-ratio: 16/9;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(113, 108, 255, 0.35);
+  background: #1a0d2e;
+}
+
+  .co-video-wrapper iframe,
+  .co-video-wrapper video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .co-video-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a0d2e, #2e1a47);
+    color: rgba(255,255,255,0.5);
+    font-family: 'Montserrat', Arial, sans-serif;
+    gap: 1rem;
+  }
+
+  .co-video-placeholder span {
+    font-size: 3.5rem;
+  }
+
+  .co-video-placeholder p {
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+  }
+
+  /* ── SECTION DIVIDER ── */
+  .co-divider {
+    text-align: center;
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+  }
+
+  .co-divider h2 {
+    font-family: 'PassionOne', 'Lilita One', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+  }
+
+  .co-divider p {
+    font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .co-divider-line {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    border-radius: 2px;
+    margin: 1rem auto 0;
+  }
+
+  /* ── CATEGORY LABEL ── */
+  .co-category {
+    max-width: 1200px;
+    margin: 0 auto 1rem;
+    padding: 0 1.5rem;
+  }
+
+  .co-category-label {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #b57edc;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .co-category-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(181, 126, 220, 0.3);
+  }
+
+  /* ── CARDS GRID ── */
+  .co-grid {
+    max-width: 1200px;
+    margin: 0 auto 4rem;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.75rem;
+  }
+
+  /* ── SINGLE CARD ── */
+  .co-card {
+    background: #8a86fea3;
+    border: 1px solid rgba(255, 255, 255, 0.448);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+  }
+
+  .co-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(113, 108, 255, 0.3);
+    border-color: rgba(113, 108, 255, 0.5);
+  }
+
+  /* Flyer image */
+  .co-card-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Badge on top of image */
+  .co-card-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    color: #fff;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+  }
+
+  .co-card-badge.open    { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+  .co-card-badge.soon    { background: linear-gradient(135deg, #f39c12, #e67e22); }
+  .co-card-badge.ongoing { background: linear-gradient(135deg, #716cff, #b57edc); }
+  .co-card-badge.online  { background: linear-gradient(135deg, #3498db, #716cff); }
+
+  /* Card body */
+  .co-card-body {
+    padding: 1.4rem 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .co-card-type {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #f1dcff;
+    margin-bottom: 0.4rem;
+  }
+
+  .co-card-title {
+    font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+
+  .co-card-desc {
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 0.9rem;
+    color: rgb(255, 255, 255);
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 1.2rem;
+  }
+
+  /* Pricing row */
+  .co-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1rem;
+    margin-top: auto;
+    gap: 1rem;
+  }
+
+  .co-card-price {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: #ffffff;
+  }
+
+  .co-card-price-note {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.5);
+    display: block;
+    margin-top: 1px;
+  }
+
+  .co-card-btn {
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 0.55rem 1.3rem;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .co-card-btn:hover {
+    opacity: 0.88;
+    transform: scale(1.04);
+  }
+
+  .co-card-btn.secondary {
+    background: rgba(113, 108, 255, 0.15);
+    border: 1px solid rgba(113, 108, 255, 0.4);
+    color: #b57edc;
+  }
+
+  /* ── PRIVATE / WIDE CARD ── */
+  .co-card.wide {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    max-height: 280px;
+  }
+
+  .co-card.wide .co-card-image {
+    width: 300px;
+    flex-shrink: 0;
+    aspect-ratio: auto;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .co-card.wide .co-card-body {
+    justify-content: center;
+  }
+
+  /* ── ONLINE CARD SPECIAL ── */
+  .co-card.coming-soon {
+    border-color: rgba(52, 152, 219, 0.3);
+    background: rgba(52, 152, 219, 0.05);
+  }
+
+  .co-card.coming-soon .co-card-price {
+    color: rgba(255,255,255,0.45);
+    font-size: 1rem;
+  }
+
+  /* ── CTA STRIP ── */
+.co-cta-wrapper {
+    align-items: center;
+    display: flex;
+  }
+  .co-cta {
+    max-width: 700px;
+    margin: 1rem auto 5rem;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(113, 108, 255, 0.288), rgba(181,126,220,0.12));
+    border: 1px solid rgba(113,108,255,0.25);
+    border-radius: 24px;
+  }
+
+  .co-cta h3 {
+    font-family: 'PassionOne', 'Lilita One', sans-serif;
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .co-cta p {
+    font-family: 'Nunito', Arial, sans-serif;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .co-cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .co-cta-btn {
+    padding: 0.75rem 2rem;
+    border-radius: 30px;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .co-cta-btn.primary {
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    color: #fff;
+    border: none;
+  }
+
+  .co-cta-btn.outline {
+    background: transparent;
+    border: 2px solid rgba(113,108,255,0.5);
+    color: #b57edc;
+  }
+
+  .co-cta-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .co-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+
+    .co-card.wide {
+      flex-direction: column;
+      max-height: none;
+      grid-column: auto;
+    }
+
+    .co-card.wide .co-card-image {
+      width: 100%;
+      height: 220px;
+    }
+  }
+
+  /* ── LEVEL PILL (on card image) ── */
+  .co-level-pill {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+  }
+
+  /* ── CARD META (lessons + duration) ── */
+  .co-card-meta {
+    display: flex;
+    gap: 1.2rem;
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1rem;
+  }
+
+  /* ── PRICE "SOON" STATE ── */
+  .co-card-price.soon {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* ── LEVEL FILTER TABS ── */
+  .co-level-tab {
+    background: #8a86fe43;
+    border: 1px solid rgba(255, 255, 255, 0.239);
+    color: rgba(255,255,255,0.6);
+    border-radius: 30px;
+    padding: 0.45rem 1.1rem;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .co-level-tab:hover {
+    border-color: rgba(113,108,255,0.5);
+    color: #fff;
+  }
+
+  .co-level-tab.active {
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    border-color: transparent;
+    color: #fff;
+  }
+
+</style>
+</head>
+<body>
+<div id="sparkle-bg"></div>
+<!-- ── HEADER ── -->
+<header>
+  <a href="index.html">
+    <img src="images/logos/logo2.png" alt="Queer Latin Dance SD Logo" class="logo2" />
+  </a>
+  <div id="cart-modal" class="cart-modal">
+    <div class="cart-modal-title">Your Cart</div>
+    <div id="cart-items"></div>
+    <button onclick="viewCart()" class="cart-modal-btn view">View Cart</button>
+    <button onclick="closeCart()" class="cart-modal-btn close">Close</button>
+  </div>
+  <nav>
+    <a href="courses.html">Courses</a>
+    <a href="Events.html">Events</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="directory.html">Directory</a>
+    <a href="team.html">Team</a>
+    <a href="book-us.html">Book Us</a>
+    <a href="merch.html">Merch</a>
+    <span id="cart-nav" class="cart-nav">
+      <img src="images/icons/cart-icon.png" alt="Cart" class="cart-icon-img">
+      <span id="cart-count" class="cart-count">0</span>
+    </span>
+  </nav>
+  <button class="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="mobile-nav-menu" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
+  <nav>
+    <a href="courses.html">Courses</a>
+    <a href="Events.html">Events</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="directory.html">Directory</a>
+    <a href="team.html">Team</a>
+    <a href="book-us.html">Book Us</a>
+    <a href="merch.html">Merch</a>
+  </nav>
+</div>
+
+<section class="co-hero">
+  <p class="co-hero-eyebrow">Queer Latin Dance SD</p>
+  <h1 class="co-hero-title">Salsa & Bachata <span>Fundamentals</span></h1>
+  <p class="co-hero-subtitle">Course Preview: See a sneak peek ofthe modules.</p>
+</section>
+<div class="co-video-section">
+  <div class="co-video-wrapper">
+    <video
+      controls
+      playsinline
+      preload="metadata"
+    >
+      <source src="" type="video/mp4">
+    </video>
+  </div>
+</div>
+</div>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+.main-flex {
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+justify-content: flex-start;
+gap: 64px;
+max-width: 1280px;
+margin: 0 auto;
+padding-top: 10px;
+position: relative;
+z-index: 1;
+font-family: 'Huninn', Arial, sans-serif;
+}
+@media (max-width: 900px) {
+.main-flex {
+flex-direction: column;
+gap: 32px;
+padding-top: 12px;
+max-width: 98vw;
+}
+
+.event-table-2col {
+display: block !important;
+width: 100%;
+max-width: 100%;
+margin-left: 0;
+}
+
+/* Make both columns stack vertically as single column */
+.event-table-left, .event-table-right {
+display: block !important;
+width: 100% !important;
+padding: 1rem !important;
+margin-bottom: 1.5rem !important;
+}
+
+/* Remove table row structure on mobile */
+.event-table-2col tr {
+display: block !important;
+}
+
+/* Remove table cell structure on mobile */
+.event-table-2col td {
+display: block !important;
+width: 100% !important;
+padding: 0 !important;
+}
+
+/* Gallery styling for mobile */
+#swipe-gallery {
+max-width: 100%;
+margin: 0 auto;
+}
+
+#gallery-img {
+max-width: 95%;
+margin: 0 auto 1rem auto;
+}
+
+/* Gallery navigation buttons for mobile */
+#gallery-prev, #gallery-next {
+position: absolute;
+top: 50%;
+width: 32px;
+height: 32px;
+font-size: 1.2em;
+}
+
+#gallery-prev {
+left: 5px;
+}
+
+#gallery-next {
+right: 5px;
+}
+
+.mobile-spacing {
+height: 60px !important;
+}
+}
+.event-title {
+font-family: 'Huninn', 'Nunito', Arial, sans-serif;
+font-size: 5rem;
+font-weight: 500;
+margin-top: 50px;
+margin-bottom: 10px;
+color: #ffffff;
+letter-spacing: -1.5px;
+text-align: left;
+background: none;
+border-radius: 0;
+box-shadow: none;
+-webkit-text-stroke: 2.5px #00a0ae;
+}
+.left-col {
+flex: 1 1 340px;
+min-width: 280px;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+}
+.event-table-2col {
+width: 100%;
+max-width: 1300px;
+margin: 0 auto;
+border-spacing: 0 0;
+background: rgba(255, 255, 255, 0.027);
+border-radius: 0px;
+box-shadow: 0 2px 12px #e1d9ff33;
+overflow: hidden;
+font-family: 'Nunito', Arial, sans-serif;
+font-size: 1.08rem;
+}
+.event-table-left {
+width: 1000px;
+vertical-align: top;
+padding: 36px 24px 36px 36px;
+}
+.event-table-right {
+width: 1000px;
+vertical-align: top;
+padding: 32px 32px 32px 32px;
+}
+.info-card {
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: flex-start;
+background: rgba(255, 255, 255, 0);
+border-radius: 10px;
+padding: 6px 10px;
+min-width: 120px;
+width: auto;
+margin-bottom: 10px;
+font-size: 0.85rem;
+}
+.info-label {
+font-family: 'Nunito', Arial, sans-serif;
+font-size: 0.92rem;
+font-weight: 700;
+color: #322234;
+margin-bottom: 2px;
+}
+.info-desc {
+font-size: 0.8rem;
+color: #444;
+}
+.event-section {
+margin-bottom: 18px;
+}
+.event-label {
+font-family: 'Nunito', Arial, sans-serif;
+font-size: 1.08rem;
+font-weight: 700;
+color: #322234;
+margin-bottom: 4px;
+text-align: left;
+}
+.event-value {
+font-size: 1.05rem;
+color: #444;
+text-align: left;
+}
+
+.event-map {
+width: 100%;
+max-width: 800px;
+margin-top: 12px;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 2px 12px #e1d9ff33;
+}
+
+/* ORGANIZER SECTION CSS */
+.organizer-section {
+background: linear-gradient(135deg,#e1d9ff00 0%,#b1e2ff00 100%);
+border-radius: 18px;
+padding: 32px 32px 24px 32px;
+margin-top: 24px;
+box-shadow: 0 2px 12px #e1d9ff33;
+}
+.organizer-label {
+font-family: 'Nunito', Arial, sans-serif;
+font-size: 1.08rem;
+font-weight: 700;
+color: #322234;
+margin-bottom: 8px;
+}
+.organizer-name {
+font-family: 'Nunito', Arial, sans-serif;
+font-size: 1.35rem;
+font-weight: 900;
+color: #222;
+margin-bottom: 24px;
+}
+.organizer-cards {
+display: flex;
+flex-direction: row;
+gap: 48px;
+}
+.organizer-card {
+flex: 1;
+background: rgba(4, 2, 2, 0);
+border-radius: 14px;
+padding: 18px 24px;
+box-shadow: 0 2px 8px #00000000;
+display: flex;
+flex-direction: column;
+align-items: center;
+min-width: 180px;
+}
+.organizer-icon {
+margin-bottom: 12px;
+}
+.organizer-card-title {
+font-family: 'Nunito', Arial, sans-serif;
+font-size: 1.08rem;
+font-weight: 700;
+color: #32223400;
+margin-bottom: 4px;
+}
+.organizer-card-link {
+font-size: 1rem;
+color: #222;
+text-decoration: underline;
+}
+/* END ORGANIZER SECTION CSS */
+.pricing-card > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  align-items: center; /* Center the pricing options horizontally */
+}
+.pricing-card .pricing-option {
+  min-width: 160px;
+  max-width: 160px;
+  width: 160px;
+  text-align: center;
+}
+.pricing-option {
+  margin: 0 auto; /* Center each button inside its flex container */
+}
+.pricing-options {
+display: flex;
+flex-direction: column;
+gap: 0.7rem;
+margin-left: 2.5rem;
+margin-bottom: 1.5rem;
+}
+.pricing-option {
+font-size: 0.98rem;
+font-weight: 700;
+color: #716cff;
+background: #f6f3ff;
+border-radius: 9px;
+padding: 0.36rem 0.8rem;
+cursor: pointer;
+transition: transform 0.15s, box-shadow 0.15s, background 0.2s, color 0.2s;
+box-shadow: 0 2px 8px #716cff22;
+outline: none;
+border: 2px solid transparent;
+user-select: none;
+margin-right: auto;
+width: fit-content;
+min-width: 120px;
+min-height: 32px;
+line-height: 1.2;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+}
+.pricing-option:hover, .pricing-option:focus {
+transform: scale(1.06);
+box-shadow: 0 4px 16px #716cff44;
+background: #e6e0ff;
+}
+.pricing-option.selected {
+background: #716cff;
+color: #fff;
+border: 2px solid #4b2fcf;
+box-shadow: 0 4px 16px #716cff77;
+transform: scale(1.06);
+}
+
+@media (max-width: 768px) {
+/* Pricing section mobile adjustments */
+.pricing-options {
+margin-left: 0 !important;
+gap: 0.25rem !important;
+flex-wrap: wrap !important;
+align-items: center !important;
+justify-content: center !important;
+width: 100% !important;
+}
+
+.pricing-option {
+font-size: 0.7rem !important;
+padding: 0.3rem 0.5rem !important;
+min-width: 80px !important;
+width: min(140px, 90vw) !important;
+max-width: 140px !important;
+text-align: center !important;
+margin: 0 auto 0.25rem auto !important;
+box-sizing: border-box !important;
+display: flex !important;
+align-items: center !important;
+justify-content: center !important;
+}
+
+.pricing-option.new-option {
+  position: relative;
+}
+
+.main-flex {
+flex-direction: column !important;
+padding: 0.5rem !important;
+gap: 0.25rem !important;
+max-width: 100vw !important;
+}
+
+.event-title {
+font-size: 1.8rem !important;
+text-align: left !important;
+-webkit-text-stroke: 2px #00a0ae !important;
+line-height: 1.2 !important;
+}
+
+.event-table-2col {
+display: block !important;
+width: 100% !important;
+max-width: 100% !important;
+margin-left: 0 !important;
+margin-right: 0 !important;
+font-size: 0.75rem !important;
+}
+
+/* Make both columns stack vertically as single column */
+.event-table-left, .event-table-right {
+display: block !important;
+width: 100% !important;
+padding: 0.5rem !important;
+margin-bottom: 0.5rem !important;
+}
+
+/* Remove table row structure on mobile */
+.event-table-2col tr {
+display: block !important;
+}
+
+/* Remove table cell structure on mobile */
+.event-table-2col td {
+display: block !important;
+width: 100% !important;
+padding: 0 !important;
+}
+
+/* Mobile typography adjustments */
+.event-label {
+font-size: 0.8rem !important;
+margin-bottom: 0.25rem !important;
+}
+
+.event-value {
+font-size: 0.75rem !important;
+line-height: 1.3 !important;
+margin-bottom: 0.5rem !important;
+}
+
+.event-value ul {
+margin-left: 0.5rem !important;
+padding-left: 0.25rem !important;
+}
+
+.event-value ul li {
+font-size: 0.7rem !important;
+margin-bottom: 0.2rem !important;
+line-height: 1.2 !important;
+}
+
+/* Pricing section mobile adjustments */
+.pricing-options {
+margin-left: 0 !important;
+gap: 0.25rem !important;
+flex-wrap: wrap !important;
+}
+
+.pricing-option {
+font-size: 0.7rem !important;
+padding: 0.3rem 0.5rem !important;
+min-width: 80px !important;
+}
+
+#price-tag {
+font-size: 0.75rem !important;
+padding: 0.2rem 0.6rem !important;
+}
+
+#price-total {
+font-size: 0.7rem !important;
+}
+
+#get-tickets-btn {
+font-size: 0.85rem !important;
+padding: 0.5rem 1.5rem !important;
+}
+
+/* Gallery styling for mobile */
+#swipe-gallery {
+max-width: 100% !important;
+margin: 0 auto !important;
+}
+
+#gallery-img {
+max-width: 90% !important;
+margin: 0 auto 0.5rem auto !important;
+height: auto !important;
+object-fit: contain !important;
+}
+
+/* Gallery navigation buttons for mobile */
+#gallery-prev, #gallery-next {
+position: absolute !important;
+top: 50% !important;
+width: 24px !important;
+height: 24px !important;
+font-size: 0.8rem !important;
+}
+
+#gallery-prev {
+left: 2px !important;
+}
+
+#gallery-next {
+right: 2px !important;
+}
+
+/* Organizer section mobile adjustments */
+.organizer-section {
+padding: 0.5rem !important;
+}
+
+.organizer-label {
+font-size: 0.8rem !important;
+}
+
+.organizer-name {
+font-size: 0.9rem !important;
+margin-bottom: 0.5rem !important;
+}
+
+.organizer-cards {
+flex-direction: column !important;
+gap: 0.5rem !important;
+}
+
+.organizer-card {
+min-width: auto !important;
+padding: 0.5rem !important;
+}
+
+.organizer-card-title {
+font-size: 0.75rem !important;
+}
+
+.organizer-card-link {
+font-size: 0.7rem !important;
+}
+
+/* Back button mobile adjustment */
+.main-flex + a {
+top: 10px !important;
+left: 10px !important;
+font-size: 0.8rem !important;
+padding: 4px 10px 4px 6px !important;
+}
+
+  .pricing-card {
+    min-width: 0 !important;
+    padding: 0.5em 2em !important;
+    margin: 0em 0 0.5em 0 !important;
+    box-sizing: border-box !important;
+  }
+  .pricing-card-label {
+    font-size: 1rem !important;
+    margin-bottom: 0.4em !important;
+  }
+  .pricing-option {
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.5rem !important;
+    margin: 0.15em auto !important;
+  }
+}
+
+</style>
+</head>
+<body>
+<!-- Terms & Conditions Modal -->
+<div id="termsModal" class="modal-fade" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#0008;z-index:2000;align-items:center;justify-content:center;">
+<div style="background:#fff;border-radius:18px;max-width:540px;width:96vw;padding:1.5em 1.2em;box-shadow:0 4px 32px #a259ff33;position:relative;overflow-y:auto;max-height:92vh;font-size:0.97em;">
+<button type="button" class="modal-close-x" aria-label="Close" onclick="document.getElementById('termsModal').classList.remove('show'); setTimeout(()=>{document.getElementById('termsModal').style.display='none';},500);">&times;</button>
+<h2 style="color:#716cff;font-size:1.4em;margin-bottom:0.7em;">Queer Latin Dance San Diego - Terms & Conditions</h2>
+<div style="color:#444;line-height:1.7;font-size:1.04em;max-height:70vh;overflow-y:auto;">
+<b>Registration & Payment</b><br>
+&bull; Full payment is required to secure your spot in the series.<br><br>
+<b>Attendance & Missed Classes</b><br>
+&bull; Missed classes will not be refunded or credited.<br>
+&bull; We do not offer makeup classes at this time.<br>
+&bull; We recommend attending all sessions to get the most out of the series.<br><br>
+<b>Refund Policy</b><br>
+&bull; All payments are non-refundable.<br>
+&bull; Studio space is reserved and paid in advance, and we are unable to offer refunds for cancellations or no-shows.<br><br>
+&bull; In the event of cancellation on our part, full refunds will be issued.<br><br>
+<b>Communication & Updates</b><br>
+&bull; We will communicate schedule changes, postponements, or cancellations via email and our WhatsApp group chat.<br>
+&bull; Please ensure your contact information is accurate and check your email & WhatsApp regularly.<br><br>
+<b>Safety & Respect</b><br>
+&bull; All participants are expected to act in accordance with our Code of Conduct.<br>
+&bull; Discriminatory, inappropriate, or disruptive behavior will not be tolerated and may result in removal without refund.<br><br>
+<b>Liability</b><br>
+&bull; By participating in our classes, you acknowledge that dancing is a physical activity and accept all risks involved.<br>
+&bull; Queer Latin Dance SD and its instructors are not liable for any injuries sustained during classes or events.<br><br>
+<b>Media Release</b><br>
+&bull; We may occasionally take photos or short videos for promotional purposes.<br>
+&bull; If you prefer not to be photographed, please let the instructor know at the start of class.<br><br>
+Thank you for your support. Please email <a href="mailto:queerlatindancesd@gmail.com" style="color:#a259ff;text-decoration:underline;">queerlatindancesd@gmail.com</a> with any questions or comments.
+</div>
+</div>
+</div>
+<a href="courses.html" style="position:fixed;top:28px;left:38px;z-index:10;text-decoration:none;font-family:'Nunito',Arial,sans-serif;font-size:1.13rem;font-weight:800;color:#716cff;background:#fff6;padding:7px 18px 7px 12px;border-radius:8px;box-shadow:0 2px 8px #716cff22;display:inline-flex;align-items:center;gap:7px;transition:background 0.18s,box-shadow 0.18s;">
+<span style="font-size:1.25em;line-height:1;">&#8592;</span>Back
+</a>
+<table class="event-table-2col" style="margin-left: 32px;">
+<tr>
+<td class="event-table-left">
+8 Week Option (Discounted!): Includes 2 Cycles of the 4 Week Series, Summer 1 & Summer 2. Summer 2 dates are TBD.
+<!-- Salsa series description above pricing -->
+<br><a href="#course-details" class="read-more-link">See Course Details</a>
+<br><a href="courses.html#faqs">See FAQs</a>
+</div>
+<div class="event-section" style="margin-top: 10px; margin-bottom: 5rem;">
+<div>
+<span class="event-label">Pricing</span>
+<div style="display:flex;flex-direction:column;align-items:flex-start;margin-top:2px;">
+<span id="price-tag" style="display:inline-flex;align-items:center;background:#f6f3ff;color:#7c3aed;font-size:1.01rem;font-weight:800;border-radius:7px;padding:2px 12px 2px 10px;box-shadow:0 1px 4px #716cff18;min-width:90px;text-align:left;margin-top:3px;">$20 per hr</span>
+<span id="price-total" style="font-size:0.98rem;color:#444;font-weight:600;margin-top:10px;margin-bottom:10px;text-align:left;min-width:170px;">Total: 4 weeks x $20/hr = $80</span>
+</div>
+</div>
+<div style="font-style:italic;font-size:1.13rem;margin-bottom:1.1rem;">Please select from the following:</div>
+<div style="display: flex; gap: 12px; justify-content: flex-start; align-items: flex-start; margin-bottom: 1.5rem;">
+  <!-- 4 Week Card -->
+  <div class="pricing-card" style="background:#fff6;border-radius:18px;box-shadow:0 2px 12px #716cff22;padding:1.2em 1em 1em 1em;display:flex;flex-direction:column;align-items:flex-start;min-width:180px;">
+    <div class="pricing-card-label" style="font-family:'Nunito',Arial,sans-serif;font-size:1.35rem;font-weight:900;color:#716cff;margin-bottom:0.7em;letter-spacing:1px;">4 weeks</div>
+    <div style="display:flex;flex-direction:column;gap:8px;width:100%;">
+      <div class="pricing-option" tabindex="0" data-desc="">Salsa Only</div>
+      <div class="pricing-option" tabindex="0" data-desc="">Bachata Only</div>
+      <div class="pricing-option" tabindex="0" data-desc="">Salsa &amp; Bachata</div>
+    </div>
+  </div>
+  <!-- 8 Week Card -->
+  <div class="pricing-card" style="background:#fff6;border-radius:18px;box-shadow:0 2px 12px #716cff22;padding:1.2em 1em 1em 1em;display:flex;flex-direction:column;align-items:flex-start;min-width:180px;">
+    <div class="pricing-card-label" style="font-family:'Nunito',Arial,sans-serif;font-size:1.35rem;font-weight:900;color:#ff2d2d;margin-bottom:0.7em;letter-spacing:1px;">8 weeks (NEW!)</div>
+    <div style="display:flex;flex-direction:column;gap:8px;width:100%;">
+      <div class="pricing-option" tabindex="0" data-desc="">8wk Salsa Only</div>
+      <div class="pricing-option" tabindex="0" data-desc="">8wk Bachata Only</div>
+      <div class="pricing-option" tabindex="0" data-desc="">8wk Salsa &amp; Bachata</div>
+    </div>
+  </div>
+</div>
+<div style="margin-top:1.2rem; display:flex; justify-content:center; width:100%;">
+<a id="get-tickets-btn" href="#" style="background:#716cff;color:#fff;font-family:'Nunito',Arial,sans-serif;font-weight:900;font-size:1.1rem;padding:0.7rem 2.2rem;border-radius:1.2rem;text-decoration:none;box-shadow:0 2px 12px #716cff44;transition:background 0.18s,color 0.18s;">Register</a>
+</div>
+</div>
+<div id="pricing-desc" style="margin-top:1.1rem;font-size:1.08rem;color:#444;min-height:48px;"></div>
+</div>
+</td>
+<td class="event-table-right" style="padding-left: 56px;">
+<div class="event-section" style="padding:0; margin:0 0 18px 0; display:flex; justify-content:center; align-items:center;">
+<div style="position:relative; width:100%; max-width:520px; display:flex; align-items:center; justify-content:center;">
+<img id="gallery-img" src="images/lessons/Spring1.png" alt="4 Week Series Promo" style="width:100%;max-width:520px;height:auto;display:block;margin:0 0 18px 0;border-radius:18px;box-shadow:0 2px 12px #716cff22;object-fit:contain;transition:opacity 0.2s;" />
+</div>
+</div>
+<div class="event-section" id="course-details">
+  <div class="event-value">
+<b>Series Dates:</b> `
+<a id="gcal-link-friday" href="#" target="_blank" title="Add Series to Google Calendar" style="display:inline-block;margin-left:8px;vertical-align:middle;">
+  <img src="images/eventpage/Schedulicon 1.png" alt="Google Calendar" style="height:20px;width:20px;vertical-align:middle;filter:drop-shadow(0 1px 2px #fff8);" />
+</a>
+<span id="series-dates" style="color:#943dff;font-weight:700;">Loading...</span><br>
+<b>RSVP Deadline:</b> <span id="rsvp-deadline" style="color:#ff2d2d;font-weight:700;">Loading...</span>
+  <br>Class Times: <span id="class-times" style="color:#943dff;font-weight:700;">Loading...</span><br>
+<section class="event-section">
+<h2 class="event-label">Series Overview</h2>
+<div class="event-value">
+<h3>4 Week Series 1: Level 1 Introduction to Salsa On2 & Bachata</h3>
+<p>
+A fast-paced beginner class that is meant to be retaken so you don’t have to commit to 6–8 week long classes. The series cycles for new students and for students who are retaking the series to develop muscle memory and build a strong foundation in their basics. Each cycle of the series, is a slightly different variation of the material.
+</p>
+<h4>What's it like taking Salsa Series 1?</h4>
+<ul>
+<li><strong>1st time BASICS:</strong> Exposure to the basics, learn timing and rhythm, retain at least 30% of the material.</li>
+<li><strong>2nd time retaking BODY MECHANICS:</strong> Do the basics on your own, retain an extra 30%, focus on body movement</li>
+<li><strong>3rd time retaking STYLING:</strong> Develop muscle memory of the basics. Retain an extra 40%, successfully execute basic combos. Add styling</li>
+</ul>
+<h4>What's it like taking Bachata Series 1?</h4>
+<ul>
+<li>Bachata Series 1 is meant to be taken once or as many times as you need. Bachata basics are much easier to learn than Salsa due to simpler rhythm and timing and can get more complex as you progress due to hip and body movement.</li>
+</ul>
+<p><em>Note: Retention and progress depend on your background in body movement and dance. <b>Practicing outside of class is mandatory and recap videos will be provided.</b> The homework (documentaries and reading material) is optional but highly recommended.</em></p>
+<h4>About the Instructor:</h4>
+<p>Michelle’s passion for movement began in El Centro, California, where she has over 24 years of experience in gymnastics, ballet, karate, and 12 years of classical music, including choir and violin. These early experiences built her discipline, strength, flexibility, and body awareness. She later began her Latin dance journey at UC San Diego and now has over 8 years of experience in salsa and bachata.
+<a href="michelle.html" class="read-more-link">Read more...</a></p>
+</div>
+</section>
+You can sign up for <b>Salsa</b>, <b>Bachata</b>, or <b>both</b>! Drop-ins are available if you can’t make all the dates, but we highly recommend joining the full series to progress with us into the next 4-Week Series 2 beginner lessons.
+<br>
+<b>Important Notes:</b>
+<ul style="margin:0 0 0 1.2em;padding:0 0 0 1.2em;list-style:square;color:#090808;">
+  <li>Payment is non-refundable. We book studio space in advance and are unable to offer refunds at this time.</li>
+<li>We have a limited number of reduced-price spots available. Please contact us if you'd like to be considered.</li>
+</ul>
+<br>
+<span style="color:#716cff;font-weight:700;">Thank you for understanding. We can’t wait to dance with you!</span><br>
+<span style="color:#070505;">Email us at <a href="mailto:queerlatindancesd@gmail.com" style="color:#a259ff;text-decoration:underline;">queerlatindancesd@gmail.com</a> with any questions or comments.</span>
+</div>
+</div>
+</div>
+<div class="event-section">
+<div class="event-label">LOCATION</div>
+<div class="event-value">
+Studio K<br>
+9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123 &amp; D, San Diego CA 92126
+<div class="event-map">
+<a href="https://maps.app.goo.gl/P8sKwApM5b67xiLa8?g_st=ipc" target="_blank" rel="noopener" style="display:block;">
+  <iframe src="https://www.google.com/maps?q=9340+Clairemont+Mesa+Blvd,+Ste+F,+San+Diego,+CA+92123&output=embed" width="100%" height="220" style="border:0;border-radius:12px;margin-top:12px;box-shadow:0 2px 12px #e1d9ff33;pointer-events:none;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" tabindex="-1"></iframe>
+</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<script>
+// Terms & Conditions modal logic
+function openTermsModal() {
+const modal = document.getElementById('termsModal');
+modal.style.display = 'flex';
+setTimeout(() => modal.classList.add('show'), 10);
+}
+document.addEventListener('DOMContentLoaded', function() {
+['termsLink1','termsLink2','termsLink3'].forEach(function(id) {
+const link = document.getElementById(id);
+if (link) link.onclick = function(e) { e.preventDefault(); openTermsModal(); };
+});
+});
+
+let calendarData = null;
+
+// Load calendar data from JSON
+// ...existing code...
+fetch('calendar-data.json')
+.then(response => response.json())
+.then(data => {
+  calendarData = data.friSpringP1;  // ✅ updated from data.series1
+  console.log('Calendar data loaded:', calendarData);
+
+  // Update series dates
+  const seriesDatesSpan = document.getElementById('series-dates');
+  if (seriesDatesSpan) {
+    seriesDatesSpan.textContent = `${calendarData.dayOfWeek} – ${calendarData.dates.join(', ')}`;
+  }
+
+  // Update RSVP deadline
+  const rsvpSpan = document.getElementById('rsvp-deadline');
+  if (rsvpSpan && calendarData.rsvpDeadline) {
+    rsvpSpan.textContent = calendarData.rsvpDeadline;
+  }
+
+  // Update class times
+  const classTimesSpan = document.getElementById('class-times');
+  if (classTimesSpan) {
+    let timesText = '';
+    if (calendarData.times.salsa) timesText += `Salsa: ${calendarData.times.salsa}`;
+    if (calendarData.times.bachata) {
+      if (timesText) timesText += ' | ';
+      timesText += `Bachata: ${calendarData.times.bachata}`;
+    }
+    classTimesSpan.innerHTML = timesText;
+  }
+
+  // Update Google Calendar link
+  const gcalLinkFriday = document.getElementById('gcal-link-friday');
+  if (gcalLinkFriday) {
+    gcalLinkFriday.href = getGcalUrlFriday();
+  }
+})
+.catch(error => console.error('Error loading calendar data:', error));
+// ...existing code...
+function getSelectedPricing() {
+const selected = document.querySelector('.pricing-option.selected');
+if (!selected) return 'both';
+const text = selected.textContent.trim().toLowerCase();
+if (text.includes('salsa') && text.includes('bachata')) return 'both';
+if (text.includes('salsa')) return 'salsa';
+if (text.includes('bachata')) return 'bachata';
+return 'both';
+}
+// Pricing option selection logic
+document.addEventListener('DOMContentLoaded', function() {
+const options = document.querySelectorAll('.pricing-option');
+const descBox = document.getElementById('pricing-desc');
+const gcalLink = document.getElementById('gcal-link');
+// Google Calendar link for Friday series
+function getGcalUrlFriday() {
+if (!calendarData) return '#';
+
+const title = `Queer Salsa & Bachata Series (${calendarData.dayOfWeek})`;
+const details = `Join us for ${calendarData.dayOfWeek} Salsa & Bachata lessons! ${calendarData.location.name}, ${calendarData.location.address}`;
+const location = `${calendarData.location.name}, ${calendarData.location.address}`;
+const checkDataForDates = setInterval(() => {
+if (calendarData) {
+const seriesDatesSpan = document.getElementById('series-dates');
+if (seriesDatesSpan) {
+seriesDatesSpan.textContent = `${calendarData.dayOfWeek} – ${calendarData.dates.join(', ')}`;
+}
+clearInterval(checkDataForDates);
+}
+}, 100);
+const checkDataForRSVP = setInterval(() => {
+if (calendarData) {
+const rsvpSpan = document.getElementById('rsvp-deadline');
+if (rsvpSpan && calendarData.rsvpDeadline) {
+rsvpSpan.textContent = calendarData.rsvpDeadline;
+}
+clearInterval(checkDataForRSVP);
+}
+}, 100);
+// Use googleCalendarDates from JSON
+const dates = calendarData.googleCalendarDates.map(d => ({
+start: d,
+end: d
+}));
+const timeStart = '1800', timeEnd = '1950';
+// Use first date for link, mention all in details
+let recur = 'RRULE:FREQ=WEEKLY;COUNT=4';
+let start = dates[0].start + 'T' + timeStart + '00';
+let end = dates[0].end + 'T' + timeEnd + '00';
+let url = 'https://calendar.google.com/calendar/render?action=TEMPLATE';
+url += '&text=' + encodeURIComponent(title);
+url += '&dates=' + start + '/' + end;
+url += '&details=' + encodeURIComponent(details + `\n\nDates: ${calendarData.dates.join(', ')}, ${calendarData.year}`);
+url += '&location=' + encodeURIComponent(location);
+url += '&recur=' + encodeURIComponent(recur);
+return url;
+}
+function setDesc(option) {
+const desc = option.getAttribute('data-desc') || '';
+descBox.textContent = desc;
+}
+const priceTag = document.getElementById('price-tag');
+const priceTotal = document.getElementById('price-total');
+function updatePriceTag() {
+const selected = document.querySelector('.pricing-option.selected');
+let price = '$20 per hr';
+let total = 'Total: 4 weeks x $20/hr = $80';
+if (selected) {
+  const text = selected.textContent.trim().toLowerCase();
+  if (text.includes('8wk')) {
+    if (text.includes('salsa') && text.includes('bachata')) {
+      price = '$15 per hr';
+      total = 'Total: 8 weeks x $15/hr = $240';
+    } else if (text.includes('salsa')) {
+      price = '$17 per hr';
+      total = 'Total: 8 weeks x $17/hr = $136';
+    } else if (text.includes('bachata')) {
+      price = '$17 per hr';
+      total = 'Total: 8 weeks x $17/hr = $136';
+    }
+  } else {
+    if (text.includes('salsa') && text.includes('bachata')) {
+      price = '$18 per hr';
+      total = 'Total: 4 weeks x $18/hr = $144';
+    } else if (text.includes('salsa')) {
+      price = '$20 per hr';
+      total = 'Total: 4 weeks x $20/hr = $80';
+    } else if (text.includes('bachata')) {
+      price = '$20 per hr';
+      total = 'Total: 4 weeks x $20/hr = $80';
+    }
+  }
+}
+if (priceTag) priceTag.textContent = price;
+if (priceTotal) priceTotal.textContent = total;
+}
+
+options.forEach(option => {
+option.addEventListener('click', function() {
+options.forEach(opt => opt.classList.remove('selected'));
+this.classList.add('selected');
+setDesc(this);
+updatePriceTag();
+});
+option.addEventListener('keydown', function(e) {
+if (e.key === 'Enter' || e.key === ' ') {
+options.forEach(opt => opt.classList.remove('selected'));
+this.classList.add('selected');
+setDesc(this);
+updatePriceTag();
+}
+});
+});
+// Mapping from your option names to Stripe keys
+const optionToStripeKey = {
+  '8WK-S1-p1 Salsa & Bachata': 'both8wk',
+  '8WK-S1-p1 Salsa Only': 'salsa8wk',
+  '8WK-S1-p1 Bachata Only': 'bachata8wk',
+  '4WK-S1-p1 Salsa & Bachata': 'both',
+  '4WK-S1-p1 Salsa Only': 'salsa',
+  '4WK-S1-p1 Bachata Only': 'bachata'
+};
+
+let stripeLinks = {};
+fetch('pricing-config.json')
+  .then(response => response.json())
+  .then(data => {
+    stripeLinks = data.stripeLinks.series;
+
+    const stripeBtn = document.getElementById('stripe-btn');
+    stripeBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const selected = document.querySelector('.pricing-option.selected');
+      let option = '4WK-S1-p1 Salsa & Bachata';
+
+      if (selected) {
+        const text = selected.textContent.trim().toLowerCase();
+        if (text.includes('8wk')) {
+          if (text.includes('salsa') && text.includes('bachata')) {
+            option = '8WK-S1-p1 Salsa & Bachata';
+          } else if (text.includes('salsa')) {
+            option = '8WK-S1-p1 Salsa Only';
+          } else if (text.includes('bachata')) {
+            option = '8WK-S1-p1 Bachata Only';
+          }
+        } else {
+          if (text.includes('salsa') && text.includes('bachata')) {
+            option = '4WK-S1-p1 Salsa & Bachata';
+          } else if (text.includes('salsa')) {
+            option = '4WK-S1-p1 Salsa Only';
+          } else if (text.includes('bachata')) {
+            option = '4WK-S1-p1 Bachata Only';
+          }
+        }
+      }
+      const stripeKey = optionToStripeKey[option];
+      if (stripeLinks[stripeKey]) {
+        window.location.href = stripeLinks[stripeKey];
+      } else {
+        alert('Stripe link not found for this option.');
+      }
+    });
+  });
+// Optionally, show Salsa Only by default
+options[0].classList.add('selected');
+setDesc(options[0]);
+updatePriceTag();
+// Get Tickets button logic
+const getTicketsBtn = document.getElementById('get-tickets-btn');
+getTicketsBtn.addEventListener('click', function(e) {
+e.preventDefault();
+const selected = document.querySelector('.pricing-option.selected');
+let option = '4WK-S1-p1 Salsa & Bachata';
+let price = '144';
+if (selected) {
+  const text = selected.textContent.trim().toLowerCase();
+  if (text.includes('8wk')) {
+    if (text.includes('salsa') && text.includes('bachata')) {
+      option = '8WK-S1-p1 Salsa & Bachata';
+      price = '272';
+    } else if (text.includes('salsa')) {
+      option = '8WK-S1-p1 Salsa Only';
+      price = '152';
+    } else if (text.includes('bachata')) {
+      option = '8WK-S1-p1 Bachata Only';
+      price = '152';
+    }
+  } else {
+    if (text.includes('salsa') && text.includes('bachata')) {
+      option = '4WK-S1-p1 Salsa & Bachata';
+      price = '144';
+    } else if (text.includes('salsa')) {
+      option = '4WK-S1-p1 Salsa Only';
+      price = '80';
+    } else if (text.includes('bachata')) {
+      option = '4WK-S1-p1 Bachata Only';
+      price = '80';
+    }
+  }
+}
+const includes = 'Homework & Recap Videos,Discounted rate for the social';
+window.location.href = `payment1.html?option=${encodeURIComponent(option)}&price=${encodeURIComponent(price)}`;
+});
+const gcalLinkFriday = document.getElementById('gcal-link-friday');
+if (gcalLinkFriday) {
+const checkData = setInterval(() => {
+if (calendarData) {
+gcalLinkFriday.href = getGcalUrlFriday();
+clearInterval(checkData);
+}
+}, 100);
+}
+// Update class times from JSON
+const checkDataForTimes = setInterval(() => {
+if (calendarData) {
+const classTimesSpan = document.getElementById('class-times');
+if (classTimesSpan) {
+let timesText = '';
+if (calendarData.times.salsa && calendarData.times.salsa !== 'Cancelled') {
+timesText += `Salsa: ${calendarData.times.salsa}`;
+}
+if (calendarData.times.bachata && calendarData.times.bachata !== 'N/A' && calendarData.times.bachata !== 'Cancelled') {
+if (timesText) timesText += ' | ';
+timesText += `Bachata: ${calendarData.times.bachata}`;
+}
+classTimesSpan.innerHTML = timesText;
+}
+clearInterval(checkDataForTimes);
+}
+}, 100);
+});
+
+</script>
+</body>
+</html>
