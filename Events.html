@@ -302,7 +302,16 @@ font-size: 1.3em;
 </div>
 <!-- Desktop Navigation -->
 <nav>
-<a href="courses.html">Courses</a>
+<div class="nav-dropdown">
+  <a href="courses.html" class="nav-dropdown-toggle">
+    Courses ▾
+  </a>
+  <div class="nav-dropdown-menu">
+    <a href="courses-login.html">Course Login</a>
+    <a href="course-options.html">Online Courses</a>
+    <a href="courses.html">In-Person Courses</a>
+  </div>
+</div>
 <a href="Events.html">Events</a>
 <a href="gallery.html">Gallery</a> 
 <a href="directory.html">Directory</a>
@@ -315,7 +324,7 @@ font-size: 1.3em;
 </span>
 </nav>
 <!-- Mobile Navigation Toggle -->
-<button class="mobile-nav-toggle" aria-label="Toggle navigation">
+<button class="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav">
 <span></span>
 <span></span>
 <span></span>
@@ -323,9 +332,14 @@ font-size: 1.3em;
 </header>
 
 <!-- Mobile Navigation Menu -->
-<div class="mobile-nav-menu">
+<div class="mobile-nav-menu" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
 <nav>
 <a href="courses.html">Courses</a>
+    <div class="mobile-submenu">
+      <a href="courses-login.html">Course Login</a>
+      <a href="course-options.html">Online Courses</a>
+      <a href="courses.html">In-Person Courses</a>
+    </div>
 <a href="Events.html">Events</a>
 <a href="gallery.html">Gallery</a> 
 <a href="directory.html">Directory</a>

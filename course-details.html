@@ -490,34 +490,56 @@
     <button onclick="viewCart()" class="cart-modal-btn view">View Cart</button>
     <button onclick="closeCart()" class="cart-modal-btn close">Close</button>
   </div>
-  <nav>
-    <a href="courses.html">Courses</a>
-    <a href="Events.html">Events</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="directory.html">Directory</a>
-    <a href="team.html">Team</a>
-    <a href="book-us.html">Book Us</a>
-    <a href="merch.html">Merch</a>
-    <span id="cart-nav" class="cart-nav">
-      <img src="images/icons/cart-icon.png" alt="Cart" class="cart-icon-img">
-      <span id="cart-count" class="cart-count">0</span>
-    </span>
-  </nav>
-  <button class="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav">
-    <span></span><span></span><span></span>
-  </button>
-</header>
-<div class="mobile-nav-menu" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
-  <nav>
-    <a href="courses.html">Courses</a>
-    <a href="Events.html">Events</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="directory.html">Directory</a>
-    <a href="team.html">Team</a>
-    <a href="book-us.html">Book Us</a>
-    <a href="merch.html">Merch</a>
-  </nav>
+<!-- Desktop Navigation -->
+<nav>
+<div class="nav-dropdown">
+  <a href="courses.html" class="nav-dropdown-toggle">
+    Courses ▾
+  </a>
+  <div class="nav-dropdown-menu">
+    <a href="courses-login.html">Course Login</a>
+    <a href="course-options.html">Online Courses</a>
+    <a href="courses.html">In-Person Courses</a>
+  </div>
 </div>
+<a href="Events.html">Events</a>
+<a href="gallery.html">Gallery</a> 
+<a href="directory.html">Directory</a>
+<a href="team.html">Team</a>
+<a href="book-us.html">Book Us</a>
+<a href="merch.html">Merch</a>
+<span id="cart-nav" class="cart-nav">
+<img src="images/icons/cart-icon.png" alt="Cart" class="cart-icon-img">
+<span id="cart-count" class="cart-count">0</span>
+</span>
+</nav>
+<!-- Mobile Navigation Toggle -->
+<button class="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav">
+<span></span>
+<span></span>
+<span></span>
+</button>
+</header>
+
+<!-- Mobile Navigation Menu -->
+<div class="mobile-nav-menu" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
+<nav>
+<a href="courses.html">Courses</a>
+    <div class="mobile-submenu">
+      <a href="courses-login.html">Course Login</a>
+      <a href="course-options.html">Online Courses</a>
+      <a href="courses.html">In-Person Courses</a>
+    </div>
+<a href="Events.html">Events</a>
+<a href="gallery.html">Gallery</a> 
+<a href="directory.html">Directory</a>
+<a href="team.html">Team</a>
+<a href="book-us.html">Book Us</a>
+<a href="merch.html">Merch</a>
+<span id="cart-nav-mobile" class="cart-nav-mobile">
+<img src="images/icons/cart-icon.png" alt="Cart" class="cart-icon-img">
+<span id="cart-count-mobile" class="cart-count-mobile">0</span>
+</span>
 
 <!-- <section class="co-hero">
   <p class="co-hero-eyebrow">Queer Latin Dance SD</p>

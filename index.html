@@ -1104,7 +1104,16 @@ position: relative;
   </div>
 <!-- Desktop Navigation -->
 <nav>
-<a href="courses.html">Courses</a>
+<div class="nav-dropdown">
+  <a href="courses.html" class="nav-dropdown-toggle">
+    Courses ▾
+  </a>
+  <div class="nav-dropdown-menu">
+    <a href="courses-login.html">Course Login</a>
+    <a href="course-options.html">Online Courses</a>
+    <a href="courses.html">In-Person Courses</a>
+  </div>
+</div>
 <a href="Events.html">Events</a>
 <a href="gallery.html">Gallery</a> 
 <a href="directory.html">Directory</a>
@@ -1116,7 +1125,6 @@ position: relative;
 <span id="cart-count" class="cart-count">0</span>
 </span>
 </nav>
-
 <!-- Mobile Navigation Toggle -->
 <button class="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav">
 <span></span>
@@ -1124,11 +1132,15 @@ position: relative;
 <span></span>
 </button>
 </header>
-
 <!-- Mobile Navigation Menu -->
 <div class="mobile-nav-menu" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
 <nav>
 <a href="courses.html">Courses</a>
+    <div class="mobile-submenu">
+      <a href="courses-login.html">Course Login</a>
+      <a href="course-options.html">Online Courses</a>
+      <a href="courses.html">In-Person Courses</a>
+    </div>
 <a href="Events.html">Events</a>
 <a href="gallery.html">Gallery</a> 
 <a href="directory.html">Directory</a>
@@ -1184,12 +1196,12 @@ position: relative;
 <h2>Subscribe to Our Newsletter</h2>
 <form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec" aria-label="Newsletter subscription form">
 <input type="email" id="newsletter-email" name="email" required placeholder="Enter your email ..." aria-required="true" />
-<button type="submit">Subscribe</button>
+<button type="submit" class="cta-btn">Subscribe</button>
 </form>
 </div>
 </div>
 </section>
-<section class="salsa-history-section" aria-labelledby="salsa-history-heading">
+<!-- <section class="salsa-history-section" aria-labelledby="salsa-history-heading">
 <div class="history-header">
 <img src="images/home/historylogo.png" alt="" role="presentation" class="history-logo" />
 </div>
@@ -1234,7 +1246,7 @@ position: relative;
   The conga drum is essential to salsa's rhythm, driving the music with its deep, resonant tones. Alongside timbales, bongos, and cowbell, the conga brings the pulse of Africa to every salsa song.
 </p>
 <p>
-  Salsa is a dance of improvisation, where dancers express themselves through movement, rhythm, and connection. 
+  Salsa is a dance of improvisation, where dancers express themselves through movement, rhythm, and connection.  -->
   <!-- It's a dance that transcends language, culture, and identity, inviting everyone to join in the celebration.
 </p>
 <p>
