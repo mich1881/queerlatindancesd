@@ -132,15 +132,63 @@ font-family: 'Nunito', Arial, sans-serif;
 font-size: 1.08rem;
 }
 .event-table-left {
-width: 35%;
+width: 45%;
 vertical-align: top;
 padding: 36px 24px 36px 36px;
 }
 .event-table-right {
-width:70%;
+width:55%;
 padding:20px 10px 20px 8px;
 vertical-align: top;
 } 
+
+/* === Column Slide-In Animation === */
+
+.event-table-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: slideFromLeft 0.8s ease-out forwards;
+    animation-delay: 0.15s;
+}
+
+.event-table-right {
+    opacity: 0;
+    transform: translateX(50px);
+    animation: slideFromRight 0.8s ease-out forwards;
+    animation-delay: 0.15s;
+}
+
+@keyframes slideFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Accessibility: respect reduced motion settings */
+@media (prefers-reduced-motion: reduce) {
+    .event-table-left,
+    .event-table-right {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}
 .info-card {
 display: flex;
 flex-direction: row;
@@ -507,7 +555,7 @@ transform: scale(1.06);
     gap: 2px;
 }
 .register-container {
-    margin-bottom: -90px;
+    margin-bottom: -50px;
 }
 }
 </style>
@@ -602,13 +650,6 @@ Thank you for your support. Please email <a href="mailto:queerlatindancesd@gmail
     </a>
 </div>
 <div id="pricing-desc" class="pricing-description"></div>
-</td>
-<td class="event-table-right">
-<div class="event-section" style="padding:0; margin:0 0 0 0; display:flex; justify-content:center; align-items:center;">
-<div style="position:relative; width:100%; display:flex; align-items:center; justify-content:center;">
-<img id="gallery-img" src="images/lessons/Spring1.png" alt="4 Week Series Promo" style="width:100%;max-width:520px;height:auto;display:block;margin:0 0 18px 0;border-radius:18px;box-shadow:0 2px 12px #716cff22;object-fit:contain;transition:opacity 0.2s;" />
-</div>
-</div>
 <div class="event-section" id="course-details">
 <div class="event-label">Course Details</div>
 <div class="event-value">
@@ -642,6 +683,13 @@ A fast-paced beginner class that is meant to be retaken so you don’t have to c
 <li>Bachata Series 1 is meant to be taken once or as many times as you need. Bachata basics are much easier to learn than Salsa due to simpler rhythm and timing and can get more complex as you progress due to hip and body movement.</li>
 </ul>
 <p><em>Note: Retention and progress depend on your background in body movement and dance.</em></p>
+</td>
+<td class="event-table-right">
+<div class="event-section" style="padding:0; margin:0 0 0 0; display:flex; justify-content:center; align-items:center;">
+<div style="position:relative; width:100%; display:flex; align-items:center; justify-content:center;">
+<img id="gallery-img" src="images/lessons/Spring1.png" alt="4 Week Series Promo" style="width:100%;max-width:520px;height:auto;display:block;margin:0 0 18px 0;border-radius:18px;box-shadow:0 2px 12px #716cff22;object-fit:contain;transition:opacity 0.2s;" />
+</div>
+</div>
 <h2 class="event-label">About the Instructor</h2>
 <p>Michelle’s passion for movement began in El Centro, California, where she has over 24 years of experience in gymnastics, ballet, karate, and 12 years of classical music, including choir and violin. These early experiences built her discipline, strength, flexibility, and body awareness. She later began her Latin dance journey at UC San Diego and now has over 8 years of experience in salsa and bachata.
 <a href="michelle.html" class="read-more-link">Read more...</a></p>

@@ -10,14 +10,20 @@ class CoursePlatform {
         this.lessonProgress = {};
         this.courseAccess = {};
         this.courses = {
-            'salsa-recap-lvl1': {
-                id: 'salsa-recap-lvl1',
-                title: 'In Person Classes: Salsa Recap Videos',
-                description: 'Recap videos for in-person salsa classes. To practice outside of the studio at home or with other students in class and prepare you for the next lessons.',
-                price: 80,
+            'recap-library': {
+                id: 'recap-library',
+                title: 'In Person Classes: Recap Videos',
+                description: 'Practice outside of the studio at home or with other students in class and prepare you for the next lessons.',
+                price: 10,
                 icon: 'images/4weekseries1/IMG_9905.JPG',
                 duration: '4 hours',
                 lessons: 12,
+                    learning: [
+                        'Build strong beginner Salsa fundamentals',
+                        'Learn basic steps, timing, and rhythm',
+                        'Practice partner connection and leading/following skills',
+                        'Train at your own pace with on-demand lessons'
+                    ],
                 level: 'Salsa Level 1',
                 videoLessons: [
                     //SALSA VARIATION A
@@ -125,7 +131,7 @@ class CoursePlatform {
                 id: 'salsa-fundamentals',
                 title: 'Salsa Fundamentals',
                 description: 'Learn the basics, strengthen, build a strong Salsa foundation.',
-                price: 49,
+                price: 20,
                 icon: 'images/4weekseries1/IMG_8661.JPG',
                 duration: '4 hours',
                 lessons: 8,
@@ -251,15 +257,15 @@ class CoursePlatform {
                     }
                 ]
             },
-            'advanced-salsa': {
-                id: 'advanced-salsa',
-                title: 'Advanced Salsa',
-                description: 'Take your salsa to the next level with complex patterns, advanced styling, and performance-level techniques. For experienced dancers only.',
-                price: 69,
+            'all-access': {
+                id: 'all-access',
+                title: 'All Access Pass',
+                description: 'Unlock all courses and exclusive content with the All Access Pass. Perfect for dedicated dancers looking to improve their skills.',
+                price: 35,
                 icon: 'images/4weekseries1/IMG_0505.JPG',
-                duration: '5 hours',
-                lessons: 10,
-                level: 'Advanced',
+                duration: 'Unlimited',
+                lessons: 50,
+                level: 'All Levels',
                 videoLessons: [
                     {
                         id: 1,
@@ -356,14 +362,11 @@ async checkAllCourseAccess() {
     if (savedUser) {
         try {
             this.currentUser = JSON.parse(savedUser);
-
             console.log('✅ Found saved user:', this.currentUser.name);
-
             this.isAdmin();
 
             // 🔥 important: wait for permissions BEFORE UI loads
             await this.checkAllCourseAccess();
-
             this.showSuccess(`Welcome back, ${this.currentUser.name}! 💃`);
             this.showDashboard();
 
@@ -385,7 +388,6 @@ async checkAllCourseAccess() {
             this.showError('Please enter both email and password');
             return;
         }
-
         this.showLoading('Signing you in...');
 
         try {
@@ -436,7 +438,6 @@ const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/
             setTimeout(() => this.showAuthScreen(), 1500);
             return;
         }
-
         if (password.length < 6) {
             this.showError('Password must be at least 6 characters');
             setTimeout(() => this.showAuthScreen(), 1500);
@@ -466,7 +467,6 @@ const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/
             setTimeout(() => this.showAuthScreen(), 1500);
         }
     }
-
     logout() {
         this.currentUser = null;
         localStorage.removeItem('currentUser');
@@ -652,7 +652,6 @@ const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/
     createCourseCard(course) {
         const card = document.createElement('div');
         card.className = 'course-card';
-        
         const isOwned = this.userOwnsCourse(course.id);
         const progress = this.getCourseProgress(course.id);
         const isAdmin = this.isAdmin();
@@ -721,7 +720,6 @@ const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/
                 </div>
             `;
         }
-
         return card;
     }
 
@@ -744,17 +742,12 @@ userOwnsCourse(courseId) {
         if (!this.currentUser || !this.currentUser.progress || !this.currentUser.progress[courseId]) {
             return 0;
         }
-        
         const courseProgress = this.currentUser.progress[courseId];
         const course = this.courses[courseId];
-        
         if (!course || !course.videoLessons) return 0;
-        
         const completedLessons = Object.values(courseProgress).filter(progress => progress >= 90).length;
         return Math.round((completedLessons / course.videoLessons.length) * 100);
     }
-
-
 
     // ===== COURSE PURCHASE (Demo Mode) =====
 
@@ -796,7 +789,6 @@ userOwnsCourse(courseId) {
             this.showDashboard();
         }, 3000);
     }
-
     showDownloadLink(course, downloadUrl) {
         // Create download notification
         const notification = document.createElement('div');
@@ -1431,7 +1423,6 @@ userOwnsCourse(courseId) {
                 </div>
                 
                 ${paymentDetails}
-                
                 <div style="background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
                     <strong>⏱️ Next Steps:</strong><br>
                     1. Complete your payment using the details above<br>
@@ -1439,7 +1430,6 @@ userOwnsCourse(courseId) {
                     3. You'll receive course access confirmation<br>
                     4. Start learning! 🎉
                 </div>
-                
                 <div style="text-align: center; margin-top: 1.5rem;">
                     <p style="color: #666; font-size: 0.9rem; margin: 0;">
                         Questions? Contact us at <a href="mailto:michelle@queerlatindance.com" style="color: #667eea;">michelle@queerlatindance.com</a>
@@ -1450,7 +1440,6 @@ userOwnsCourse(courseId) {
         
         // Show the detailed success message
         this.showSuccess(successMessage);
-        
         console.log('📧 Email confirmation sent to:', paymentRequest.email);
         console.log('👑 Payment request now available for admin review');
     }

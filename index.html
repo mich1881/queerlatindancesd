@@ -143,6 +143,24 @@ body {
   overflow: hidden;
   background: #533d9f;
 }
+
+/* Background image overlay */
+.hero-flex::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("images/eventpage/mayqssbg.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8; /* adjust transparency */
+  z-index: 0;
+}
+
+/* Keep your actual content above the image */
+.hero-flex > * {
+  position: relative;
+  z-index: 1;
+}
 .hero-flex::after {
   display: none;
 }
