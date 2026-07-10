@@ -18,9 +18,9 @@ class CoursePlatform {
                 icon: 'images/4weekseries1/IMG_9905.JPG',
                 duration: '4 hours',
                 lessons: 12,
-                    learning: [
-                        'Build strong beginner Salsa fundamentals',
-                        'Learn basic steps, timing, and rhythm',
+                learning: [
+                        'Practice and review in-person class material',
+                        'Come ready for the next lessons',
                         'Practice partner connection and leading/following skills',
                         'Train at your own pace with on-demand lessons'
                     ],
@@ -135,6 +135,12 @@ class CoursePlatform {
                 icon: 'images/4weekseries1/IMG_8661.JPG',
                 duration: '4 hours',
                 lessons: 8,
+                learning: [
+                        'Build strong beginner Salsa fundamentals',
+                        'Learn basic steps, timing, and rhythm',
+                        'Practice partner connection and leading/following skills',
+                        'Train at your own pace with on-demand lessons'
+                    ],
                 level: 'Beginner',
                 videoLessons: [
                     {
@@ -211,6 +217,12 @@ class CoursePlatform {
                 icon: 'images/4weekseries1/IMG_9905.JPG',
                 duration: '3 hours',
                 lessons: 6,
+                learning: [
+                        'Build strong beginner Bachata fundamentals',
+                        'Learn basic steps, timing, and rhythm',
+                        'Practice partner connection and leading/following skills',
+                        'Train at your own pace with on-demand lessons'
+                    ],
                 level: 'Beginner',
                 videoLessons: [
                     {
@@ -265,6 +277,12 @@ class CoursePlatform {
                 icon: 'images/4weekseries1/IMG_0505.JPG',
                 duration: 'Unlimited',
                 lessons: 50,
+                learning: [
+                        'Build strong beginner Salsa fundamentals',
+                        'Learn basic steps, timing, and rhythm',
+                        'Practice partner connection and leading/following skills',
+                        'Train at your own pace with on-demand lessons'
+                    ],
                 level: 'All Levels',
                 videoLessons: [
                     {
