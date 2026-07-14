@@ -4,11 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Queer Latin Dance - Online Courses</title>
+<link rel="stylesheet" href="styles/global.css">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="course-styles.css">
-<link rel="stylesheet" href="styles/global.css">
 <link rel="icon" type="image/png" href="images/icons/favicon.png">
 </head>
+<style>
+ @font-face {
+  font-family: 'PassionOne';
+  src: url('fonts/Passion_One/PassionOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Nunito';
+  src: url('fonts/Nunito/static/Nunito-Regular.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+body {
+background: linear-gradient(120deg,
+#ffe29f 0%,   /* light yellow */
+#ffb6b9 15%,  /* light pink */
+#ffb6ff 30%,  /* light magenta */
+#b5d8ff 45%,  /* light blue */
+#baffc9 60%,  /* light green */
+#fff6b7 75%,  /* light gold */
+#ffd6e0 90%,  /* light rose */
+#ffe29f 100%  /* repeat yellow */
+);
+}
+/* Uniform font for all text elements */
+p, ul, li, span, div, table, td, th, a, label, input, button {
+font-family: 'Nunito', Arial, sans-serif;
+font-size: 1em;
+font-weight: 700;
+}
+</style>
 <body>
 <div id="course-app">
 <!-- Loading Screen -->
@@ -263,10 +295,10 @@ Refresh Payments
 <input type="email" id="admin-student-email" placeholder="Student email address" />
 <select id="admin-course-select">
 <option value="">Select Course</option>
- <option value="salsa-recap-lvl1">In-Class - Salsa Recap</option> 
+ <option value="recap-library">In-Class - Salsa Recap</option> 
 <option value="salsa-fundamentals">Salsa Fundamentals</option>
 <option value="bachata-fundamentals">Bachata Fundamentals</option>
-<option value="advanced-salsa">Advanced Salsa</option>
+<option value="all-access">All Access</option>
 </select>
 <button onclick="grantCourseAccess()" class="btn-grant">Grant Access</button>
 </div>
@@ -297,7 +329,7 @@ Check Expired Access
 <option value="salsa-recap-lvl1">In-Class - Salsa Recap</option>
 <option value="salsa-fundamentals">Salsa Fundamentals</option>
 <option value="bachata-fundamentals">Bachata Fundamentals</option>
-<option value="advanced-salsa">Advanced Salsa</option>
+<option value="all-access">All Access</option>
 </select>
 </div>
 

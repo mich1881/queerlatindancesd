@@ -9,7 +9,7 @@
 <style>
 
 body {
-  background-image: url('images/eventpage/julqssbg.png');
+  background-image: url('images/eventpage/mayqssbg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -559,16 +559,16 @@ font-style: italic;
 <div class="main-flex">
 <div class="checkin-container">
     <h2>GUEST CHECK-IN<span class="heart">🌈Welcome!🌈</span></h2>
-    <h3><i>Queer Salsa Social: Afterglow <br>Brought to you by QLDSD</i></h3>
+    <h3><i>Queer Salsa Sunsets:  <br>Brought to you by QLDSD</i></h3>
     <!-- <div class="checkin-footer">
   Scan QR code using the camera. <br>
   Purchase ticket through Stripe then check in using name or email address used for payment.<i>(processing fee applies)</i>.
     </div> -->
 
 <div class="method-tabs">
-<button class="method-tab active" id="scanTab" onclick="showScanner()">📷 SCAN QR</button>
-<button class="method-tab" id="purchaseTab" onclick="showManualEntry()">🎟️ PURCHASE TICKET</button>
-<button class="vip-btn" id="vipTab" onclick="showVipEntry()">⭐ VIP</button>
+<!-- <button class="method-tab active" id="scanTab" onclick="showScanner()">📷 SCAN QR</button> -->
+<button class="method-tab" id="purchaseTab" onclick="showManualEntry()">🎟️ ENTER NAME</button>
+<!-- <button class="vip-btn" id="vipTab" onclick="showVipEntry()">⭐ VIP</button> -->
 </div>
 
 <!-- Manual Entry Section (hidden by default) -->
@@ -580,12 +580,12 @@ font-style: italic;
 </div>
 
 <!-- QR Scanner Section -->
-<div id="scannerSection">
+<!-- <div id="scannerSection">
 <div id="qr-reader"></div>
 <p class="scanner-hint">Show QR CODE in front of the camera.</p>
 <button class="btn-stop" onclick="resetCheckinUI()">Stop Scanner</button>
-</div>
-<div class="popup-overlay" id="stripe-popup">
+</div> -->
+<!-- <div class="popup-overlay" id="stripe-popup">
   <div class="popup-content">
     <h2>Purchase Ticket</h2>
        <p>After payment, close pop-up to return to check in using your QR CODE or email.</p>
@@ -594,16 +594,16 @@ font-style: italic;
       <button class="btn-cancel" onclick="closePopup('stripe-popup')">Close</button>
     </div>
   </div>
-</div>
+</div> -->
 <!-- Result Message -->
 <div id="result"></div>
 </div>
 <div class="flyer-container">
-<img src="images/eventpage/qssjuly24.jpeg" alt="Event Flyer" class="event-flyer">
+<img src="images/eventpage/qssjuly12.png" alt="Event Flyer" class="event-flyer">
 </div>
 </div>
 <!-- Name/Pronouns Popup -->
-<div class="popup-overlay" id="namepronouns-popup">
+<!-- <div class="popup-overlay" id="namepronouns-popup">
 <div class="popup-content">
 <h2>Success!</h2>
 <p>Please confirm your details for your name tag:</p>
@@ -623,10 +623,10 @@ font-style: italic;
 <button class="btn-confirm" id="namePronounsSubmitBtn">Continue</button>
 </div>
 </div>
-</div>
+</div> -->
 
 <!-- Print Ticket Popup -->
-<div class="popup-overlay" id="checkin-popup">
+<!-- <div class="popup-overlay" id="checkin-popup">
 <div class="popup-content">
 <h2>Nametag Preview</h2>
 <div class="ticket-preview">
@@ -638,18 +638,18 @@ font-style: italic;
 <button class="btn-print" id="popupPrintBtn">Confirm</button>
 </div>
 </div>
-</div>
+</div> -->
 
 <!-- Hidden Ticket for Printing -->
-<div id="ticketToPrint">
+<!-- <div id="ticketToPrint">
 <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; border: 2px dashed var(--main-orange); border-radius: 12px; max-width: 300px; margin: -10px 0 auto;">
 <div style="font-size: 24px; font-weight: bold; color: #8354c0;" id="printGuestName"></div>
 <div style="color: #000000; font-size: 20px; font-weight: bold;font-style: italic;" id="printPronouns"></div>
 </div>
-</div>
+</div> -->
 
 <!-- Multiple Ticket Selection Popup -->
-<div class="popup-overlay" id="multi-ticket-popup">
+<!-- <div class="popup-overlay" id="multi-ticket-popup">
   <div class="popup-content">
     <h2>Multiple Tickets Found</h2>
     <p>Select which ticket to check in:</p>
@@ -658,7 +658,7 @@ font-style: italic;
       <button class="btn-cancel" onclick="closePopup('multi-ticket-popup')">Cancel</button>
     </div>
   </div>
-</div>
+</div> -->
 
 <script>
 // Configuration
@@ -893,9 +893,10 @@ if (guest.checkedIn && !guest.printed) {
 }
 
 // New check-in
-document.getElementById('preferredNameInput').value = guest.preferredName || guest.actualName || '';
-document.getElementById('pronounsInput').value = guest.pronouns || '';
-document.getElementById('namepronouns-popup').classList.add('active');
+completeCheckin(guest);
+// document.getElementById('preferredNameInput').value = guest.preferredName || guest.actualName || '';
+// document.getElementById('pronounsInput').value = guest.pronouns || '';
+// document.getElementById('namepronouns-popup').classList.add('active');
 
 } catch (error) {
 console.error('Check-in error:', error);
@@ -1087,6 +1088,54 @@ function updateRoleColor() {
 }
 roleSelect.addEventListener('change', updateRoleColor);
 updateRoleColor();
+
+async function completeCheckin(guest) {
+
+    const preferredName = guest.preferredName || guest.actualName || '';
+    const pronouns = guest.pronouns || '';
+
+    try {
+
+        const response = await fetch(`${API_BASE_URL}/api/checkin-complete`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                query: lastCheckedInQuery,
+                preferredName,
+                pronouns,
+                row: currentGuestRow
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            showResult(`✅ Welcome ${preferredName}! You're checked in.`, "success");
+
+            document.getElementById("email").value = "";
+
+            setTimeout(() => {
+                showManualEntry();
+                document.getElementById("email").focus();
+            }, 1500);
+
+        } else {
+
+            showResult(result.error || "Check-in failed.", "error");
+
+        }
+
+    } catch (err) {
+
+        console.error(err);
+        showResult("Connection error.", "error");
+
+    }
+
+}
 </script>
 </body>
 </html>
