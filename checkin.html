@@ -490,7 +490,7 @@ font-size: 1.4em;
 font-weight: bold;
 color: #8354c0;
 }
-.ticket-preview .pronouns {
+.ticket-preview .role {
 color: #666;
 font-style: italic;
 }
@@ -516,7 +516,7 @@ font-size: 24px;
 font-weight: bold;
 color: #8354c0;
 }
-div#ticketToPrint .pronouns {
+div#ticketToPrint .role {
 color: #000000;
 font-weight: bold;
 font-style: italic;
@@ -602,25 +602,25 @@ font-style: italic;
 <img src="images/eventpage/qssjuly24.jpeg" alt="Event Flyer" class="event-flyer">
 </div>
 </div>
-<!-- Name/Pronouns Popup -->
-<div class="popup-overlay" id="namepronouns-popup">
+<!-- Name/Role Popup -->
+<div class="popup-overlay" id="nameRole-popup">
 <div class="popup-content">
 <h2>Success!</h2>
 <p>Please confirm your details for your name tag:</p>
 <input type="text" id="preferredNameInput" placeholder="Preferred name for name tag">
-<select id="pronounsInput" style="width:100%;padding:0.8em;margin:0.5em 0;border:2px solid #ffb6c1;border-radius:8px;font-size:1em;outline:none;cursor:pointer;background:#fff;color:#444;">
+<select id="roleInput" style="width:100%;padding:0.8em;margin:0.5em 0;border:2px solid #ffb6c1;border-radius:8px;font-size:1em;outline:none;cursor:pointer;background:#fff;color:#444;">
   <option value="" style="color:#aaa;">Preferred Role (Optional)</option>
   <option value="Lead">Lead</option>
   <option value="Follow">Follow</option>
   <option value="Switch">Switch</option>
 </select>
 <style>
-  #pronounsInput:has(option[value=""]:checked) { color: #aaa; }
-  #pronounsInput option:not([value=""]) { color: #444; }
+  #roleInput:has(option[value=""]:checked) { color: #aaa; }
+  #roleInput option:not([value=""]) { color: #444; }
 </style>
 <div class="popup-buttons">
-<button class="btn-cancel" onclick="closePopup('namepronouns-popup')">Cancel</button>
-<button class="btn-confirm" id="namePronounsSubmitBtn">Continue</button>
+<button class="btn-cancel" onclick="closePopup('nameRole-popup')">Cancel</button>
+<button class="btn-confirm" id="nameRoleSubmitBtn">Continue</button>
 </div>
 </div>
 </div>
@@ -631,10 +631,10 @@ font-style: italic;
 <h2>Nametag Preview</h2>
 <div class="ticket-preview">
 <div class="guest-name" id="ticketGuestName"></div>
-<div class="pronouns" id="ticketPronouns"></div>
+<div class="role" id="ticketRole"></div>
 </div>
 <div class="popup-buttons">
-<button class="btn-cancel" onclick="backToNamePronouns()">Back</button>
+<button class="btn-cancel" onclick="backToNameRole()">Back</button>
 <button class="btn-print" id="popupPrintBtn">Confirm</button>
 </div>
 </div>
@@ -818,15 +818,15 @@ return;
 if (guest.checkedIn && !guest.printed) {
 // Already checked in, offer reprint
 document.getElementById('ticketGuestName').textContent = guest.preferredName;
-document.getElementById('ticketPronouns').textContent = guest.pronouns || '';
+document.getElementById('ticketRole').textContent = guest.role || '';
 printTicket();
 return;
 }
 
-// New check-in - show name/pronouns popup
+// New check-in - show name/role popup
 document.getElementById('preferredNameInput').value = guest.preferredName || '';
-document.getElementById('pronounsInput').value = guest.pronouns || '';
-document.getElementById('namepronouns-popup').classList.add('active');
+document.getElementById('roleInput').value = guest.role || '';
+document.getElementById('nameRole-popup').classList.add('active');
 
 } catch (error) {
 console.error('QR check-in error:', error);
@@ -885,17 +885,17 @@ if (guest.checkedIn && guest.printed) {
 if (guest.checkedIn && !guest.printed) {
   const displayName = guest.preferredName || guest.actualName || '';
   document.getElementById('ticketGuestName').textContent = displayName ? '🎉' + displayName : '';
-  document.getElementById('ticketPronouns').textContent = guest.pronouns || '';
+  document.getElementById('ticketRole').textContent = guest.role || '';
   document.getElementById('printGuestName').textContent = displayName ? '🎉' + displayName : '';
-  document.getElementById('printPronouns').textContent = guest.pronouns || '';
+  document.getElementById('printRole').textContent = guest.role || '';
   document.getElementById('checkin-popup').classList.add('active');
   return;
 }
 
 // New check-in
 document.getElementById('preferredNameInput').value = guest.preferredName || guest.actualName || '';
-document.getElementById('pronounsInput').value = guest.pronouns || '';
-document.getElementById('namepronouns-popup').classList.add('active');
+document.getElementById('roleInput').value = guest.role || '';
+document.getElementById('nameRole-popup').classList.add('active');
 
 } catch (error) {
 console.error('Check-in error:', error);
@@ -903,12 +903,12 @@ showResult("Connection error. Please try again.", "error");
 }
 });
 
-// ============ Name/Pronouns Submit ============
-document.getElementById('namePronounsSubmitBtn').addEventListener('click', async function() {
+// ============ Name/Role Submit ============
+document.getElementById('nameRoleSubmitBtn').addEventListener('click', async function() {
 const preferredName = document.getElementById('preferredNameInput').value.trim();
-const pronouns = document.getElementById('pronounsInput').value.trim();
+const role = document.getElementById('roleInput').value.trim();
 
-closePopup('namepronouns-popup');
+closePopup('nameRole-popup');
 
 if (!preferredName) {
 showResult("Please enter your preferred name.", "error");
@@ -920,8 +920,8 @@ showResult("Checking in...", "info");
 try {
 const endpoint = isQRCheckin ? '/api/qr-checkin-complete' : '/api/checkin-complete';
 const body = isQRCheckin 
-? { qrCode: lastCheckedInQuery, preferredName, pronouns, row: currentGuestRow }
-: { query: lastCheckedInQuery, preferredName, pronouns, row: currentGuestRow };
+? { qrCode: lastCheckedInQuery, preferredName, role, row: currentGuestRow }
+: { query: lastCheckedInQuery, preferredName, role, row: currentGuestRow };
 
 const response = await fetch(`${API_BASE_URL}${endpoint}`, {
 method: 'POST',
@@ -936,9 +936,9 @@ showResult(`✅ Welcome, ${preferredName}!`, "success");
 
 // Update ticket preview
 document.getElementById('ticketGuestName').textContent = preferredName ? '🎉' + preferredName : "";
-document.getElementById('ticketPronouns').textContent = pronouns;
+document.getElementById('ticketRole').textContent = role;
 document.getElementById('printGuestName').textContent = preferredName ? '🎉' + preferredName : "";
-document.getElementById('printPronouns').textContent = pronouns
+document.getElementById('printRole').textContent = role;
 
 // Show print popup
 document.getElementById('checkin-popup').classList.add('active');
@@ -1007,17 +1007,17 @@ function handleSelectedGuest(guest) {
   if (guest.checkedIn && !guest.printed) {
     const displayName = guest.preferredName || guest.actualName || '';
     document.getElementById('ticketGuestName').textContent = displayName ? '🎉' + displayName : '';
-    document.getElementById('ticketPronouns').textContent = guest.pronouns || '';
+    document.getElementById('ticketRole').textContent = guest.role || '';
     document.getElementById('printGuestName').textContent = displayName ? '🎉' + displayName : '';
-    document.getElementById('printPronouns').textContent = guest.pronouns || '';
+    document.getElementById('printRole').textContent = guest.role || '';
     document.getElementById('checkin-popup').classList.add('active');
     return;
   }
 
   // New check-in
   document.getElementById('preferredNameInput').value = guest.preferredName || guest.actualName || '';
-  document.getElementById('pronounsInput').value = guest.pronouns || '';
-  document.getElementById('namepronouns-popup').classList.add('active');
+  document.getElementById('roleInput').value = guest.role || '';
+  document.getElementById('nameRole-popup').classList.add('active');
 }
 
 function showGuestSelection(matches) {
@@ -1063,14 +1063,14 @@ function backToNamePronouns() {
     closePopup('checkin-popup');
     // Get current values from the preview
     let name = document.getElementById('ticketGuestName').textContent || '';
-    let pronouns = document.getElementById('ticketPronouns').textContent || '';
+    let role = document.getElementById('ticketRole').textContent || '';
     // Remove emoji if present
     name = name.replace('🎉', '').trim();
     // Fill the confirmation popup fields with current values
 document.getElementById('preferredNameInput').value = name;
-document.getElementById('pronounsInput').value = pronouns;
-    // Show the name/pronoun confirmation popup
-    document.getElementById('namepronouns-popup').classList.add('active');
+document.getElementById('roleInput').value = role;
+    // Show the name/role confirmation popup
+    document.getElementById('nameRole-popup').classList.add('active');
 }
 
 // Allow Enter key for manual entry
@@ -1081,7 +1081,7 @@ document.getElementById('checkinBtn').click();
 });
 
 // Grey placeholder for role dropdown
-const roleSelect = document.getElementById('pronounsInput');
+const roleSelect = document.getElementById('roleInput');
 function updateRoleColor() {
   roleSelect.style.color = roleSelect.value === '' ? '#aaa' : '#444';
 }

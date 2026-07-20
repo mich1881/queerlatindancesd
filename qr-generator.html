@@ -55,7 +55,7 @@
       border-color: #e75480;
     }
     button {
-      padding: 0.8em 1.5em;
+      padding: 1em 1em;
       font-size: 1em;
       border-radius: 8px;
       border: none;
@@ -84,8 +84,8 @@
       background: #6a3fa0;
     }
     .btn-small {
-      padding: 0.5em 1em;
-      font-size: 0.9em;
+      padding: 1em 1em;
+      font-size: 1em;
     }
     .btn-download-all {
       background: #4CAF50;
@@ -240,16 +240,16 @@
 </head>
 <body>
   <div class="container">
-    <h1>🎟️ QR Code Generator</h1>
+    <h1>🎟️ QR CODE GENERATOR</h1>
     <p class="subtitle">Generate unique QR codes for guest check-in</p>
     <!-- Single QR Generation -->
      <label for="eventDate" style="margin-right:0.5em;">Event Date:</label>
-<input type="text" id="eventDate" value="April 17th, 2026, 7pm – 10:30pm" style="padding:0.5em 1em; border-radius:8px; border:2px solid #ffb6c1; margin-bottom:1em;">
+<input type="text" id="eventDate" value="Jul 24th, 2026, 6:30pm – 10:30pm" style="padding:0.5em 1em; border-radius:8px; border:2px solid #ffb6c1; margin-bottom:1em;">
 <div id="guestList" class="input-group">
   <div class="guest-entry">
-    <input type="text" class="guestNameBox" placeholder="Guest name (e.g., Marisol Guzman)">
+    <input type="text" class="guestNameBox" placeholder="First & Last Name">
     <input type="text" class="preferredNameBox" placeholder="Preferred name (optional)">
-    <input type="text" class="pronounsBox" placeholder="Pronouns (e.g., she/they)">
+    <input type="text" class="roleBox" placeholder="Role (Lead/Follow/Switch)">
     <input type="email" class="guestEmailBox" placeholder="Guest email">
     <button class="btn-secondary btn-small" onclick="removeGuestEntry(this)">Remove</button>
   </div>
@@ -297,7 +297,7 @@
           const day = dateObj.getDate();
           const year = dateObj.getFullYear();
           const suffix = day === 1 ? 'st' : day === 2 ? 'nd' : day === 3 ? 'rd' : 'th';
-          const time = nextEvent.time || '7pm – 10:30pm';
+          const time = nextEvent.time || '6:30pm – 10:30pm';
           const formatted = `${month} ${day}${suffix}, ${year}, ${time}`;
           document.getElementById('eventDate').value = formatted;
         }
@@ -319,14 +319,14 @@ function generateUniqueId() {
   } while (generatedCodes.some(codeObj => codeObj.code === id));
   return id;
 }
-function sendQrEmailToWorker(guestName, guestEmail, uniqueId, preferredName, pronouns) {
+function sendQrEmailToWorker(guestName, guestEmail, uniqueId, preferredName, role) {
   const eventDate = document.getElementById('eventDate').value || '';
-  const subject = `Queer Latin Dance Social: Fall into Rhythm - Confirmation Ticket`;
+  const subject = `Queer Latin Dance Social: Afterglow - Confirmation Ticket`;
   const html = buildEmailHtml({
     guestName,
     qrCode: uniqueId,
     preferredName,
-    pronouns,
+    role,
     eventDate
   });
 
@@ -338,7 +338,7 @@ function sendQrEmailToWorker(guestName, guestEmail, uniqueId, preferredName, pro
       guestEmail,
       qrCode: uniqueId,
       preferredName,
-      pronouns,
+      role,
       eventDate,
       subject,
       html 
@@ -356,7 +356,7 @@ function sendQrEmailToWorker(guestName, guestEmail, uniqueId, preferredName, pro
           guestEmail,
           qrCode: uniqueId,
           preferredName,
-          pronouns,
+          role,
           eventDate
         })
       })
@@ -380,7 +380,7 @@ function generateSingle() {
   const guestName = document.getElementById('guestName').value.trim() || 'Guest';
   const guestEmailRaw = document.getElementById('guestEmail').value.trim() || '';
   const preferredName = document.querySelector('.preferredNameBox').value.trim();
-  const pronouns = document.querySelector('.pronounsBox').value.trim();
+  const role = document.querySelector('.roleBox').value.trim();
   const uniqueId = generateUniqueId();
 
   // Split emails by comma and trim spaces
@@ -399,11 +399,11 @@ function generateSingle() {
     emailBtn.className = 'btn-secondary btn-small';
     emailBtn.textContent = `✉️ Send Email to ${email}`;
     emailBtn.style.marginTop = '0.5em';
-    emailBtn.onclick = () => sendQrEmailToWorker(guestName, email, uniqueId, preferredName, pronouns);
+    emailBtn.onclick = () => sendQrEmailToWorker(guestName, email, uniqueId, preferredName, role);
     item.appendChild(emailBtn);
   });
 
-  generatedCodes.push({ name: guestName, preferredName, pronouns, email: guestEmails.join(', '), code: uniqueId });
+  generatedCodes.push({ name: guestName, preferredName, role, email: guestEmails.join(', '), code: uniqueId });
 
   updateCodeList();
 
@@ -482,9 +482,9 @@ function generateSingle() {
 function updateCodeList() {
   document.getElementById('codeList').style.display = 'block';
 
-  // Header: Actual Name, Preferred Name, Email, Checked In, Printed, Pronouns, QR Code, CheckIn Time
+  // Header: Actual Name, Preferred Name, Email, Checked In, Printed, Role, QR Code, CheckIn Time
   const headerArr = [
-    'Actual Name', 'Preferred Name', 'Email', 'Checked In', 'Printed', 'Pronouns', 'QR Code', 'CheckIn Time'
+    'Actual Name', 'Preferred Name', 'Email', 'Checked In', 'Printed', 'Role', 'QR Code', 'CheckIn Time'
   ];
   const header = headerArr.join('\t');
   const rows = generatedCodes.map(g =>
@@ -494,7 +494,7 @@ function updateCodeList() {
       g.email,        // Email
       '',        // Checked In
       '',        // Printed
-      g.pronouns || '', // Pronouns
+      g.role || '', // Role
       g.code,         // QR Code
       ''              // CheckIn Time
     ]
@@ -619,9 +619,9 @@ function addGuestEntry() {
   const entry = document.createElement('div');
   entry.className = 'guest-entry';
   entry.innerHTML = `
-    <input type="text" class="guestNameBox" placeholder="Guest name (e.g., Marisol)">
+    <input type="text" class="guestNameBox" placeholder="First & Last Name)">
     <input type="text" class="preferredNameBox" placeholder="Preferred name (optional)">
-    <input type="text" class="pronounsBox" placeholder="Pronouns (e.g., she/they)">
+    <input type="text" class="roleBox" placeholder="Role (e.g., Performer/Attendee)">
     <input type="email" class="guestEmailBox" placeholder="Guest email">
     <button class="btn-secondary btn-small" onclick="removeGuestEntry(this)">Remove</button>
   `;
@@ -633,18 +633,18 @@ function removeGuestEntry(btn) {
 }
 
 //email body template
-function buildEmailHtml({ guestName, qrCode, preferredName, pronouns, eventDate }) {
+function buildEmailHtml({ guestName, qrCode, preferredName, role, eventDate }) {
   const qrImage = `https://quickchart.io/qr?text=${encodeURIComponent(qrCode)}&size=400`;
   const displayName = preferredName || guestName || 'Guest';
   const displayDate = eventDate || document.getElementById('eventDate').value || 'April 17th, 2026, 6:30pm – 11:00pm';
   return `
-    <div style="background:#e8e3fa;padding:0;margin:0;font-family:Arial,sans-serif;">
+    <div style="background:#e8e3fa;padding:0;margin:0;font-family:'Montserrat',sans-serif;">
       <div style="background:#b67ff1;padding:0.5em 0;">
         <img src="https://queerlatindance.com/images/logos/logo1.png" alt="Event Banner" style="max-width:100%;height:auto;border-radius:12px;display:block;margin:0 auto;">
       </div>
       <div style="padding:2em;">
         <h2 style="color:#555;margin-bottom:0.5em;">You're in ${displayName}! Here is your order confirmation for:</h2>
-        <h1 style="color:#555;margin-bottom:1em;">Queer Salsa Social: Fall into Rhythm</h1>
+        <h1 style="color:#555;margin-bottom:1em;">Queer Salsa Social: Afterglow</h1>
         <div style="background:#fff;padding:1.5em;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.08);margin-bottom:2em;">
           <div style="text-align:center;">
             <h3 style="color:#333;margin-bottom:0.5em;font-size:1.5em;">Your ticket</h3>
@@ -677,7 +677,7 @@ function buildEmailHtml({ guestName, qrCode, preferredName, pronouns, eventDate 
 function generateMultiple() {
   const guestNames = Array.from(document.querySelectorAll('.guestNameBox')).map(e => e.value.trim());
   const preferredNames = Array.from(document.querySelectorAll('.preferredNameBox')).map(e => e.value.trim());
-  const pronounsList = Array.from(document.querySelectorAll('.pronounsBox')).map(e => e.value.trim());
+  const rolesList = Array.from(document.querySelectorAll('.roleBox')).map(e => e.value.trim());
   const guestEmails = Array.from(document.querySelectorAll('.guestEmailBox')).map(e => e.value.trim());
   const output = document.getElementById('qrOutput');
   output.innerHTML = '';
@@ -686,7 +686,7 @@ function generateMultiple() {
   guestNames.forEach((name, idx) => {
     const email = guestEmails[idx];
     const preferredName = preferredNames[idx];
-    const pronouns = pronounsList[idx];
+    const role = rolesList[idx];
     if (name && email) {
       const uniqueId = generateUniqueId();
       const item = createQRItem(name, email, uniqueId, 200);
@@ -697,10 +697,10 @@ function generateMultiple() {
       emailBtn.className = 'btn-secondary btn-small';
       emailBtn.textContent = `✉️ Send Email to ${email}`;
       emailBtn.style.marginTop = '0.5em';
-      emailBtn.onclick = () => sendQrEmailToWorker(name, email, uniqueId, preferredName, pronouns);
+      emailBtn.onclick = () => sendQrEmailToWorker(name, email, uniqueId, preferredName, role);
       item.appendChild(emailBtn);
 
-      generatedCodes.push({ name, preferredName, pronouns, email, code: uniqueId });
+      generatedCodes.push({ name, preferredName, role, email, code: uniqueId });
     }
   });
 
