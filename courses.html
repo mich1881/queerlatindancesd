@@ -321,6 +321,14 @@
   text-align: left;
 }
 
+.dropdown-title-2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.0rem;
+  font-weight: 800;
+  color: white;
+  text-align: left;
+}
+
 .dropdown-dates {
   font-family: 'Montserrat', sans-serif;
   font-size: 1rem;
@@ -369,7 +377,20 @@
   .dropdown-arrow {
     font-size: 1.3rem;
   }
-
+  .dropdown-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.0rem;
+  font-weight: 800;
+  color: white;
+  text-align: left;
+}
+  .dropdown-title-2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.0rem;
+  font-weight: 800;
+  color: white;
+  text-align: left;
+}
 }
 </style>
 </head>
@@ -446,8 +467,8 @@
     <div class="dropdown-header">
       <div class="dropdown-title-row">
         <div class="dropdown-title-group">
-          <span class="dropdown-title">
-            Spring Series Pt 2
+          <span class="dropdown-title-2">
+            ZERO DANCE EXPERIENCE (NEW!) & SUMMER SERIES PT 2
           </span>
           <span class="dropdown-dates">
             Drop-ins welcome!
@@ -1373,12 +1394,12 @@ async function loadSchedulesFromCalendarData() {
 
     // Spring Part 2: friSpringP2 (Fridays) + sunSpringP2 (Sundays)
     const fridaysP2 = data.friSpringP2;
-    const sundaysP2 = data.sunSpringP2;
+    const sundaysP2 = data.SatZero1;
 
     if (fridaysP2 || sundaysP2) {
 
       document.getElementById('spring-p2-dates').innerHTML = 
-        `FRIDAYS: ${fridaysP2.dates.join(', ')}<br>SUNDAYS: ${sundaysP2.dates.join(', ')}`;
+        `THURSDAYS: ${fridaysP2.dates.join(', ')}<br>SATURDAYS: ${sundaysP2.dates.join(', ')}`;
 
       document.getElementById('calendar-fridays-spring-p2').innerHTML = 
         `<li class="calendar-times">

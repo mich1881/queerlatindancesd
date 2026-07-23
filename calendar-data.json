@@ -3,6 +3,27 @@
     "name": "Studio K",
     "address": "9340 Clairemont Mesa Blvd, Ste F, San Diego, CA 92123"
   },
+"SatZero1": {
+    "title": "4 Week Saturday Series - Summer",
+    "dayOfWeek": "Saturdays",
+    "year": 2026,
+    "dates": ["9/5", "9/12", "9/19", "9/26"],
+    "rsvpDeadline": "Wednesday, 9/3",
+    "googleCalendarDates": ["20260905", "20260912", "20260919", "20260926"],
+    "times": {
+      "salsa": "5:00pm - 7:00pm",
+      "bachata": "6:00pm - 7:00pm",
+      "both": "5:00pm - 7:00pm",
+      "calendarStart": "1800",
+      "calendarEnd": "2000"
+    },
+    "calendarEvents": {
+      "2026-09-05": { "salsa": true, "bachata": true },
+      "2026-09-12": { "salsa": true, "bachata": true },
+      "2026-09-19": { "salsa": true, "bachata": true },
+      "2026-09-26": { "salsa": true, "bachata": true }
+    }
+  },
 
   "friSpringP1": {
     "title": "4 Week Thursday Series - Summer",
@@ -52,8 +73,8 @@
     "title": "4 Week Friday Series - Spring Part 2",
     "dayOfWeek": "Fridays",
     "year": 2026,
-    "dates": ["6/12", "6/19", "6/26", "7/10"],
-    "rsvpDeadline": "6/10",
+    "dates": ["9/3", "9/10", "9/17", "9/24"],
+    "rsvpDeadline": "Tuesday, 9/1",
     "googleCalendarDates": [],
     "times": {
       "salsa": "6:00pm - 7:00pm",

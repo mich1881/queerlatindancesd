@@ -43,11 +43,11 @@
       "date": "February-2026",
       "month": "FEB",
       "day": "2026",
-      "title": "Friday Series",
-      "flyerUrl": "images/lessons/Springp2-1.png",
-      "description": "Description for Friday Series P2",
+      "title": "Saturday Series",
+      "flyerUrl": "images/lessons/Zerodance1.png",
+      "description": "Description for Saturday Series P2",
       "type": "series",
-      "link": "4weekseries1p2.html",
+      "link": "4weekserieszero1.html",
       "banner": "OPEN ENROLLMENT"
     },
 
@@ -63,6 +63,19 @@
       "link": "4weekseries2p2.html",
       "banner": "OPEN ENROLLMENT",
       "hidden": true
+    },
+
+     {
+      "id": "new-class-1",
+      "date": "February-2026",
+      "month": "FEB",
+      "day": "2026",
+      "title": "Thursday Series",
+      "flyerUrl": "images/lessons/Summer2.png",
+      "description": "Description for Thursday Series P2",
+      "type": "series",
+      "link": "4weekseries1p2.html",
+      "banner": "OPEN ENROLLMENT"
     },
     
     {
