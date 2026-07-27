@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Home | Queer Latin Dance SD</title>
-
   <!-- Favicon -->
   <!-- <link rel="icon" href="/images/icons/favicon-v2.png" type="image/png" sizes="any"> -->
   <link rel="icon" href="/favicon.ico?v=4">
@@ -46,7 +45,6 @@
     ]
   }
   </script>
-
   <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/global.css">
   <link rel="stylesheet" href="style.css" />
@@ -63,7 +61,7 @@
   font-size: clamp(2.8rem, 5vw, 3.2rem);
   font-weight: 700;
   color: #f6eed5;
-  letter-spacing: -.05em;
+  letter-spacing: -.03em;
   margin-bottom: 0.4rem;
   line-height: 1;
 }
@@ -130,12 +128,12 @@ body {
 }
 .hero-flex {
   position: relative;
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  min-height: 100vh;
+  width: 100%;
+  min-height: clamp(1500px, 85vh, 1500px);
+  left: auto;
+  right: auto;
+  margin-left: 0;
+  margin-right: 0;
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -291,23 +289,66 @@ z-index: 1;
   position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
 }
+
 .swipe-img {
-  display: none;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  pointer-events: none;
 }
+
 .swipe-img.active {
-  display: block;
+  opacity: 1;
+}
+
+.qldsdinvite-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 140px;
+    text-align: center;
+    padding: 0 20px;
+}
+
+#animatedText {
+    font-family: 'PassionOne','Huninn','Signika', Arial, sans-serif;
+    font-size: clamp(2rem, 5vw, 5rem);
+    font-weight: 900;
+    color: white;
+    line-height: 1.2;
+}
+
+.word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(15px);
+    margin-right: .25em;
+    transition:
+        opacity .5s ease,
+        transform .5s ease;
+}
+
+.word.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.word.hide {
+    opacity: 0;
+    transform: translateY(-15px);
 }
 
 @media (max-width: 768px) {
+  .qldsdinvite-message {
+    display: none;
+  }
   .hero-flex {
     flex-direction: column;
     height: 100svh;
@@ -682,20 +723,35 @@ top: 2px; /* Slightly shifts arrow lower for better centering */
 }
 
 /* === FAQ SECTION STYLES === */
+
+  .co-hero-title {
+    font-family: 'PassionOne', 'Lilita One', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .co-hero-title span {
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 .faq-section {
-/* background: linear-gradient(120deg, #2e0233f9 0%, #4a1f94 100%); */
-padding: 2.5rem 1rem;
+padding: 2.5rem 6rem;
 color: #ffffff;
 }
 
 .faq-container {
-max-width: 800px;
+max-width: 900px;
 margin: 0 auto;
 display: grid;
-grid-template-columns: 1fr 2fr;
+grid-template-columns: 1fr 6fr;
 gap: 3rem;
 align-items: start;
-padding-left: -50rem;
+padding-left: 15rem;
 }
 
 .faq-questions h3 {
@@ -812,7 +868,7 @@ height: 100%;
 }
 
 .faq-title h2 {
-font-family: 'Monserrat','PassionOne', 'Lilita One', Arial, sans-serif;
+font-family: 'PassionOne', 'Lilita One', Arial, sans-serif;
 font-size: 10rem;
 color: #ffffff;
 text-align: center;
@@ -826,8 +882,11 @@ line-height: 0.8;
 }
 
 .faq-title h2 span {
-display: block;
-}
+    background: linear-gradient(135deg, #716cff, #b57edc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
 /* Mobile responsive styles */
 @media (max-width: 768px) {
@@ -863,222 +922,98 @@ padding: 1rem;
 }
 }
 
-/* === SALSA HISTORY SECTION === */
-.salsa-history-section {
-margin: 2.5rem auto 2rem auto;
-max-width: 1200px;
-text-align: left;
-background: none;
-box-shadow: none;
-padding: 2rem;
-color: #5c2ca9;
-position:relative;
-z-index: 2;
-font-weight: 500;
-font-family: 'Huninn', Arial, sans-serif;
-}
-
-/* History header with logo */
-.history-header {
-display: flex;
-position:relative;
-z-index: 2; 
-align-items: flex-start;
-justify-content: flex-start;
-gap: 1.5rem;
-margin-bottom: -1rem;
-}
-
-.history-logo {
-width: 350px;
-height: auto;
-object-fit: contain;
-align-self: flex-start;
-}
-
-/* Newspaper-style three-column layout */
-.newspaper-columns {
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-gap: 2rem;
-column-rule: 1px solid #b57edc;
-margin-top: -7rem;
-align-items: start;
-}
-
-.newspaper-columns .column {
-padding: 0 1rem;
-}
-
-.newspaper-columns .column:first-child {
-margin-top: 7rem;
-}
-
-.newspaper-columns .column:nth-child(2),
-.newspaper-columns .column:nth-child(3) {
-margin-top: 0;
-}
-
-.newspaper-columns .column h2 {
-font-family: 'Huninn', 'PassionOne', 'Signika', Arial, sans-serif;
-font-size: 1.5rem;
-color: #9d09ff;
-margin-bottom: 1rem;
-border-bottom: 2px solid #b57edc;
-padding-bottom: 0.5rem;
-}
-
-.newspaper-columns .column p {
-font-size: 1rem;
-line-height: 1.6;
-margin-bottom: 1rem;
-text-align: justify;
-hyphens: auto;
-}
-
-.newspaper-columns .image-container {
-text-align: center;
-margin: 1rem 0;
-}
-
-.newspaper-columns .image-container img {
-width: 200px;
-height: 200px;
-object-fit: cover;
-object-position:left center;
-border-radius: 50%;
-border: 2px solid #9d09ff;
-}
-
-/* === RESPONSIVE STYLES === */
-@media (max-width: 900px) {
-.about-hero-text h1 {
-font-size: 2.2rem;
-}
-.gallery-title {
-font-size: 2.2rem;
-}
-.salsa-history-title {
-font-size: 2.2rem;
-}
-.footer-newsletter h2 {
-font-size: 1.5rem;
-}
-.footer-social h3 {
-font-size: 1.3rem;
-}
-.gallery-photo {
-width: 98vw;
-max-width: 98vw;
-}
-.gallery-grid {
-grid-template-columns: 1fr;
-gap: 1rem;
-padding: 1rem 0;
-}
-.hero-flex {
-  min-height: unset;
-}
-.newsletter-container {
-flex-direction: column;
-gap: 1rem;
-}
-.history-header {
-flex-direction: column;
-align-items: center;
-text-align: center;
-gap: 1rem;
-}
-.history-logo {
-width: 150px;
-}
-.salsa-history-title {
-text-align: center;
-font-size: 2rem;
-}
-.newspaper-columns {
-grid-template-columns: 1fr;
-column-rule: none;
-gap: 2rem;
-}
-.newspaper-columns .column {
-padding: 0;
-border-bottom: 1px solid #b57edc;
-padding-bottom: 1.5rem;
-margin-bottom: 1.5rem;
-}
-.newspaper-columns .column:last-child {
-border-bottom: none;
-margin-bottom: 0;
-}
-.salsa-history-section {
-padding: 1rem;
-}
-}
-
 @media (max-width: 768px) {
-.hero {
-padding: 40px 5px 30px 5px;
-border-radius: 20px;
-}
-.hero-content p {
-font-size: 1rem;
-margin-bottom: 1.5rem;
-margin-top: 0.7rem;
-}
-.cta-btn, .cta-btn1 {
-font-size: 1rem;
-padding: 0.5rem 1.2rem;
-margin-bottom: 0.75rem;
-}
-.about-hero-img { width: 100px; height: 100px; }
-.about-hero-text h1 { font-size: 1.3rem; margin-bottom: 1rem; }
-.gallery-title { font-size: 1.2rem; margin-bottom: 1rem; }
-.salsa-history-title { font-size: 1.2rem; margin-bottom: 0.5rem; }
-.gallery-photo { width: 98vw; max-width: 98vw; border-radius: 8px; }
-.gallery-grid { grid-template-columns: 1fr; gap: 0.5rem; padding: 0.5rem 0; }
-.testimonial-cards-container {
-flex-direction: column;
-gap: 1.5rem;
-padding: 0 0.5rem;
-max-width: 100%;
-max-height: 660px;
-overflow-y: auto;
-scrollbar-width: thin;
-scrollbar-color: #716cff #e8d8ff;
-}
-.testimonial-card {
-padding: 1.25rem;
-max-width: 100%;
-overflow: visible;
-box-sizing: border-box;
-height: auto !important;
-min-height: unset !important;
-}
-.testimonial-arrow { display: none !important; }
-.testimonial-form { padding: 1.5rem; margin: 0 0.5rem; }
-.form-actions { flex-direction: column; }
-.submit-testimonial-btn { padding: 0.75rem 1.25rem; font-size: 0.95rem; }
-.faq-container { grid-template-columns: 1fr; gap: 2rem; }
-.faq-title { order: -1; }
-.faq-title h2 { font-size: 4rem; flex-direction: row; gap: 0.2rem; margin-left: 0; margin-right: 0; }
-.faq-questions h3 { font-size: 1.2rem; text-align: center; }
-.faq-question { font-size: 1rem; padding: 1rem; }
-.faq-answer p { padding: 1rem; }
-}
+  .newsletter-subscribe {
+    margin: 0 auto;
+  }
+  .newsletter-subscribe form {
+    align-items: center;
+  }
+  .newsletter-subscribe input {
+    width: 100%;
+    max-width: 400px;
+  }
+    .newsletter-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
-@media (max-width: 600px) {
-.history-logo { width: 120px; }
-.salsa-history-title { font-size: 1.6rem; }
-.newspaper-columns .column p { text-align: justify; }
-.mission-card p {
-font-size: 1.2rem;
-color: #C4F9CA;
-text-align: justify;
-margin: 0 auto 1.2rem auto;
-font-family: 'Monserrat','Nunito', Arial, sans-serif;
-position: relative;
-}
+  .newsletter-preview,
+  .newsletter-subscribe {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .newsletter-subscribe {
+    order: 2;
+  }
+
+  .newsletter-preview {
+    order: 1;
+  }
+  .hero {
+  padding: 40px 5px 30px 5px;
+  border-radius: 20px;
+  }
+  .hero-content p {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  margin-top: 0.7rem;
+  }
+  .cta-btn, .cta-btn1 {
+  font-size: 1rem;
+  padding: 0.5rem 1.2rem;
+  margin-bottom: 0.75rem;
+  }
+  .about-hero-img { width: 100px; height: 100px; }
+  .about-hero-text h1 { font-size: 1.3rem; margin-bottom: 1rem; }
+  .gallery-title { font-size: 1.2rem; margin-bottom: 1rem; }
+  .gallery-photo { width: 98vw; max-width: 98vw; border-radius: 8px; }
+  .gallery-grid { grid-template-columns: 1fr; gap: 0.5rem; padding: 0.5rem 0; }
+  .testimonial-cards-container {
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0 0.5rem;
+  max-width: 100%;
+  max-height: 660px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #716cff #e8d8ff;
+  }
+  .testimonial-card {
+  padding: 1.25rem;
+  max-width: 100%;
+  overflow: visible;
+  box-sizing: border-box;
+  height: auto !important;
+  min-height: unset !important;
+  }
+  .testimonial-arrow { display: none !important; }
+  .testimonial-form { padding: 1.5rem; margin: 0 0.5rem; }
+  .form-actions { flex-direction: column; }
+  .submit-testimonial-btn { padding: 0.75rem 1.25rem; font-size: 0.95rem; }
+  .faq-title { order: -1; }
+  .faq-title h2 { font-size: 4rem; flex-direction: row; gap: 0.2rem; margin-left: 0; margin-right: 0; }
+  .faq-questions h3 { font-size: 1.2rem; text-align: center; }
+  .faq-question { font-size: 1rem; padding: 1rem; }
+  .faq-answer p { padding: 1rem; }
+  .faq-section {
+    padding: 2rem 1rem;
+  }
+  .faq-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-left: 0;   /* ← This is what's missing */
+  }
+
+    /* Footer mobile styles */
+  .footer-newsletter h2 {
+  font-size: 1.5rem;
+  }
+  .footer-social h3 {
+  font-size: 1.3rem;
+  }
+
 }
 
 .testimonial-stars {
@@ -1177,8 +1112,11 @@ position: relative;
 <!-- ...existing swipe gallery code... -->
 </div>
 </section>
-</section>
 </main>
+<!--Fade-in Text Animation-->
+<div class="qldsdinvite-message">
+    <div id="animatedText"></div>
+</div>
 <section class="newsletter-preview-section" aria-labelledby="newsletter-section-heading">
 <div class="newsletter-container">
 <div class="newsletter-preview">
@@ -1201,65 +1139,6 @@ position: relative;
 </div>
 </div>
 </section>
-<!-- <section class="salsa-history-section" aria-labelledby="salsa-history-heading">
-<div class="history-header">
-<img src="images/home/historylogo.png" alt="" role="presentation" class="history-logo" />
-</div>
-<div class="newspaper-columns">
-<article class="column">
-<h2>Origins & Roots</h2>
-<p>
-  Salsa is more than a dance: it's a living, breathing celebration of Afro-Latino culture, resilience, and joy. Its roots stretch across the Caribbean, blending rhythms and movements from Cuba, Puerto Rico, and the vibrant immigrant communities of New York City.
-</p>
-<p>
-  Salsa's foundation lies in Cuban son, rumba, mambo, and cha-cha-cha, mixed with Puerto Rican bomba and plena. In the 1960s and 70s, New York became a melting pot where these styles fused with jazz, soul, and other influences, giving birth to the salsa we know today.
-</p>
-<p>
-  The heartbeat of salsa is Afro-Latino. African rhythms, percussion, and call-and-response vocals are at its core, reflecting the deep influence of the African diaspora in the Caribbean.
-</p>
-</article>
-<article class="column">
-<h2>Celia Cruz: The Queen of Salsa <a href="https://youtu.be/cu1tsaLp65M" target="_blank" rel="noopener noreferrer" aria-label="Watch Celia Cruz video on YouTube (opens in new tab)"><img src="images/icons/youtubeicon.png" alt="" role="presentation" class="video-icon"></a></h2>
-<div class="image-container">
-  <img src="images/home/celia-cruz.jpg" alt="Celia Cruz performing on stage, singing with passion and joy" />
-</div>
-<p>
-  No salsa history is complete without <strong>Celia Cruz</strong>, the legendary Cuban singer known as the "Queen of Salsa." Her powerful voice, infectious energy, and iconic shout—<em>¡Azúcar!</em>—made her a global ambassador for salsa and Afro-Cuban music.
-</p>
-<p>
-  Cruz's music transcended borders, bringing the rhythms of Cuba to audiences worldwide. Her collaborations with artists like Tito Puente and Willie Colón helped popularize salsa in the 20th century.
-</p>
-<p>
-  Cruz's legacy continues to inspire new generations of musicians and dancers, reminding us of the power of music to unite and uplift.
-</p>
-</article>
-
-<article class="column">
-<h2>Sound & Movement</h2>
-<p>
-  Salsa music is a rich tapestry of rhythms and instruments. The clave, a two-note pattern, is the backbone of salsa's rhythm, guiding dancers and musicians alike. Brass sections, piano montunos, and bass lines create a vibrant soundscape that invites movement.
-</p>
-<div class="image-container">
-  <img src="images/conga-drums.jpg" alt="Traditional conga drums used in salsa music" />
-</div>
-<p>
-  The conga drum is essential to salsa's rhythm, driving the music with its deep, resonant tones. Alongside timbales, bongos, and cowbell, the conga brings the pulse of Africa to every salsa song.
-</p>
-<p>
-  Salsa is a dance of improvisation, where dancers express themselves through movement, rhythm, and connection.  -->
-  <!-- It's a dance that transcends language, culture, and identity, inviting everyone to join in the celebration.
-</p>
-<p>
-  Today, salsa is a global phenomenon, connecting people of all backgrounds and identities. Its spirit of community, improvisation, and joy lives on in dance floors around the world!
-</p> -->
-</article>
-</div>
-</section>
-<div class="scrolling-message">
-<span>
-&nbsp;  &nbsp;Where words leave off, music begins...&nbsp;  &nbsp; ¡Vamos a Bailar! &nbsp;  &nbsp;Let's Dance!&nbsp;
-</span>
-</div>
 <!-- Testimonials Section -->
 <section class="testimonial-flex">
 <div class="testimonial-content">
@@ -1300,14 +1179,14 @@ Submit Your Testimonial
 <section class="faq-section" aria-labelledby="faq-heading">
 <div class="faq-container">
 <div class="faq-title">
-<h2 id="faq-heading"><span>F</span><span>A</span><span>Q</span><span>s</span></h2>
+<h2 id="faq-heading">Things To <span>Know</span></h2>
 </div>
 <div class="faq-questions">
 <h3>Have a question that isn't covered below? Send us an email!</h3>
 <div class="faq-list" role="list">
 <div class="faq-item" role="listitem">
 <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-1">
-  What is Salsa?
+  Salsa Brief History
   <span class="faq-icon" aria-hidden="true">+</span>
 </button>
 <div class="faq-answer" id="faq-answer-1">
@@ -1316,19 +1195,8 @@ Submit Your Testimonial
 </div>
 </div>
 <div class="faq-item" role="listitem">
-<button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-2">
-  What is the difference between Salsa On1 and On2?
-  <span class="faq-icon" aria-hidden="true">+</span>
-</button>
-<div class="faq-answer" id="faq-answer-2">
-  <p>The distinction comes from which beat of the 8-count musical phrase the dancer begins their basic step. Salsa On1 (popularized in Los Angeles in the 1990s) breaks forward on the first beat, making the style feel fast, sharp, and showy. Often matching the horn section of salsa music.</p>
-  <p>Salsa On2 (developed in New York and associated with Eddie Torres in the 1980s) breaks forward on the second beat, aligning more closely with the clave rhythm, which has African and Afro-Cuban origins dating back centuries. On2 is often described as smoother, more rhythmically grounded, and deeply connected to traditional salsa music’s roots. Both styles share the same fundamentals. The timing simply shifts the feel of the dance.</p>
-</div>
-</div>
-
-<div class="faq-item" role="listitem">
 <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-3">
-  What is Bachata?
+  Bachata Brief History
   <span class="faq-icon" aria-hidden="true">+</span>
 </button>
 <div class="faq-answer" id="faq-answer-3">
@@ -1336,19 +1204,27 @@ Submit Your Testimonial
   <p>In 1962, José Manuel Calderón recorded one of the first recognized bachata songs, “Borracho de Amor,” which helped establish the genre. Through the 1980s and 1990s, artists like Juan Luis Guerra and Aventura brought bachata to international audiences. The dance itself features a simple side-to-side basic step with a tap on the 4th beat, but over time it has expanded into multiple styles: traditional Dominican bachata, modern bachata (with more body movement and fusion elements), and sensual bachata (developed in Spain in the 2000s). Today, bachata is one of the most popular social dances worldwide.</p>
 </div>
 </div>
-
+<div class="faq-item" role="listitem">
+<button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-1">
+Difference Between Salsa On1 & On2
+  <span class="faq-icon" aria-hidden="true">+</span>
+</button>
+<div class="faq-answer" id="faq-answer-2">
+  <p>The distinction comes from which beat of the 8-count musical phrase the dancer begins their basic step. Salsa On1 (popularized in Los Angeles in the 1990s) breaks forward on the first beat, making the style feel fast, sharp, and showy. Often matching the horn section of salsa music.</p>
+  <p>Salsa On2 (developed in New York and associated with Eddie Torres in the 1980s) breaks forward on the second beat, aligning more closely with the clave rhythm, which has African and Afro-Cuban origins dating back centuries. On2 is often described as smoother, more rhythmically grounded, and deeply connected to traditional salsa music’s roots. Both styles share the same fundamentals. The timing simply shifts the feel of the dance.</p>
+</div>
+</div>
 <div class="faq-item" role="listitem">
 <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-4">
-  How long does it take to learn Salsa or Bachata?
+  When can I expect to social dance?
   <span class="faq-icon" aria-hidden="true">+</span>
 </button>
 <div class="faq-answer" id="faq-answer-4">
-  <p>Learning times vary, but history shows both dances were created in social settings meant to be enjoyed by everyday people, not just professionals. Most students pick up the basics within 4–6 weeks of consistent classes. 
-  <p>Salsa, which evolved through decades of cultural exchange has more complex rhythms and may take longer to master musically. 
+  <p>Learning times vary, but history shows both dances were created in social settings meant to be enjoyed by everyday people, not just professionals. Most students pick up the basics within 4–6 weeks of consistent classes.</p>
+  <p>Salsa, which evolved through decades of cultural exchange has more complex rhythms and may take longer to master musically.</p>
   <p>Bachata, which began in the Dominican Republic in the 1960s, has a simpler basic step and is often easier for beginners to feel comfortable dancing within a few weeks. With steady practice, dancers can usually join social dance floors confidently in 3–6 months.</p>
 </div>
 </div>
-
 <div class="faq-item" role="listitem">
 <button class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq-answer-6">
   What is your return policy?
@@ -1461,7 +1337,7 @@ resetAutoSwipe();
 function startAutoSwipe() {
 autoSwipeTimeout = setTimeout(() => {
 nextImage();
-startAutoSwipe(); // Restart the cycle
+startAutoSwipe();
 }, 3000);
 }
 
@@ -1676,7 +1552,6 @@ const originalText = submitBtn.textContent;
 submitBtn.textContent = 'Submitting...';
 submitBtn.disabled = true;
 
-// Debug: Log the form data being sent
 console.log('Sending testimonial data:', {
 name: formData.get('name'),
 email: formData.get('email'), 
@@ -1690,7 +1565,7 @@ body: formData,
 mode: 'no-cors'
 })
 .then(() => {
-// With no-cors mode, we can't check response status, so assume success
+
 alert('Thank you! Your testimonial has been submitted successfully. We appreciate your feedback!');
 form.reset();
 toggleTestimonialForm();
@@ -1716,6 +1591,54 @@ toggleFAQ(this);
 function renderStars(starCount) {
   return '★'.repeat(starCount) + '☆'.repeat(5 - starCount);
 }
+
+// Animated Invite Functionality
+const messages = [
+    "Join Us On the Dance Floor at Queer Salsa Social",
+    "Dance with us at the Park at Queer Salsa Sunsets",
+    "Join our 4 Week Salsa & Bachata Series",
+];
+
+const container = document.getElementById("animatedText");
+let messageIndex = 0;
+async function sleep(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function animateMessage(message){
+    container.innerHTML = "";
+    const words = message.split(" ");
+    // Create spans
+    words.forEach(word => {
+        const span = document.createElement("span");
+        span.className = "word";
+        span.textContent = word;
+        container.appendChild(span);
+    });
+    const spans = [...container.querySelectorAll(".word")];
+    // Fade IN one word at a time
+    for (const span of spans){
+        span.classList.add("show");
+        await sleep(180);
+    }
+    // Leave the full sentence visible
+    await sleep(2500);
+    // Fade OUT one word at a time
+    for (const span of spans){
+        span.classList.add("hide");
+        await sleep(120);
+    }
+    await sleep(600);
+}
+async function startAnimation(){
+    while(true){
+        await animateMessage(messages[messageIndex]);
+        messageIndex++;
+        if(messageIndex >= messages.length){
+            messageIndex = 0;
+        }
+    }
+}
+startAnimation();
 </script>
 </body>
 </html>

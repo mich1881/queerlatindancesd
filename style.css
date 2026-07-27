@@ -1339,44 +1339,6 @@ button {
   opacity: 1;
 }
 
-
-
-/* === SCROLLING MESSAGE STYLES === */
-.scrolling-message {
-  width: 100%;
-  overflow: hidden;
-  margin-top: 3rem;
-  position: relative;
-  height: 6rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  white-space: nowrap;
-}
-.scrolling-message span {
-  font-family: 'PassionOne','Huninn', 'Signika', Arial, sans-serif;
-  display: inline-block;
-  font-size: 6rem;
-  font-weight: 1200;
-  color: white;
-  padding-right: 4rem;
-  animation: scroll 18s linear infinite;
-  white-space: nowrap;
-  letter-spacing: -1.5px;
-}
-@keyframes scroll {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-@media (max-width: 700px) {
-  .scrolling-message {
-    display: none;
-  }
-  }
 /* Payment1.html Modal & Form Refactor */
 .modal-overlay {
   display: none;
