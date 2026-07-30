@@ -1,0 +1,19 @@
+name = "qldsd-video-uploads"
+main = "worker.js"
+compatibility_date = "2026-07-28"
+compatibility_flags = ["nodejs_compat"]
+
+workers_dev = true
+
+[vars]
+R2_ACCOUNT_ID = "7633804b1121f44ee4a8086053ba3695"
+R2_BUCKET_NAME = "dance-videos"
+
+[[r2_buckets]]
+binding = "VIDEO_BUCKET"
+bucket_name = "dance-videos"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "qlsd-video-library"
+database_id = "53e249fa-c988-4e6a-a9a5-e73eac157652"

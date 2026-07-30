@@ -1034,7 +1034,8 @@ pricingConfig = {
 "5 classes bundle": { "price": 375, "calculation": "5 Class Bundle: 5 hours x $75 per hour = $375", "label": "5 Class Bundle", "perHour": "$75 per hour" },
 "1-hr class": { "price": 85, "calculation": "1-hr Class: 1 hour x $85 per hour = $85", "label": "1-hr Private Lesson", "perHour": "$85 per hour" },
 "2-hr class": { "price": 156, "calculation": "2-hr Class: 2 hours x $78 per hour = $156", "label": "2-hr Private Lesson", "perHour": "$78 per hour" }
-}
+},
+"coupons": {}
 };
 }
 }
@@ -1267,7 +1268,7 @@ lessonDateTimeDiv.style.display = 'none';
 ['paypalFormInner','venmoFormInner','zelleFormInner'].forEach(function(formId) {
 const form = document.getElementById(formId);
 if (form) {
-['firstName','lastName','email','phone','pronouns'].forEach(function(field) {
+['firstName','lastName','email','phone','pronouns','role'].forEach(function(field) {
 if (form[field]) {
 form[field].addEventListener('input', function() {
 sharedFormData[field] = this.value;
@@ -1423,6 +1424,7 @@ document.getElementById('paypalFormInner').onsubmit = async function(ev) {
   const email = this.email.value;
   const phone = this.phone.value;
   const pronouns = this.pronouns.value;
+  const role = this.role.value;
 
   function getParam(name) {
     const url = new URL(window.location.href);
@@ -1431,7 +1433,7 @@ document.getElementById('paypalFormInner').onsubmit = async function(ev) {
 
   const series = getParam('option') || '';
   const pricingType = getParam('pricing_type') || 'series';
-
+  let normalizedSeries = 'both';
   // Normalize series for JSON lookup
 if (series) {
   const lower = series.toLowerCase();
@@ -1518,7 +1520,7 @@ if (series) {
     `<b>Recipient:</b> @queerlatindance<br>` +
     `<b>Name:</b> ${firstName} ${lastName}<br>` +
     (pronouns ? `<b>Pronouns:</b> ${pronouns}<br>` : '') +
-    (this.role.value ? `<b>Role:</b> ${this.role.value}<br>` : '') +
+    (role ? `<b>Role:</b> ${role}<br>` : '') +
     (email ? `<b>Email:</b> ${email}<br>` : '') +
     (phone ? `<b>Phone:</b> ${phone}<br>` : '') +
     `<b>Note:</b> ${firstName} ${lastName} - ${seriesLabel}<br><br>` +
@@ -1582,6 +1584,7 @@ document.getElementById('zelleFormInner').onsubmit = async function(ev) {
   const email = this.email.value;
   const phone = this.phone.value;
   const pronouns = this.pronouns.value;
+  const role = this.role.value;
 
   function getParam(name) {
     const url = new URL(window.location.href);
@@ -1675,7 +1678,7 @@ if (series) {
     `<b>Recipient:</b> michf18@gmail.com or 760-529-1320<br>` +
     `<b>Name:</b> ${firstName} ${lastName}<br>` +
     (pronouns ? `<b>Pronouns:</b> ${pronouns}<br>` : '') +
-    (this.role.value ? `<b>Role:</b> ${this.role.value}<br>` : '') +
+    (role ? `<b>Role:</b> ${role}<br>` : '') +
     (email ? `<b>Email:</b> ${email}<br>` : '') +
     (phone ? `<b>Phone:</b> ${phone}<br>` : '') +
     `<b>Memo:</b> ${firstName} ${lastName} - ${seriesLabel}<br><br>` +
@@ -1719,6 +1722,7 @@ document.getElementById('venmoFormInner').onsubmit = async function(ev) {
   const email = this.email.value;
   const phone = this.phone.value;
   const pronouns = this.pronouns.value;
+  const role = this.role.value;
 
   function getParam(name) {
     const url = new URL(window.location.href);
@@ -1812,7 +1816,7 @@ if (appliedDiscount) amount = Math.max(0, basePrice - appliedDiscount);
     `<b>Recipient:</b> @michf18<br>` +
     `<b>Name:</b> ${firstName} ${lastName}<br>` +
     (pronouns ? `<b>Pronouns:</b> ${pronouns}<br>` : '') +
-    (this.role.value ? `<b>Role:</b> ${this.role.value}<br>` : '') +
+    (role ? `<b>Role:</b> ${role}<br>` : '') +
     (email ? `<b>Email:</b> ${email}<br>` : '') +
     (phone ? `<b>Phone:</b> ${phone}<br>` : '') +
     `<b>Note:</b> ${firstName} ${lastName} - ${seriesLabel}<br><br>` +
@@ -1942,10 +1946,6 @@ submittedFormIds.add(dataFingerprint);
 backendRequestInProgress = true;
 lastSubmissionTime = currentTime;
 
-// Your backend URL - update this when you deploy
-// Choose your backend deployment option:
-// const backendUrl = 'http://localhost:3000/api/payment-form'; // Local development
-// const backendUrl = 'https://your-backend-url.railway.app/api/payment-form'; // Railway
 const backendUrl = 'https://restless-feather-b6a9.michf18.workers.dev/api/payment-form'; // Cloudflare Workers
 
 console.log('🔄 Sending data to backend...', formData);

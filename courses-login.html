@@ -91,7 +91,7 @@ font-weight: 700;
 <input type="password" id="register-password" placeholder="Create password (min 6 chars)" minlength="6" required>
 </div>
 <button type="submit" class="auth-btn">Create Account</button>
-<p class="auth-terms">By signing up, you agree to learn amazing dance moves!</p>
+<p class="auth-terms">By signing up, you agree to our Terms & Conditions</p>
 </form>
 </div>
 </div>
@@ -430,18 +430,22 @@ alert(localStorage.getItem('adminToken'));
         alert('❌ Error: ' + err.message);
     }
 };
+window.forgotPassword = function(){
 
+    const email = prompt(
+        "Enter your email address:"
+    );
+
+    if(!email){
+        return;
+    }
+
+    alert(
+        "Password reset instructions will be sent to: " + email
+    );
+
+};
 </script>
-
-<!-- Payment Overlay Modal -->
-<div id="paymentOverlay" class="payment-overlay">
-<div class="payment-container">
-<div class="payment-title">Complete Your Payment</div>
-<div class="payment-desc">
-Select a payment method below to finish registration for your course.<br>
-<span id="selectedSeries" style="display:block;margin-top:0.7em;font-size:1.08rem;color:#716cff;font-weight:700;"></span>
-<span id="selectedPrice" style="display:block;margin-top:0.2em;font-size:1.08rem;color:#222;font-weight:700;"></span>
 </div>
-
-<div class="payment-methods">
-<!-- Order Summary -->
+</body>
+</html>

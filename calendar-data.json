@@ -25,7 +25,7 @@
     }
   },
 
-  "friSpringP1": {
+  "thursSummerP1": {
     "title": "4 Week Thursday Series - Summer",
     "dayOfWeek": "Thursdays",
     "year": 2026,
@@ -47,7 +47,7 @@
     }
   },
 
-  "sunSpringP1": {
+  "sunSummerP1": {
     "title": "4 Week Sunday Series - Summer",
     "dayOfWeek": "Sundays",
     "year": 2026,
@@ -69,9 +69,9 @@
     }
   },
 
-  "friSpringP2": {
-    "title": "4 Week Friday Series - Spring Part 2",
-    "dayOfWeek": "Fridays",
+  "ThursSummerP2": {
+    "title": "4 Week Thursday Series - Summer Part 2",
+    "dayOfWeek": "Thursdays",
     "year": 2026,
     "dates": ["9/3", "9/10", "9/17", "9/24"],
     "rsvpDeadline": "Tuesday, 9/1",
@@ -86,7 +86,7 @@
     "calendarEvents": {}
   },
 
-  "sunSpringP2": {
+  "sunSummerP2": {
     "title": "4 Week Sunday Series - Spring Part 2",
     "dayOfWeek": "Sundays",
     "year": 2026,

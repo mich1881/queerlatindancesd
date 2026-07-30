@@ -83,6 +83,7 @@ function doPost(e) {
       formData.email || '',
       formData.phone || '',
       formData.pronouns || '',
+      formData.role || '',
       formData.paymentMethod || '',
       formData.series || '',
       formData.amount || '',

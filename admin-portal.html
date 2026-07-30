@@ -5,8 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>QLDSD Admin Portal</title>
 <style>
+/* ═══════════════════════════════════════
+   QLDSD LIGHT LAVENDER THEME
+═══════════════════════════════════════ */
+:root {
+  --qldsd-bg: #e9e6e6;
+  --qldsd-bg-soft: #ede4ff;
+
+  --qldsd-primary: #716cff;
+  --qldsd-secondary: #b57edc;
+  --qldsd-accent: #3b383e;
+
+  --qldsd-text: #3b2850;
+  --qldsd-text-soft: rgba(59,40,80,0.65);
+
+  --qldsd-card: rgba(255,255,255,0.9);
+  --qldsd-border: rgba(113,108,255,0.2);
+
+  --qldsd-success: #27ae60;
+  --qldsd-warning: #f39c12;
+  --qldsd-danger: #e74c3c;
+}
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Montserrat', 'Nunito', Arial, sans-serif; background: #b5a0fc; color: hsl(0, 0%, 93%); min-height: 100vh; }
+    body {
+      font-family:'Montserrat','Nunito',Arial,sans-serif;
+      background:linear-gradient(
+        135deg,
+        var(--qldsd-bg),
+        var(--qldsd-bg-soft)
+      );
+      color:var(--qldsd-text);
+      min-height:100vh;
+    }
   /* ── LOCK SCREEN ── */
   #lockScreen {
     position: fixed; inset: 0; background: #524563;
@@ -15,7 +45,7 @@
   #lockScreen h1 { color: #dfc6ff; font-size: 2rem; margin-bottom: 0.5rem; }
   #lockScreen p { color: #f5c1ff; margin-bottom: 2rem; font-size: 0.9rem; }
   #lockScreen input {
-    padding: 0.8rem 1.2rem; border-radius: 10px; border: 2px solid #fcf9ff;
+    padding: 0.8rem 1.2rem; border-radius: 10px;
     background: #e8e2f3; color: #312c37; font-size: 1.1rem; width: 280px; text-align: center; outline: none;
   }
   #lockScreen button {
@@ -28,41 +58,52 @@
   /* ── MAIN APP ── */
   #app { display: none; }
   header {
-    background: linear-gradient(120deg, #7a5beb, #d3c9f5);
+    background:linear-gradient(
+      135deg,
+      var(--qldsd-primary),
+      var(--qldsd-secondary)
+    );
     padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between;
     position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   }
   header h1 { font-size: 1.4rem; color: #fff; }
   header span { font-size: 0.85rem; color: #fbf5ff; }
   #signOutBtn {
-    background: #ff6b6b; color: #fff; border: none; border-radius: 8px;
+    background:rgba(248, 78, 78, 0.9);
+    border: 2px solid rgba(243, 242, 255, 0.86);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(113,108,255,0.15);
     padding: 0.4rem 1rem; cursor: pointer; font-size: 0.9rem;
   }
 
   /* ── TABS ── */
-  .tabs { display: flex; gap: 0; background: #c6abff; border-bottom: 2px solid #987bdb; }
+  .tabs { display: flex; gap: 0; background:#ffffff;
+    border-bottom:1px solid #dfc6ff;}
   .tab-btn {
     padding: 1rem 2rem; background: none; border: none; color: #524e4e;
     font-size: 1rem; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s;
   }
-  .tab-btn.active { color: #a259ff; border-bottom-color: #a259ff; background: #fff; }
+  .tab-btn.active { color:#716cff;
+    border-bottom-color:#716cff;
+    background:#f6f1ff; }
   .tab-btn:hover { color: #c990ff; }
   .tab-content { display: none; padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto; }
   .tab-content.active { display: block; }
 
   /* ── CARDS ── */
   .reg-card {
-    background: #fff; border-radius: 14px; padding: 0.5rem 1rem;
-    margin-bottom: 0.5rem; border: 0.5px solid #fff; position: relative;
+    background: #d4d2d7; border-radius: 14px; padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem; position: relative;
   }
-  .reg-card.verified { border-color: #27ae60; }
-  .reg-card.finished { border-color: #888; opacity: 0.7; }
-  .reg-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
-  .reg-name { font-size: 0.85rem; font-weight: 700; color: #8c28f7; }
-  .reg-series { font-size: 0.85rem; color: #58347c; margin-top: 0.2rem; }
-  .reg-detail { font-size: 0.85rem; color: #888; margin-top: 0.15rem; }
+
+  .reg-card.verified { background: #ffffff;}
+  .reg-card.finished { background: #c7c5c9;}
+  .reg-header {display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+  .reg-name { font-size: 0.85rem; font-weight: 700; color: #716cff; }
+  .reg-series { font-size: 0.85rem; color: #494848; margin-top: 0.2rem; }
+  .reg-detail { font-size: 0.85rem; color: #494848; margin-top: 0.15rem; }
   .badge {
-    padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+    padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.78rem; font-weight: 550; text-transform: uppercase;
   }
   .badge.pending { background: #f39c12; color: #fff; }
   .badge.verified { background: #27ae60; color: #fff; }
@@ -73,9 +114,9 @@
   .credit-dot {
     width: 16px; height: 16px; border-radius:50%;
     background: #27ae60; border: 2px solid #27ae60;
-    display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #fff; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #fff; font-weight: 550;
   }
-  .credit-dot.used { background: #555; border-color: #777; }
+  .credit-dot.used { background: #555;}
   .credit-label { font-size: 0.85rem; color: #411e4b; margin-left: 0.5rem; }
 
   /* Attendance log */
@@ -86,8 +127,8 @@
   /* Action buttons */
   .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
   .btn {
-    padding: 0.1rem 0.5rem; border: none; border-radius: 8px; font-size: 0.8rem;
-    cursor: pointer; font-weight: 600; transition: all 0.2s;
+    padding: 0.5rem 0.8rem; border: none; border-radius: 10px; font-size: 0.9rem;
+    cursor: pointer; font-weight: 550; transition: all 0.2s;
   }
   .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
   .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
@@ -102,24 +143,24 @@
   .credits-selector { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; }
   .credits-selector label { font-size: 0.85rem; color: #aaa; }
   .credits-selector select {
-    padding: 0.35rem 0.6rem; border-radius: 6px; background: #cba6ff;
-    border: 1px solid #bbb4c9; color: #fff; font-size: 0.9rem; outline: none;
+    padding: 0.35rem 0.6rem; border-radius: 6px; background: #ffffff;
+    color: #726d6d; font-size: 0.9rem; outline: none;
   }
 
   /* Filter bar */
   .filter-bar { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
   .filter-bar input, .filter-bar select {
-    padding: 0.5rem 0.8rem; border-radius: 8px; border: 1.5px solid #dfd1ff;
+    padding: 0.5rem 0.8rem; border-radius: 8px;
     background: #ffffff; font-size: 0.9rem; color: #201a1a;outline: none;
   }
   .filter-bar input { width: 220px; }
-  .count-badge { background: #f4f0ff; color: #750ad9; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; }
+  .count-badge { background: #f4f0ff; color: #750ad9; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 550; }
 
   /* Summary stats */
   .stats-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-  .stat-box { background: #f7f5fa; border-radius: 12px; padding: 1rem 1.4rem; border: 2px solid #836eb3d1; min-width: 130px; }
-  .stat-box .num { font-size: 2rem; font-weight: 900; color: #8e6ca9; }
-  .stat-box .lbl { font-size: 0.8rem; color: #523371; margin-top: 0.2rem; }
+  .stat-box { background: #f7f5fa; border-radius: 12px; padding: 1rem 1.4rem; min-width: 130px; }
+  .stat-box .num { font-size: 2rem; font-weight: 550; color: #8e6ca9; }
+  .stat-box .lbl { font-size: 0.8rem; color: #201a1a; margin-top: 0.2rem; }
 
   /* Online courses section (mirrors courses-login admin) */
   .online-student-card {
@@ -128,7 +169,7 @@
   }
   .grant-form { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
   .grant-form input, .grant-form select {
-    padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #d1baff;
+    padding: 0.5rem 0.8rem; border-radius: 8px;
     background: #f0e4ff; color: #fff; font-size: 0.9rem; outline: none;
   }
   .grant-form input { width: 240px; }
@@ -137,7 +178,13 @@
   .empty { text-align: center; color: #fff6f6; padding: 3rem; font-size: 1rem; }
 
   /* Refresh btn */
-  .refresh-btn { background: #8e60c4; color: #ffffff; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
+  .refresh-btn { 
+    background: #8e60c4; color: #ffffff; 
+    border: none; border-radius: 8px; 
+    padding: 0.5rem 1rem; cursor: pointer; 
+    font-size: 0.85rem; font-weight: 550;
+    margin-bottom: 1rem;
+   }
   .refresh-btn:hover { background: #7a54b0; }
 
   /* Mobile */
@@ -147,7 +194,7 @@
     header { padding: 0.8rem 1rem; }
   }
 
-  .spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid #a259ff44; border-top-color: #a259ff; border-radius: 50%; animation: spin 0.7s linear infinite; }
+  .spinner { display: inline-block; width: 20px; height: 20px; border-top-color: #a259ff; border-radius: 50%; animation: spin 0.7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
   .modal {
@@ -160,14 +207,40 @@
   height: 100%;
   background: rgba(0,0,0,.5);
 }
-
 .modal-content {
   background: white;
-  width: 400px;
-  max-width: 90%;
-  margin: 10% auto;
+  width: 700px;
+  max-width: 95%;
+  margin: 5% auto;
   padding: 25px;
   border-radius: 12px;
+
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.edit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+}
+
+.edit-grid input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .modal-content input {
@@ -187,12 +260,12 @@
 }
 .edit-label {
   color: #7c3aed;   /* purple */
-  font-weight: bold;
+  font-weight: 550;
   font-size: 14px;
 }
 
-.compact-attendance {
-  padding: 8px 12px;
+.reg-card.compact-attendance {
+  background: #ffffff !important;
 }
 
 .compact-row {
@@ -205,7 +278,7 @@
 .compact-name {
   flex: 1;
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 550;
   color: rgb(127, 91, 175);
 }
 
@@ -213,12 +286,25 @@
   width: 40px;
   text-align: center;
   font-size: 1.2rem;
-  font-weight: 900;
+  font-weight: 550;
   color: #27ae60;
 }
 
 .compact-credits.zero {
   color: #e74c3c;
+}
+
+.video-card {
+background:white;
+border-radius:20px;
+padding:20px;
+margin-bottom:15px;
+color:#444345;
+}
+
+#tab-videos .reg-card {
+background:white;
+border-radius:24px;
 }
 </style>
 </head>
@@ -279,8 +365,11 @@
       <input type="text" id="attendSearch" placeholder="Search name, email, or series…" oninput="renderAttendance()" />
       <select id="seriesFilter" onchange="renderAttendance()">
         <option value="all">All Series</option>
-        <option value="4 Week">4-Week Series</option>
-        <option value="8 Week">8-Week Series</option>
+        <option value="4 Week">p1 Salsa Only</option>
+        <option value="4 Week">p2 Salsa Only</option>
+        <option value="4 Week">p1 Bachata Only</option>
+        <option value="4 Week">p2 Bachata Only</option>
+        <option value="8 Week">8WK-S1 Salsa Only</option>
         <option value="Drop-in">Drop-in</option>
         <option value="Private">Private</option>
       </select>
@@ -293,8 +382,20 @@
       onclick="toggleCompactView()">
       📱 Compact View
     </button>
-    <div id="attendanceList"><div class="empty">Loading…</div></div>
-  </div>
+<div id="attendanceList"><div class="empty">Loading…</div></div>
+
+<h2 style="color:#f95050;margin-top:2rem;">
+  Past Students
+  <button
+    class="refresh-btn"
+    id="pastToggleBtn"
+    onclick="togglePastStudents()">
+    👥 Show Past Students
+  </button>
+</h2>
+<div id="pastStudentList" style="display:none;">
+  <div class="empty">No past students.</div>
+</div>
 
   <!-- ── TAB 3: ONLINE COURSES ── -->
   <div id="tab-online" class="tab-content">
@@ -329,28 +430,68 @@
 <!-- ── TAB 4: EDIT COURSES ── -->
 <div id="editModal" class="modal">
   <div class="modal-content">
+
     <span class="close" onclick="closeEditModal()">&times;</span>
+
     <h2>Edit Registration</h2>
+
     <input type="hidden" id="editRegId">
     <input id="edit-regId" type="hidden">
-    <label class="edit-label">First Name</label>
-    <input id="edit-firstName">
-    <label class="edit-label">Last Name</label>
-    <input id="edit-lastName">
-    <label class="edit-label">Email</label>
-    <input id="edit-email">
-    <label class="edit-label">Phone</label>
-    <input id="edit-phone">
-    <label class="edit-label">Pronouns</label>
-    <input id="edit-pronouns">
-    <label class="edit-label">Series</label>
-    <input id="edit-series">
-    <label class="edit-label">Role</label>
-    <input id="edit-role">
-    <label class="edit-label">Amount</label>
-    <input id="edit-amount">
-    <button onclick="saveStudentEdit()">Save</button>
-    <button onclick="closeEditModal()">Cancel</button>
+
+    <div class="edit-grid">
+
+      <div>
+        <label class="edit-label">First Name</label>
+        <input id="edit-firstName">
+      </div>
+
+      <div>
+        <label class="edit-label">Last Name</label>
+        <input id="edit-lastName">
+      </div>
+
+      <div>
+        <label class="edit-label">Email</label>
+        <input id="edit-email">
+      </div>
+
+      <div>
+        <label class="edit-label">Phone</label>
+        <input id="edit-phone">
+      </div>
+
+      <div>
+        <label class="edit-label">Pronouns</label>
+        <input id="edit-pronouns">
+      </div>
+
+      <div>
+        <label class="edit-label">Series</label>
+        <input id="edit-series">
+      </div>
+
+      <div>
+        <label class="edit-label">Series Key</label>
+        <input id="edit-seriesKey">
+      </div>
+
+      <div>
+        <label class="edit-label">Role</label>
+        <input id="edit-role">
+      </div>
+
+      <div>
+        <label class="edit-label">Amount</label>
+        <input id="edit-amount">
+      </div>
+
+    </div>
+
+    <div class="modal-actions">
+      <button onclick="saveStudentEdit()">Save</button>
+      <button onclick="closeEditModal()">Cancel</button>
+    </div>
+
   </div>
 </div>
 <!-- ── TAB 4: VIDEO LIBRARY ── -->
@@ -363,7 +504,7 @@
   <div class="reg-card">
 
     <h3 style="color:#7c3aed;">
-      Upload Lesson Video
+      Upload Video Lessons
     </h3>
 
     <br>
@@ -400,11 +541,12 @@
 
     <br><br>
 
-    <button 
+      <button 
       class="btn btn-checkin"
-      id="uploadVideoBtn">
+      id="uploadVideoBtn"
+      onclick="uploadVideo()">
       Upload Video
-    </button>
+      </button>
 
     <br><br>
 
@@ -417,12 +559,12 @@
 
     <p 
       id="uploadStatus"
-      style="margin-top:10px;color:#b17373;">
+      style="margin-top:10px;color:#9587ff;">
     </p>
   </div>
-
+<h2>Uploaded Videos</h2>
+<div id="videoLibrary"></div>
 </div>
-
 <script src="admin-portal.js"></script>
 </body>
 </html>

@@ -2,28 +2,9 @@
 // CONFIG
 // ══════════════════════════════════════════
 const WORKER_URL = 'https://restless-feather-b6a9.michf18.workers.dev';
-// let adminToken = sessionStorage.getItem('adminToken') || '';
+const VIDEO_WORKER_URL ='https://qldsd-video-uploads.michf18.workers.dev';
 let adminToken = localStorage.getItem('adminToken') || '';
 let allRegistrations = [];
-
-// // ══════════════════════════════════════════
-// // SECRET KEYBOARD UNLOCK (type "qldsd")
-// // ══════════════════════════════════════════
-// let keyBuf = '';
-// document.addEventListener('keydown', function(e) {
-//   keyBuf += e.key.toLowerCase();
-//   if (keyBuf.includes('qldsd')) {
-//     document.getElementById('passwordInput').focus();
-//     keyBuf = '';
-//   }
-//   if (keyBuf.length > 10) keyBuf = keyBuf.slice(-10);
-// });
-
-// // Also allow Enter key on password field
-// document.getElementById('passwordInput').addEventListener('keydown', function(e) {
-//   if (e.key === 'Enter') doLogin();
-// });
-
 // ══════════════════════════════════════════
 // LOGIN / LOGOUT
 // ══════════════════════════════════════════
@@ -42,7 +23,6 @@ async function doLogin() {
     const data = await res.json();
     if (data.success) {
       adminToken = data.token;
-      // sessionStorage.setItem('adminToken', adminToken);
       localStorage.setItem('adminToken', adminToken);
       document.getElementById('lockScreen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
@@ -58,25 +38,26 @@ async function doLogin() {
 
 function signOut() {
   adminToken = '';
-  // sessionStorage.removeItem('adminToken');
   localStorage.removeItem('adminToken');
   document.getElementById('app').style.display = 'none';
   document.getElementById('lockScreen').style.display = 'flex';
   document.getElementById('passwordInput').value = '';
 }
 
-// Auto-login if token exists in session
+// Auto-login if token exists in localStorage
 if (adminToken) {
   document.getElementById('lockScreen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   loadRegistrations();
+  loadOnlineStudents();
+  loadVideoLibrary();
 }
 
 // ══════════════════════════════════════════
 // TABS
 // ══════════════════════════════════════════
 
-let compactView = false;
+let compactView = true;
 function toggleCompactView() {
 
   compactView = !compactView;
@@ -131,7 +112,7 @@ function renderPending() {
   const filter = document.getElementById('pendingFilter').value;
 
   let regs = allRegistrations.filter(r => {
-    const matchQ = !q || `${r.firstName} ${r.lastName} ${r.email} ${r.series}`.toLowerCase().includes(q);
+    const matchQ = !q || `${r.firstName} ${r.lastName} ${r.email} ${r.series} ${r.seriesKey}`.toLowerCase().includes(q);
     const matchF = filter === 'all' || r.status === filter;
     return matchQ && matchF;
   });
@@ -166,17 +147,17 @@ function pendingCard(r) {
 
   <div class="actions">
     <button class="btn btn-verify"
-      onclick="verifyPayment('${r.id}')">
-      ✅ Verify Payment & Assign Credits
+      onclick="event.stopPropagation(); verifyPayment('${r.id}')">
+      ✅ Verify
     </button>
 
     <button class="btn btn-secondary"
-      onclick="editRegistration('${r.id}')">
+      onclick="event.stopPropagation(); editRegistration('${r.id}')">
       Edit
     </button>
 
     <button class="btn btn-danger"
-      onclick="deleteRegistration('${r.id}')">
+      onclick="event.stopPropagation(); deleteRegistration('${r.id}')">
       Delete
     </button>
   </div>
@@ -187,13 +168,8 @@ function pendingCard(r) {
       ✅ Payment verified ${r.creditsTotal} credits
     </span>
 
-    <button class="btn btn-secondary"
-      onclick="editRegistration('${r.id}')">
-      ✏️ Edit
-    </button>
-
     <button class="btn btn-danger"
-      onclick="deleteRegistration('${r.id}')">
+      onclick="event.stopPropagation(); deleteRegistration('${r.id}')">
       🗑️ Delete
     </button>
 
@@ -201,11 +177,12 @@ function pendingCard(r) {
 `;
 
   return `
-    <div class="reg-card ${r.status}" id="regcard-${r.id}">
+    <div class="reg-card ${r.status}" id="regcard-${r.id}" ondblclick="editRegistration('${r.id}')">
       <div class="reg-header">
         <div>
           <div class="reg-name">${r.firstName} ${r.lastName}</div>
           <div class="reg-series">${r.series || '—'}</div>
+          <div class="reg-series">${r.seriesKey || '—'}</div>
           <div class="reg-detail">📧 ${r.email}${r.phone ? ' · 📞 ' + r.phone : ''}${r.pronouns ? ' · ' + r.pronouns : ''}${r.role ? ' · ' + r.role : ''}</div>
           <div class="reg-detail">💰 ${r.amount || '—'} via ${r.paymentMethod || '—'} · Submitted: ${date}</div>
         </div>
@@ -260,6 +237,11 @@ async function quickAddRegistration() {
     "4 Week"
   );
 
+  const seriesKey = prompt(
+    "Series Key:",
+    ""
+  );
+
   try {
 
     const res = await fetch(
@@ -275,6 +257,7 @@ async function quickAddRegistration() {
           lastName,
           email,
           series,
+          seriesKey,
           status: 'pending'
         })
       }
@@ -297,25 +280,160 @@ async function quickAddRegistration() {
 // ══════════════════════════════════════════
 // TAB 2: ATTENDANCE & CREDITS
 // ══════════════════════════════════════════
+// function renderAttendance() {
+//   const q = (document.getElementById('attendSearch').value || '').toLowerCase();
+//   const seriesFilter = document.getElementById('seriesFilter').value;
+
+//   let regs = allRegistrations.filter(r => {
+//     if (r.status !== 'verified') return false;
+//     const matchQ = !q || `${r.firstName} ${r.lastName} ${r.email} ${r.series} ${r.seriesKey}`.toLowerCase().includes(q);
+//     const matchS = seriesFilter === 'all' || (r.series || '').includes(seriesFilter);
+//     const matchSK = seriesFilter === 'all' || (r.seriesKey || '').includes(seriesFilter);
+//     return matchQ && matchS && matchSK;
+//   });
+
+//   document.getElementById('attendCount').textContent = `${regs.length} enrolled`;
+//   if (!regs.length) {
+//     document.getElementById('attendanceList').innerHTML = '<div class="empty">No verified students yet. Verify payments first in the Pending tab.</div>';
+//     return;
+//   }
+//   document.getElementById('attendanceList').innerHTML = regs.map(r => attendanceCard(r)).join('');
+// }
+
+// ══════════════════════════════════════════
+// SCHEDULE DATA / PAST STUDENT LOGIC
+// ══════════════════════════════════════════
+
+let scheduleData = {};
+
+async function loadScheduleData() {
+  try {
+    const res = await fetch("calendar-data.json");
+
+    if (!res.ok) {
+      throw new Error("Could not load calendar-data.json");
+    }
+
+    scheduleData = await res.json();
+
+    console.log("✅ Schedule data loaded");
+
+  } catch (err) {
+    console.error("❌ Schedule load error:", err);
+  }
+}
+
+
+function getSeriesExpiration(seriesKey) {
+
+  if (!seriesKey) return null;
+
+  const series = scheduleData[seriesKey];
+
+  if (!series) {
+    console.log("Missing schedule key:", seriesKey);
+    return null;
+  }
+
+
+  if (!Array.isArray(series.dates)) {
+    return null;
+  }
+
+
+  const lastDate = series.dates[series.dates.length - 1];
+
+  if (!lastDate) {
+    return null;
+  }
+
+
+  const [month, day] = lastDate.split("/");
+
+
+  return new Date(
+    series.year,
+    month - 1,
+    day,
+    23,
+    59,
+    59
+  );
+}
+
+
+function isPastStudent(student) {
+
+  // Condition 1: No credits left = past student
+  if (Number(student.creditsRemaining) === 0) {
+    return true;
+  }
+
+  // Condition 2: Expired series = past student
+  const expiration = getSeriesExpiration(student.seriesKey);
+
+  // No expiration date available = keep active
+  if (!expiration) {
+    return false;
+  }
+
+  return new Date() > expiration;
+}
+
 function renderAttendance() {
+
   const q = (document.getElementById('attendSearch').value || '').toLowerCase();
   const seriesFilter = document.getElementById('seriesFilter').value;
 
-  let regs = allRegistrations.filter(r => {
-    if (r.status !== 'verified') return false;
-    const matchQ = !q || `${r.firstName} ${r.lastName} ${r.email} ${r.series}`.toLowerCase().includes(q);
-    const matchS = seriesFilter === 'all' || (r.series || '').includes(seriesFilter);
-    return matchQ && matchS;
-  });
+  const activeRegs = [];
+  const pastRegs = [];
 
-  document.getElementById('attendCount').textContent = `${regs.length} enrolled`;
+  allRegistrations
+    .filter(r => r.status === "verified")
+    .forEach(r => {
 
-  if (!regs.length) {
-    document.getElementById('attendanceList').innerHTML = '<div class="empty">No verified students yet. Verify payments first in the Pending tab.</div>';
-    return;
-  }
+      const text = `
+        ${r.firstName || ""}
+        ${r.lastName || ""}
+        ${r.email || ""}
+        ${r.series || ""}
+        ${r.seriesKey || ""}
+      `.toLowerCase();
 
-  document.getElementById('attendanceList').innerHTML = regs.map(r => attendanceCard(r)).join('');
+      const matchQ = !q || text.includes(q);
+
+      const matchSeries =
+        seriesFilter === "all" ||
+        (r.series || "").includes(seriesFilter) ||
+        (r.seriesKey || "").includes(seriesFilter);
+
+
+      if (!matchQ || !matchSeries) return;
+
+
+      if (isPastStudent(r)) {
+        pastRegs.push(r);
+      } else {
+        activeRegs.push(r);
+      }
+
+    });
+
+
+  document.getElementById("attendCount").textContent =
+    `${activeRegs.length} enrolled`;
+
+
+  document.getElementById("attendanceList").innerHTML =
+    activeRegs.length
+      ? activeRegs.map(r => attendanceCard(r)).join("")
+      : `<div class="empty">No active students.</div>`;
+
+
+  document.getElementById("pastStudentList").innerHTML =
+    pastRegs.length
+      ? pastRegs.map(r => attendanceCard(r)).join("")
+      : `<div class="empty">No past students.</div>`;
 }
 
 function attendanceCard(r) {
@@ -339,26 +457,20 @@ if (compactView) {
 
   return `
     <div class="reg-card compact-attendance">
-
       <div class="compact-row">
-
         <div class="compact-name">
           ${r.firstName} ${r.lastName}
         </div>
-
         <div class="compact-credits ${noCredits ? 'zero' : ''}">
           ${remaining}
         </div>
-
         <button
           class="btn btn-checkin"
           onclick="doCheckin('${r.id}')"
           ${noCredits ? 'disabled' : ''}>
           ✓
         </button>
-
       </div>
-
     </div>
   `;
 }
@@ -368,10 +480,11 @@ if (compactView) {
         <div>
           <div class="reg-name">${r.firstName} ${r.lastName}</div>
           <div class="reg-series">${r.series || '—'}</div>
+          <div class="reg-seriesKey">${r.seriesKey || '—'}</div>
           <div class="reg-detail">📧 ${r.email}${r.role ? ' · ' + r.role : ''}</div>
         </div>
         <div style="text-align:right;">
-          <div style="font-size:1.4rem;font-weight:900;color:${noCredits ? '#e74c3c' : '#27ae60'}">${remaining}</div>
+          <div style="font-size:1.4rem;font-weight:550;color:${noCredits ? '#e74c3c' : '#27ae60'}">${remaining}</div>
           <div style="font-size:0.75rem;color:#888;">credits left</div>
         </div>
       </div>
@@ -625,6 +738,7 @@ function editRegistration(regId) {
   document.getElementById("edit-phone").value = r.phone || "";
   document.getElementById("edit-pronouns").value = r.pronouns || "";
   document.getElementById("edit-series").value = r.series || "";
+  document.getElementById("edit-seriesKey").value = r.seriesKey || "";
   document.getElementById("edit-role").value = r.role || "";
   document.getElementById("edit-amount").value = r.amount || "";
   document.getElementById("editModal").style.display = "block";
@@ -660,6 +774,7 @@ async function saveStudentEdit() {
         phone: document.getElementById("edit-phone").value,
         pronouns: document.getElementById("edit-pronouns").value,
         series: document.getElementById("edit-series").value,
+        seriesKey: document.getElementById("edit-seriesKey").value,
         role: document.getElementById("edit-role").value,
         amount: document.getElementById("edit-amount").value
       })
@@ -768,75 +883,226 @@ async function loadOnlineStudents() {
 }
 
 /// ═══════════════════THIS IS FOR VIDEO UPLOADS ════════════════════════
-document
-.getElementById("uploadVideoBtn")
-.addEventListener("click", uploadVideo);
 async function uploadVideo(){
-const file =
-document.getElementById("videoFile").files[0];
-const title =
-document.getElementById("videoTitle").value;
-const courseId =
-document.getElementById("videoCourse").value;
-const lesson =
-document.getElementById("videoLesson").value;
+    const file = document.getElementById("videoFile").files[0];
+    const title = document.getElementById("videoTitle").value.trim();
+    const courseId = document.getElementById("videoCourse").value.trim();
+    const lesson = document.getElementById("videoLesson").value.trim();
+    if(!file){
+        alert("Choose a video.");
+        return;
+    }
+    if(!courseId || !lesson || !title){
+        alert("Fill all fields.");
+        return;
+    }
+    const status = document.getElementById("uploadStatus");
+    status.innerText = "Creating upload link...";
+    try {
 
-if(!file){
- alert("Please select a video");
- return;
+        const response = await fetch(
+            `${VIDEO_WORKER_URL}/api/admin/video-upload-url`,
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization":"Bearer " + adminToken
+                },
+                body:JSON.stringify({
+                    filename:file.name,
+                    contentType:file.type,
+                    courseId,
+                    lesson,
+                    title
+                })
+            }
+        );
+        const data = await response.json();
+        console.log("UPLOAD URL RESPONSE:", data);
+        if(!data.success){
+            throw new Error(data.error);
+        }
+        status.innerText="Uploading video to R2...";
+        const upload = await fetch(
+            data.uploadUrl,
+            {
+                method:"PUT",
+                headers:{
+                    "Content-Type":file.type
+                },
+                body:file
+            }
+        );
+        if(!upload.ok){
+            throw new Error("R2 upload failed");
+        }
+        const complete = await fetch(
+          `${VIDEO_WORKER_URL}/api/admin/video-upload-complete`,
+          {
+              method:"POST",
+              headers:{
+                  "Content-Type":"application/json",
+                  "Authorization":"Bearer " + adminToken
+              },
+              body:JSON.stringify({
+                  courseId,
+                  lesson,
+                  title,
+                  filename:file.name,
+                  key:data.key,
+                  contentType:file.type
+              })
+          }
+      );
+      const completeData = await complete.json();
+      console.log(
+          "VIDEO DATABASE RESPONSE:",
+          completeData
+      );
+      if(!completeData.success){
+          throw new Error(
+              "Video metadata save failed"
+          );
+      }
+        status.innerText="✅ Video uploaded!";
+
+    } catch(err){
+        console.error(err);
+        status.innerText="❌ " + err.message;
+
+    }
+
 }
 
+// async function loadVideos(){
 
-document.getElementById("uploadStatus").innerText =
-"Creating upload link...";
+//     const response = await fetch(
+//         `${VIDEO_WORKER_URL}/api/admin/videos`,
+//         {
+//             headers:{
+//                 "Authorization":"Bearer "+adminToken
+//             }
+//         }
+//     );
 
 
-// Step 1: Ask Worker for R2 upload URL
+//     const data = await response.json();
+//     console.log(data.videos);
+//     const container =
+//     document.getElementById("videoLibrary");
+//     container.innerHTML="";
+//     data.videos.forEach(video=>{
 
-const response = await fetch(
-`${WORKER_URL}/api/admin/video-upload-url`,
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json",
-"Authorization":
-"Bearer " + localStorage.getItem("adminToken")
-},
-body:JSON.stringify({
+//         container.innerHTML += `
 
-filename:file.name,
-contentType:file.type,
+//         <div class="video-card">
 
-// send metadata now
-courseId,
-lesson,
-title
+//             <h3>${video.title}</h3>
 
-})
+//             <p>
+//             Course: ${video.course_id}
+//             </p>
+
+//             <p>
+//             Lesson: ${video.lesson}
+//             </p>
+
+//             <p>
+//             File: ${video.filename}
+//             </p>
+
+//         </div>
+
+//         `;
+
+//     });
+
+// }
+
+// loadVideos();
+async function loadVideoLibrary() {
+
+    const response = await fetch(
+        `${VIDEO_WORKER_URL}/api/admin/videos`,
+        {
+            headers:{
+                "Authorization":"Bearer " + adminToken
+            }
+        }
+    );
+
+
+    const data = await response.json();
+
+
+    console.log("Data:", data);
+
+
+    const container =
+    document.getElementById("videoLibrary");
+
+
+    container.innerHTML = "";
+
+
+    data.videos.forEach(video=>{
+
+        console.log("Rendering:", video);
+
+        container.innerHTML += `
+
+        <div class="video-card">
+
+            <h3>${video.title}</h3>
+
+            <p>
+            Course: ${video.course_id}
+            </p>
+
+            <p>
+            Lesson: ${video.lesson}
+            </p>
+
+            <p>
+            File: ${video.filename}
+            </p>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+// ══════════════════════════════════════════
+// INITIALIZE ADMIN PORTAL
+// ══════════════════════════════════════════
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+  await loadScheduleData();
+
+  await loadRegistrations();
+
+  await loadVideoLibrary();
+
 });
 
-const data = await response.json();
-if(!data.success){
-alert(data.error);
-return;
-}
-document.getElementById("uploadStatus").innerText =
-"Uploading video...";
-const uploadResponse = await fetch(
-data.uploadUrl,
-{
-method:"PUT",
-headers:{
-"Content-Type":file.type
-},
-body:file
-});
-if(!uploadResponse.ok){
-alert("Upload failed");
-return;
+let pastStudentsVisible = false;
 
-}
-document.getElementById("uploadStatus").innerText =
-"Upload complete!";
-console.log("R2 Key:", data.key);
+function togglePastStudents() {
+
+  pastStudentsVisible = !pastStudentsVisible;
+
+  const list = document.getElementById("pastStudentList");
+  const btn = document.getElementById("pastToggleBtn");
+
+  if (!list || !btn) return;
+
+  list.style.display = pastStudentsVisible ? "block" : "none";
+
+  btn.textContent = pastStudentsVisible
+    ? "👥 Hide Past Students"
+    : "👥 Show Past Students";
 }

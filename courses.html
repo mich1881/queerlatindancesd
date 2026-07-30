@@ -1364,20 +1364,20 @@ async function loadSchedulesFromCalendarData() {
     const response = await fetch('calendar-data.json');
     const data = await response.json();
 
-    // Spring Part 1: friSpringP1 (Fridays) + sunSpringP1 (Sundays)
-    const fridaysP1 = data.friSpringP1;
-    const sundaysP1 = data.sunSpringP1;
+    //Seasons days
+    const thursdaysP1 = data.thursSummerP1;
+    const sundaysP1 = data.sunSummerP1;
 
-    if (fridaysP1 && sundaysP1) {
+    if (thursdaysP1 && sundaysP1) {
       document.getElementById('spring-p1-dates').innerHTML = 
-        `THURSDAYS: ${fridaysP1.dates.join(', ')}<br>SUNDAYS: ${sundaysP1.dates.join(', ')}`;
+        `THURSDAYS: ${thursdaysP1.dates.join(', ')}<br>SUNDAYS: ${sundaysP1.dates.join(', ')}`;
 
       document.getElementById('calendar-fridays-spring-p1').innerHTML = 
         `<li class="calendar-times">
-          <strong>Salsa (LEVEL 1):</strong> ${fridaysP1.times.salsa}<br>
-          <strong>Bachata (LEVEL 1):</strong> ${fridaysP1.times.bachata}
+          <strong>Salsa (LEVEL 1):</strong> ${thursdaysP1.times.salsa}<br>
+          <strong>Bachata (LEVEL 1):</strong> ${thursdaysP1.times.bachata}
         </li>` +
-        fridaysP1.dates.map(d => `<li class="${isDatePast(d, fridaysP1.year) ? 'past-date' : ''}">${d}</li>`).join('');
+        thursdaysP1.dates.map(d => `<li class="${isDatePast(d, thursdaysP1.year) ? 'past-date' : ''}">${d}</li>`).join('');
 
       document.getElementById('calendar-sundays-spring-p1').innerHTML = 
         `<li class="calendar-times">
@@ -1388,7 +1388,7 @@ async function loadSchedulesFromCalendarData() {
     }
 
     // Spring Part 2: friSpringP2 (Fridays) + sunSpringP2 (Sundays)
-    const fridaysP2 = data.friSpringP2;
+    const thursdaysP2 = data.thursSummerP2;
     const sundaysP2 = data.SatZero1;
 
     if (fridaysP2 || sundaysP2) {
