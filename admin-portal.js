@@ -48,9 +48,9 @@ function signOut() {
 if (adminToken) {
   document.getElementById('lockScreen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  loadRegistrations();
-  loadOnlineStudents();
-  loadVideoLibrary();
+  // loadRegistrations();
+  // loadOnlineStudents();
+  // loadVideoLibrary();
 }
 
 // ══════════════════════════════════════════
@@ -883,22 +883,77 @@ async function loadOnlineStudents() {
 }
 
 /// ═══════════════════THIS IS FOR VIDEO UPLOADS ════════════════════════
+// async function uploadVideo(){
+  
+//     const file = document.getElementById("videoFile").files[0];
+//     const title = document.getElementById("videoTitle").value.trim();
+//     const courseId = document.getElementById("videoCourse").value.trim();
+//     const lesson = document.getElementById("videoLesson").value.trim();
+//     if(!file){
+//         alert("Choose a video.");
+//         return;
+//     }
+//     if(!courseId || !lesson || !title){
+//         alert("Fill all fields.");
+//         return;
+//     }
+//     const status = document.getElementById("uploadStatus");
+//     status.innerText = "Creating upload link...";
+//     try {
+
+//         const response = await fetch(
+//             `${VIDEO_WORKER_URL}/api/admin/video-upload-url`,
+//             {
+//                 method:"POST",
+//                 headers:{
+//                     "Content-Type":"application/json",
+//                     "Authorization":"Bearer " + adminToken
+//                 },
+//                 body:JSON.stringify({
+//                     filename:file.name,
+//                     contentType:file.type,
+//                     courseId,
+//                     lesson,
+//                     title
+//                 })
+//             }
+//         );
+
 async function uploadVideo(){
-    const file = document.getElementById("videoFile").files[0];
-    const title = document.getElementById("videoTitle").value.trim();
-    const courseId = document.getElementById("videoCourse").value.trim();
-    const lesson = document.getElementById("videoLesson").value.trim();
-    if(!file){
-        alert("Choose a video.");
+  
+    const files = Array.from(
+        document.getElementById("videoFiles").files
+    );
+
+    if(files.length === 0){
+        alert("Choose a video(s).");
         return;
     }
-    if(!courseId || !lesson || !title){
-        alert("Fill all fields.");
-        return;
-    }
+
     const status = document.getElementById("uploadStatus");
+    const progressContainer = document.getElementById("uploadProgressContainer");
+    const progressBar = document.getElementById("uploadProgressBar");
+    const progressText = document.getElementById("uploadProgressText");
+
+    progressContainer.style.display = "block";
+    progressBar.style.width = "0%";
+    progressText.innerText = "0%";
     status.innerText = "Creating upload link...";
+    const totalVideos = files.length;
+    let uploadedVideos = 0;
+
     try {
+        for (const file of files) {
+        if (file.name === ".DS_Store") continue;
+        if (!file.type.startsWith("video/")) continue;
+
+        const path = file.webkitRelativePath || file.name;
+        const parts = path.split("/");
+
+        const courseId = document.getElementById("videoCourse").value.trim();
+        const lesson = document.getElementById("videoLesson").value.trim();
+
+        const title = file.name.replace(/\.[^/.]+$/, "");
 
         const response = await fetch(
             `${VIDEO_WORKER_URL}/api/admin/video-upload-url`,
@@ -922,7 +977,8 @@ async function uploadVideo(){
         if(!data.success){
             throw new Error(data.error);
         }
-        status.innerText="Uploading video to R2...";
+        status.innerText = `Uploading ${uploadedVideos + 1} of ${totalVideos} to R2: ${file.name}`;
+
         const upload = await fetch(
             data.uploadUrl,
             {
@@ -964,62 +1020,105 @@ async function uploadVideo(){
               "Video metadata save failed"
           );
       }
-        status.innerText="✅ Video uploaded!";
+        uploadedVideos++;
 
+        const percent = Math.round((uploadedVideos / totalVideos) * 100);
+
+        progressBar.style.width = `${percent}%`;
+        progressText.innerText = `${percent}%`;
+
+        status.innerText =
+        `✅ Uploaded ${uploadedVideos} of ${totalVideos}: ${file.name}`;
+    }
     } catch(err){
         console.error(err);
         status.innerText="❌ " + err.message;
 
     }
-
 }
 
-// async function loadVideos(){
+async function uploadSingleVideo() {
+    const file = document.getElementById("singleVideoFile").files[0];
 
-//     const response = await fetch(
-//         `${VIDEO_WORKER_URL}/api/admin/videos`,
-//         {
-//             headers:{
-//                 "Authorization":"Bearer "+adminToken
-//             }
-//         }
-//     );
+    if (!file) {
+        alert("Choose a video");
+        return;
+    }
+    const courseId = document.getElementById("singleCourseId").value.trim();
+    const lesson = document.getElementById("singleLesson").value.trim();
+    const title = file.name.replace(/\.[^/.]+$/, "");
+    try {
+
+        const response = await fetch(
+            `${VIDEO_WORKER_URL}/api/admin/video-upload-url`,
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization":"Bearer " + adminToken
+                },
+                body:JSON.stringify({
+                    filename:file.name,
+                    contentType:file.type,
+                    courseId,
+                    lesson,
+                    title
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if(!data.success){
+            throw new Error(data.error);
+        }
 
 
-//     const data = await response.json();
-//     console.log(data.videos);
-//     const container =
-//     document.getElementById("videoLibrary");
-//     container.innerHTML="";
-//     data.videos.forEach(video=>{
+        const upload = await fetch(
+            data.uploadUrl,
+            {
+                method:"PUT",
+                headers:{
+                    "Content-Type":file.type
+                },
+                body:file
+            }
+        );
 
-//         container.innerHTML += `
 
-//         <div class="video-card">
+        if(!upload.ok){
+            throw new Error("R2 upload failed");
+        }
 
-//             <h3>${video.title}</h3>
 
-//             <p>
-//             Course: ${video.course_id}
-//             </p>
+        await fetch(
+            `${VIDEO_WORKER_URL}/api/admin/video-upload-complete`,
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization":"Bearer " + adminToken
+                },
+                body:JSON.stringify({
+                    courseId,
+                    lesson,
+                    title,
+                    filename:file.name,
+                    key:data.key,
+                    contentType:file.type
+                })
+            }
+        );
 
-//             <p>
-//             Lesson: ${video.lesson}
-//             </p>
 
-//             <p>
-//             File: ${video.filename}
-//             </p>
+        alert("✅ Video uploaded!");
 
-//         </div>
+    } catch(err){
+        console.error(err);
+        alert("❌ " + err.message);
+    }
+}
 
-//         `;
-
-//     });
-
-// }
-
-// loadVideos();
 async function loadVideoLibrary() {
 
     const response = await fetch(
@@ -1067,6 +1166,10 @@ async function loadVideoLibrary() {
             File: ${video.filename}
             </p>
 
+            <button onclick="deleteVideo(${video.id}, '${video.r2_key}')">
+            🗑 Delete Video
+        </button>
+
         </div>
 
         `;
@@ -1106,3 +1209,36 @@ function togglePastStudents() {
     ? "👥 Hide Past Students"
     : "👥 Show Past Students";
 }
+
+/// ═════════════════════Delete Function Front End Videos═════════════════════
+
+async function deleteVideo(videoId, r2Key) {
+    const confirmed = confirm("Are you sure you want to delete this video?");
+    if (!confirmed) return;
+
+    const response = await fetch(
+        `${VIDEO_WORKER_URL}/api/admin/video-delete`,
+        {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + adminToken
+            },
+            body: JSON.stringify({
+                id: videoId,
+                r2_key: r2Key
+            })
+        }
+    );
+
+    const data = await response.json();
+    console.log("DELETE RESPONSE:", data);
+
+    if (response.ok && data.success) {
+        alert("Video deleted successfully.");
+        loadVideoLibrary();
+    } else {
+        alert("Failed to delete video.");
+    }
+}
+

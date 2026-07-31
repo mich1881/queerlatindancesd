@@ -6,8 +6,6 @@
 <title>Courses | Queer Latin Dance SD</title>
 <link rel="stylesheet" href="styles/global.css">
 <link rel="stylesheet" href="style.css" />
-  <!-- Favicon -->
-  <!-- <link rel="icon" href="/images/icons/favicon-v2.png" type="image/png" sizes="any"> -->
   <link rel="icon" href="/favicon.ico?v=4">
   <link rel="icon" type="image/png" href="/images/icons/favicon-v2.png?v=4">
   <link rel="apple-touch-icon" href="/images/icons/favicon-v2.png">
@@ -396,7 +394,7 @@
 <a href="index.html">
 <img src="images/logos/logo2.png" alt="Queer Latin Dance SD Logo" class="logo2" />
 </a>
-  <!-- Cart Modal -->
+<!-- Cart Modal -->
 <div id="cart-modal" class="cart-modal">
 <div class="cart-modal-title">Your Cart</div>
 <div id="cart-items"></div>
@@ -477,7 +475,6 @@
       </div>
     </div>
   </button>
-
   <div id="spring-p2-content" class="dropdown-content">
     <div class="offers-row-bottom" id="upcoming-lessons-bottom"></div>
   </div>
@@ -496,7 +493,7 @@
             Summer Series Pt 1
           </span>
           <span class="dropdown-dates">
-            Registration Closes July 22nd
+            Drop-ins welcome!
           </span>
           <span class="dropdown-dates" id="spring-p1-dates">
             Loading dates...
@@ -690,14 +687,14 @@ padding: 0.3em 0.7em;
 color: #fff;
 }
 .offer-card-bg3 {
-background: url('images/eventpage/privateflyer.png') center center/cover no-repeat !important;
+background: url('images/eventpage/privates.jpg') center center/cover no-repeat !important;
 color: #fff;
 position: relative;
 box-shadow: 0 4px 24px #716cff22;
 border: none;
 }
 .offer-card-bg4 {
-background: url('images/lessons/onlinelessonscover.png') center center/cover no-repeat !important;
+background: url('images/lessons/onlinelessonscover.jpg') center center/cover no-repeat !important;
 position: relative;
 border: none;
 width: 90%;
@@ -739,7 +736,7 @@ margin-left: calc(-1 * ((100vw - 100%) / 2));
 margin-right: calc(-1 * ((100vw - 100%) / 2));
 border-radius: 0;
 box-shadow: none;
-background: url('images/lessons/onlinelessonscover.png') center center/contain no-repeat !important;
+background: url('images/lessons/onlinelessonscover.jpg') center center/contain no-repeat !important;
 }
 
 /* Footer mobile styles */
@@ -850,7 +847,7 @@ color: #fff;
 text-decoration: none !important;
 }
 .offer-card-bg4 {
-background: url('images/lessons/onlinelessonscover.png') center center/cover no-repeat !important;
+background: url('images/lessons/onlinelessonscover.jpg') center center/cover no-repeat !important;
 position: relative;
 border: none;
 width: 100%;
@@ -892,13 +889,6 @@ gap: 1rem;
 }
 }
 
-.offer-card-bg-dropin {
-background: url('images/lessons/4weekseriesdropin.png') center center/cover no-repeat !important;
-color: #fff;
-position: relative;
-box-shadow: 0 4px 24px #716cff22;
-border: none;
-}
 
 @media (max-width: 768px) {
 .offer-card {
@@ -1322,7 +1312,7 @@ if (window.innerWidth <= 768) {
 setTimeout(function() {
 document.querySelectorAll('.offer-card-bg4').forEach(function(card) {
 card.removeAttribute('style');
-card.style.background = "url('images/lessons/onlinelessonscover.png') center center/contain no-repeat";
+card.style.background = "url('images/lessons/onlinelessonscover.jpg') center center/contain no-repeat";
 card.style.width = "100vw";
 card.style.maxWidth = "100vw";
 card.style.marginLeft = "calc(-1 * ((100vw - 100%) / 2))";
@@ -1358,57 +1348,30 @@ function isDatePast(dateStr, year) {
   const [month, day] = dateStr.split('/').map(Number);
   return new Date(year, month - 1, day) < new Date();
 }
+//====================================================================================================
 
+//                 THIS IS WHERE TO UPDATE THE DATES AND TIMES FOR SERIES OR CLASSES
+
+//====================================================================================================
 async function loadSchedulesFromCalendarData() {
   try {
     const response = await fetch('calendar-data.json');
     const data = await response.json();
-
-    //Seasons days
-    const thursdaysP1 = data.thursSummerP1;
-    const sundaysP1 = data.sunSummerP1;
-
-    if (thursdaysP1 && sundaysP1) {
+    const xP1 = data.thursSummerP1; 
+    const yP1 = data.sunSummerP1;
+    if (xP1 && yP1) {
       document.getElementById('spring-p1-dates').innerHTML = 
-        `THURSDAYS: ${thursdaysP1.dates.join(', ')}<br>SUNDAYS: ${sundaysP1.dates.join(', ')}`;
-
-      document.getElementById('calendar-fridays-spring-p1').innerHTML = 
-        `<li class="calendar-times">
-          <strong>Salsa (LEVEL 1):</strong> ${thursdaysP1.times.salsa}<br>
-          <strong>Bachata (LEVEL 1):</strong> ${thursdaysP1.times.bachata}
-        </li>` +
-        thursdaysP1.dates.map(d => `<li class="${isDatePast(d, thursdaysP1.year) ? 'past-date' : ''}">${d}</li>`).join('');
-
-      document.getElementById('calendar-sundays-spring-p1').innerHTML = 
-        `<li class="calendar-times">
-          <strong>Salsa (LEVEL 1):</strong> ${sundaysP1.times.salsa}<br>
-          <strong>Bachata (LEVEL 2):</strong> ${sundaysP1.times.bachata}
-        </li>` +
-        sundaysP1.dates.map(d => `<li class="${isDatePast(d, sundaysP1.year) ? 'past-date' : ''}">${d}</li>`).join('');
+        `THURSDAYS: ${xP1.dates.join(', ')}<br>SUNDAYS: ${yP1.dates.join(', ')}`;
+        xP1.dates.map(d => `<li class="${isDatePast(d, xP1.year) ? 'past-date' : ''}">${d}</li>`).join('');
+        yP1.dates.map(d => `<li class="${isDatePast(d, yP1.year) ? 'past-date' : ''}">${d}</li>`).join('');
     }
-
-    // Spring Part 2: friSpringP2 (Fridays) + sunSpringP2 (Sundays)
-    const thursdaysP2 = data.thursSummerP2;
-    const sundaysP2 = data.SatZero1;
-
-    if (fridaysP2 || sundaysP2) {
-
+    const xP2 = data.thursSummerP2;
+    const yP2 = data.SatZero1;
+    if (xP2 || yP2) {
       document.getElementById('spring-p2-dates').innerHTML = 
-        `THURSDAYS: ${fridaysP2.dates.join(', ')}<br>SATURDAYS: ${sundaysP2.dates.join(', ')}`;
-
-      document.getElementById('calendar-fridays-spring-p2').innerHTML = 
-        `<li class="calendar-times">
-          <strong>Salsa (LEVEL 1):</strong> ${fridaysP2.times.salsa}<br>
-          <strong>Bachata (LEVEL 1):</strong> ${fridaysP2.times.bachata}
-        </li>` +
-        fridaysP2.dates.map(d => `<li class="${isDatePast(d, fridaysP2.year) ? 'past-date' : ''}">${d}</li>`).join('');
-
-      document.getElementById('calendar-sundays-spring-p2').innerHTML = 
-        `<li class="calendar-times">
-          <strong>Salsa (LEVEL 1):</strong> ${sundaysP2.times.salsa}<br>
-          <strong>Bachata (LEVEL 2):</strong> ${sundaysP2.times.bachata}
-        </li>` +
-        sundaysP2.dates.map(d => `<li class="${isDatePast(d, sundaysP2.year) ? 'past-date' : ''}">${d}</li>`).join('');
+        `THURSDAYS: ${xP2.dates.join(', ')}<br>SATURDAYS: ${yP2.dates.join(', ')}`;
+        xP2.dates.map(d => `<li class="${isDatePast(d, xP2.year) ? 'past-date' : ''}">${d}</li>`).join('');
+        yP2.dates.map(d => `<li class="${isDatePast(d, yP2.year) ? 'past-date' : ''}">${d}</li>`).join('');
     }
 
   } catch (error) {

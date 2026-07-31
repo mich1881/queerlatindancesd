@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 export default {
 
@@ -6,7 +6,7 @@ async fetch(request, env) {
 
 const cors = {
 "Access-Control-Allow-Origin":"*",
-"Access-Control-Allow-Methods":"POST, OPTIONS",
+"Access-Control-Allow-Methods":"GET, POST, DELETE, OPTIONS",
 "Access-Control-Allow-Headers":"Content-Type, Authorization"
 };
 
@@ -166,7 +166,6 @@ url.pathname === "/api/admin/videos"
     )
     .all();
 
-
     return Response.json(
         {
             success:true,
@@ -174,10 +173,159 @@ url.pathname === "/api/admin/videos"
         },
         {
             headers:cors
+        });
+}
+
+if(
+  request.method === "DELETE" &&
+  url.pathname === "/api/admin/video-delete"
+){
+
+    const body = await request.json();
+
+    const { id, r2_key } = body;
+
+    if(!id || !r2_key){
+        return Response.json(
+            {
+                error:"Missing video id or r2 key"
+            },
+            {
+                status:400,
+                headers:cors
+            }
+        );
+    }
+
+
+    // Delete from R2
+    const client = new S3Client({
+
+        region:"auto",
+
+        endpoint:
+        `https://${env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+
+        credentials:{
+            accessKeyId: env.R2_ACCESS_KEY_ID,
+            secretAccessKey: env.R2_SECRET_ACCESS_KEY
+        }
+
+    });
+
+
+    await client.send(
+        new DeleteObjectCommand({
+            Bucket: env.R2_BUCKET_NAME,
+            Key: r2_key
+        })
+    );
+
+
+    // Delete database record
+    await env.DB.prepare(
+        `
+        DELETE FROM videos
+        WHERE id = ?
+        `
+    )
+    .bind(id)
+    .run();
+
+
+    return Response.json(
+        {
+            success:true,
+            message:"Video deleted"
+        },
+        {
+            headers:cors
         }
     );
 
 }
+
+if (
+    request.method === "GET" &&
+    url.pathname.startsWith("/api/course/")
+) {
+
+    const courseId = decodeURIComponent(
+        url.pathname.replace("/api/course/", "")
+    );
+
+    const { results } = await env.DB.prepare(`
+        SELECT
+            id,
+            title,
+            lesson,
+            r2_key,
+            content_type
+        FROM videos
+        WHERE course_id = ?
+        ORDER BY lesson, id
+    `)
+    .bind(courseId)
+    .all();
+
+    const lessons = results.map(video => ({
+        id: video.id,
+        title: video.title,
+        video: video.r2_key,
+        videoType: "r2",
+        lesson: video.lesson,
+        duration: "",
+        description: ""
+    }));
+
+    return Response.json(lessons, {
+        headers: cors
+    });
+
+}
+
+if (
+request.method === "GET" &&
+url.pathname.startsWith("/api/video/")
+){
+
+    const key = decodeURIComponent(
+        url.pathname.replace("/api/video/", "")
+    );
+
+    const object = await env.VIDEO_BUCKET.get(key);
+
+    if(!object){
+
+        return Response.json(
+            {
+                error:"Video not found",
+                key
+            },
+            {
+                status:404,
+                headers:cors
+            }
+        );
+
+    }
+
+
+    return new Response(
+        object.body,
+        {
+            headers:{
+                ...cors,
+                "Content-Type":
+                    object.httpMetadata?.contentType || "video/mp4",
+                "Cache-Control":
+                    "public, max-age=3600"
+            }
+        }
+    );
+
+}
+
 return new Response(
 "Not Found",
 {

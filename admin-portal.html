@@ -306,6 +306,48 @@ color:#444345;
 background:white;
 border-radius:24px;
 }
+
+#uploadProgressContainer{
+    display:none;
+    margin-top:20px;
+}
+
+.upload-progress-header{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:8px;
+    font-size:14px;
+    font-weight:600;
+    color:#d8c7ff;
+}
+/* Progress Bar Container */
+.upload-progress-track{
+    width:100%;
+    height:14px;
+    background:#2a2140;
+    border-radius:999px;
+    overflow:hidden;
+    border:1px solid #5d3fd3;
+}
+
+#uploadProgressBar{
+    width:0%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        #7c3aed,
+        #a855f7
+    );
+    border-radius:999px;
+    transition:width .25s ease;
+}
+
+#uploadStatus{
+    margin-top:12px;
+    color:#d8c7ff;
+    font-size:14px;
+    font-weight:500;
+}
 </style>
 </head>
 <body>
@@ -315,7 +357,6 @@ border-radius:24px;
 ══════════════════════════════════════════ -->
 <div id="lockScreen">
   <h1>🔐 QLDSD Admin Portal</h1>
-  <p>Type <strong>qldsd</strong> anywhere to reveal the password field, or click below</p>
   <input type="password" id="passwordInput" placeholder="Admin password" autocomplete="current-password" />
   <button onclick="doLogin()">Enter</button>
   <div id="lockError"></div>
@@ -396,7 +437,7 @@ border-radius:24px;
 <div id="pastStudentList" style="display:none;">
   <div class="empty">No past students.</div>
 </div>
-
+</div>
   <!-- ── TAB 3: ONLINE COURSES ── -->
   <div id="tab-online" class="tab-content">
     <h2 style="color:#ffffff;margin-bottom:1rem;">Grant Online Course Access</h2>
@@ -494,77 +535,69 @@ border-radius:24px;
 
   </div>
 </div>
-<!-- ── TAB 4: VIDEO LIBRARY ── -->
+<!-- ── TAB 4: VIDEO UPLOAD ── -->
 <div id="tab-videos" class="tab-content">
-
   <h2 style="color:#ffffff;margin-bottom:1rem;">
     🎥 Video Library
-  </h2>
-
-  <div class="reg-card">
-
+</h2>
+<div class="reg-card">
     <h3 style="color:#7c3aed;">
-      Upload Video Lessons
+        Upload Video Lessons
     </h3>
-
     <br>
-
-    <label>Video File</label>
+    <label>Video File(s) / Folder</label>
     <input 
-      type="file" 
-      id="videoFile" 
-      accept="video/*">
-
+        type="file" 
+        id="videoFiles"
+        accept="video/*"
+        multiple
+    >
     <br><br>
-
-    <label>Course ID</label>
+    <label>Course Folder</label>
     <input
       type="text"
       id="videoCourse"
-      placeholder="salsa-fundamentals">
-
+      placeholder="recap-library">
     <br><br>
-
-    <label>Lesson</label>
+    <label>Lesson / Subfolder</label>
     <input
       type="text"
       id="videoLesson"
-      placeholder="lesson-1">
-
+      placeholder="bachata-recap">
     <br><br>
-
-    <label>Video Title</label>
-    <input
-      type="text"
-      id="videoTitle"
-      placeholder="Cross Body Lead">
-
-    <br><br>
-
-      <button 
+    <button 
       class="btn btn-checkin"
       id="uploadVideoBtn"
       onclick="uploadVideo()">
-      Upload Video
-      </button>
-
+      Upload Videos
+    </button>
     <br><br>
+    <div id="uploadProgressContainer" style="display:none; margin-top:15px;">
+        <div style="margin-bottom:5px;">
+            <span id="uploadProgressText">0%</span>
+        </div>
+        <div style="
+            width:100%;
+            background:#ddd;
+            height:20px;
+            border-radius:10px;
+            overflow:hidden;
+        ">
+            <div id="uploadProgressBar" style="
+                width:0%;
+                height:100%;
+                transition:width 0.3s ease;
+            "></div>
+        </div>
 
-    <progress 
-      id="uploadProgress"
-      value="0"
-      max="100"
-      style="width:100%;">
-    </progress>
-
+    </div>
     <p 
       id="uploadStatus"
       style="margin-top:10px;color:#9587ff;">
     </p>
-  </div>
+</div>
 <h2>Uploaded Videos</h2>
 <div id="videoLibrary"></div>
-</div>
 <script src="admin-portal.js"></script>
 </body>
 </html>
