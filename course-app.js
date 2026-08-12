@@ -1,7 +1,7 @@
 // Queer Latin Dance Course Platform
 // Student Registration & Login System
-// Google Apps Script URL — update this if you redeploy
 const APPS_SCRIPT_URL = 'https://bitter-forest-4b9b.michf18.workers.dev';
+const VIDEO_WORKER_URL = 'https://qldsd-video-uploads.michf18.workers.dev';
 class CoursePlatform {
     constructor() {
         this.currentUser = null;
@@ -12,294 +12,75 @@ class CoursePlatform {
         this.courses = {
             'recap-library': {
                 id: 'recap-library',
-                title: 'In Person Classes: Recap Videos',
-                description: 'Practice outside of the studio at home or with other students in class and prepare you for the next lessons.',
-                price: 10,
+                title: 'In-Person: Salsa Recap Videos',
+                description: 'Included in 4 Week Series in-person package. Practice outside of the studio at home or with other students in class and prepare you for the next lessons.',
+                billing: 'monthly',
+                price: 5,
+                stripePriceId: 'price_1TxwiUKTy3NrTNI8d7WUOmgV', 
                 icon: 'images/4weekseries1/IMG_9905.JPG',
                 duration: '4 hours',
                 lessons: 12,
-                learning: [
-                        'Practice and review in-person class material',
-                        'Come ready for the next lessons',
-                        'Practice partner connection and leading/following skills',
-                        'Train at your own pace with on-demand lessons'
-                    ],
                 level: 'Salsa Level 1',
-                videoLessons: [
-                    //SALSA VARIATION A
-                    {
-                        id: 'A1',
-                        title: 'Salsa Week 1A',
-                        video: 'https://drive.google.com/file/d/1t0ofE40PeO3gxxdGUeG_l3Uf3Utln9Ks/preview',
-                        videoType: 'googledrive',
-                        duration: '03:42',
-                        description: 'Salsa basic drills and timing'
-                    },
-                    {
-                        id: 'A2',
-                        title: 'Salsa Week 2A',
-                        video: 'https://drive.google.com/file/d/1Q7iX8nipE2TYvx5VgZMEkrk82_J4VLwJ/preview',
-                        videoType: 'googledrive',
-                        duration: '01:17',
-                        description: 'Salsa rhythm and basic variations'
-                    },
-                    {
-                        id: 'A3',
-                        title: 'Salsa Week 3A',
-                        video: 'https://drive.google.com/file/d/1TkDTNKCdtjJ3RMTEVUOef4y8dPpgBTf9/preview',
-                        videoType: 'googledrive',
-                        duration: '01:18',
-                        description: 'How to connect with your dance partner'
-                    },
-                    {
-                        id: 'A4',
-                        title: 'Salsa Week 4A',
-                        video: 'https://drive.google.com/file/d/1dyCFI5aAlD8o4W0mL9rOLg_g6TnrPZXb/preview',
-                        videoType: 'googledrive',
-                        duration: '03:06',
-                        description: 'The most important move in salsa dancing'
-                    },
-                    //SALSA VARIATION B
-                    {
-                        id: 'B1',
-                        title: 'Salsa Week 1B',
-                        video: 'https://drive.google.com/file/d/1t0ofE40PeO3gxxdGUeG_l3Uf3Utln9Ks/preview',
-                        videoType: 'googledrive',
-                        duration: '03:42',
-                        description: 'Learn the fundamental salsa steps and timing'
-                    },
-                    {
-                        id: 'B2',
-                        title: 'Salsa Week 2B',
-                        video: 'https://drive.google.com/file/d/15_P7Dv04rc1-0BduLcDh-T3kttzlCOjv/preview',
-                        videoType: 'googledrive',
-                        duration: '01:17',
-                        description: 'Understanding salsa rhythm and musical timing'
-                    },
-                    {
-                        id: 'B3',
-                        title: 'Salsa Week 3B',
-                        video: 'https://drive.google.com/file/d/1zcW0HZETnvyI5nJ2sHXFMxuAk0DacxTs/preview',
-                        videoType: 'googledrive',
-                        duration: '01:18',
-                        description: 'How to connect with your dance partner'
-                    },
-                    {
-                        id: 'B4',
-                        title: 'Salsa Week 4B',
-                        video: 'https://drive.google.com/file/d/1xZiR7tUobJvK1FeXy2GnLbqWDIA8mwIq/preview',
-                        videoType: 'googledrive',
-                        duration: '03:06',
-                        description: 'The most important move in salsa dancing'
-                    },
-                    //SALSA VARIATION C
-                    {
-                        id: 'C1',
-                        title: 'Salsa Week 1C',
-                        video: 'https://drive.google.com/file/d/1t0ofE40PeO3gxxdGUeG_l3Uf3Utln9Ks/preview',
-                        videoType: 'googledrive',
-                        duration: '03:42',
-                        description: 'Learn the fundamental salsa steps and timing'
-                    },
-                    {
-                        id: 'C2',
-                        title: 'Salsa Week 2C',
-                        video: 'https://drive.google.com/file/d/18fIoQ6V75s1Vu66med0_3Wlj_ZVqkBqz/preview',
-                        videoType: 'googledrive',
-                        duration: '01:47',
-                        description: 'Understanding salsa rhythm and musical timing'
-                    },
-                    {
-                        id: 'C3',
-                        title: 'Salsa Week 3C',
-                        video: 'https://drive.google.com/file/d/1SmogXNnqD6CuD5ulxJjrAdCVk9nVuYWi/preview',
-                        videoType: 'googledrive',
-                        duration: '01:32',
-                        description: 'How to connect with your dance partner'
-                    },
-                    {
-                        id: 'C4',
-                        title: 'Salsa Week 4C',
-                        video: 'https://drive.google.com/file/d/1L1CJt6Mbh0e_KV1MwGGS6xoZNsbNw3x1/preview',
-                        videoType: 'googledrive',
-                        duration: '01:02',
-                        description: 'The most important move in salsa dancing'
-                    },
-                ]
             },
-            'salsa-fundamentals': {
-                id: 'salsa-fundamentals',
-                title: 'Salsa Fundamentals',
-                description: 'Learn the basics, strengthen, build a strong Salsa foundation.',
-                price: 20,
+            'bachata-recap-library': {
+                id: 'bachata-recap-library',
+                title: 'Bachata Recap Videos',
+                description: 'Learn the basics, strengthen, build a strong Bachata foundation.',
+                billing: 'monthly',
+                price: 5,
+                stripePriceId: 'price_1TxwiUKTy3NrTNI8d7WUOmgV',
                 icon: 'images/4weekseries1/IMG_8661.JPG',
                 duration: '4 hours',
                 lessons: 8,
-                learning: [
-                        'Build strong beginner Salsa fundamentals',
-                        'Learn basic steps, timing, and rhythm',
-                        'Practice partner connection and leading/following skills',
-                        'Train at your own pace with on-demand lessons'
-                    ],
                 level: 'Beginner',
-                videoLessons: [
-                    {
-                        id: 1,
-                        title: 'Welcome & Basic Steps',
-                        video: 'https://pub-f5414e507f874cda9f93105c49892fc8.r2.dev/Salsa%20Videos%20Level%201/video-output-E439A4E8-B730-4FF9-95FB-3DB36582BF7A-1.mp4',
-                        videoType: 'mp4',
-                        duration: '01:55',
-                        description: 'Introduction: Goals & Expectations'
-                    },
-                    {
-                        id: 2,
-                        title: 'Basic Timing & Rhythm',
-                        video: 'https://drive.google.com/uc?export=download&id=1UHWNUdTdOHKSqqbmFoEZGJcynn27dO6m',
-                        videoType: 'mp4',
-                        duration: '18:45',
-                        description: 'Understanding salsa rhythm and musical timing'
-                    },
-                    {
-                        id: 3,
-                        title: 'Partner Connection Basics',
-                        video: 'https://drive.google.com/file/d/1UHWNUdTdOHKSqqbmFoEZGJcynn27dO6m/preview',
-                        videoType: 'mp4',
-                        duration: '22:15',
-                        description: 'How to connect with your dance partner'
-                    },
-                    {
-                        id: 4,
-                        title: 'Cross Body Lead',
-                        video: 'videos/salsa-fundamentals/lesson-4-cross-body-lead.mp4',
-                        videoType: 'mp4',
-                        duration: '20:00',
-                        description: 'The most important move in salsa dancing'
-                    },
-                    {
-                        id: 5,
-                        title: 'Basic Spins & Turns',
-                        video: 'videos/salsa-fundamentals/lesson-5-spins-turns.mp4',
-                        videoType: 'mp4',
-                        duration: '19:30',
-                        description: 'Adding flair with spins and turns'
-                    },
-                    {
-                        id: 6,
-                        title: 'Leading & Following',
-                        video: 'videos/salsa-fundamentals/lesson-6-leading-following.mp4',
-                        videoType: 'mp4',
-                        duration: '17:45',
-                        description: 'Communication through dance'
-                    },
-                    {
-                        id: 7,
-                        title: 'Basic Styling',
-                        video: 'videos/salsa-fundamentals/lesson-7-styling.mp4',
-                        videoType: 'mp4',
-                        duration: '21:20',
-                        description: 'Adding your personal style to salsa'
-                    },
-                    {
-                        id: 8,
-                        title: 'Putting It All Together',
-                        video: 'videos/salsa-fundamentals/lesson-8-putting-together.mp4',
-                        videoType: 'mp4',
-                        duration: '25:10',
-                        description: 'Practice session with all techniques'
-                    }
-                ]
             },
             'bachata-fundamentals': {
                 id: 'bachata-fundamentals',
                 title: 'Bachata Fundamentals',
                 description: 'Learn the romantic and expressive movements of bachata. Focus on body movement, isolations, and creating beautiful connection with your partner.',
-                price: 39,
+                billing: 'monthly',
+                price: 25,
+                stripePriceId: 'price_1TxwiUKTy3NrTNI8d7WUOmgV',
                 icon: 'images/4weekseries1/IMG_9905.JPG',
                 duration: '3 hours',
                 lessons: 6,
-                learning: [
-                        'Build strong beginner Bachata fundamentals',
-                        'Learn basic steps, timing, and rhythm',
-                        'Practice partner connection and leading/following skills',
-                        'Train at your own pace with on-demand lessons'
-                    ],
                 level: 'Beginner',
-                videoLessons: [
-                    {
-                        id: 1,
-                        title: 'Bachata Basics',
-                        video: 'videos/bachata/lesson1.mp4',
-                        duration: '16:20',
-                        description: 'Learn the basic bachata step and rhythm'
-                    },
-                    {
-                        id: 2,
-                        title: 'Hip Movement & Body Motion',
-                        video: 'videos/bachata/lesson2.mp4',
-                        duration: '19:30',
-                        description: 'Master the signature bachata hip movement'
-                    },
-                    {
-                        id: 3,
-                        title: 'Basic Turn Patterns',
-                        video: 'videos/bachata/lesson3.mp4',
-                        duration: '18:15',
-                        description: 'Simple but beautiful turn combinations'
-                    },
-                    {
-                        id: 4,
-                        title: 'Sensual Styling',
-                        video: 'videos/bachata/lesson4.mp4',
-                        duration: '22:45',
-                        description: 'Add sensuality and expression to your dance'
-                    },
-                    {
-                        id: 5,
-                        title: 'Partner Connection',
-                        video: 'videos/bachata/lesson5.mp4',
-                        duration: '20:10',
-                        description: 'Creating intimate connection in bachata'
-                    },
-                    {
-                        id: 6,
-                        title: 'Performance Practice',
-                        video: 'videos/bachata/lesson6.mp4',
-                        duration: '24:00',
-                        description: 'Put together a beautiful bachata routine'
-                    }
-                ]
+            },
+            'salsa-fundamentals': {
+                id: 'salsa-fundamentals',
+                title: 'Salsa Fundamentals',
+                description: 'Learn the essential movements and techniques of salsa dancing.',
+                billing: 'monthly',
+                price: 25,
+                stripePriceId: 'price_1TxwiUKTy3NrTNI8d7WUOmgV',
+                icon: 'images/4weekseries1/IMG_9905.JPG',
+                duration: '3 hours',
+                lessons: 6,
+                level: 'Beginner',
+            },
+            'all-access-recap': {
+                id: ['all-access-recap'],
+                title: 'All Access Recap Library',
+                description: 'Access all recap videos from previous courses.',
+                billing: 'monthly',
+                price: 10,
+                stripePriceId: 'price_1TxwiUKTy3NrTNI8d7WUOmgV',
+                icon: 'images/4weekseries1/IMG_9905.JPG',
+                duration: '3 hours',
+                lessons: 6,
+                level: 'Beginner',
             },
             'all-access': {
                 id: 'all-access',
                 title: 'All Access Pass',
                 description: 'Unlock all courses and exclusive content with the All Access Pass. Perfect for dedicated dancers looking to improve their skills.',
-                price: 35,
+                billing: 'monthly',
+                price: 40,
+                stripePriceId: 'price_1TxwiUKTy3NrTNI8d7WUOmgV',
                 icon: 'images/4weekseries1/IMG_0505.JPG',
                 duration: 'Unlimited',
                 lessons: 50,
-                learning: [
-                        'Build strong beginner Salsa fundamentals',
-                        'Learn basic steps, timing, and rhythm',
-                        'Practice partner connection and leading/following skills',
-                        'Train at your own pace with on-demand lessons'
-                    ],
                 level: 'All Levels',
-                videoLessons: [
-                    {
-                        id: 1,
-                        title: 'Complex Turn Patterns',
-                        video: 'videos/advanced-salsa/lesson1.mp4',
-                        duration: '25:30',
-                        description: 'Multi-turn combinations and complex patterns'
-                    },
-                    {
-                        id: 2,
-                        title: 'Advanced Styling Techniques',
-                        video: 'videos/advanced-salsa/lesson2.mp4',
-                        duration: '22:15',
-                        description: 'Professional-level styling and flair'
-                    }
-                ]
             }
         };
 
@@ -491,7 +272,6 @@ const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/
         this.showSuccess('See you later! Keep dancing! 💃🕺');
         setTimeout(() => this.showAuthScreen(), 1000);
     }
-
 
     // ===== USER INTERFACE =====
 
@@ -721,7 +501,7 @@ const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/
                             <span class="progress-label">${progress > 0 ? `${progress}% complete` : 'Not started'}</span>
                         </div>
                         <div class="course-footer">
-                            <span class="status-badge">✓ Purchased</span>
+                            <span class="status-badge">Purchased</span>
                             <button class="course-btn btn-success" onclick="courseApp.openCourse('${course.id}')">
                                 ${progress > 0 ? '▶ Continue Learning' : 'Start Course'}
                             </button>
@@ -730,7 +510,7 @@ const response = await fetch('https://restless-feather-b6a9.michf18.workers.dev/
                         <div class="course-footer">
                             <span class="course-price">$${course.price}</span>
                             <button class="course-btn btn-primary" onclick="courseApp.showPaymentInstructions('${course.id}')">
-                                Buy Now - $${course.price}
+                                Enroll 
                             </button>
                         </div>
                     `}
@@ -886,19 +666,53 @@ userOwnsCourse(courseId) {
 
     // ===== VIDEO PLAYER =====
 
-    openCourse(courseId) {
-        // Allow admins to view any course, regular users need to own it
-        if (!this.isAdmin() && !this.userOwnsCourse(courseId)) {
-            this.showError('You need to purchase this course first');
-            return;
-        }
+    // openCourse(courseId) {
+    //     // Allow admins to view any course, regular users need to own it
+    //     if (!this.isAdmin() && !this.userOwnsCourse(courseId)) {
+    //         this.showError('You need to purchase this course first');
+    //         return;
+    //     }
 
-        this.currentCourse = this.courses[courseId];
-        if (!this.currentCourse) return;
+    //     this.currentCourse = this.courses[courseId];
+    //     if (!this.currentCourse) return;
 
-        this.showScreen('player-screen');
-        this.setupCoursePlayer();
+    //     this.showScreen('player-screen');
+    //     this.setupCoursePlayer();
+    // }
+    async openCourse(courseId) {
+
+    if (!this.isAdmin() && !this.userOwnsCourse(courseId)) {
+        this.showError('You need to purchase this course first');
+        return;
     }
+
+    this.currentCourse = this.courses[courseId];
+
+    if (!this.currentCourse) {
+        console.error("Course not found:", courseId);
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `${VIDEO_WORKER_URL}/api/course/${courseId}`
+        );
+
+        const lessons = await response.json();
+
+        console.log("Loaded lessons from D1:", lessons);
+
+        this.currentCourse.videoLessons = lessons;
+
+    } catch (error) {
+        console.error("Failed loading course videos:", error);
+        this.showError("Unable to load videos.");
+        return;
+    }
+
+    this.showScreen('player-screen');
+    this.setupCoursePlayer();
+}
 
     setupCoursePlayer() {
         if (!this.currentCourse) return;
@@ -1281,6 +1095,7 @@ userOwnsCourse(courseId) {
         const email = formData.get('email') || this.currentUser?.email || '';
         const phone = formData.get('phone') || '';
         const pronouns = formData.get('pronouns') || '';
+        const role = formData.get('role') || '';
         
         // Validate required fields
         if (!firstName || !lastName || !email) {
@@ -1298,6 +1113,7 @@ userOwnsCourse(courseId) {
             name: `${firstName} ${lastName}`,
             phone: phone,
             pronouns: pronouns,
+            role: role,
             courseName: this.selectedCourse.title,
             series: this.selectedCourse.title,
             courseId: this.selectedCourse.id,
@@ -1341,6 +1157,7 @@ userOwnsCourse(courseId) {
             email: paymentRequest.email,
             phone: paymentRequest.phone || '',
             pronouns: paymentRequest.pronouns || '',
+            role: paymentRequest.role || '',
             paymentMethod: paymentRequest.paymentMethod,
             series: paymentRequest.courseName,
             amount: `$${paymentRequest.amount}`,
@@ -1596,7 +1413,13 @@ userOwnsCourse(courseId) {
             video.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;';
             
             const source = document.createElement('source');
-            source.src = lesson.video;
+
+            if (videoType === 'r2') {
+                source.src = `${VIDEO_WORKER_URL}/api/video/${encodeURIComponent(lesson.video)}`;
+            } else {
+                source.src = lesson.video;
+            }
+
             source.type = 'video/mp4';
             
             video.appendChild(source);
@@ -1740,44 +1563,9 @@ userOwnsCourse(courseId) {
         setTimeout(() => {
             if (securityNotice.parentNode) {
                 securityNotice.parentNode.removeChild(securityNotice);
-            }
+            } 
         }, 5000);
     }
-
-    // ===== END SECURITY MEASURES =====
-
-    // ===== FUTURE SUBSCRIPTION SECURITY RECOMMENDATIONS =====
-    /*
-    For a production subscription-based platform, consider implementing:
-    
-    1. SERVER-SIDE VIDEO STREAMING:
-       - Host videos on a secure server (not Google Drive)
-       - Use signed URLs with expiration times
-       - Implement HLS/DASH streaming with token authentication
-    
-    2. ADVANCED VIDEO PROTECTION:
-       - Use DRM (Digital Rights Management) for premium content
-       - Implement video watermarking with user information
-       - Use CDN with geographic and time-based restrictions
-    
-    3. ACCESS CONTROL:
-       - Server-side subscription validation before video access
-       - Rate limiting to prevent abuse
-       - Session-based tokens that expire
-    
-    4. MONITORING & ANALYTICS:
-       - Track video viewing patterns
-       - Detect suspicious download attempts
-       - Monitor for screen recording (though this is technically challenging)
-    
-    5. LEGAL PROTECTION:
-       - Clear terms of service regarding content usage
-       - DMCA protection and takedown procedures
-       - User agreements with penalties for sharing
-    
-    Example secure video URL structure:
-    https://your-secure-cdn.com/video/course1-lesson1.m3u8?token=eyJ0eXAiOi...&expires=1638360000&user=user_id
-    */
 
     // Example: Generate secure video token (for future implementation)
     generateSecureVideoToken(lessonId, userId) {
@@ -1900,7 +1688,7 @@ userOwnsCourse(courseId) {
         } catch (error) {
             console.log('⚠️ Backend not available for course access, using demo mode:', error.message);
             // Demo mode: use local storage or default access
-            const localAccess = this.userOwnsCourse('salsa-fundamentals') ? ['salsa-fundamentals'] : [];
+            const localAccess = this.userOwnsCourse('bachata-recap-library') ? ['bachata-recap-library'] : [];
             console.log('🎭 Demo course access:', localAccess);
             return localAccess;
         }
@@ -2010,16 +1798,34 @@ userOwnsCourse(courseId) {
             return;
         }
         
-        // User has access - load the course
-        this.currentCourse = this.courses[courseId];
-        if (!this.currentCourse) {
-            this.showError('❌ Course not found');
-            return;
+        this.currentCourse = structuredClone(this.courses[courseId]);
+
+        try {
+
+            const response = await fetch(
+                `${VIDEO_WORKER_URL}/api/course/${this.currentCourse.id}`
+            );
+
+            if (response.ok) {
+
+    const videos = await response.json();
+
+            if (videos.length > 0) {
+                this.currentCourse.videoLessons = videos;
+            }
+
+            console.log("✅ Loaded videos from database:", videos);
+
+        } else {
+            console.warn("⚠️ No videos found in database, using built-in videos");
         }
-        
+
+        } catch (err) {
+            console.warn("⚠️ Could not load database videos. Using built-in videos.", err);
+        }
+
         // Navigate to course screen
         this.showScreen('course-screen');
-        
         // Load course data
         this.showCourseDetails(courseId);
         
@@ -2052,8 +1858,6 @@ userOwnsCourse(courseId) {
         // Simple admin check - in production, implement proper role management
         const adminEmails = [
             'michelle@queerlatindance.com',
-            'admin@queerlatindance.com',
-            'admin@demo.com',  // Demo admin for testing
             // Add other admin emails here
         ];
         
@@ -2137,14 +1941,25 @@ userOwnsCourse(courseId) {
                         <div class="form-group">
                             <label>Video Source</label>
                             <select name="videoType" onchange="courseApp.toggleVideoInput(this)">
+                                <option value="r2">Cloudflare R2</option>
                                 <option value="googledrive">Google Drive</option>
                                 <option value="youtube">YouTube</option>
                                 <option value="vimeo">Vimeo</option>
-                                <option value="mp4">Upload MP4</option>
+                                <option value="mp4">MP4 URL</option>
                             </select>
                         </div>
                         
                         <div class="form-group video-input-group">
+                            <div class="video-input-r2">
+                                <label>R2 Video Key</label>
+                                <input 
+                                    type="text" 
+                                    name="r2Key"
+                                    placeholder="recap-library/salsa-recap/video.mp4">
+                                <small>
+                                    Enter the exact R2 object path (not the bucket name)
+                                </small>
+                            </div>
                             <div class="video-input-googledrive">
                                 <label>Google Drive Share Link</label>
                                 <input type="url" name="googledriveUrl" placeholder="https://drive.google.com/file/d/...">
@@ -2408,20 +2223,27 @@ userOwnsCourse(courseId) {
 
         // Get video URL based on type
         switch (lessonData.videoType) {
+
+            case 'r2':
+                lessonData.video = formData.get('r2Key');
+                break;
+
             case 'googledrive':
                 const driveUrl = formData.get('googledriveUrl');
                 if (driveUrl) {
-                    // Convert sharing URL to embed URL
                     const fileId = this.extractGoogleDriveFileId(driveUrl);
                     lessonData.video = `https://drive.google.com/file/d/${fileId}/preview`;
                 }
                 break;
+
             case 'youtube':
                 lessonData.video = formData.get('youtubeUrl');
                 break;
+
             case 'vimeo':
                 lessonData.video = formData.get('vimeoUrl');
                 break;
+
             case 'mp4':
                 lessonData.video = formData.get('mp4Url');
                 break;
@@ -3469,7 +3291,7 @@ userOwnsCourse(courseId) {
         if (!courseName || courseName === 'Unknown Course') {
             const courseMapping = {
                 'salsa-recap-lvl1': { name: 'Salsa Recap (Level 1)', price: 49 },
-                'salsa-fundamentals': { name: 'Salsa Fundamentals', price: 49 },
+                'bachata-recap-library': { name: 'Bachata Recap Library', price: 49 },
                 'bachata-sensual': { name: 'Bachata Sensual', price: 59 },
                 'advanced-salsa': { name: 'Advanced Salsa', price: 69 },
                 'bachata-basics': { name: 'Bachata Basics', price: 49 }
@@ -4109,6 +3931,28 @@ window.fixMyLogin = function(email, desiredPassword) {
         console.error('❌ courseApp not available');
     }
 };
+window.forgotPassword = async function(){
+
+    const email = prompt("Enter your email address:");
+
+    if(!email){
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `${APPS_SCRIPT_URL}?action=forgotPassword&email=${encodeURIComponent(email)}`
+        );
+        const data = await response.json();
+        if(data.success){
+            alert("✅ Password reset email sent!");
+        } else {
+            alert("❌ " + data.error);
+        }
+    } catch(err){
+        alert("❌ Error: " + err.message);
+    }
+};
 
 
 // Initialize the application when DOM is loaded
@@ -4214,8 +4058,9 @@ async function adminFetch(url, options = {}) {
       ...(token ? { Authorization: `Bearer ${token}` } : {})
     }
   });
-  async function checkKVAccess(email) {
-    try {
+}
+async function checkKVAccess(email) {
+  try {
 
         const response = await fetch(
             'https://restless-feather-b6a9.michf18.workers.dev/api/course-access',
@@ -4241,5 +4086,4 @@ async function adminFetch(url, options = {}) {
             hasAccess: false
         };
     }
-}
 }
