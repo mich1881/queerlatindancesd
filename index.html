@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Home | Queer Latin Dance SD</title>
+  <title>Queer Dance Classes & Events in San Diego | Queer Latin Dance SD</title>
+  <style>
+    .swipe-gallery .swipe-img,
+    .newsletter-swipe-gallery .swipe-img { display: none; }
+    .swipe-gallery .swipe-img.active,
+    .newsletter-swipe-gallery .swipe-img.active { display: block; }
+  </style>
   <!-- Favicon -->
   <!-- <link rel="icon" href="/images/icons/favicon-v2.png" type="image/png" sizes="any"> -->
   <link rel="icon" href="/favicon.ico?v=4">
@@ -11,7 +17,7 @@
   <link rel="apple-touch-icon" href="/images/icons/favicon-v2.png">
 
   <!-- SEO Meta Tags -->
-  <meta name="description" content="Queer Latin Dance SD offers salsa and bachata classes and queer events in San Diego. A safe, affirming space for the LGBTQ+ community to dance and celebrate identity.">
+  <meta name="description" content="Queer Latin Dance SD offers queer, LGBTQ+-friendly, and women-friendly salsa and bachata dance classes and events in San Diego. All levels welcome.">
   <meta name="keywords" content="queer dance San Diego, queer events San Diego, LGBTQ dance classes San Diego, salsa San Diego, bachata San Diego, queer salsa social, queer Latin dance">
   <meta name="author" content="Queer Latin Dance SD">
   <link rel="canonical" href="https://www.queerlatindance.com">
@@ -67,7 +73,7 @@
 }
 .hero-tagline {
   font-family: 'Montserrat', Arial, sans-serif;
-  font-size: 1.1rem;
+  font-size: 0.85rem;
   font-weight: 400;
   color: rgba(255,255,255,0.92);
   letter-spacing: 0.18em;
@@ -197,7 +203,20 @@ body {
   margin-bottom: 0.75rem;
   vertical-align: middle;
 }
+.feature-split-video {
+  width: 50%;
+  min-height: 500px;
+  overflow: hidden;
+  background: #1a0a30;
+}
 
+.feature-split-video video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
 /* === NEWSLETTER SECTION === */
 .newsletter-preview-section {
 margin: 2rem 0;
@@ -240,7 +259,7 @@ gap: 1rem;
 padding: 0.75rem;
 border: 2px solid #6850c2;
 border-radius: 8px;
-font-size: 1rem;
+font-size: 0.85rem;
 }
 
 .newsletter-subscribe button {
@@ -437,7 +456,7 @@ margin: 3rem 0;
 padding: 2rem 1rem;
 background: linear-gradient(135deg, #f8f4ff 0%, #e8d8ff 100%);
 border-radius: 20px;
-max-width: 1200px;
+max-width: 100%;
 margin: 3rem auto;
 }
 
@@ -566,14 +585,15 @@ margin-top: 2rem;
 .submit-testimonial-btn {
 background: linear-gradient(135deg, #716cff 0%, #a259ff 100%);
 color: white;
-border: none;
-padding: 0.75rem 1.5rem;
-border-radius: 50px;
-font-size: 1rem;
-font-weight: 600;
-cursor: pointer;
-transition: all 0.3s ease;
-box-shadow: 0 4px 15px rgba(113, 108, 255, 0.3);
+  padding: 0.85rem 2.2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 400;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  box-shadow: 0 4px 15px rgba(113, 108, 255, 0.3);
 }
 
 .submit-testimonial-btn:hover {
@@ -888,7 +908,320 @@ line-height: 0.8;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+/* Founding Supporters */
+/* === FOUNDING MEMBERS === */
 
+.founding-members {
+    padding: 4rem 1.5rem;
+    text-align: center;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.founding-members-title {
+    font-family: 'PassionOne', 'Lilita One', Arial, sans-serif;
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1;
+    margin: 0 0 0.75rem 0;
+}
+
+.founding-members-intro {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+}
+
+.founding-members-grid {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3.5rem;
+    flex-wrap: wrap;
+}
+
+.founding-member {
+    width: 200px;
+    text-align: center;
+}
+
+.founding-member-photo {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: center 30%;
+    border-radius: 50%;
+    display: block;
+    align-items: center;
+    margin: 0 auto 1rem auto;
+}
+
+.founding-member h3 {
+    font-family: 'PassionOne', 'Lilita One', Arial, sans-serif;
+    font-size: 1.9rem;
+    font-weight: 400;
+    color: #8266fe;
+    margin: 0 0 0.4rem 0;
+}
+
+.founding-member-bio {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: #8266fe;
+    margin: 0;
+}
+/* === ARTIST SUBMISSIONS === */
+.artist-submission-section {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 3rem 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #e4d2f2 0%, #8986fe 100%);
+  border-radius: 30px;
+  box-sizing: border-box;
+}
+
+.artist-submission-content h2 {
+  font-family: 'PassionOne', 'Lilita One', Arial, sans-serif;
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  line-height: 1;
+}
+
+.artist-submission-content p {
+  max-width: 650px;
+  margin: 0 auto 1.5rem;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ffffff;
+}
+
+.artist-submission-content .cta-btn1 {
+  margin-top: 0.5rem;
+}
+
+.pdf-calendar-section {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.pdf-embed-wrapper {
+  width: 100%;
+  height: 87vh;
+  min-height: 600px;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.pdf-embed-wrapper object,
+.pdf-embed-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .pdf-embed-wrapper {
+    height: 50vh;
+    min-height: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .artist-submission-section {
+    margin: 2rem 1rem;
+    padding: 2.5rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .artist-submission-content p {
+    font-size: 0.9rem;
+  }
+}
+/* === FOUNDING MEMBERS MOBILE === */
+@media (max-width: 768px) {
+    .founding-members {
+        padding: 3rem 1rem;
+    }
+    .founding-members-title {
+        font-size: 3.5rem;
+    }
+    .founding-members-intro {
+        font-size: 0.9rem;
+        margin-bottom: 2.5rem;
+    }
+    .founding-members-grid {
+        gap: 2.5rem;
+    }
+    .founding-member {
+        width: 180px;
+    }
+    .founding-member-photo {
+        width: 140px;
+        height: 140px;
+    }
+}
+/* === STUDENT PERK CIRCLES === */
+
+.student-perks-grid {
+    gap: 2rem;
+}
+
+.student-perk {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: #ffffffb5;
+    padding: 2rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.student-perk h3 {
+    font-family: 'PassionOne', 'Lilita One', Arial, sans-serif;
+    font-size: 1.7rem;
+    font-weight: 400;
+    line-height: 1.05;
+    color: #8266fe;
+    margin: 0 0 0.6rem 0;
+}
+
+.student-perk p {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #8266fe;
+    margin: 0;
+    max-width: 160px;
+}
+
+/* === FULL-WIDTH IMAGE + TEXT SECTION === */
+
+.feature-split-section {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.feature-split-image {
+  width: 50%;
+  min-height: 500px;
+  overflow: hidden;
+}
+
+.feature-split-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.feature-split-content {
+  width: 50%;
+  min-height: 500px;
+  box-sizing: border-box;
+  padding: 5rem 7vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background: #c4fad7;
+}
+
+.feature-split-content h2 {
+  font-family: 'PassionOne', 'Lilita One', Arial, sans-serif;
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  color: #716cff;
+  margin: 0 0 1.5rem;
+}
+
+.feature-split-content p {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #402e51;
+  max-width: 550px;
+  margin: 0 0 2rem;
+}
+
+.feature-split-content .cta-btn1 {
+  margin-top: 0.5rem;
+}
+
+
+/* === MOBILE === */
+
+@media (max-width: 768px) {
+
+  .feature-split-section {
+    flex-direction: column;
+  }
+
+.feature-split-image,
+.feature-split-video {
+  width: 100%;
+  min-height: 350px;
+}
+
+  .feature-split-content {
+    width: 100%;
+    min-height: auto;
+    padding: 3.5rem 1.5rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .feature-split-content h2 {
+    font-size: clamp(3rem, 12vw, 4.5rem);
+  }
+
+  .feature-split-content p {
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .student-perk {
+        width: 200px;
+        height: 200px;
+        padding: 1.5rem;
+    }
+
+    .student-perk h3 {
+        font-size: 1.55rem;
+    }
+
+    .student-perk p {
+        font-size: 0.78rem;
+    }
+    .feature-split-image {
+  width: 100%;
+  min-height: 350px;
+}
+}
 /* Mobile responsive styles */
 @media (max-width: 768px) {
 .faq-container {
@@ -931,6 +1264,7 @@ padding: 1rem;
   .newsletter-subscribe input {
     width: 100%;
     max-width: 300px;
+    font-size: 0.85rem;
   }
   .newsletter-container {
   flex-direction: column;
@@ -1091,24 +1425,34 @@ padding: 1rem;
 <section class="hero-flex" aria-labelledby="hero-heading">
 <div class="hero-content">
 <div class="qldsd-wordmark" id="hero-heading">Queer Latin Dance San Diego</div>
-<div class="hero-tagline">Salsa · Bachata · Community</div>
+<div class="hero-tagline">Est. Aug 2022 · Salsa · Bachata · Community</div>
 <a href="courses.html" class="cta-btn1">Register for Classes!</a>
-<a href="Events.html" class="cta-btn">See Upcoming Events</a>
+<a href="Events.html" class="cta-btn">See Upcoming Events</a> 
 </div>
 <section id="photoGallery" aria-label="Photo slideshow">
 <div class="swipe-gallery" role="region" aria-roledescription="carousel" aria-label="Community event photos">
-<img src="images/home/photo1.png" alt="Community members dancing at Sun Dance Day Fest, celebrating together outdoors" class="swipe-img faded-img active" />
-<img src="images/home/photo2.png" alt="Dancers sharing a joyful moment at a community dance event" class="swipe-img faded-img" />
-<img src="images/home/photo3.png" alt="Pat and Miguel dancing together at Salsa Sunsets event" class="swipe-img faded-img"/>
-<img src="images/home/photo4.png" alt="Couple dancing salsa together at Sun Dance Day Fest, smiling and having fun" class="swipe-img faded-img" />
-<img src="images/home/photo5.png" alt="Couple dancing salsa together at a community event, smiling and having fun" class="swipe-img faded-img" />
-<img src="images/home/photo6.png" alt="Dancers having fun at Queer Salsa Social event" class="swipe-img faded-img" />
-<img src="images/home/photo7.png" alt="Group of friends sharing a warm hug at a community dance event" class="swipe-img faded-img" />
-<img src="images/home/photo8.png" alt="Participants learning salsa moves at Sun Dance Day Fest" class="swipe-img faded-img" />
-<img src="images/home/photo9.png" alt="Colorful dance celebration at Sun Dance Day Fest with community members" class="swipe-img faded-img" />
-<img src="images/home/photo10.png" alt="Community gathering and dancing at Sun Dance Day Fest" class="swipe-img faded-img" />
-<img src="images/home/photo12.png" alt="Couple dancing salsa together at Sun Dance Day Fest, smiling and having fun" class="swipe-img faded-img" />
-<!-- ...existing swipe gallery code... -->
+<!-- <img src="images/home/photo1.png" alt="Salsa Chica and Michelle Dancing Together" class="swipe-img faded-img active" loading="eager" fetchpriority="high" />
+<img src="images/home/photo2.png" alt="Queer Salsa Sunsets Workshop" class="swipe-img faded-img" loading="lazy" /> -->
+<video
+  class="swipe-img faded-img"
+  muted
+  playsinline
+  preload="metadata"
+  aria-label="Queer Latin Dance SD community dance video"
+>
+  <source
+    src="https://pub-f5414e507f874cda9f93105c49892fc8.r2.dev/Previews/Home%20page%20images.MP4"
+    type="video/mp4"
+  />
+</video>
+<!-- <img src="images/home/photo16.png" alt="Michelle & Students Listening and Smiling" class="swipe-img faded-img" loading="lazy" />
+<img src="images/home/photo14.png" alt="Pat & Michelle with Students Group Picture at Boba Religion" class="swipe-img faded-img" loading="lazy" />
+<img src="images/home/photo3.png" alt="Queer Salsa Social Workshop with Rorris" class="swipe-img faded-img" loading="lazy"/>
+<img src="images/home/photo4.png" alt="Queer Salsa Sunsets second event workshop with big group" class="swipe-img faded-img" loading="lazy"/>
+<img src="images/home/photo5.png" alt="Pat Djing using DDJ-FLX4" class="swipe-img faded-img" loading="lazy"/>
+<img src="images/home/photo7.png" alt="Queer Salsa Sunsets Social Dancing" class="swipe-img faded-img" loading="lazy"/>
+<img src="images/home/photo8.png" alt="Michelle R & Michelle F dancing at Sun Dance Day Fest" class="swipe-img faded-img" loading="lazy"/>
+<img src="images/home/photo12.png" alt="Michelle teaching workshop at QSS with large group" class="swipe-img faded-img" loading="lazy"/> -->
 </div>
 </section>
 </main>
@@ -1116,27 +1460,73 @@ padding: 1rem;
 <div class="qldsdinvite-message">
     <div id="animatedText"></div>
 </div>
-<section class="newsletter-preview-section" aria-labelledby="newsletter-section-heading">
-<div class="newsletter-container">
-<div class="newsletter-preview">
-<h2>Newsletter Preview</h2>
-<div class="newsletter-swipe-gallery" role="region" aria-roledescription="carousel" aria-label="Newsletter preview images">
-<img src="images/home/News1.png" alt="Newsletter preview showing upcoming events and community highlights" class="swipe-img faded-img active" />
-<img src="images/home/News2.png" alt="Newsletter preview featuring dance tips and event announcements" class="swipe-img faded-img" />
-<img src="images/home/News3.png" alt="Newsletter preview with community stories and upcoming classes" class="swipe-img faded-img" />
-<img src="images/home/News4.png" alt="Newsletter preview highlighting special events and workshops" class="swipe-img faded-img" />
-<img src="images/home/News5.png" alt="Newsletter preview showcasing community achievements and celebrations" class="swipe-img faded-img" />
-<!-- Add more newsletter images as needed -->
-</div>
-</div>
-<div class="newsletter-subscribe">
-<h2>Subscribe to Our Newsletter</h2>
-<form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec" aria-label="Newsletter subscription form">
-<input type="email" id="newsletter-email" name="email" required placeholder="Enter your email ..." aria-required="true" />
-<button type="submit" class="cta-btn">Subscribe</button>
-</form>
-</div>
-</div>
+<section class="pdf-calendar-section" aria-labelledby="calendar-heading">
+  <div class="pdf-embed-wrapper">
+    <object
+      data="images/home/QLDSD_Oct2026.pdf#toolbar=0&navpanes=0&scrollbar=0&statusbar=0&messages=0&view=FitH"
+      type="application/pdf"
+      title="QLDSD Class and Event Calendar">
+      <iframe
+        src="images/home/QLDSD_Oct2026.pdf#toolbar=0&navpanes=0&scrollbar=0&statusbar=0&messages=0&view=FitH"
+        title="QLDSD Class and Event Calendar"
+        loading="lazy">
+      </iframe>
+    </object>
+  </div>
+</section>
+<section class="feature-split-section">
+  <div class="feature-split-video">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      aria-label="Queer Latin Dance SD salsa and bachata dance classes in San Diego"
+    >
+      <source src="https://pub-f5414e507f874cda9f93105c49892fc8.r2.dev/Previews/IMG_1516.MOV" type="video/mp4">
+      Your browser does not support the video element.
+    </video>
+  </div>
+  <div class="feature-split-content">
+    <h2>Queer Centered Dance Classes in San Diego</h2>
+    <p>
+      Looking for a dance class where you can feel comfortable being yourself?
+      Queer Latin Dance SD offers queer-centered, LGBTQ+-friendly and women-friendly
+      salsa and bachata dance classes in San Diego. Our classes welcome beginners
+      and experienced dancers, with no partner required. Come learn, dance, and
+      connect in a supportive community without pressure or judgment.
+    </p>
+    <a href="courses.html" class="cta-btn1">
+      Explore Dance Classes
+    </a>
+  </div>
+</section>
+<!-- === STUDENT PERKS === -->
+<section class="founding-members">
+    <h2 class="founding-members-title">QLDSD STUDENT PERKS</h2>
+    <div class="founding-members-grid student-perks-grid">
+        <div class="student-perk">
+            <h3>Discounted Classes & Tickets</h3>
+          <p>⭐️⭐️⭐️⭐️⭐️</p>
+            <p>Enjoy discounted student pricing on classes and socials</p>
+        </div>
+        <div class="student-perk">
+            <h3>Priority Access</h3>
+            <p>⭐️⭐️⭐️⭐️⭐️</p>
+            <p>Priority access to Queer Salsa Sunsets and early notifications for events</p>
+        </div>
+        <div class="student-perk">
+            <h3>Access to Recap Videos</h3>
+            <p>⭐️⭐️⭐️⭐️⭐️</p>
+            <p>Enjoy access to class recap videos for new and old classes</p>
+        </div>
+        <div class="student-perk">
+            <h3>Access to Invite Only Events</h3>
+            <p>⭐️⭐️⭐️⭐️⭐️</p>
+            <p>Access to night socials and brunch events for members only</p>
+          </div>
+    </div>
 </section>
 <!-- Testimonials Section -->
 <section class="testimonial-flex">
@@ -1173,6 +1563,130 @@ Submit Your Testimonial
 </form>
 </div>
 </div>
+</section>
+<!-- === ARTIST / PERFORMANCE SUBMISSIONS === -->
+<section class="artist-submission-section" aria-labelledby="artist-submission-heading">
+  <div class="artist-submission-content">
+    <h2 id="artist-submission-heading">Perform with QLDSD</h2>
+    <p>
+      Are you a queer artist, musician, dancer, or performer?
+      We'd love to hear from you!
+    </p>
+    <a
+      href="https://docs.google.com/forms/d/e/1FAIpQLSeGsNQEoR9cZ_ssPpGQLr9YLLED6WMiMTfuLfYdiXD32F0V2w/viewform?usp=dialog"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="cta-btn1"
+    >
+      Submit Your Performance
+    </a>
+  </div>
+</section>
+<section class="newsletter-preview-section" aria-labelledby="newsletter-section-heading">
+<div class="newsletter-container">
+<div class="newsletter-preview">
+<h2>Newsletter Preview</h2>
+<div class="newsletter-swipe-gallery" role="region" aria-roledescription="carousel" aria-label="Newsletter preview images">
+<img src="images/home/News1.png" alt="Newsletter preview showing upcoming events and community highlights" class="swipe-img faded-img active" />
+<img src="images/home/News2.png" alt="Newsletter preview featuring dance tips and event announcements" class="swipe-img faded-img" />
+<img src="images/home/News3.png" alt="Newsletter preview with community stories and upcoming classes" class="swipe-img faded-img" />
+<img src="images/home/News4.png" alt="Newsletter preview highlighting special events and workshops" class="swipe-img faded-img" />
+<img src="images/home/News5.png" alt="Newsletter preview showcasing community achievements and celebrations" class="swipe-img faded-img" />
+<!-- Add more newsletter images as needed -->
+</div>
+</div>
+<div class="newsletter-subscribe">
+<h2>Subscribe to Our Newsletter</h2>
+<form method="POST" action="https://script.google.com/macros/s/AKfycbw1bgaooIBO_fAGViGiDHSDjgmdkCvAP_KxkBf-p-pxCADytBTwyMzE7Fby5GCzvtnr/exec" aria-label="Newsletter subscription form">
+<input type="email" id="newsletter-email" name="email" required placeholder="Enter your email ..." aria-required="true" />
+<button type="submit" class="cta-btn">Subscribe</button>
+</form>
+</div>
+</div>
+</section>
+<!-- === FEATURE SPLIT SECTION === -->
+<section class="feature-split-section">
+  <div class="feature-split-image">
+    <img 
+      src="images/home/queersalsasunsets.JPG" 
+      alt="Queer Latin Dance SD community"
+    >
+  </div>
+
+  <div class="feature-split-content">
+    <h2>Queer Salsa Sunsets at the Park</h2>
+
+    <p>
+      Queer Salsa Sunsets (QSS) established in May 2025 is a monthly potluck and social dance event
+      hosted by Queer Latin Dance San Diego (QLDSD). The event takes place at a local park in San Diego, CA. 
+      Where all ages are welcome to hangout and catch the sunset while enjoying Latin music. A beginner-friendly 
+      Latin dance workshop is offered at the event led by Michelle Fernandez (founder of QLDSD). The goal of the 
+      event is for folks to experience the community and to explore Latin dance outdoors in hopes to inspire folks
+      to continue their journey with QLDSD by taking classes and attending dance socials. QLDSD is committed to creating 
+      third spaces for the queer community, to foster a sense of stability and belonging. 
+    </p>
+
+    <a href="https://queerlatindance.com/Events" class="cta-btn1"> 
+      Learn More
+    </a>
+  </div>
+</section>
+<!-- === FOUNDING MEMBERS === -->
+<section class="founding-members">
+    <h2 class="founding-members-title">FOUNDING SUPPORTERS</h2>
+    <div class="founding-members-grid">
+        <!-- Ana Laura -->
+        <div class="founding-member">
+            <img 
+                src="images/home/Ana_Laura.jpg" 
+                alt="Ana Laura"
+                class="founding-member-photo">
+            <h3>Ana Laura</h3>
+            <!-- <p class="founding-member-role">Student</p> -->
+            <p class="founding-member-bio">
+                QLDSD student and community member, Ana Laura has been there from the beginning, 
+                helping promote QLDSD's mission of growing the queer Latin Dance community in San Diego.
+            </p>
+        </div>
+        <!-- Cinthya -->
+        <div class="founding-member">
+            <img 
+                src="images/home/Cinthya.jpg" 
+                alt="Cinthya"
+                class="founding-member-photo"
+            >
+            <h3>Cinthya</h3>
+            <!-- <p class="founding-member-role">Student</p> -->
+            <p class="founding-member-bio">
+                QLDSD student and community member, Cinthya has been there as QLDSD's dedicated student.
+                Helping create a welcoming environment for all students and community members.
+            </p>
+        </div>
+    </div>
+</section>
+<section class="feature-split-section">
+  <div class="feature-split-content">
+    <h2>Queer Salsa Social</h2>
+
+    <p>
+      Queer Salsa Social (QSS) established in Nov 2025 is a dance social event
+      hosted by Queer Latin Dance San Diego (QLDSD). The themed event takes place in a dance studio in San Diego, CA. 
+      Attendees enjoy an open-level workshop led by Michelle Fernandez or a guest instructor, followed by social dancing 
+      to Dj Pat's or a Guest Dj set of Salsa, Bachata, Cumbia and more! Food and refreshements are included. Occassionally, QSS will host a live performance or local dance group performances
+      to showcase local talent in Southern California. The goal of the event is to provide a safe space for community members
+      to switch dance without expectations and to focus on learning and enjoying dances without pressure or judgement.
+    </p>
+
+    <a href="https://queerlatindance.com/Events" class="cta-btn1">
+      Learn More
+    </a>
+  </div>
+    <div class="feature-split-image">
+    <img 
+      src="images/home/queersalsasocial.jpg" 
+      alt="Queer Latin Dance SD community"
+    >
+  </div>
 </section>
 <!-- FAQ Section -->
 <section class="faq-section" aria-labelledby="faq-heading">
